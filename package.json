@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "sass-embedded": "^1.83.0",
+    "vite": "^6.0.5",
+    "vite-plugin-shopify": "^3.1.1"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --raw --kill-others --passthrough-arguments \"shopify theme dev --store cinq-agence {@}\" \"vite dev\"",
+    "build": "vite build"
+  }
+}

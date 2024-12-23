@@ -296,6 +296,11 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    {% liquid
+      render 'vite-tag' with 'theme.scss'
+      render 'vite-tag' with 'theme.js'
+    %}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
