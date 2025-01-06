@@ -1,2 +1,4 @@
 package.json
 vite.config.ts
+yarn.lock
+.gitignore
