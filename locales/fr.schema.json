@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "settings_schema": {
     "colors": {
@@ -373,9 +382,9 @@
   "sections": {
     "all": {
       "padding": {
-        "section_padding_heading": "Marge de la section",
-        "padding_top": "Marge supérieure",
-        "padding_bottom": "Marge inférieure"
+        "header": "Hauteur de la boîte de remplissage de la section",
+        "top": "Hauteur de la boîte de remplissage en haut de l'élément",
+        "bottom": "Hauteur de la boîte de remplissage en bas de l'élément"
       },
       "spacing": "Espacement",
       "colors": {
