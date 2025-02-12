@@ -1,0 +1,13 @@
+{
+  "src/entrypoints/app.ts": {
+    "file": "app-Dd17Wz6v.js",
+    "name": "app",
+    "src": "src/entrypoints/app.ts",
+    "isEntry": true
+  },
+  "src/entrypoints/styles.css": {
+    "file": "styles-BAB3O_iR.css",
+    "src": "src/entrypoints/styles.css",
+    "isEntry": true
+  }
+}
