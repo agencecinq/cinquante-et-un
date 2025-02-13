@@ -14,35 +14,12 @@
 {% # theme-check-enable %}
 
 <tr
-  class="variant-item{% unless show_image %} variant-item--no-media{% endunless %}{% if item.available and item.unit_price_measurement %} variant-item--unit-price{% endif %}"
+  class="variant-item{% if item.available and item.unit_price_measurement %} variant-item--unit-price{% endif %}"
   id="Variant-{{ variant.id }}"
   data-variant-id="{{ variant.id }}"
   data-cart-qty="{{ cart_qty }}"
 >
   <td class="variant-item__inner{% unless sku and show_sku %} variant-item__inner--no-sku{% endunless %}">
-    {%- if show_image -%}
-      <div class="variant-item__media">
-        <div class="variant-item__image-container global-media-settings{% unless is_modal %} gradient{% endunless %}{% unless image %} variant-item__image-container--no-img{% endunless %}">
-          {% if image %}
-            {%- assign img_height = 43 | divided_by: image.aspect_ratio | ceil -%}
-            {{
-              image
-              | image_url: width: 86
-              | image_tag:
-                loading: 'lazy',
-                fetchpriority: 'low',
-                decoding: 'async',
-                class: 'variant-item__image',
-                width: 43,
-                height: img_height,
-                widths: '86',
-                alt: image.alt
-              | escape
-            }}
-          {% endif %}
-        </div>
-      </div>
-    {%- endif -%}
     <div class="small-hide medium-hide">
       <span class="variant-item__name h4 break">{{ item.title | escape }}</span>
       {%- if show_sku -%}

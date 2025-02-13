@@ -1,1 +1,22 @@
-@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@import 'tailwindcss';
+
+@theme {
+  --breakpoint-prototype: 90rem;
+  --base-font-size-unitless: 16;
+  --prototype-width-unitless: 1440;
+
+  --default-font-family: 'Aeonik';
+}
+
+/* Base */
+
+@import './base/base.css';
+@import './base/font-face.css';
+
+/* Components */
+
+/* Utilities */
+
+@import './utilities/container.css';

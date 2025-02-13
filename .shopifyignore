@@ -15,4 +15,4 @@ translation.yml
 node_modules
 .git/
 .github/
-assets/.vite
+assets/.vite/manifest.json

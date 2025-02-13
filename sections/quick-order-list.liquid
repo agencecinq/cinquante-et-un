@@ -20,11 +20,7 @@
   }
 {%- endstyle -%}
 
-{% render 'quick-order-list',
-  product: product,
-  show_image: section.settings.show_image,
-  show_sku: section.settings.show_sku
-%}
+{% render 'quick-order-list', product: product, show_sku: section.settings.show_sku %}
 
 {% schema %}
 {
@@ -34,12 +30,6 @@
     "templates": ["product"]
   },
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_image",
-      "default": false,
-      "label": "t:sections.quick-order-list.settings.show_image.label"
-    },
     {
       "type": "checkbox",
       "id": "show_sku",

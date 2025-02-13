@@ -1,3 +1,5 @@
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.5 | divided_by: 16.00 }}px;
@@ -13,7 +15,12 @@
 {%- endstyle -%}
 
 <header class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+<<<<<<< HEAD
   <div class="container">HEADER</div></header>
+=======
+  <div class="container"><h2>HEADER</h2></div>
+</header>
+>>>>>>> 08c76ac (:construction: Building starter theme)
 
 <script type="application/ld+json">
   {
@@ -60,7 +67,7 @@
 {% schema %}
 {
   "name": "t:sections.header.name",
-  "class": "section-header",
+  "class": "section header",
   "max_blocks": 3,
   "settings": [
     {

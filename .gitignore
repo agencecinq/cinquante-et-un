@@ -10,3 +10,8 @@ Thumbs.db
 .shopify
 node_modules
 .ruby-version
+
+# Shopify #
+###################
+config.yml
+config/settings_data.json

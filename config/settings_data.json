@@ -17,62 +17,27 @@
           "settings": {
             "background": "#FFFFFF",
             "background_gradient": "",
-            "text": "#121212",
-            "button": "#121212",
+            "text": "#000000",
+            "button": "#000000",
             "button_label": "#FFFFFF",
-            "secondary_button_label": "#121212",
-            "shadow": "#121212"
+            "secondary_button_label": "#000000",
+            "shadow": "#000000"
           }
         },
         "scheme-2": {
           "settings": {
-            "background": "#F3F3F3",
-            "background_gradient": "",
-            "text": "#121212",
-            "button": "#121212",
-            "button_label": "#F3F3F3",
-            "secondary_button_label": "#121212",
-            "shadow": "#121212"
-          }
-        },
-        "scheme-3": {
-          "settings": {
-            "background": "#242833",
+            "background": "#000000",
             "background_gradient": "",
             "text": "#FFFFFF",
             "button": "#FFFFFF",
             "button_label": "#000000",
             "secondary_button_label": "#FFFFFF",
-            "shadow": "#121212"
+            "shadow": "#FFFFFF"
           }
         },
-        "scheme-4": {
-          "settings": {
-            "background": "#121212",
-            "background_gradient": "",
-            "text": "#FFFFFF",
-            "button": "#FFFFFF",
-            "button_label": "#121212",
-            "secondary_button_label": "#FFFFFF",
-            "shadow": "#121212"
-          }
-        },
-        "scheme-5": {
-          "settings": {
-            "background": "#334FB4",
-            "background_gradient": "",
-            "text": "#FFFFFF",
-            "button": "#FFFFFF",
-            "button_label": "#334FB4",
-            "secondary_button_label": "#FFFFFF",
-            "shadow": "#121212"
-          }
-        }
       },
       "type_header_font": "assistant_n4",
       "type_body_font": "assistant_n4",
-      "page_width": 1200,
-      "spacing_sections": 0,
       "spacing_grid_horizontal": 8,
       "spacing_grid_vertical": 8,
       "buttons_border_thickness": 1,
@@ -94,7 +59,6 @@
       "inputs_radius": 0,
       "inputs_shadow_opacity": 0,
       "inputs_shadow_horizontal_offset": 0,
-      "inputs_shadow_vertical_offset": 4,
       "inputs_shadow_blur": 5,
       "card_style": "standard",
       "card_image_padding": 0,
@@ -141,7 +105,6 @@
       "media_radius": 0,
       "media_shadow_opacity": 0,
       "media_shadow_horizontal_offset": 0,
-      "media_shadow_vertical_offset": 4,
       "media_shadow_blur": 5,
       "popup_border_thickness": 1,
       "popup_border_opacity": 10,

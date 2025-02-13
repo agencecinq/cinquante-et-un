@@ -23,9 +23,6 @@
         "horizontal_offset": {
           "label": "Horizontal offset"
         },
-        "vertical_offset": {
-          "label": "Vertical offset"
-        },
         "thickness": {
           "label": "Thickness"
         },
@@ -124,8 +121,8 @@
           "label": "Background"
         },
         "background_gradient": {
-          "label": "Background gradient",
-          "info": "Background gradient replaces background where possible."
+          "label": "Background",
+          "info": "Background replaces background where possible."
         },
         "text": {
           "label": "Text"
@@ -331,9 +328,6 @@
             "label": "Popup notification"
           }
         },
-        "show_vendor": {
-          "label": "Show vendor"
-        },
         "show_cart_note": {
           "label": "Enable cart note"
         },
@@ -349,15 +343,6 @@
     "layout": {
       "name": "Layout",
       "settings": {
-        "page_width": {
-          "label": "Page width"
-        },
-        "spacing_sections": {
-          "label": "Space between template sections"
-        },
-        "header__grid": {
-          "content": "Grid"
-        },
         "paragraph__grid": {
           "content": "Affects areas with multiple columns or rows."
         },
@@ -371,6 +356,9 @@
     }
   },
   "sections": {
+    "counter": {
+      "name": "Counter",
+    },
     "all": {
       "animation": {
         "content": "Animations",
@@ -418,34 +406,6 @@
           "label": "Extra extra large"
         }
       },
-      "image_shape": {
-        "options__1": {
-          "label": "Default"
-        },
-        "options__2": {
-          "label": "Arch"
-        },
-        "options__3": {
-          "label": "Blob"
-        },
-        "options__4": {
-          "label": "Chevron left"
-        },
-        "options__5": {
-          "label": "Chevron right"
-        },
-        "options__6": {
-          "label": "Diamond"
-        },
-        "options__7": {
-          "label": "Parallelogram"
-        },
-        "options__8": {
-          "label": "Round"
-        },
-        "label": "Image shape",
-        "info": "Standard-styled cards have no borders when an image shape is active."
-      }
     },
     "announcement-bar": {
       "name": "Announcement bar",
@@ -529,36 +489,8 @@
           "default": "Collections",
           "label": "Heading"
         },
-        "image_ratio": {
-          "label": "Image ratio",
-          "options__1": {
-            "label": "Adapt to image"
-          },
-          "options__2": {
-            "label": "Portrait"
-          },
-          "options__3": {
-            "label": "Square"
-          },
-          "info": "Add images by editing your collections. [Learn more](https://help.shopify.com/manual/products/collections)"
-        },
-        "columns_desktop": {
-          "label": "Number of columns on desktop"
-        },
         "show_view_all": {
           "label": "Enable \"View all\" button if list includes more collections than shown"
-        },
-        "header_mobile": {
-          "content": "Mobile Layout"
-        },
-        "columns_mobile": {
-          "label": "Number of columns on mobile",
-          "options__1": {
-            "label": "1 column"
-          },
-          "options__2": {
-            "label": "2 columns"
-          }
         },
         "swipe_on_mobile": {
           "label": "Enable swipe on mobile"
@@ -605,15 +537,8 @@
         "post_limit": {
           "label": "Number of blog posts to show"
         },
-        "columns_desktop": {
-          "label": "Number of columns on desktop"
-        },
         "show_view_all": {
           "label": "Enable \"View all\" button if blog includes more blog posts than shown"
-        },
-        "show_image": {
-          "label": "Show featured image",
-          "info": "For best results, use an image with a 3:2 aspect ratio. [Learn more](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         },
         "show_date": {
           "label": "Show date"
@@ -1090,9 +1015,6 @@
           },
           "label": "Mobile content alignment"
         },
-        "header_mobile": {
-          "content": "Mobile Layout"
-        }
       },
       "blocks": {
         "row": {
@@ -1197,9 +1119,6 @@
         "header": {
           "content": "Blog post card"
         },
-        "show_image": {
-          "label": "Show featured image"
-        },
         "show_date": {
           "label": "Show date"
         },
@@ -1253,102 +1172,9 @@
     },
     "main-collection-banner": {
       "name": "Collection banner",
-      "settings": {
-        "paragraph": {
-          "content": "Add a description or image by editing your collection. [Learn more](https://help.shopify.com/manual/products/collections/collection-layout)"
-        },
-        "show_collection_description": {
-          "label": "Show collection description"
-        },
-        "show_collection_image": {
-          "label": "Show collection image",
-          "info": "For best results, use an image with a 16:9 aspect ratio. [Learn more](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
-        }
-      }
     },
     "main-collection-product-grid": {
       "name": "Product grid",
-      "settings": {
-        "products_per_page": {
-          "label": "Products per page"
-        },
-        "columns_desktop": {
-          "label": "Number of columns on desktop"
-        },
-        "enable_filtering": {
-          "label": "Enable filtering",
-          "info": "Customize filters with the Search & Discovery app. [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
-        },
-        "filter_type": {
-          "label": "Desktop filter layout",
-          "options__1": {
-            "label": "Horizontal"
-          },
-          "options__2": {
-            "label": "Vertical"
-          },
-          "options__3": {
-            "label": "Drawer"
-          },
-          "info": "Drawer is the default mobile layout."
-        },
-        "enable_sorting": {
-          "label": "Enable sorting"
-        },
-        "image_ratio": {
-          "label": "Image ratio",
-          "options__1": {
-            "label": "Adapt to image"
-          },
-          "options__2": {
-            "label": "Portrait"
-          },
-          "options__3": {
-            "label": "Square"
-          }
-        },
-        "show_secondary_image": {
-          "label": "Show second image on hover"
-        },
-        "show_vendor": {
-          "label": "Show vendor"
-        },
-        "show_rating": {
-          "label": "Show product rating",
-          "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#product-grid-section-settings)"
-        },
-        "header__1": {
-          "content": "Filtering and sorting"
-        },
-        "header__3": {
-          "content": "Product card"
-        },
-        "enable_tags": {
-          "label": "Enable filtering",
-          "info": "Customize filters with the Search & Discovery app. [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
-        },
-        "quick_add": {
-          "label": "Quick add",
-          "info": "Bulk is optimized for items purchased in higher quantities.",
-          "options": {
-            "option_1": "None",
-            "option_2": "Standard",
-            "option_3": "Bulk"
-          }
-        },
-        "header_mobile": {
-          "content": "Mobile Layout"
-        },
-        "columns_mobile": {
-          "label": "Number of columns on mobile",
-          "options__1": {
-            "label": "1 column"
-          },
-          "options__2": {
-            "label": "2 columns"
-          }
-        }
-      }
     },
     "main-list-collections": {
       "name": "Collections list page",
@@ -1378,34 +1204,6 @@
             "label": "Product count, low to high"
           }
         },
-        "image_ratio": {
-          "label": "Image ratio",
-          "options__1": {
-            "label": "Adapt to image"
-          },
-          "options__2": {
-            "label": "Portrait"
-          },
-          "options__3": {
-            "label": "Square"
-          },
-          "info": "Add images by editing your collections. [Learn more](https://help.shopify.com/manual/products/collections)"
-        },
-        "columns_desktop": {
-          "label": "Number of columns on desktop"
-        },
-        "header_mobile": {
-          "content": "Mobile Layout"
-        },
-        "columns_mobile": {
-          "label": "Number of columns on mobile",
-          "options__1": {
-            "label": "1 column"
-          },
-          "options__2": {
-            "label": "2 columns"
-          }
-        }
       }
     },
     "main-login": {
@@ -1759,9 +1557,6 @@
             "product_list_limit": {
               "label": "Maximum products to show"
             },
-            "products_per_page": {
-              "label": "Number of products per page"
-            },
             "pagination_style": {
               "label": "Pagination style",
               "options": {
@@ -1772,13 +1567,6 @@
             },
             "product_card": {
               "heading": "Product card"
-            },
-            "image_ratio": {
-              "label": "Image ratio",
-              "options": {
-                "option_1": "Portrait",
-                "option_2": "Square"
-              }
             },
             "enable_quick_add": {
               "label": "Enable quick add button"
@@ -1936,58 +1724,6 @@
     },
     "main-search": {
       "name": "Search results",
-      "settings": {
-        "columns_desktop": {
-          "label": "Number of columns on desktop"
-        },
-        "image_ratio": {
-          "label": "Image ratio",
-          "options__1": {
-            "label": "Adapt to image"
-          },
-          "options__2": {
-            "label": "Portrait"
-          },
-          "options__3": {
-            "label": "Square"
-          }
-        },
-        "show_secondary_image": {
-          "label": "Show second image on hover"
-        },
-        "show_vendor": {
-          "label": "Show vendor"
-        },
-        "show_rating": {
-          "label": "Show product rating",
-          "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#search-results-section-settings)"
-        },
-        "header__1": {
-          "content": "Product card"
-        },
-        "header__2": {
-          "content": "Blog card",
-          "info": "Blog card styles also apply to page cards in search results. To change card styles update your theme settings."
-        },
-        "article_show_date": {
-          "label": "Show date"
-        },
-        "article_show_author": {
-          "label": "Show author"
-        },
-        "header_mobile": {
-          "content": "Mobile Layout"
-        },
-        "columns_mobile": {
-          "label": "Number of columns on mobile",
-          "options__1": {
-            "label": "1 column"
-          },
-          "options__2": {
-            "label": "2 columns"
-          }
-        }
-      }
     },
     "newsletter": {
       "name": "Email signup",
@@ -2175,9 +1911,6 @@
     "quick-order-list": {
       "name": "Quick order list",
       "settings": {
-        "show_image": {
-          "label": "Show images"
-        },
         "show_sku": {
           "label": "Show SKUs"
         }
@@ -2195,50 +1928,10 @@
         "products_to_show": {
           "label": "Maximum products to show"
         },
-        "columns_desktop": {
-          "label": "Number of columns on desktop"
-        },
         "paragraph__1": {
           "content": "Dynamic recommendations use order and product information to change and improve over time. [Learn more](https://help.shopify.com/themes/development/recommended-products)",
           "default": "You may also like"
         },
-        "header__2": {
-          "content": "Product card"
-        },
-        "image_ratio": {
-          "label": "Image ratio",
-          "options__1": {
-            "label": "Adapt to image"
-          },
-          "options__2": {
-            "label": "Portrait"
-          },
-          "options__3": {
-            "label": "Square"
-          }
-        },
-        "show_secondary_image": {
-          "label": "Show second image on hover"
-        },
-        "show_vendor": {
-          "label": "Show vendor"
-        },
-        "show_rating": {
-          "label": "Show product rating",
-          "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#product-recommendations-section-settings)"
-        },
-        "header_mobile": {
-          "content": "Mobile Layout"
-        },
-        "columns_mobile": {
-          "label": "Number of columns on mobile",
-          "options__1": {
-            "label": "1 column"
-          },
-          "options__2": {
-            "label": "2 columns"
-          }
-        }
       }
     },
     "slideshow": {
@@ -2439,18 +2132,6 @@
         },
         "image": {
           "label": "Image"
-        },
-        "image_ratio": {
-          "label": "Image ratio",
-          "options__1": {
-            "label": "Adapt to image"
-          },
-          "options__2": {
-            "label": "Small"
-          },
-          "options__3": {
-            "label": "Large"
-          }
         },
         "desktop_layout": {
           "label": "Desktop layout",

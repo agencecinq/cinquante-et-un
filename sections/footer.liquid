@@ -1,16 +1,12 @@
-
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-
-
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
   @media screen and (min-width: 750px) {
- 
-
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -19,6 +15,7 @@
 {%- endstyle -%}
 
 <footer class="section-{{ section.id }}-padding">
+<<<<<<< HEAD
   FOOTER
   <ul>
     <li>{% render 'use.html', icon: 'facebook' %}</li>
@@ -27,17 +24,29 @@
     <li>{% render 'use.html', icon: 'tumblr' %}</li>
     <li>{% render 'use.html', icon: 'youtube' %}</li>
   </ul>
+=======
+  <div class="container">
+    <h2>FOOTER</h2>
+    <ul>
+      <li>{%- render 'use.html', icon: 'facebook' -%}</li>
+      <li>{%- render 'use.html', icon: 'instagram' -%}</li>
+      <li>{%- render 'use.html', icon: 'tiktok' -%}</li>
+      <li>{%- render 'use.html', icon: 'tumblr' -%}</li>
+      <li>{%- render 'use.html', icon: 'twitter' -%}</li>
+      <li>{%- render 'use.html', icon: 'youtube' -%}</li>
+    </ul>
+  </div>
+>>>>>>> 08c76ac (:construction: Building starter theme)
 </footer>
 
 {% schema %}
 {
   "name": "t:sections.footer.name",
+  "class": "section footer",
   "blocks": [
     {
       "type": "@app"
-    },
-    
-    
+    }
   ],
   "settings": [
     {
@@ -70,6 +79,6 @@
       "label": "t:sections.all.padding.padding_bottom",
       "default": 40
     }
-  ],
+  ]
 }
 {% endschema %}

@@ -1,3 +1,3 @@
-import 'vite/modulepreload-polyfill';
+import { load } from 'piecesjs';
 
-console.log('YO');
+load('c-button', () => import('./components/Counter.js'));

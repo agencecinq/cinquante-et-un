@@ -13,9 +13,6 @@
         </div>
       {%- endif -%}
       <div>
-        {%- if settings.show_vendor -%}
-          <p class="caption-with-letter-spacing light">{{ item.product.vendor }}</p>
-        {%- endif -%}
         <h3 class="cart-notification-product__name h4">{{ item.product.title | escape }}</h3>
         <dl>
           {%- unless item.product.has_only_default_variant -%}

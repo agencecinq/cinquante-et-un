@@ -1,0 +1,32 @@
+/**
+ * Base
+ *
+ * @package Mono
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
+ */
+@layer base {
+	@media screen and (min-width: var(--breakpoint-prototype)) {
+		html {
+			font-size: calc(
+				var(--base-font-size-unitless) * 100vw / var(--prototype-width-unitless)
+			);
+		}
+	}
+
+	@keyframes page-fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	body {
+		opacity: 0;
+		animation: page-fade-in theme('transitionTimingFunction.in-out') 1;
+		animation-fill-mode: forwards;
+		animation-duration: theme('transitionDuration.700');
+		/* animation-delay: 0; */
+	}
+}
