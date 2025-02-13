@@ -358,6 +358,9 @@
   "sections": {
     "counter": {
       "name": "Counter",
+      "presets": {
+        "name": "COunter"
+      }
     },
     "all": {
       "animation": {
