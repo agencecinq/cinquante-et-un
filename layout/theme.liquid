@@ -21,8 +21,8 @@
     {% render 'meta-tags' %}
 
     {%- liquid
-      render 'vite-tag' with 'styles.css', preload_stylesheet: true
-      render 'vite-tag' with 'app.ts'
+      render 'vite-tag' with 'stylesheets/styles.css', preload_stylesheet: true
+      render 'vite-tag' with 'scripts/app.ts'
     -%}
 
     {{ content_for_header }}
@@ -34,7 +34,7 @@
     </script>
   </head>
 
-  <body class="bg-amber-50 font-bold">
+  <body class="antialiased">
     {% sections 'header-group' %}
 
     <main>

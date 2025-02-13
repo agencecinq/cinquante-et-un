@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -323,10 +332,6 @@
       "onboarding_title": "Article de blog",
       "onboarding_content": "Donnez à vos clients un résumé de votre article de blog"
     },
-    "featured_collection": {
-      "view_all": "Tout afficher",
-      "view_all_label": "Afficher tous les produits de la collection {{ collection_name }}"
-    },
     "collection_list": {
       "view_all": "Tout afficher"
     },
@@ -334,9 +339,6 @@
       "title": "Collection",
       "empty": "Aucun produit trouvé",
       "use_fewer_filters_html": "Utiliser moins de filtres ou <a class=\"{{ class }}\" href=\"{{ link }}\">tout supprimer</a>"
-    },
-    "video": {
-      "load_video": "Charger la vidéo : {{ description }}"
     },
     "slideshow": {
       "load_slide": "Charger la diapositive",

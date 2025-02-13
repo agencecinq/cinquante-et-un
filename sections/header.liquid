@@ -1,13 +1,7 @@
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
+    padding-top: {{ section.settings.padding_top | times: 0.5 | divided_by: 16.00 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | divided_by: 16.00 }}px;
   }
 
   @media screen and (min-width: 990px) {
@@ -18,7 +12,8 @@
   }
 {%- endstyle -%}
 
-<header class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">HEADER</header>
+<header class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="container">HEADER</div></header>
 
 <script type="application/ld+json">
   {
@@ -28,6 +23,7 @@
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
+    {%  if settings.social_twitter_link or settings.social_facebook_link or settings.social_pinterest_link or settings.social_instagram_link or settings.social_tiktok_link or settings.social_tumblr_link or settings.social_snapchat_link or settings.social_youtube_link or settings.social_vimeo_link%}
     "sameAs": [
       {{ settings.social_twitter_link | json }},
       {{ settings.social_facebook_link | json }},
@@ -39,6 +35,7 @@
       {{ settings.social_youtube_link | json }},
       {{ settings.social_vimeo_link | json }}
     ],
+  {% endif %}
     "url": {{ request.origin | append: page.url | json }}
   }
 </script>

@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Dawn",
-    "theme_version": "15.2.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://support.shopify.com/"
+    "theme_name": "Cinquante et un",
+    "theme_version": "0.0.0",
+    "theme_author": "Cinq",
+    "theme_documentation_url": "https://github.com/agencecinq/cinquante-et-un",
+    "theme_support_url": "https://github.com/agencecinq/cinquante-et-un/issues"
   },
   {
     "name": "t:settings_schema.logo.name",
@@ -116,16 +116,6 @@
         "info": "t:settings_schema.typography.settings.type_header_font.info"
       },
       {
-        "type": "range",
-        "id": "heading_scale",
-        "min": 100,
-        "max": 150,
-        "step": 5,
-        "unit": "%",
-        "label": "t:settings_schema.typography.settings.heading_scale.label",
-        "default": 100
-      },
-      {
         "type": "header",
         "content": "t:settings_schema.typography.settings.header__2.content"
       },
@@ -136,16 +126,6 @@
         "label": "t:settings_schema.typography.settings.type_body_font.label",
         "info": "t:settings_schema.typography.settings.type_body_font.info"
       },
-      {
-        "type": "range",
-        "id": "body_scale",
-        "min": 100,
-        "max": 130,
-        "step": 5,
-        "unit": "%",
-        "label": "t:settings_schema.typography.settings.body_scale.label",
-        "default": 100
-      }
     ]
   },
   {
