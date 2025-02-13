@@ -12,11 +12,12 @@
   }
 {%- endstyle -%}
 
-<div class="page-width page-width--narrow section-{{ section.id }}-padding">
-  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    {{ page.title | escape }}
-  </h1>
-  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+<div class="section-{{ section.id }}-padding">
+  <div class="container">
+    <h1>
+      {{ page.title | escape }}
+    </h1>
+
     {{ page.content }}
   </div>
 </div>
@@ -25,7 +26,7 @@
 {
   "name": "t:sections.main-page.name",
   "tag": "section",
-  "class": "section",
+  "class": "section main-page",
   "settings": [
     {
       "type": "header",

@@ -17,6 +17,12 @@
 <div class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="container">
     <h2>MAIN COLLECTION PRODUCT GRID</h2>
+
+    <ul>
+      {%- for product in collection.products -%}
+        <li>{{ product.title | link_to: product.url }}</li>
+      {%- endfor -%}
+    </ul>
   </div>
 </div>
 

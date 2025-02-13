@@ -120,19 +120,17 @@
         "gallery_layout": "stacked",
         "mobile_thumbnails": "hide",
         "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "related-products": {
       "type": "related-products",
       "settings": {
         "heading": "You may also like",
-        "heading_size": "h2",
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 28
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     }
   },

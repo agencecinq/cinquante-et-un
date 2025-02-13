@@ -7,6 +7,8 @@
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
 
+    <link rel="icon" type="image/png" href="{{ 'favicon.png' | asset_url }}">
+
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -18,12 +20,9 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
-    {% render 'meta-tags' %}
-
-    {%- liquid
-      render 'vite-tag' with 'stylesheets/styles.css', preload_stylesheet: true
-      render 'vite-tag' with 'scripts/app.ts'
-    -%}
+    {%- render 'meta-tags' -%}
+    {%- render 'vite-tag' with 'stylesheets/styles.css', preload_stylesheet: true -%}
+    {%- render 'vite-tag' with 'scripts/app.ts' -%}
 
     {{ content_for_header }}
 
@@ -83,7 +82,7 @@
   <body class="antialiased">
     {% sections 'header-group' %}
 
-    <main>{{ content_for_layout }}</main>
+    <main id="swup" class="transition-fade">{{ content_for_layout }}</main>
 
     {% sections 'footer-group' %}
     {{ 'sprite.svg' | inline_asset_content }}

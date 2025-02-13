@@ -15,7 +15,18 @@
 {%- endstyle -%}
 
 <header class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
-  <div class="container"><h2>HEADER</h2></div>
+  <div class="container">
+    <h2>HEADER</h2>
+    <nav>
+      <ul>
+        {% for link in linklists['main-menu'].links -%}
+          <li>
+            {{- link.title | link_to: link.url -}}
+          </li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <script type="application/ld+json">

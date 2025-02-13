@@ -368,24 +368,6 @@
         "label": "Nuancier de couleurs",
         "has_cards_info": "Pour modifier le nuancier de couleur de la carte, mettez à jour les paramètres de votre thème."
       },
-      "heading_size": {
-        "label": "Taille du titre",
-        "options__1": {
-          "label": "Petit"
-        },
-        "options__2": {
-          "label": "Moyenne"
-        },
-        "options__3": {
-          "label": "Grand"
-        },
-        "options__4": {
-          "label": "Très grand"
-        },
-        "options__5": {
-          "label": "Très très grand"
-        }
-      },
       "animation": {
         "content": "Animations",
         "image_behavior": {
@@ -1277,9 +1259,6 @@
           "content": "Support multimédia",
           "info": "En savoir plus sur les [types de supports multimédia.](https://help.shopify.com/manual/products/product-media)"
         },
-        "enable_video_looping": {
-          "label": "Activer le bouclage de la vidéo"
-        },
         "enable_sticky_info": {
           "label": "Activez le contenu de la note flottante sur le bureau"
         },
@@ -1549,9 +1528,6 @@
         "header": {
           "content": "Support multimédia",
           "info": "En savoir plus sur les [types de supports multimédias](https://help.shopify.com/manual/products/product-media)"
-        },
-        "enable_video_looping": {
-          "label": "Activer la vidéo en boucle"
         },
         "hide_variants": {
           "label": "Masquer les médias des variantes non sélectionnées sur le bureau"

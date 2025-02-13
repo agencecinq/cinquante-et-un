@@ -391,24 +391,6 @@
         "label": "Color scheme",
         "has_cards_info": "To change the card color scheme, update your theme settings."
       },
-      "heading_size": {
-        "label": "Heading size",
-        "options__1": {
-          "label": "Small"
-        },
-        "options__2": {
-          "label": "Medium"
-        },
-        "options__3": {
-          "label": "Large"
-        },
-        "options__4": {
-          "label": "Extra large"
-        },
-        "options__5": {
-          "label": "Extra extra large"
-        }
-      },
     },
     "announcement-bar": {
       "name": "Announcement bar",
@@ -691,9 +673,6 @@
         "hide_variants": {
           "label": "Hide unselected variants’ media on desktop"
         },
-        "enable_video_looping": {
-          "label": "Enable video looping"
-        }
       },
       "presets": {
         "name": "Featured product"
@@ -1665,9 +1644,6 @@
         "hide_variants": {
           "label": "Hide other variants’ media after selecting a variant"
         },
-        "enable_video_looping": {
-          "label": "Enable video looping"
-        }
       }
     },
     "main-register": {
