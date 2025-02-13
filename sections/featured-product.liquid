@@ -14,19 +14,6 @@
     data-zoom-on-hover
   {% endif %}
 >
-  {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
-  {{ 'section-featured-product.css' | asset_url | stylesheet_tag }}
-  {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
-  {{ 'component-price.css' | asset_url | stylesheet_tag }}
-  {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
-  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
-  {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
-  {% unless section.settings.product.has_only_default_variant %}
-    {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
-    {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
-    {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
-  {% endunless %}
-
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -41,31 +28,9 @@
     }
   {%- endstyle -%}
 
-  <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
-
   {% comment %} TODO: assign `product.selected_or_first_available_variant` to variable and replace usage to reduce verbosity {% endcomment %}
 
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
-  {%- if first_3d_model -%}
-    {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
-    <link
-      id="ModelViewerStyle"
-      rel="stylesheet"
-      href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css"
-      media="print"
-      onload="this.media='all'"
-    >
-    <link
-      id="ModelViewerOverride"
-      rel="stylesheet"
-      href="{{ 'component-model-viewer-ui.css' | asset_url }}"
-      media="print"
-      onload="this.media='all'"
-    >
-  {%- endif -%}
-
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
 
   <section class="color-{{ section.settings.color_scheme }} {% if section.settings.secondary_background %}background-secondary{% else %}gradient{% endif %}">
@@ -454,21 +419,6 @@
     </div>
   </section>
 
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-  {%- if section.settings.image_zoom == 'hover' -%}
-    <script id="EnableZoomOnHover-featured" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
-  {%- endif %}
-  {%- if request.design_mode -%}
-    <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
-  {%- endif -%}
-
-  {%- if first_3d_model -%}
-    <script type="application/json" id="ProductJSON-{{ product.id }}">
-      {{ product.media | where: 'media_type', 'model' | json }}
-    </script>
-    <script src="{{ 'product-model.js' | asset_url }}" defer></script>
-  {%- endif -%}
-
   {%- liquid
     if product.selected_or_first_available_variant.featured_media
       assign seo_media = product.selected_or_first_available_variant.featured_media
@@ -480,11 +430,6 @@
   <script type="application/ld+json">
     {{ product | structured_data }}
   </script>
-
-  {% if product.media.size > 0 %}
-    <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
-  {% endif %}
 </product-info>
 
 {% schema %}
@@ -1455,7 +1400,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
+      "label": "t:sections.all.padding.top",
       "default": 36
     },
     {
@@ -1465,7 +1410,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
+      "label": "t:sections.all.padding.bottom",
       "default": 36
     }
   ],
