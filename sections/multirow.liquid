@@ -50,10 +50,7 @@
         <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.image_layout contains 'alternate' %}{% cycle odd_class, even_class %}{% else %}{{ odd_class }}{% endif %}">
           <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
             <div
-              class="image-with-text__media image-with-text__media--{{ section.settings.image_height }} color-{{ section.settings.row_color_scheme }} global-media-settings{% if block.settings.image != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
-              {% if section.settings.image_height == 'adapt' and block.settings.image != blank %}
-                style="padding-bottom: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;"
-              {% endif %}
+              class="image-with-text__media color-{{ section.settings.row_color_scheme }} global-media-settings{% if block.settings.image != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
             >
               {%- if block.settings.image != blank -%}
                 {%- capture sizes -%}
@@ -71,7 +68,7 @@
             </div>
           </div>
           <div class="image-with-text__text-item grid__item">
-            <div class="image-with-text__content image-with-text__content--{{ section.settings.desktop_content_position }} image-with-text__content--desktop-{{ section.settings.desktop_content_alignment }} image-with-text__content--mobile-{{ section.settings.mobile_content_alignment }} image-with-text__content--{{ section.settings.image_height }} content-container{% unless no_content_background and no_content_styles %} color-{{ section.settings.row_color_scheme }}{% else %} background-transparent{% endunless %}">
+            <div class="image-with-text__content image-with-text__content--{{ section.settings.desktop_content_position }} image-with-text__content--desktop-{{ section.settings.desktop_content_alignment }} image-with-text__content--mobile-{{ section.settings.mobile_content_alignment }} content-container{% unless no_content_background and no_content_styles %} color-{{ section.settings.row_color_scheme }}{% else %} background-transparent{% endunless %}">
               {%- if block.settings.caption -%}
                 <p class="image-with-text__text image-with-text__text--caption caption-with-letter-spacing caption-with-letter-spacing--medium">
                   {{ block.settings.caption | escape }}
@@ -113,30 +110,6 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    {
-      "type": "select",
-      "id": "image_height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.multirow.settings.image_height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.multirow.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.multirow.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.multirow.settings.image_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.multirow.settings.image_height.label"
-    },
     {
       "type": "select",
       "id": "desktop_image_width",

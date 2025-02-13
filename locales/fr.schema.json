@@ -754,24 +754,6 @@
       "blocks": {
         "featured_image": {
           "name": "Image vedette",
-          "settings": {
-            "image_height": {
-              "label": "Hauteur de l'image vedette",
-              "options__1": {
-                "label": "Adapter à l'image"
-              },
-              "options__2": {
-                "label": "Petit"
-              },
-              "options__3": {
-                "label": "Moyenne"
-              },
-              "info": "Pour optimiser vos résultats, utilisez une image ayant un rapport d'aspect de 16:9. [En savoir plus](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)",
-              "options__4": {
-                "label": "Grand"
-              }
-            }
-          }
         },
         "title": {
           "name": "Titre",
@@ -829,22 +811,6 @@
           },
           "info": "Les publications sont empilées sur mobile."
         },
-        "image_height": {
-          "label": "Hauteur de l'image vedette",
-          "options__1": {
-            "label": "Adapter à l'image"
-          },
-          "options__2": {
-            "label": "Petit"
-          },
-          "options__3": {
-            "label": "Moyenne"
-          },
-          "options__4": {
-            "label": "Grand"
-          },
-          "info": "Pour optimiser vos résultats, utilisez une image ayant un rapport d'aspect de 3:2. [En savoir plus](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
-        }
       }
     },
     "main-cart-footer": {
@@ -1627,22 +1593,6 @@
           "label": "Afficher le contenu sous l'image sur le mobile",
           "info": "Pour optimiser vos résultats, utilisez une image ayant un rapport d'aspect de 16:9. [En savoir plus](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         },
-        "image_height": {
-          "label": "Hauteur de la bannière",
-          "options__1": {
-            "label": "Adapter à l'image"
-          },
-          "options__2": {
-            "label": "Petit"
-          },
-          "options__3": {
-            "label": "Moyenne"
-          },
-          "options__4": {
-            "label": "Grand"
-          },
-          "info": "Pour optimiser vos résultats, utilisez une image ayant un rapport d'aspect de 16:9. [En savoir plus](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
-        },
         "desktop_content_position": {
           "options__4": {
             "label": "Au milieu à gauche"
@@ -2151,21 +2101,6 @@
       "settings": {
         "image": {
           "label": "Image"
-        },
-        "image_height": {
-          "options__1": {
-            "label": "Adapter à l’image"
-          },
-          "options__2": {
-            "label": "Petit"
-          },
-          "options__3": {
-            "label": "Moyenne"
-          },
-          "options__4": {
-            "label": "Grand"
-          },
-          "label": "Hauteur de l’image"
         },
         "desktop_image_width": {
           "options__1": {

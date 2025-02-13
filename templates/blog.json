@@ -12,7 +12,6 @@
     "main": {
       "type": "main-blog",
       "settings": {
-        "image_height": "medium",
         "show_date": true,
         "show_author": false,
         "padding_top": 36,

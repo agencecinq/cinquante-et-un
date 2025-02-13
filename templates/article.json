@@ -5,9 +5,6 @@
       "blocks": {
         "featured_image": {
           "type": "featured_image",
-          "settings": {
-            "image_height": "adapt"
-          }
         },
         "title": {
           "type": "title",
