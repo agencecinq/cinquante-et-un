@@ -4,10 +4,11 @@
 {% endcomment %}
 {% assign path = vite-tag | replace: '~/', './' | replace: '@/', './' %}
 {% if path == "/src/scripts/app.ts" or path == "scripts/app.ts" %}
-  <script src="{{ 'app-KhjiJtA8.js' | asset_url | split: '?' | first }}" type="module" crossorigin="anonymous"></script>
-  <link rel="modulepreload" href="{{ 'Counter-7hurtys8.js' | asset_url | split: '?' | first }}" crossorigin="anonymous">
+  <script src="{{ 'app-CvWVT-mT.js' | asset_url | split: '?' | first }}" type="module" crossorigin="anonymous"></script>
+  <link rel="modulepreload" href="{{ 'piecesjs-B79wdN2z.js' | asset_url | split: '?' | first }}" crossorigin="anonymous">
 {% elsif path == "/src/scripts/components/Counter.js" or path == "scripts/components/Counter.js" %}
-  <script src="{{ 'Counter-7hurtys8.js' | asset_url | split: '?' | first }}" type="module" crossorigin="anonymous"></script>
+  <script src="{{ 'Counter-ZRA-7hPN.js' | asset_url | split: '?' | first }}" type="module" crossorigin="anonymous"></script>
+  <link rel="modulepreload" href="{{ 'piecesjs-B79wdN2z.js' | asset_url | split: '?' | first }}" crossorigin="anonymous">
 {% elsif path == "/src/stylesheets/base/base.css" or path == "stylesheets/base/base.css" %}
   {{ 'base-B2jfIXOa.css' | asset_url | split: '?' | first | stylesheet_tag: preload: preload_stylesheet }}
 {% elsif path == "/src/stylesheets/base/font-face.css" or path == "stylesheets/base/font-face.css" %}
