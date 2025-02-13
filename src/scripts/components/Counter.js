@@ -6,11 +6,13 @@ class Counter extends Piece {
   }
 
   mount() {
+    console.log('mount Counter');
     this.$button = this.$('button')[0];
     this.on('click', this.$button, this.click);
   }
 
   unmount() {
+    console.log('unmount Counter');
     this.off('click', this.$button[0], this.click);
   }
 

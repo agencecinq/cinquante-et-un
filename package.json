@@ -23,6 +23,9 @@
   },
   "dependencies": {
     "piecesjs": "^0.2.3",
-    "vite-plugin-page-reload": "^0.2.1"
+    "swup": "^4.8.1",
+    "vite-plugin-page-reload": "^0.2.1",
+    "vite-plugin-preload": "^0.4.2",
+    "vite-preload": "^1.0.3"
   }
 }
