@@ -131,7 +131,6 @@
         "heading": "You may also like",
         "heading_size": "h2",
         "color_scheme": "scheme-1",
-        "show_rating": false,
         "padding_top": 36,
         "padding_bottom": 28
       }

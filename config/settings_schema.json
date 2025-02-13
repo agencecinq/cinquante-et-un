@@ -39,10 +39,6 @@
       {
         "type": "color_scheme_group",
         "id": "color_schemes",
-        "settings": [
-      {
-        "type": "color_scheme_group",
-        "id": "color_schemes",
         "definition": [
           {
             "type": "color",
@@ -1376,7 +1372,6 @@
         "default": "notification",
         "label": "t:settings_schema.cart.settings.cart_type.label"
       },
-      
       {
         "type": "checkbox",
         "id": "show_cart_note",
