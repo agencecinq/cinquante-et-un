@@ -8,6 +8,13 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {},
-    "order": []
+  "sections": {
+    "counter_xatWBD": {
+      "type": "counter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "counter_xatWBD"
+  ]
 }
