@@ -1,0 +1,17 @@
+{% comment %}
+ Use
+
+ @param string classes
+ @param string description
+ @param string id
+ @param string icon
+
+ @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
+{% endcomment %}
+<svg
+	class="fill-current {{ icon }}{% if classes != blank %} {{ classes }}{% endif %}"
+	{% if id %}id="{{ id }}"{%  endif %}
+	{% if description %}aria-label="{{ description }}"{% endif %}
+>
+	<use xlink:href="#{{ icon }}" href="#{{ icon }}"></use>
+</svg>
