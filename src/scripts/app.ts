@@ -4,6 +4,7 @@ import Swup from 'swup';
 
 const loadComponents = () => {
 	load('c-counter', () => import('./components/Counter.js'));
+	load('c-accordion-group', () => import('./components/AccordionGroup.js'));
 }
 
 const swup = new Swup();

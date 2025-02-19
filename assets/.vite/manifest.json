@@ -48,7 +48,7 @@
     "src": "src/icons/youtube.svg"
   },
   "src/scripts/app.ts": {
-    "file": "app-CvWVT-mT.js",
+    "file": "app-CMwNX3vN.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -56,7 +56,18 @@
       "_piecesjs-B79wdN2z.js"
     ],
     "dynamicImports": [
-      "src/scripts/components/Counter.js"
+      "src/scripts/components/Counter.js",
+      "src/scripts/components/AccordionGroup.js"
+    ]
+  },
+  "src/scripts/components/AccordionGroup.js": {
+    "file": "AccordionGroup-b-ldIm_K.js",
+    "name": "AccordionGroup",
+    "src": "src/scripts/components/AccordionGroup.js",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_piecesjs-B79wdN2z.js"
     ]
   },
   "src/scripts/components/Counter.js": {
@@ -80,7 +91,7 @@
     "isEntry": true
   },
   "src/stylesheets/styles.css": {
-    "file": "styles-DF4Dn3D0.css",
+    "file": "styles-DIdII5ni.css",
     "src": "src/stylesheets/styles.css",
     "isEntry": true
   },

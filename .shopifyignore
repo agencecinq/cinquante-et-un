@@ -16,3 +16,4 @@ node_modules
 .git/
 .github/
 assets/.vite/manifest.json
+shopify.theme.toml
