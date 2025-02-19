@@ -1,0 +1,22 @@
+{{ 'section-main-collection-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="color-{{ section.settings.color_scheme }}">
+  <div class="container">
+    <h2>MAIN COLLECTION BANNER</h2>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "section main-collection-banner",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}
