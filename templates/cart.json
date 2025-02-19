@@ -31,11 +31,12 @@
       "block_order": [
         "subtotal",
         "buttons"
-      ]
-    },
+      ],
+      "settings": {}
+    }
   },
   "order": [
     "cart-items",
-    "cart-footer",
+    "cart-footer"
   ]
 }
