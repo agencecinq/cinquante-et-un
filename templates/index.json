@@ -60,7 +60,10 @@
         "accordion_EKn74F"
       ],
       "settings": {
-        "title": "FAQ sur nos services"
+        "title": "FAQ sur nos services",
+        "color_scheme": "scheme-2",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     }
   },
