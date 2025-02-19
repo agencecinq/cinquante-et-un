@@ -12,7 +12,7 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }}">
+<div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
   <div class="container space-y-16">
     <header class="text-4xl font-medium">{{- section.settings.title -}}</header>
     <c-accordion-group class="block space-y-16">
@@ -25,7 +25,7 @@
           {{ block.shopify_attributes }}
         >
           <button
-            class="js-accordion-header text-4xl font-medium cursor-pointer"
+            class="js-accordion-header text-4xl font-medium cursor-pointer text-left"
             type="button"
             aria-expanded="true"
             aria-controls="{{ id }}-body"
@@ -54,7 +54,7 @@
 {
   "name": "t:sections.accordion-group.name",
   "tag": "section",
-  "class": "section counter",
+  "class": "section accordion-group",
   "settings": [
     {
       "type": "text",

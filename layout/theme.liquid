@@ -70,6 +70,11 @@
         --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
       }
       {% endfor %}
+
+      {{ scheme_classes | prepend: 'body' }} {
+        color: rgba(var(--color-foreground), 1);
+        background-color: rgb(var(--color-background));
+      }
     </style>
 
     <script>

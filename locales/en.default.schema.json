@@ -359,8 +359,10 @@
     "accordion-group": {
       "name": "Accordion group",
       "settings": {
-        "title": "Accordion group title",
-        "default": "Title"
+        "title": {
+          "default": "Accordion group title",
+          "label": "Title"
+        }
       },
       "blocks": {
         "accordion": {
