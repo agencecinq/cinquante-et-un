@@ -358,6 +358,10 @@
   "sections": {
     "accordion-group": {
       "name": "Accordion group",
+      "settings": {
+        "title": "Accordion group title",
+        "default": "Title"
+      },
       "blocks": {
         "accordion": {
           "name": "Accordion",

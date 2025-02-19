@@ -1,32 +1,53 @@
-<div class="container">
-  <header>{{- section.settings.title -}}</header>
-  <c-accordion-group>
-    {%- for block in section.blocks -%}
-      {% assign id = block.settings.title | handleize | append: forloop.index0 %}
-      <div
-        class="js-accordion-panel"
-        data-accordion-open="{% if forloop.first %}true{% else %}false{% endif %}"
-        data-accordion-deselect="true"
-        {{ block.shopify_attributes }}
-      >
-        <button
-          class="js-accordion-header"
-          type="button"
-          aria-expanded="true"
-          aria-controls="{{ id }}"
-          id="{{ id }}-header"
-        >
-          {{- block.settings.title -}}
-        </button>
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top | divided_by: 16.00 }}rem * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom | divided_by: 16.00 }}rem  * 0.75);
+  }
 
-        <div id="{{ id }}-body" role="region" aria-labelledby="{{ id }}-header">
-          <div class="js-accordion-inner">
-            {{- block.settings.content -}}
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }}">
+  <div class="container space-y-16">
+    <header class="text-4xl font-medium">{{- section.settings.title -}}</header>
+    <c-accordion-group class="block space-y-16">
+      {%- for block in section.blocks -%}
+        {% assign id = block.settings.title | handleize | append: '-' | append: forloop.index0 %}
+        <div
+          class="js-accordion-panel"
+          data-accordion-open="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-accordion-deselect="true"
+          {{ block.shopify_attributes }}
+        >
+          <button
+            class="js-accordion-header text-4xl font-medium cursor-pointer"
+            type="button"
+            aria-expanded="true"
+            aria-controls="{{ id }}-body"
+            id="{{ id }}-header"
+          >
+            {{- block.settings.title -}}
+          </button>
+
+          <div
+            id="{{ id }}-body"
+            role="region"
+            aria-labelledby="{{ id }}-header"
+            class="transition-[max-height] ease-out duration-300"
+          >
+            <div class="js-accordion-inner pt-5 text-xl [&>*:first-child]:mt-0 [&>*:first-child]:mb-0 space-y-4">
+              {{- block.settings.content -}}
+            </div>
           </div>
         </div>
-      </div>
-    {%- endfor -%}
-  </c-accordion-group>
+      {%- endfor -%}
+    </c-accordion-group>
+  </div>
 </div>
 
 {% schema %}
@@ -38,8 +59,38 @@
     {
       "type": "text",
       "id": "title",
-      "default": "Accordion title",
-      "label": "Title"
+      "default": "t:sections.accordion-group.settings.title.default",
+      "label": "t:sections.accordion-group.settings.title.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.bottom",
+      "default": 80
     }
   ],
   "blocks": [
