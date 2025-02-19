@@ -5,20 +5,14 @@
   "keywords": [],
   "type": "module",
   "scripts": {
-    "dev": "run-p shopify:dev vite:watch",
-    "build": "run-s vite:build",
-    "deploy": "run-s vite:build && shopify theme push -e production",
-    "deploy:dev": "run-s vite:build && shopify theme push -e development",
-    "deploy:staging": "run-s vite:build && shopify theme push --path shopify -e staging",
-    "deploy:new": "run-s vite:build && shopify theme push --unpublished",
-    "vite:watch": "cross-env NODE_ENV=development vite",
-    "vite:build": "cross-env NODE_ENV=production vite build",
-    "shopify:dev": "shopify theme dev --poll --live-reload=\"hot-reload\" --notify=/tmp/theme.update --theme-editor-sync -e development",
-    "shopify:pull": "shopify theme pull",
-    "shopify:pull-dev": "shopify theme pull -d"
+    "dev": "run-p -sr \"shopify:dev -- {@}\" \"vite:dev\" --",
+    "deploy": "run-s \"vite:build\" \"shopify:push -- {@}\" --",
+    "shopify:dev": "shopify theme dev",
+    "shopify:push": "shopify theme push",
+    "vite:dev": "vite",
+    "vite:build": "vite build"
   },
   "devDependencies": {
-    "@19h47/accordion": "^5.1.1",
     "@by-association-only/vite-plugin-shopify-clean": "^1.2.0",
     "@tailwindcss/vite": "^4.0.6",
     "tailwindcss": "^4.0.6",
@@ -28,8 +22,10 @@
     "yarn-run-all": "^3.1.1"
   },
   "dependencies": {
-    "cross-env": "^7.0.3",
     "piecesjs": "^0.2.3",
-    "swup": "^4.8.1"
+    "swup": "^4.8.1",
+    "vite-plugin-page-reload": "^0.2.1",
+    "vite-plugin-preload": "^0.4.2",
+    "vite-preload": "^1.0.3"
   }
 }
