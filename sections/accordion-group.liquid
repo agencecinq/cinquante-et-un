@@ -1,10 +1,35 @@
 <div class="container">
-  <c-accordion-group></c-accordion-group>
+  <c-accordion-group>
+    {%- for block in section.blocks -%}
+      {% assign id = block.settings.title | handleize | append: forloop.index0 %}
+      <div
+        class="js-accordion-panel"
+        data-accordion-open="{% if forloop.first %}true{% else %}false{% endif %}"
+        data-accordion-deselect="true"
+      >
+        <button
+          class="js-accordion-header"
+          type="button"
+          aria-expanded="true"
+          aria-controls="{{ id }}"
+          id="{{ id }}-header"
+        >
+          {{- block.settings.title -}}
+        </button>
+
+        <div id="{{ id }}-body" role="region">
+          <div class="js-accordion-inner">
+            {{- block.settings.content -}}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </c-accordion-group>
 </div>
 
 {% schema %}
 {
-  "name": "t:sections.accordion.name",
+  "name": "t:sections.accordion-group.name",
   "tag": "section",
   "class": "section counter",
   "settings": [
@@ -18,26 +43,26 @@
   "blocks": [
     {
       "type": "accordion",
-      "name": "t:sections.accordion.block.accordion.name",
+      "name": "t:sections.accordion-group.blocks.accordion.name",
       "settings": [
         {
           "type": "text",
-          "default": "Accordion title",
+          "default": "t:sections.accordion-group.blocks.accordion.settings.title.default",
           "id": "title",
-          "label": "Title"
+          "label": "t:sections.accordion-group.blocks.accordion.settings.title.label"
         },
         {
           "type": "richtext",
-          "default": "<p>Accordion content</p>",
+          "default": "t:sections.accordion-group.blocks.accordion.settings.content.default",
           "id": "content",
-          "label": "Content"
+          "label": "t:sections.accordion-group.blocks.accordion.settings.content.label"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "t:sections.accordion.presets.name",
+      "name": "t:sections.accordion-group.presets.name",
       "blocks": [{ "type": "accordion" }, { "type": "accordion" }, { "type": "accordion" }]
     }
   ]

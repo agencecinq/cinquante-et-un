@@ -356,6 +356,27 @@
     }
   },
   "sections": {
+    "accordion-group": {
+      "name": "Accordion group",
+      "blocks": {
+        "accordion": {
+          "name": "Accordion",
+          "settings": {
+            "title": {
+              "default": "Accordion title",
+              "label": "Title"
+            },
+            "content": {
+              "default": "<p>Accordion content</p>",
+              "label": "Content"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Accordion"
+      }
+    },
     "counter": {
       "name": "Counter",
       "presets": {
