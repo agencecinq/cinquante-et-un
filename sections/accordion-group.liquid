@@ -1,4 +1,5 @@
 <div class="container">
+  <header>{{- section.settings.title -}}</header>
   <c-accordion-group>
     {%- for block in section.blocks -%}
       {% assign id = block.settings.title | handleize | append: forloop.index0 %}
@@ -6,6 +7,7 @@
         class="js-accordion-panel"
         data-accordion-open="{% if forloop.first %}true{% else %}false{% endif %}"
         data-accordion-deselect="true"
+        {{ block.shopify_attributes }}
       >
         <button
           class="js-accordion-header"
@@ -17,7 +19,7 @@
           {{- block.settings.title -}}
         </button>
 
-        <div id="{{ id }}-body" role="region">
+        <div id="{{ id }}-body" role="region" aria-labelledby="{{ id }}-header">
           <div class="js-accordion-inner">
             {{- block.settings.content -}}
           </div>
