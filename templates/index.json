@@ -12,9 +12,60 @@
     "counter_xatWBD": {
       "type": "counter",
       "settings": {}
+    },
+    "accordion_group_Hde8r9": {
+      "type": "accordion-group",
+      "blocks": {
+        "accordion_PXFhKt": {
+          "type": "accordion",
+          "settings": {
+            "title": "Quels types de services propose CINQ ?",
+            "content": "<p>Accordion content</p>"
+          }
+        },
+        "accordion_TyTPFQ": {
+          "type": "accordion",
+          "settings": {
+            "title": "Pourquoi choisir une agence Shopify plutôt que de créer mon site seul ?",
+            "content": "<p>Accordion content</p>"
+          }
+        },
+        "accordion_Pqmgxg": {
+          "type": "accordion",
+          "settings": {
+            "title": "Quels sont vos délais de livraison pour un projet Shopify ?",
+            "content": "<p>Accordion content</p>"
+          }
+        },
+        "accordion_Gj7w4p": {
+          "type": "accordion",
+          "settings": {
+            "title": "Proposez-vous des facilités de paiement ?",
+            "content": "<p>Accordion content</p>"
+          }
+        },
+        "accordion_EKn74F": {
+          "type": "accordion",
+          "settings": {
+            "title": "Est-ce que CINQ s’occupe aussi des boutiques déjà existantes sur Shopify ?",
+            "content": "<p>Accordion content</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_PXFhKt",
+        "accordion_TyTPFQ",
+        "accordion_Pqmgxg",
+        "accordion_Gj7w4p",
+        "accordion_EKn74F"
+      ],
+      "settings": {
+        "title": "FAQ sur nos services"
+      }
     }
   },
   "order": [
-    "counter_xatWBD"
+    "counter_xatWBD",
+    "accordion_group_Hde8r9"
   ]
 }
