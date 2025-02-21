@@ -13,6 +13,97 @@
       "type": "counter",
       "settings": {}
     },
+    "multirow_iemtEV": {
+      "type": "multirow",
+      "blocks": {
+        "row_FGrhX8": {
+          "type": "row",
+          "settings": {
+            "title": "Site clé en main",
+            "content": "<p>Courte intro</p>",
+            "button_label": "Découvrir",
+            "button_link": "#"
+          }
+        },
+        "row_VVxmh6": {
+          "type": "row",
+          "settings": {
+            "title": "Sur-mesure",
+            "content": "<p>Courte intro</p>",
+            "button_label": "Découvrir",
+            "button_link": "#"
+          }
+        },
+        "row_JN9cba": {
+          "type": "row",
+          "settings": {
+            "title": "Accompagnement e-commerce",
+            "content": "<p>Courte intro</p>",
+            "button_label": "Découvrir",
+            "button_link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "row_FGrhX8",
+        "row_VVxmh6",
+        "row_JN9cba"
+      ],
+      "settings": {
+        "title": "Nos services Shopify",
+        "content": "<p>Adapter le texte de la HP pour éviter le duplicate content</p>",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "multirow_g7nE9J": {
+      "type": "multirow",
+      "blocks": {
+        "row_DqWGGK": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/placeholder.jpg",
+            "title": "",
+            "content": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_8fTjxp": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/placeholder.jpg",
+            "title": "",
+            "content": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_LXn4kM": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/placeholder.jpg",
+            "title": "",
+            "content": "",
+            "button_label": "",
+            "button_link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "row_DqWGGK",
+        "row_8fTjxp",
+        "row_LXn4kM"
+      ],
+      "settings": {
+        "title": "Réalisations",
+        "content": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "accordion_group_Hde8r9": {
       "type": "accordion-group",
       "blocks": {
@@ -69,6 +160,8 @@
   },
   "order": [
     "counter_xatWBD",
+    "multirow_iemtEV",
+    "multirow_g7nE9J",
     "accordion_group_Hde8r9"
   ]
 }

@@ -2,12 +2,10 @@
 store = "cinq-agence"
 theme = "Cinquante-et-un"
 
-[environments.staging]
-store = "cinq-agence"
-theme = "Cinquante-et-un"
-ignore = ["templates/*", "config/*"]
-
 [environments.production]
 store = "cinq-agence"
 theme = "Cinquante-et-un"
-ignore = ["templates/*", "config/*"]
+
+[environments.staging]
+store = "cinq-agence"
+theme = "Cinquante-et-un"
