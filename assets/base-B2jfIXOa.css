@@ -1,1 +1,0 @@
-/*! tailwindcss v4.0.6 | MIT License | https://tailwindcss.com */@layer base{html.is-changing .transition-fade{transition:opacity .3s var(--power1-in-out);opacity:1}html.is-animating .transition-fade{opacity:0}@keyframes page-fade-in{0%{opacity:0}to{opacity:1}}body{opacity:0;animation:.7s cubic-bezier(.4,0,.2,1) forwards page-fade-in}}

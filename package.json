@@ -18,15 +18,17 @@
     "shopify:pull-dev": "shopify theme pull -d"
   },
   "devDependencies": {
-    "@by-association-only/vite-plugin-shopify-clean": "^1.2.0",
-    "@tailwindcss/vite": "^4.0.6",
-    "tailwindcss": "^4.0.6",
-    "vite": "^6.1.0",
-    "vite-plugin-shopify": "^3.1.1",
+    "@by-association-only/vite-plugin-shopify-clean": "^2.2.0",
+    "@tailwindcss/vite": "^4.0.12",
+    "cross-env": "^7.0.3",
+    "tailwindcss": "^4.0.12",
+    "vite": "^6.2.1",
+    "vite-plugin-shopify": "^3.2.0",
     "vite-svg-sprite-wrapper": "^1.4.1",
     "yarn-run-all": "^3.1.1"
   },
   "dependencies": {
+    "@19h47/accordion": "^5.1.1",
     "piecesjs": "^0.2.3",
     "swup": "^4.8.1"
   }
