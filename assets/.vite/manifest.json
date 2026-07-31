@@ -101,6 +101,12 @@
     "src": "src/scripts/api/addItems.ts",
     "isEntry": true
   },
+  "src/scripts/api/fetchPredictiveSearchSection.ts": {
+    "file": "fetchPredictiveSearchSection-D5md-Mpw.js",
+    "name": "fetchPredictiveSearchSection",
+    "src": "src/scripts/api/fetchPredictiveSearchSection.ts",
+    "isEntry": true
+  },
   "src/scripts/api/getCart.ts": {
     "file": "getCart-DvIlmc10.js",
     "name": "getCart",
@@ -132,7 +138,7 @@
     "isEntry": true
   },
   "src/scripts/app.ts": {
-    "file": "app-_mhNXzKZ.js",
+    "file": "app-DmohfQHE.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -148,6 +154,7 @@
       "src/scripts/components/CartQuantity.ts"
     ],
     "dynamicImports": [
+      "src/scripts/predictive-search-mount.ts",
       "src/scripts/components/AddToCartButton.ts",
       "src/scripts/components/Headroom.ts",
       "src/scripts/components/LoadMore.ts",
@@ -170,7 +177,7 @@
     ]
   },
   "src/scripts/cinq/index.ts": {
-    "file": "index-DlXMK6Jn.js",
+    "file": "index-Dc-0J6mP.js",
     "name": "index",
     "src": "src/scripts/cinq/index.ts",
     "isEntry": true,
@@ -300,7 +307,7 @@
     ]
   },
   "src/scripts/components/VariantsPicker.ts": {
-    "file": "VariantsPicker-BXPzjGv4.js",
+    "file": "VariantsPicker-Bo2fvG1C.js",
     "name": "VariantsPicker",
     "src": "src/scripts/components/VariantsPicker.ts",
     "isEntry": true,
@@ -308,18 +315,18 @@
       "_piecesjs-41EcyIeW.js",
       "_dist-CmZiYuZS.js",
       "src/scripts/utils/format-currency.ts",
-      "src/scripts/utils/format-currency.ts",
-      "src/scripts/components/VariantsPickerOption.ts",
-      "src/scripts/components/VariantsPickerOption.ts"
+      "src/scripts/utils/format-currency.ts"
     ]
   },
-  "src/scripts/components/VariantsPickerOption.ts": {
-    "file": "VariantsPickerOption-DRbitRQQ.js",
-    "name": "VariantsPickerOption",
-    "src": "src/scripts/components/VariantsPickerOption.ts",
+  "src/scripts/predictive-search-mount.ts": {
+    "file": "predictive-search-mount-nTLOevv_.js",
+    "name": "predictive-search-mount",
+    "src": "src/scripts/predictive-search-mount.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js"
+      "_dist-CmZiYuZS.js",
+      "src/scripts/api/fetchPredictiveSearchSection.ts",
+      "src/scripts/api/fetchPredictiveSearchSection.ts"
     ]
   },
   "src/scripts/store/cart.ts": {
@@ -391,12 +398,30 @@
     "isEntry": true
   },
   "src/stylesheets/components/button.css": {
-    "file": "button-CKrROBPX.css",
+    "file": "button-Zrqn5Pj6.css",
     "name": "button",
     "names": [
       "button.css"
     ],
     "src": "src/stylesheets/components/button.css",
+    "isEntry": true
+  },
+  "src/stylesheets/components/subtitle.css": {
+    "file": "subtitle-h-Z7tOZ0.css",
+    "name": "subtitle",
+    "names": [
+      "subtitle.css"
+    ],
+    "src": "src/stylesheets/components/subtitle.css",
+    "isEntry": true
+  },
+  "src/stylesheets/components/surface.css": {
+    "file": "surface-BRA4LahK.css",
+    "name": "surface",
+    "names": [
+      "surface.css"
+    ],
+    "src": "src/stylesheets/components/surface.css",
     "isEntry": true
   },
   "src/stylesheets/components/tag.css": {
@@ -409,7 +434,7 @@
     "isEntry": true
   },
   "src/stylesheets/components/wysiwyg.css": {
-    "file": "wysiwyg-DYJ_7DHk.css",
+    "file": "wysiwyg-CTiGY5Pm.css",
     "name": "wysiwyg",
     "names": [
       "wysiwyg.css"
@@ -418,7 +443,7 @@
     "isEntry": true
   },
   "src/stylesheets/styles.css": {
-    "file": "styles-B1mLccRf.css",
+    "file": "styles-D_6VKfNn.css",
     "name": "styles",
     "names": [
       "styles.css"
@@ -427,7 +452,7 @@
     "isEntry": true
   },
   "src/stylesheets/theme.css": {
-    "file": "theme-pVYNI7oo.css",
+    "file": "theme-xE5TMphD.css",
     "name": "theme",
     "names": [
       "theme.css"

@@ -1,0 +1,961 @@
+{% comment %}
+  Styleguide / presentation — theme philosophy, features, and live @agencecinq UI demos.
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+    }
+  }
+
+  /* Window splitter — before/after image comparison (clip mode) */
+  #StyleguideSplitter-{{ section.id }} {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background: #f3f4f6;
+    user-select: none;
+    touch-action: none;
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__layer {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Stacking contexts so layer labels cannot paint above the clipped pane */
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__layer--after {
+    z-index: 0;
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__layer--before {
+    z-index: 1;
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__layer img,
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__layer svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__label {
+    position: absolute;
+    top: 0.75rem;
+    z-index: 1;
+    padding: 0.25rem 0.5rem;
+    background: rgb(255 255 255 / 90%);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #111827;
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__label--after {
+    right: 0.75rem;
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__label--before {
+    left: 0.75rem;
+  }
+
+  #StyleguideSplitter-{{ section.id }} > [role='separator'] {
+    position: absolute;
+    z-index: 3;
+    inset-block: 0;
+    left: 0;
+    display: flex;
+    width: 2.5rem;
+    margin-left: -1.25rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: col-resize;
+    touch-action: none;
+    user-select: none;
+  }
+
+  #StyleguideSplitter-{{ section.id }} > [role='separator']::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+    background: #fff;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 20%);
+  }
+
+  #StyleguideSplitter-{{ section.id }} .styleguide-compare__handle {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #111827;
+    background: #fff;
+    color: #111827;
+  }
+
+  #StyleguideSplitter-{{ section.id }} > [role='separator']:focus {
+    outline: none;
+  }
+
+  #StyleguideSplitter-{{ section.id }} > [role='separator']:focus-visible .styleguide-compare__handle {
+    outline: 2px solid #111827;
+    outline-offset: 2px;
+  }
+
+  /* Calendar — selection & day states */
+  #StyleguideCalendar-{{ section.id }} {
+    display: block;
+    max-width: 20rem;
+  }
+
+  #StyleguideCalendar-{{ section.id }} table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  #StyleguideCalendar-{{ section.id }} th,
+  #StyleguideCalendar-{{ section.id }} td {
+    padding: 0.15rem;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  #StyleguideCalendar-{{ section.id }} th {
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day {
+    display: flex;
+    aspect-ratio: 1;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #111827;
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day:hover:not([aria-disabled='true']):not(.active) {
+    background: #f3f4f6;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day:focus {
+    outline: none;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day:focus-visible {
+    outline: 2px solid #111827;
+    outline-offset: 2px;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day[aria-current='date']:not(.active) {
+    border-color: #111827;
+    font-weight: 600;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day.active,
+  #StyleguideCalendar-{{ section.id }} .js-day[aria-selected='true'] {
+    background: #111827;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day.range:not(.active) {
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day.start,
+  #StyleguideCalendar-{{ section.id }} .js-day.end {
+    background: #111827;
+    color: #fff;
+  }
+
+  #StyleguideCalendar-{{ section.id }} .js-day[aria-disabled='true'] {
+    color: #d1d5db;
+    cursor: not-allowed;
+  }
+{%- endstyle -%}
+
+{%- assign sid = section.id -%}
+{%- assign card = 'surface surface--padded space-y-4' -%}
+
+<div class="section-{{ sid }}-padding">
+  <div class="container space-y-16 lg:space-y-24">
+    <header class="max-w-3xl space-y-4">
+      {%- liquid
+        assign styleguide_subtitle = section.settings.subtitle
+        if styleguide_subtitle == blank
+          assign styleguide_subtitle = 'sections.styleguide.eyebrow' | t
+        endif
+      -%}
+      {%- render 'subtitle.html', subtitle: styleguide_subtitle -%}
+      <h2 class="text-3xl font-semibold text-balance lg:text-4xl">
+        {{- section.settings.title -}}
+      </h2>
+      {%- if section.settings.intro != blank -%}
+        <div class="wysiwyg text-base text-gray-700">{{ section.settings.intro }}</div>
+      {%- else -%}
+        <p class="text-base text-gray-700">{{- 'sections.styleguide.description' | t -}}</p>
+      {%- endif -%}
+    </header>
+
+    <section class="space-y-6" aria-labelledby="styleguide-css-{{ sid }}">
+      <div class="max-w-3xl space-y-2">
+        <h3 id="styleguide-css-{{ sid }}" class="text-xl font-semibold">
+          {{- 'sections.styleguide.css.title' | t -}}
+        </h3>
+        <p class="text-sm text-gray-600">{{- 'sections.styleguide.css.description' | t -}}</p>
+      </div>
+
+      <div class="space-y-10">
+        <div class="space-y-4">
+          {%- assign css_colors_label = 'sections.styleguide.css.colors' | t -%}
+          {%- render 'subtitle.html', subtitle: css_colors_label -%}
+          <ul class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+            {%- assign swatches = 'black,white,gray-50,gray-100,gray-200,gray-500,gray-700,gray-900' | split: ',' -%}
+            {%- for name in swatches -%}
+              <li class="space-y-2">
+                <div
+                  class="aspect-square border border-gray-200"
+                  style="background: var(--color-{{ name }})"
+                  aria-hidden="true"
+                ></div>
+                <p class="font-mono text-[0.625rem] break-all text-gray-500">--color-{{ name }}</p>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="space-y-4">
+          {%- assign css_type_label = 'sections.styleguide.css.typography' | t -%}
+          {%- render 'subtitle.html', subtitle: css_type_label -%}
+          <ul class="surface divide-y divide-gray-200">
+            <li class="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+              <span class="text-xs font-medium">Aa · text-xs</span>
+              <span class="font-mono text-[0.625rem] text-gray-500">--text-xs</span>
+            </li>
+            <li class="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+              <span class="text-sm font-medium">Aa · text-sm</span>
+              <span class="font-mono text-[0.625rem] text-gray-500">--text-sm</span>
+            </li>
+            <li class="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+              <span class="text-base font-medium">Aa · text-base</span>
+              <span class="font-mono text-[0.625rem] text-gray-500">--text-base</span>
+            </li>
+            <li class="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+              <span class="text-xl font-semibold">Aa · text-xl</span>
+              <span class="font-mono text-[0.625rem] text-gray-500">--text-xl</span>
+            </li>
+            <li class="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+              <span class="text-3xl font-semibold">Aa · text-3xl</span>
+              <span class="font-mono text-[0.625rem] text-gray-500">--text-3xl</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-4">
+          {%- assign css_patterns_label = 'sections.styleguide.css.patterns' | t -%}
+          {%- render 'subtitle.html', subtitle: css_patterns_label -%}
+          <ul class="grid gap-4 md:grid-cols-3">
+            <li class="surface surface--padded space-y-3">
+              <p class="font-mono text-[0.625rem] text-gray-500">.subtitle</p>
+              <p class="subtitle">{{- 'sections.styleguide.css.subtitle_sample' | t -}}</p>
+              <p class="text-sm text-gray-600">{{- 'sections.styleguide.css.subtitle_hint' | t -}}</p>
+            </li>
+            <li class="surface surface--padded space-y-3">
+              <p class="font-mono text-[0.625rem] text-gray-500">.surface</p>
+              <p class="text-sm text-gray-600">{{- 'sections.styleguide.css.surface_hint' | t -}}</p>
+            </li>
+            <li class="surface surface--padded space-y-3">
+              <p class="font-mono text-[0.625rem] text-gray-500">.tag</p>
+              <span class="tag">{{- 'sections.styleguide.css.tag_sample' | t -}}</span>
+              <p class="mt-3 text-sm text-gray-600">{{- 'sections.styleguide.css.tag_hint' | t -}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-6" aria-labelledby="styleguide-philosophy-{{ sid }}">
+      <h3 id="styleguide-philosophy-{{ sid }}" class="text-xl font-semibold">
+        {{- 'sections.styleguide.philosophy.title' | t -}}
+      </h3>
+      <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <li class="surface surface--padded space-y-2">
+          <h4 class="text-sm font-semibold">{{- 'sections.styleguide.philosophy.a11y.title' | t -}}</h4>
+          <p class="text-sm text-gray-600">{{- 'sections.styleguide.philosophy.a11y.text' | t -}}</p>
+        </li>
+        <li class="surface surface--padded space-y-2">
+          <h4 class="text-sm font-semibold">{{- 'sections.styleguide.philosophy.headless.title' | t -}}</h4>
+          <p class="text-sm text-gray-600">{{- 'sections.styleguide.philosophy.headless.text' | t -}}</p>
+        </li>
+        <li class="surface surface--padded space-y-2">
+          <h4 class="text-sm font-semibold">{{- 'sections.styleguide.philosophy.stack.title' | t -}}</h4>
+          <p class="text-sm text-gray-600">{{- 'sections.styleguide.philosophy.stack.text' | t -}}</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="space-y-6" aria-labelledby="styleguide-features-{{ sid }}">
+      <h3 id="styleguide-features-{{ sid }}" class="text-xl font-semibold">
+        {{- 'sections.styleguide.features.title' | t -}}
+      </h3>
+      <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <li class="surface px-4 py-3 text-sm">{{- 'sections.styleguide.features.items.vite' | t -}}</li>
+        <li class="surface px-4 py-3 text-sm">{{- 'sections.styleguide.features.items.tailwind' | t -}}</li>
+        <li class="surface px-4 py-3 text-sm">{{- 'sections.styleguide.features.items.pieces' | t -}}</li>
+        <li class="surface px-4 py-3 text-sm">{{- 'sections.styleguide.features.items.cinq' | t -}}</li>
+        <li class="surface px-4 py-3 text-sm">{{- 'sections.styleguide.features.items.cart' | t -}}</li>
+        <li class="surface px-4 py-3 text-sm">{{- 'sections.styleguide.features.items.ecommerce' | t -}}</li>
+      </ul>
+    </section>
+
+    <section class="space-y-6" aria-labelledby="styleguide-buttons-{{ sid }}">
+      <div class="space-y-2">
+        <h3 id="styleguide-buttons-{{ sid }}" class="text-xl font-semibold">
+          {{- 'sections.styleguide.buttons.title' | t -}}
+        </h3>
+        <p class="text-sm text-gray-600">{{- 'sections.styleguide.buttons.description' | t -}}</p>
+      </div>
+      <ul class="flex flex-wrap items-end gap-6">
+        <li class="space-y-2">
+          <p class="font-mono text-xs text-gray-500">primary · solid</p>
+          {%- assign title = 'sections.styleguide.buttons.primary' | t -%}
+          {%- render 'button.html', title: title, variant: 'primary' -%}
+        </li>
+        <li class="space-y-2">
+          <p class="font-mono text-xs text-gray-500">secondary · outline</p>
+          {%- assign title = 'sections.styleguide.buttons.secondary' | t -%}
+          {%- render 'button.html', title: title, variant: 'secondary' -%}
+        </li>
+        <li class="space-y-2">
+          <p class="font-mono text-xs text-gray-500">tertiary · text</p>
+          {%- assign title = 'sections.styleguide.buttons.tertiary' | t -%}
+          {%- render 'button.html', title: title, variant: 'tertiary' -%}
+        </li>
+      </ul>
+    </section>
+
+    <section class="space-y-6" aria-labelledby="styleguide-icons-{{ sid }}">
+      <div class="space-y-2">
+        <h3 id="styleguide-icons-{{ sid }}" class="text-xl font-semibold">
+          {{- 'sections.styleguide.icons.title' | t -}}
+        </h3>
+        <p class="text-sm text-gray-600">{{- 'sections.styleguide.icons.description' | t -}}</p>
+      </div>
+      <ul class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8">
+        {%- assign icons = 'arrow-left,arrow-right,bars,cart,check,chevron-down,chevron-left,chevron-right,facebook,minus,plus,search,star,tiktok,times,trash,tumblr,twitter,user,youtube' | split: ',' -%}
+        {%- for icon in icons -%}
+          <li class="surface flex flex-col items-center gap-2 px-3 py-4">
+            {%- render 'use.html', icon: icon, classes: 'size-5' -%}
+            <span class="font-mono text-[0.625rem] break-all text-center text-gray-500">{{ icon }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </section>
+
+    <section class="space-y-10" aria-labelledby="styleguide-components-{{ sid }}">
+      <div class="max-w-3xl space-y-2">
+        <h3 id="styleguide-components-{{ sid }}" class="text-xl font-semibold">
+          {{- 'sections.styleguide.components.title' | t -}}
+        </h3>
+        <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.description' | t -}}</p>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/accordion · &lt;cinq-accordion&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.accordion.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.accordion.text' | t -}}</p>
+          </header>
+          <cinq-accordion class="surface block divide-y divide-gray-200">
+            <div data-accordion-panel data-accordion-open="true" data-accordion-deselect="true">
+              <button
+                type="button"
+                data-accordion-header
+                id="styleguide-acc-1-{{ sid }}"
+                aria-expanded="true"
+                aria-controls="styleguide-acc-1-body-{{ sid }}"
+                class="group flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-medium"
+              >
+                {{- 'sections.styleguide.components.accordion.item_1_title' | t -}}
+                {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5 shrink-0 transition-transform duration-300 ease-out group-aria-expanded:rotate-180' -%}
+              </button>
+              <div id="styleguide-acc-1-body-{{ sid }}" role="region" aria-labelledby="styleguide-acc-1-{{ sid }}">
+                <div data-accordion-inner class="px-4 pb-4 text-sm text-gray-600">
+                  {{- 'sections.styleguide.components.accordion.item_1_text' | t -}}
+                </div>
+              </div>
+            </div>
+            <div data-accordion-panel data-accordion-open="false">
+              <button
+                type="button"
+                data-accordion-header
+                id="styleguide-acc-2-{{ sid }}"
+                aria-expanded="false"
+                aria-controls="styleguide-acc-2-body-{{ sid }}"
+                class="group flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-medium"
+              >
+                {{- 'sections.styleguide.components.accordion.item_2_title' | t -}}
+                {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5 shrink-0 transition-transform duration-300 ease-out group-aria-expanded:rotate-180' -%}
+              </button>
+              <div id="styleguide-acc-2-body-{{ sid }}" role="region" aria-labelledby="styleguide-acc-2-{{ sid }}" hidden>
+                <div data-accordion-inner class="px-4 pb-4 text-sm text-gray-600">
+                  {{- 'sections.styleguide.components.accordion.item_2_text' | t -}}
+                </div>
+              </div>
+            </div>
+          </cinq-accordion>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/disclosure-button · &lt;cinq-disclosure-button&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.disclosure.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.disclosure.text' | t -}}</p>
+          </header>
+          <div class="space-y-2 text-sm">
+            <p id="styleguide-disc-short-{{ sid }}">
+              {{- 'sections.styleguide.components.disclosure.short' | t -}}
+            </p>
+            <div id="styleguide-disc-full-{{ sid }}" hidden>
+              {{- 'sections.styleguide.components.disclosure.full' | t -}}
+            </div>
+            <cinq-disclosure-button>
+              <button
+                type="button"
+                aria-expanded="false"
+                aria-controls="styleguide-disc-full-{{ sid }}"
+                class="underline underline-offset-2"
+                data-disclosure-short="styleguide-disc-short-{{ sid }}"
+                data-readmore-title="{{ 'sections.styleguide.components.disclosure.more' | t }}"
+                data-readless-title="{{ 'sections.styleguide.components.disclosure.less' | t }}"
+              >
+                <span>{{- 'sections.styleguide.components.disclosure.more' | t -}}</span>
+              </button>
+            </cinq-disclosure-button>
+          </div>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/drawer · &lt;cinq-drawer&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.drawer.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.drawer.text' | t -}}</p>
+          </header>
+          <cinq-drawer-button class="inline-block">
+            {%- assign title = 'sections.styleguide.components.drawer.open' | t -%}
+            {%- render 'button.html',
+              title: title,
+              variant: 'primary',
+              attributes: 'aria-controls="styleguide-drawer" aria-expanded="false"'
+            -%}
+          </cinq-drawer-button>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/modal · &lt;cinq-modal&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.modal.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.modal.text' | t -}}</p>
+          </header>
+          <cinq-modal-button class="inline-block">
+            {%- assign title = 'sections.styleguide.components.modal.open' | t -%}
+            {%- render 'button.html',
+              title: title,
+              variant: 'secondary',
+              attributes: 'aria-controls="styleguide-modal" aria-expanded="false"'
+            -%}
+          </cinq-modal-button>
+          <cinq-modal id="styleguide-modal">
+            <dialog
+              class="surface fixed top-1/2 left-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2 p-6 text-gray-900 backdrop:bg-black/40"
+            >
+              <h4 class="mb-2 text-base font-semibold">
+                {{- 'sections.styleguide.components.modal.dialog_title' | t -}}
+              </h4>
+              <p class="mb-5 text-sm text-gray-600">
+                {{- 'sections.styleguide.components.modal.dialog_text' | t -}}
+              </p>
+              <cinq-modal-button class="inline-block">
+                {%- assign title = 'sections.styleguide.components.modal.close' | t -%}
+                {%- render 'button.html',
+                  title: title,
+                  variant: 'primary',
+                  attributes: 'aria-controls="styleguide-modal" aria-expanded="false"'
+                -%}
+              </cinq-modal-button>
+            </dialog>
+          </cinq-modal>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/tabs · &lt;cinq-tabs&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.tabs.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.tabs.text' | t -}}</p>
+          </header>
+          <cinq-tabs class="block" data-tabs-hash="false" data-tabs-delay="0">
+            <div
+              role="tablist"
+              aria-label="{{ 'sections.styleguide.components.tabs.label' | t }}"
+              class="mb-[-1px] flex flex-wrap gap-1 border-b border-gray-200"
+            >
+              <button
+                id="styleguide-tab-a-{{ sid }}"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="styleguide-panel-a-{{ sid }}"
+                class="border-b-2 border-transparent px-4 py-2.5 text-xs font-medium aria-selected:border-black"
+              >
+                {{- 'sections.styleguide.components.tabs.tab_a' | t -}}
+              </button>
+              <button
+                id="styleguide-tab-b-{{ sid }}"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="styleguide-panel-b-{{ sid }}"
+                tabindex="-1"
+                class="border-b-2 border-transparent px-4 py-2.5 text-xs font-medium aria-selected:border-black"
+              >
+                {{- 'sections.styleguide.components.tabs.tab_b' | t -}}
+              </button>
+              <button
+                id="styleguide-tab-c-{{ sid }}"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="styleguide-panel-c-{{ sid }}"
+                tabindex="-1"
+                class="border-b-2 border-transparent px-4 py-2.5 text-xs font-medium aria-selected:border-black"
+              >
+                {{- 'sections.styleguide.components.tabs.tab_c' | t -}}
+              </button>
+            </div>
+            <section
+              id="styleguide-panel-a-{{ sid }}"
+              role="tabpanel"
+              aria-labelledby="styleguide-tab-a-{{ sid }}"
+              tabindex="0"
+              class="pt-4 text-sm"
+            >
+              {{- 'sections.styleguide.components.tabs.panel_a' | t -}}
+            </section>
+            <section
+              id="styleguide-panel-b-{{ sid }}"
+              role="tabpanel"
+              aria-labelledby="styleguide-tab-b-{{ sid }}"
+              tabindex="0"
+              hidden
+              class="pt-4 text-sm"
+            >
+              {{- 'sections.styleguide.components.tabs.panel_b' | t -}}
+            </section>
+            <section
+              id="styleguide-panel-c-{{ sid }}"
+              role="tabpanel"
+              aria-labelledby="styleguide-tab-c-{{ sid }}"
+              tabindex="0"
+              hidden
+              class="pt-4 text-sm"
+            >
+              {{- 'sections.styleguide.components.tabs.panel_c' | t -}}
+            </section>
+          </cinq-tabs>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/spinbutton · &lt;cinq-spinbutton&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.spinbutton.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.spinbutton.text' | t -}}</p>
+          </header>
+          <cinq-spinbutton class="inline-flex items-center gap-3" data-spinbutton-step="1">
+            <button
+              type="button"
+              data-spinbutton-action="decrease"
+              class="flex size-8 items-center justify-center border border-gray-200"
+              tabindex="-1"
+              aria-label="{{ 'sections.styleguide.components.spinbutton.decrease' | t }}"
+            >
+              −
+            </button>
+            <input
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              role="spinbutton"
+              value="1"
+              class="size-10 border border-gray-200 bg-gray-50 text-center text-sm"
+              data-spinbutton-input
+              aria-label="{{ 'sections.styleguide.components.spinbutton.label' | t }}"
+              aria-valuemin="0"
+              aria-valuemax="10"
+              aria-valuenow="1"
+            >
+            <button
+              type="button"
+              data-spinbutton-action="increase"
+              class="flex size-8 items-center justify-center border border-gray-200"
+              tabindex="-1"
+              aria-label="{{ 'sections.styleguide.components.spinbutton.increase' | t }}"
+            >
+              +
+            </button>
+          </cinq-spinbutton>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/switch · &lt;cinq-switch&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.switch.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.switch.text' | t -}}</p>
+          </header>
+          <cinq-switch
+            class="group inline-flex cursor-pointer items-center gap-3"
+            role="switch"
+            aria-checked="false"
+            tabindex="0"
+          >
+            <span class="text-sm">{{- 'sections.styleguide.components.switch.label' | t -}}</span>
+            <span
+              class="flex h-5 w-9 items-center border border-gray-500 px-0.5 before:block before:size-3.5 before:bg-black before:transition-transform before:duration-200 before:content-[''] group-aria-checked:before:translate-x-3.5"
+              aria-hidden="true"
+            ></span>
+            <span class="sr-only" aria-hidden="true">{{- 'sections.styleguide.components.switch.on' | t -}}</span>
+            <span class="sr-only" aria-hidden="true">{{- 'sections.styleguide.components.switch.off' | t -}}</span>
+            <div hidden>
+              <input type="checkbox" name="styleguide-switch-{{ sid }}" tabindex="-1" aria-hidden="true">
+            </div>
+          </cinq-switch>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/combobox · &lt;cinq-combobox&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.combobox.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.combobox.text' | t -}}</p>
+          </header>
+          <label
+            for="styleguide-combobox-input-{{ sid }}"
+            class="mb-2 block text-xs font-medium tracking-wide text-gray-500 uppercase"
+          >
+            {{- 'sections.styleguide.components.combobox.label' | t -}}
+          </label>
+          <cinq-combobox
+            id="styleguide-combobox-{{ sid }}"
+            class="relative block max-w-xs [&_[role=listbox]]:absolute [&_[role=listbox]]:inset-x-0 [&_[role=listbox]]:top-full [&_[role=listbox]]:z-10 [&_[role=listbox]]:mt-1 [&_[role=listbox]]:max-h-48 [&_[role=listbox]]:overflow-auto [&_[role=listbox]]:border [&_[role=listbox]]:border-gray-200 [&_[role=listbox]]:bg-white [&_[role=option]]:cursor-pointer [&_[role=option]]:px-3 [&_[role=option]]:py-2 [&_[role=option]]:text-sm [&_[role=option][aria-selected=true]]:bg-gray-100 [&_[role=option]:hover]:bg-gray-100"
+          >
+            <input
+              id="styleguide-combobox-input-{{ sid }}"
+              type="text"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-controls="styleguide-combobox-list-{{ sid }}"
+              autocomplete="off"
+              placeholder="{{ 'sections.styleguide.components.combobox.placeholder' | t }}"
+              class="w-full border border-gray-200 py-3 pr-10 pl-3 text-sm"
+            >
+            <button
+              type="button"
+              tabindex="-1"
+              aria-label="{{ 'sections.styleguide.components.combobox.toggle' | t }}"
+              aria-controls="styleguide-combobox-list-{{ sid }}"
+              aria-expanded="false"
+              class="absolute inset-y-0 right-0 flex w-10 items-center justify-center"
+            >
+              {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5' -%}
+            </button>
+            <ul
+              id="styleguide-combobox-list-{{ sid }}"
+              role="listbox"
+              aria-label="{{ 'sections.styleguide.components.combobox.label' | t }}"
+              hidden
+            ></ul>
+          </cinq-combobox>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/calendar · &lt;cinq-calendar&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.calendar.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.calendar.text' | t -}}</p>
+          </header>
+          <cinq-calendar
+            id="StyleguideCalendar-{{ sid }}"
+            locale="{{ request.locale.iso_code }}"
+            deselect
+            allow-past
+            name="styleguide-date-{{ sid }}"
+          >
+            <header class="mb-3 flex items-center justify-between gap-2">
+              <button
+                type="button"
+                class="js-previous border border-gray-200 px-2 py-1 text-xs"
+                aria-label="{{ 'sections.styleguide.components.calendar.previous' | t }}"
+              >
+                {%- render 'use.html', icon: 'chevron-left', classes: 'size-3' -%}
+              </button>
+              <button
+                type="button"
+                class="js-title text-sm font-medium"
+                id="styleguide-calendar-label-{{ sid }}"
+                aria-live="polite"
+              ></button>
+              <button
+                type="button"
+                class="js-next border border-gray-200 px-2 py-1 text-xs"
+                aria-label="{{ 'sections.styleguide.components.calendar.next' | t }}"
+              >
+                {%- render 'use.html', icon: 'chevron-right', classes: 'size-3' -%}
+              </button>
+            </header>
+            <table role="grid" aria-labelledby="styleguide-calendar-label-{{ sid }}">
+              <thead>
+                <tr class="js-days"></tr>
+              </thead>
+              <tbody class="js-body"></tbody>
+            </table>
+          </cinq-calendar>
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/windowsplitter · &lt;cinq-windowsplitter&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.windowsplitter.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.windowsplitter.text' | t -}}</p>
+          </header>
+          <cinq-windowsplitter
+            id="StyleguideSplitter-{{ sid }}"
+            data-windowsplitter-mode="clip"
+            aria-label="{{ 'sections.styleguide.components.windowsplitter.label' | t }}"
+          >
+            {%- liquid
+              assign compare_after_alt = section.settings.comparison_after.alt
+              if compare_after_alt == blank
+                assign compare_after_alt = 'sections.styleguide.components.windowsplitter.after' | t
+              endif
+              assign compare_before_alt = section.settings.comparison_before.alt
+              if compare_before_alt == blank
+                assign compare_before_alt = 'sections.styleguide.components.windowsplitter.before' | t
+              endif
+            -%}
+
+            {%- comment -%} After (full layer) {%- endcomment -%}
+            <div class="styleguide-compare__layer styleguide-compare__layer--after" aria-hidden="true">
+              <span class="styleguide-compare__label styleguide-compare__label--after">
+                {{- 'sections.styleguide.components.windowsplitter.after' | t -}}
+              </span>
+              {%- if section.settings.comparison_after != blank -%}
+                {{-
+                  section.settings.comparison_after
+                  | image_url: width: 1600
+                  | image_tag:
+                    widths: '800, 1200, 1600',
+                    sizes: '(min-width: 1024px) 640px, 100vw',
+                    alt: compare_after_alt,
+                    loading: 'lazy'
+                -}}
+              {%- else -%}
+                {{- 'product-apparel-2' | placeholder_svg_tag -}}
+              {%- endif -%}
+            </div>
+
+            {%- comment -%} Before (clipped primary pane) {%- endcomment -%}
+            <div
+              id="StyleguideSplitterPrimary-{{ sid }}"
+              class="styleguide-compare__layer styleguide-compare__layer--before"
+              style="clip-path: inset(0 50% 0 0)"
+            >
+              <span class="styleguide-compare__label styleguide-compare__label--before">
+                {{- 'sections.styleguide.components.windowsplitter.before' | t -}}
+              </span>
+              {%- if section.settings.comparison_before != blank -%}
+                {{-
+                  section.settings.comparison_before
+                  | image_url: width: 1600
+                  | image_tag:
+                    widths: '800, 1200, 1600',
+                    sizes: '(min-width: 1024px) 640px, 100vw',
+                    alt: compare_before_alt,
+                    loading: 'lazy'
+                -}}
+              {%- else -%}
+                {{- 'product-apparel-1' | placeholder_svg_tag -}}
+              {%- endif -%}
+            </div>
+
+            <div
+              role="separator"
+              tabindex="0"
+              aria-orientation="vertical"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="50"
+              aria-controls="StyleguideSplitterPrimary-{{ sid }}"
+              aria-label="{{ 'sections.styleguide.components.windowsplitter.slider' | t }}"
+            >
+              <span class="styleguide-compare__handle" aria-hidden="true">
+                {%- render 'use.html', icon: 'bars', classes: 'size-4 rotate-90' -%}
+              </span>
+            </div>
+          </cinq-windowsplitter>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const items = [
+      'Accordion',
+      'Calendar',
+      'Combobox',
+      'Disclosure button',
+      'Drawer',
+      'Modal',
+      'Spinbutton',
+      'Switch',
+      'Tabs',
+      'Window splitter',
+    ];
+
+    const wire = () => {
+      const host = document.getElementById('styleguide-combobox-{{ sid }}');
+      if (!host) return;
+
+      host.search = (value) => {
+        const q = value.trim().toLowerCase();
+        if (!q) return items;
+        return items.filter((item) => item.toLowerCase().includes(q));
+      };
+    };
+
+    if (customElements.get('cinq-combobox')) {
+      wire();
+    } else {
+      customElements.whenDefined('cinq-combobox').then(wire);
+    }
+  })();
+</script>
+
+{%- capture styleguide_drawer_content -%}
+  <div class="flex h-full flex-col">
+    {%- assign title = 'sections.styleguide.components.drawer.dialog_title' | t -%}
+    {%- render 'drawer-header.html', title: title, id: 'styleguide-drawer' -%}
+    <div class="grow space-y-3 p-6 text-sm text-gray-600">
+      <p>{{- 'sections.styleguide.components.drawer.dialog_text' | t -}}</p>
+    </div>
+  </div>
+{%- endcapture -%}
+{%- render 'cinq-drawer.html',
+  content: styleguide_drawer_content,
+  id: 'styleguide-drawer',
+  background: 'bg-white'
+-%}
+
+{% schema %}
+{
+  "name": "t:sections.styleguide.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info",
+      "default": "Style guide"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.styleguide.settings.title.label",
+      "default": "Cinquante-et-un"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "t:sections.styleguide.settings.intro.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.styleguide.settings.comparison.header"
+    },
+    {
+      "type": "image_picker",
+      "id": "comparison_before",
+      "label": "t:sections.styleguide.settings.comparison.before.label",
+      "info": "t:sections.styleguide.settings.comparison.before.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "comparison_after",
+      "label": "t:sections.styleguide.settings.comparison.after.label",
+      "info": "t:sections.styleguide.settings.comparison.after.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.styleguide.presets.name",
+      "category": "t:general.styleguide"
+    }
+  ]
+}
+{% endschema %}

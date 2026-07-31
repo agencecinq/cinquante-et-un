@@ -51,7 +51,9 @@
     "update": "Mettre à jour",
     "remove": "Supprimer",
     "progress": {
-      "label": "Livraison offerte !"
+      "label": "Livraison offerte",
+      "remaining_html": "Plus que {{ amount }} pour la livraison offerte",
+      "aria_label": "Progression livraison offerte : {{ progress }} %"
     },
     "empty": "Votre panier est vide",
     "drawer": {
@@ -128,23 +130,32 @@
         "close": "Fermer"
       }
     },
+    "article": {
+      "table_of_contents_label": "Table des matières",
+      "table_of_contents_title": "Sommaire",
+      "comments_empty": "Pas encore de commentaires.",
+      "comment_success": "Votre commentaire a été publié.",
+      "comment_success_moderated": "Votre commentaire a été envoyé et est en attente de modération.",
+      "comment_moderated": "Les commentaires sont modérés et apparaîtront après validation."
+    },
     "blog": {
-      "filter_by_tag": "Filtrer par {{ tag }}"
-    },
-    "cards_slider": {
-      "carousel_aria_label": "Carrousel de cartes en avant",
-      "slide_numbered": "Diapositive {{ index }}",
-      "announce_slide": "Diapositive [[current]] sur [[total]]",
-      "previous_slide": "Diapositive précédente",
-      "next_slide": "Diapositive suivante"
-    },
-    "full_page_slider": {
-      "tablist_label": "Diapositives"
+      "filter_by_tag": "Filtrer par {{ tag }}",
+      "see-more": "Voir plus d'articles",
+      "out-of": "{{ current }} articles affichés sur {{ total }}"
     },
     "404": {
       "title": "404",
       "not_found": "Page introuvable.",
       "back_to_shopping": "Retour aux achats"
+    },
+    "predictive_search": {
+      "products": "Produits",
+      "listbox_label": "Suggestions de recherche",
+      "no_results": "Aucun résultat pour « __TERMS__ »",
+      "results_count": {
+        "one": "1 suggestion disponible",
+        "other": "__COUNT__ suggestions disponibles"
+      }
     },
     "footer": {
       "rights_reserved": "Tous droits réservés.",
@@ -194,9 +205,6 @@
         "success": "Merci de nous avoir contactés ! Nous vous répondrons dès que possible."
       }
     },
-    "feature-product": {
-      "active": "Actif {{ index }}"
-    },
     "featured-collection": {
       "view_all": "Voir tout"
     },
@@ -227,86 +235,149 @@
       "cart": "Panier",
       "menu": "Menu"
     },
-    "comparison_table": {
-      "learn_more": "En savoir plus"
-    },
-    "product-ingredients": {
-      "index": "Actif {{ index }}"
-    },
     "product": {
-      "variants-picker": {
-        "select-value_html": "{{ name }} : {{ value }}",
-        "no-variant": "Aucune variante trouvée"
-      },
-      "shop-the-look": {
-        "title": "Acheter le look",
-        "add-to-cart": "Ajouter au panier",
-        "drawer": {
-          "title": "Acheter le look",
-          "close": "Fermer le tiroir Acheter le look"
-        },
-        "subtotal": "Total"
-      },
       "previous": "Média précédent",
       "next": "Média suivant",
-      "rating": "{{ rating }}",
-      "rating-count": "({{ count }} avis)",
       "thumbnail": "Vignette du produit {{ number }}",
-      "add_to_cart_html": "Ajouter au panier&nbsp;‧&nbsp;<c-price data-product-id='{{ id }}'>{{ price }}</c-price>",
       "add_to_cart": "Ajouter au panier",
       "sold_out": "Épuisé",
-      "back_in_stock": "Prévenez-moi",
-      "preoccupation": "Préoccupations",
-      "composition": "Composition",
-      "texture": "Texture",
-      "utilisation": "Utilisation",
-      "routine": "Existe aussi en routine",
-      "tabs": {
-        "description": "Description",
-        "title": "Onglets produit"
-      },
-      "size-guide": {
-        "title": "Guide des tailles"
-      },
-      "reassurance": {
-        "region_label": "Annonces produit",
-        "slide_label": "Message {{ index }} sur {{ count }}",
-        "go_to_message": "Afficher le message {{ number }}"
-      },
       "accordion-group": {
         "description": "Description",
         "complementary_products": "Produits complémentaires"
-      },
-      "complementary_products": {
-        "add_to_cart": "Ajouter"
       }
     },
     "styleguide": {
-      "title": "Styleguide",
-      "description": "Aperçu des composants du design system utilisés dans ce thème.",
-      "group_titles": "Titres",
-      "group_subtitles": "Sous-titres",
-      "group_body": "Corps de texte"
-    },
-    "key_figures": {
-      "toggle_details": "Afficher les détails : {{ title }}",
-      "toggle_details_generic": "Afficher les détails de la carte",
-      "details_region": "Détails : {{ title }}",
-      "details_region_generic": "Détails de la carte",
-      "settings": {
-        "previous_slide": {
-          "label": "Slide précédent"
+      "eyebrow": "Style guide",
+      "title": "Cinquante-et-un",
+      "description": "Shopify theme starter for Cinq — philosophy, features, and live demos of every @agencecinq Web Component.",
+      "philosophy": {
+        "title": "Philosophy",
+        "a11y": {
+          "title": "Accessible by default",
+          "text": "Components follow WAI-ARIA Authoring Practices. Markup is the source of truth — the JS only adds behaviour."
         },
-        "next_slide": {
-          "label": "Slide suivant"
+        "headless": {
+          "title": "Headless UI",
+          "text": "Bring your own styles. @agencecinq packages ship no opinionated CSS; the theme owns look and feel."
+        },
+        "stack": {
+          "title": "Modern Shopify stack",
+          "text": "Vite 8, Tailwind 4, piecesjs lazy custom elements, and Section Rendering for a snappy cart."
         }
-      }
-    },
-    "product_benefits": {
-      "title": "Tous les bénéfices",
-      "settings": {
-        "title": {
-          "label": "Tous les bénéfices"
+      },
+      "features": {
+        "title": "Theme features",
+        "items": {
+          "vite": "Vite 8 + HMR for theme assets",
+          "tailwind": "Tailwind 4 design tokens",
+          "pieces": "piecesjs lazy-loaded c-* components",
+          "cinq": "Full @agencecinq UI kit registered once",
+          "cart": "Ajax cart + Section Rendering drawers",
+          "ecommerce": "Header, collection, PDP, localization baseline"
+        }
+      },
+      "css": {
+        "title": "Fondations CSS",
+        "description": "Tokens Tailwind par défaut (couleurs, typo) plus classes de composants. Préférer les utilities et .surface / .subtitle / .tag aux valeurs one-off.",
+        "colors": "Couleurs (défauts Tailwind)",
+        "typography": "Typographie (défauts Tailwind)",
+        "patterns": "Patterns",
+        "subtitle_sample": "Label de section",
+        "subtitle_hint": "snippets/subtitle.html · class .subtitle",
+        "surface_hint": "Panneau bordé · class .surface / .surface--padded",
+        "tag_sample": "New",
+        "tag_hint": "blocks/tag · class .tag"
+      },
+      "buttons": {
+        "title": "Boutons",
+        "description": "Snippet button.html — primary (plein), secondary (contour), tertiary (texte).",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "tertiary": "Tertiary"
+      },
+      "icons": {
+        "title": "Icônes",
+        "description": "Sprite SVG depuis src/icons — rendu via snippets/use.html (href #icon-name)."
+      },
+      "components": {
+        "title": "@agencecinq components",
+        "description": "Interactive demos of every package from the agencecinq/ui monorepo. Import once in src/scripts/cinq/index.ts.",
+        "accordion": {
+          "title": "Accordion",
+          "text": "Expandable panels with keyboard support between headers.",
+          "item_1_title": "What is Cinquante-et-un?",
+          "item_1_text": "A wireframe ecommerce starter for Cinq projects — not a Theme Store submission.",
+          "item_2_title": "Where do accounts live?",
+          "item_2_text": "Classic customer account templates are out of scope. Prefer Shopify New Customer Accounts."
+        },
+        "disclosure": {
+          "title": "Disclosure button",
+          "text": "Show / hide a region via aria-expanded and aria-controls.",
+          "short": "Short teaser text for the disclosure demo…",
+          "full": "Full content revealed by the disclosure button. Used on PDP tabs for “read more”.",
+          "more": "Read more",
+          "less": "Read less"
+        },
+        "drawer": {
+          "title": "Drawer",
+          "text": "Slide-in panel with focus trap. Theme uses the Liquid snippet via cinqDrawerPlugin().",
+          "open": "Open drawer",
+          "dialog_title": "Demo drawer",
+          "dialog_text": "Same pattern as cart, menu, filters, and localization drawers."
+        },
+        "modal": {
+          "title": "Modal",
+          "text": "Native dialog wrapper with open / close wiring through cinq-modal-button.",
+          "open": "Open modal",
+          "close": "Close",
+          "dialog_title": "Demo modal",
+          "dialog_text": "Useful for confirmations, size guides, or newsletter prompts."
+        },
+        "tabs": {
+          "title": "Tabs",
+          "text": "WAI-ARIA tabs with optional hash sync (disabled here).",
+          "label": "Styleguide tabs",
+          "tab_a": "Stack",
+          "tab_b": "Cart",
+          "tab_c": "A11y",
+          "panel_a": "Vite, Tailwind, and piecesjs power the front-end pipeline.",
+          "panel_b": "Cart updates re-render bundled sections without a full page reload.",
+          "panel_c": "Cinq components expect correct ARIA in Liquid — lint with axe or Lighthouse."
+        },
+        "spinbutton": {
+          "title": "Spinbutton",
+          "text": "Constrained numeric input — quantity steppers in the cart use this.",
+          "label": "Quantity",
+          "decrease": "Decrease",
+          "increase": "Increase"
+        },
+        "switch": {
+          "title": "Switch",
+          "text": "Binary on / off control. Label text should not change with state.",
+          "label": "Demo setting",
+          "on": "On",
+          "off": "Off"
+        },
+        "combobox": {
+          "title": "Combobox",
+          "text": "Editable list autocomplete. This demo filters component names via c-styleguide.",
+          "label": "Component",
+          "placeholder": "Type to filter…",
+          "toggle": "Open suggestions"
+        },
+        "calendar": {
+          "title": "Calendar",
+          "text": "Date picker grid. Markup and CSS are yours; the package fills days and selection.",
+          "previous": "Previous month",
+          "next": "Next month"
+        },
+        "windowsplitter": {
+          "title": "Window splitter",
+          "text": "Typical Shopify use: before/after image comparison (clip mode). Drag the handle or use arrow keys.",
+          "label": "Before and after image comparison",
+          "before": "Before",
+          "after": "After",
+          "slider": "Compare before and after"
         }
       }
     }
@@ -352,27 +423,6 @@
       "placeholder": "Rechercher",
       "submit": "Soumettre la recherche"
     },
-    "localization-form": {
-      "title": "Pays/Devise"
-    },
-    "size-guide-drawer": {
-      "close": "Fermer le guide des tailles",
-      "title": "Guide des tailles"
-    },
-    "size-guide-tabs": {
-      "size": "Taille",
-      "description": " : {{ description }}",
-      "size-conversion": "Conversion des tailles",
-      "garment-measurements": "Mesures du vêtement",
-      "cm": "cm",
-      "in": "in",
-      "title": "Guide des tailles",
-      "countries": "Pays"
-    },
-    "product-tab": {
-      "readless": "Lire moins",
-      "readmore": "Lire plus"
-    },
     "pagination": {
       "label": "Pagination",
       "previous": "Précédent",
@@ -383,6 +433,9 @@
       "discover": "Découvrir",
       "view_product": "Voir {{ title }}",
       "discover_product": "Découvrir {{ title }}"
+    },
+    "tease-article": {
+      "view_article": "Lire {{ title }}"
     },
     "klaviyo_back_in_stock": {
       "body": "Inscrivez-vous pour recevoir une notification lorsque cet article sera de nouveau disponible.",
@@ -397,7 +450,6 @@
     "add-to-cart": {
       "add_to_cart": "Ajouter au panier"
     },
-    "product-variations": {},
     "product-tags": {
       "sold_out": "Épuisé",
       "best_seller": "Best seller",

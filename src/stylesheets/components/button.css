@@ -7,47 +7,72 @@
     vertical-align: middle;
     text-align: center;
     padding: 0.75rem 1rem;
-    border: 1px solid var(--color-black);
     border-radius: 0;
-    background: var(--color-white);
-    color: var(--color-black);
     font-size: var(--text-xs);
     line-height: var(--text-xs--line-height);
     font-weight: 500;
     text-transform: none;
     text-decoration: none;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .button:disabled,
+  .button[aria-disabled='true'],
+  .button--primary:disabled,
+  .button--primary[aria-disabled='true'],
+  .button--secondary:disabled,
+  .button--secondary[aria-disabled='true'],
+  .button--tertiary:disabled,
+  .button--tertiary[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Primary — solid fill */
+  .button,
+  .button--primary {
+    border: 1px solid var(--color-black);
+    background: var(--color-black);
+    color: var(--color-white);
   }
 
   .button:hover,
   .button:focus,
   .button--primary:hover,
-  .button--primary:focus,
+  .button--primary:focus {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
+  /* Secondary — outline */
+  .button--secondary {
+    border: 1px solid var(--color-black);
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
   .button--secondary:hover,
-  .button--secondary:focus,
-  .button--tertiary:hover,
-  .button--tertiary:focus {
+  .button--secondary:focus {
     background: var(--color-black);
     color: var(--color-white);
   }
 
-  .button:disabled,
-  .button[aria-disabled='true'] {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .button--secondary,
+  /* Tertiary — text / ghost */
   .button--tertiary {
-    border-color: var(--color-gray-500);
-    color: var(--color-gray-500);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-black);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    padding-inline: 0.25rem;
   }
 
-  .button--secondary:hover,
-  .button--secondary:focus,
   .button--tertiary:hover,
   .button--tertiary:focus {
-    border-color: var(--color-black);
-    background: var(--color-black);
-    color: var(--color-white);
+    background: transparent;
+    color: var(--color-gray-500);
   }
 }

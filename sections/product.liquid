@@ -3,25 +3,38 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-  padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
-  padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
-  }
-
-  @media (width >= 64rem) {
-  .section-{{ section.id }}-padding {
-  padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
-  padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
-  }
-  }
-{%- endstyle -%}
-
 {%- liquid
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+
+  if section.settings.compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
+
   assign form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
   assign variant = product.selected_or_first_available_variant
   assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
 -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ padding_top_mobile }};
+    padding-bottom: {{ padding_bottom_mobile }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ padding_top_desktop }};
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
+  }
+{%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
   <div class="container">
@@ -71,14 +84,20 @@
 
             {%- if product.media.size > 1 -%}
               <div class="mt-2 flex items-center justify-between gap-2">
-                <button
-                  type="button"
-                  class="button button--tertiary"
-                  data-dom="previous-{{ slideshow_cid }}"
-                  aria-label="{{ 'sections.product.previous' | t }}"
-                >
-                  {%- render 'use.html', icon: 'chevron-left', classes: 'size-3' -%}
-                </button>
+                {%- liquid
+                  assign previous_label = 'sections.product.previous' | t
+                  assign previous_dom = 'previous-' | append: slideshow_cid
+                  assign next_label = 'sections.product.next' | t
+                  assign next_dom = 'next-' | append: slideshow_cid
+                -%}
+                {% capture previous_attributes %}data-dom="{{ previous_dom }}" aria-label="{{ previous_label | escape }}"{% endcapture %}
+                {% capture next_attributes %}data-dom="{{ next_dom }}" aria-label="{{ next_label | escape }}"{% endcapture %}
+                {%- render 'button.html',
+                  variant: 'tertiary',
+                  icon: 'chevron-left',
+                  title: '',
+                  attributes: previous_attributes
+                -%}
                 <div class="flex flex-wrap justify-center gap-1" data-dom="controls-{{ slideshow_cid }}">
                   {%- for media in product.media -%}
                     <button
@@ -88,14 +107,12 @@
                     ></button>
                   {%- endfor -%}
                 </div>
-                <button
-                  type="button"
-                  class="button button--tertiary"
-                  data-dom="next-{{ slideshow_cid }}"
-                  aria-label="{{ 'sections.product.next' | t }}"
-                >
-                  {%- render 'use.html', icon: 'chevron-right', classes: 'size-3' -%}
-                </button>
+                {%- render 'button.html',
+                  variant: 'tertiary',
+                  icon: 'chevron-right',
+                  title: '',
+                  attributes: next_attributes
+                -%}
               </div>
             {%- endif -%}
           </c-slideshow>
@@ -145,14 +162,7 @@
                   {%- endif -%}
                   <input type="hidden" name="quantity" value="1">
 
-                  <button
-                    data-dom="button"
-                    type="submit"
-                    class="button button--primary w-full"
-                    {% unless variant.available %}
-                      disabled
-                    {% endunless %}
-                  >
+                  {%- capture atc_title -%}
                     {%- if variant.available -%}
                       {{- 'sections.product.add_to_cart' | t -}}
                       <span aria-hidden="true">&nbsp;‧&nbsp;</span>
@@ -162,7 +172,23 @@
                     {%- else -%}
                       {{- 'sections.product.sold_out' | t -}}
                     {%- endif -%}
-                  </button>
+                  {%- endcapture -%}
+                  {%- liquid
+                    assign atc_disabled = false
+                    unless variant.available
+                      assign atc_disabled = true
+                    endunless
+                  -%}
+                  {% capture atc_attributes -%}
+                    data-dom="button"{% if atc_disabled %} disabled{% endif %}
+                  {%- endcapture %}
+                  {%- render 'button.html',
+                    title: atc_title,
+                    type: 'submit',
+                    classes: 'w-full',
+                    variant: 'primary',
+                    attributes: atc_attributes
+                  -%}
                 {%- endform -%}
               </c-add-to-cart-button>
 
@@ -242,6 +268,13 @@
       "unit": "px",
       "label": "t:sections.shared.settings.padding.bottom.label",
       "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": true
     },
     {
       "type": "header",

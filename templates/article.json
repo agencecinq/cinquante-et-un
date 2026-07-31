@@ -2,7 +2,16 @@
   "sections": {
     "main": {
       "type": "article",
-      "settings": {}
+      "settings": {
+        "show_image": true,
+        "show_table_of_contents": true,
+        "show_date": true,
+        "show_author": true,
+        "show_tags": true,
+        "show_breadcrumb": false,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     }
   },
   "order": ["main"]

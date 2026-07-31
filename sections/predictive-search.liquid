@@ -1,0 +1,40 @@
+{% comment %}
+  Inner markup for predictive search (injected into the combobox listbox).
+{% endcomment %}
+
+{%- if predictive_search.performed -%}
+  {%- assign products = predictive_search.resources.products -%}
+
+  {%- if products.size > 0 -%}
+    <div role="group" aria-labelledby="predictive-search-products-label">
+      <p
+        class="border-b border-black bg-gray-100 px-3 py-2 text-xs font-semibold uppercase"
+        id="predictive-search-products-label"
+      >
+        {{- 'sections.predictive_search.products' | t -}}
+      </p>
+      <ul class="divide-y divide-black">
+        {%- for product in products -%}
+          <li
+            role="option"
+            id="predictive-search-product-{{ product.id }}"
+            data-predictive-option
+            class="aria-selected:bg-gray-100"
+          >
+            {%- render 'predictive-search-product.html',
+              product: product,
+              terms: predictive_search.terms
+            -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.predictive_search.name",
+  "settings": []
+}
+{% endschema %}

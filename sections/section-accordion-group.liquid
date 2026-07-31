@@ -20,13 +20,19 @@
   assign classes = 'section-' | append: section.id | append: '-padding block'
   assign scheme = section.settings.color_scheme
 
-  render 'accordion-group.html', items: items, source: 'blocks', id: section.id, classes: classes, scheme: scheme, title: section.settings.title, link_url: section.settings.link_url, link_title: section.settings.link_title, link_target: section.settings.link_target
+  render 'accordion-group.html', items: items, id: section.id, classes: classes, scheme: scheme, title: section.settings.title, subtitle: section.settings.subtitle, link_url: section.settings.link_url, link_title: section.settings.link_title, link_target: section.settings.link_target
 -%}
 
 {% schema %}
 {
   "name": "t:sections.accordion-group.name",
   "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info"
+    },
     {
       "type": "text",
       "id": "title",
@@ -105,13 +111,6 @@
       "type": "accordion",
       "name": "t:sections.accordion-group.blocks.accordion.name",
       "settings": [
-        {
-          "type": "text",
-          "id": "category",
-          "label": "t:sections.accordion-group.blocks.accordion.settings.category.label",
-          "default": "t:sections.accordion-group.blocks.accordion.settings.category.default",
-          "info": "t:sections.accordion-group.blocks.accordion.settings.category.info"
-        },
         {
           "type": "text",
           "id": "title",

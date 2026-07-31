@@ -2,7 +2,9 @@
   "sections": {
     "main": {
       "type": "search",
-      "settings": {}
+      "settings": {
+        "compensate_header": true
+      }
     }
   },
   "order": ["main"]

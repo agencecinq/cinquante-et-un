@@ -70,11 +70,13 @@
         },
         "free_delivery_label": {
           "label": "Free delivery label",
+          "default": "Free delivery",
           "info": "Label displayed next to the free delivery progress"
         },
         "free_delivery_text": {
           "label": "Free delivery text",
-          "info": "Set the message displayed to customers indicating how much more they need to spend to qualify for free delivery. Use 'xx' as a placeholder for the amount. Currency formatting will be applied automatically."
+          "default": "xx left for free delivery",
+          "info": "Message shown while under the threshold. Use 'xx' as a placeholder for the remaining amount."
         },
         "cart_reassurance": {
           "header": {
@@ -190,32 +192,6 @@
           "link_url": "#",
           "link_target": "_self"
         }
-      }
-    },
-    "icon": {
-      "name": "Icon",
-      "presets": {
-        "name": "Icon"
-      }
-    },
-    "icon-group": {
-      "name": "Icon group",
-      "blocks": {
-        "icon": {
-          "settings": {
-            "title": {
-              "label": "Title",
-              "info": "Text displayed below the icon"
-            },
-            "icon": {
-              "label": "Icon",
-              "info": "Optional image displayed above the title"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Icon group"
       }
     },
     "button": {
@@ -427,68 +403,8 @@
         "subtitle": {
           "label": "Subtitle",
           "default": "Your subtitle here",
-          "info": "Enter the secondary text, typically smaller than the title",
+          "info": "Small uppercase label shown above a title",
           "placeholder": "Add a subtitle"
-        },
-        "tag": {
-          "label": "Tag",
-          "info": "Choose which HTML heading tag to use",
-          "options": {
-            "h1": {
-              "label": "H1"
-            },
-            "h2": {
-              "label": "H2"
-            },
-            "h3": {
-              "label": "H3"
-            }
-          }
-        },
-        "font_size": {
-          "label": "Font size",
-          "info": "Adjust the size of the subtitle",
-          "options": {
-            "2xl": {
-              "label": "2XL"
-            },
-            "xl": {
-              "label": "XL"
-            },
-            "l": {
-              "label": "L"
-            },
-            "m": {
-              "label": "M"
-            },
-            "s": {
-              "label": "S"
-            },
-            "xs": {
-              "label": "XS"
-            }
-          }
-        },
-        "opacity": {
-          "label": "Opacity",
-          "info": "Choose the opacity of the subtitle",
-          "options": {
-            "100": {
-              "label": "100%"
-            },
-            "75": {
-              "label": "75%"
-            },
-            "50": {
-              "label": "50%"
-            },
-            "25": {
-              "label": "25%"
-            },
-            "0": {
-              "label": "0%"
-            }
-          }
         }
       },
       "presets": {
@@ -510,187 +426,9 @@
           "title": "New"
         }
       }
-    },
-    "list": {
-      "name": "List",
-      "presets": {
-        "name": "List",
-        "category": "Content"
-      }
-    },
-    "_slide": {
-      "name": "Slide",
-      "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed for this slide"
-        },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed for this slide (takes precedence over the image)"
-        }
-      },
-      "presets": {
-        "name": "Slide",
-        "category": "Image"
-      }
-    },
-    "item": {
-      "name": "Item",
-      "settings": {
-        "text": {
-          "label": "Text",
-          "info": "List item text"
-        }
-      },
-      "presets": {
-        "name": "Item",
-        "category": "Content"
-      }
     }
   },
   "sections": {
-    "faq": {
-      "name": "FAQ",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "FAQ",
-          "info": "Section heading"
-        },
-        "link_title": {
-          "label": "Link title",
-          "default": "Learn more",
-          "info": "Optional link text displayed in the section"
-        },
-        "link_url": {
-          "label": "Link URL",
-          "info": "Optional link destination"
-        },
-        "link_target": {
-          "label": "Link target",
-          "options": {
-            "_self": {
-              "label": "Same tab"
-            },
-            "_blank": {
-              "label": "New tab"
-            }
-          }
-        },
-        "header": {
-          "content": "Metaobject"
-        },
-        "metaobject_type": {
-          "label": "Metaobject type",
-          "info": "Metaobject definition handle to read from metaobjects.&lt;type&gt;.values (default: faq)"
-        },
-        "category_key": {
-          "label": "Category field handle",
-          "info": "Metaobject field handle for category (optional)"
-        },
-        "title_key": {
-          "label": "Title/question field handle",
-          "info": "Metaobject field handle for the accordion title"
-        },
-        "content_key": {
-          "label": "Content/answer field handle",
-          "info": "Metaobject field handle for the accordion content"
-        }
-      }
-    },
-    "comparison_table": {
-      "name": "Comparison table",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "info": "Section title"
-        },
-        "table": {
-          "label": "Table",
-          "info": "Select comparison rows"
-        }
-      },
-      "presets": {
-        "name": "Comparison table"
-      }
-    },
-    "products_push": {
-      "name": "Products Push",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Your title here",
-          "info": "Enter the main text, usually the largest text on the section"
-        },
-        "products": {
-          "label": "Products",
-          "info": "Select the products to feature in this section"
-        },
-        "quick_add": {
-          "label": "Quick add",
-          "info": "Show add to cart button on product cards"
-        }
-      },
-      "presets": {
-        "name": "Products Push",
-        "category": "Products"
-      }
-    },
-    "cards_slider": {
-      "name": "Cards slider",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Your title here",
-          "info": "Optional section title for the cards slider"
-        }
-      },
-      "blocks": {
-        "card": {
-          "name": "Card",
-          "settings": {
-            "image": {
-              "label": "Image"
-            },
-            "video": {
-              "label": "Video"
-            },
-            "title": {
-              "label": "Title"
-            },
-            "text": {
-              "label": "Text"
-            },
-            "link_title": {
-              "label": "Link title",
-              "default": "Learn more",
-              "info": "Text displayed on the link"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "Set the destination URL of this card link"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose whether the link opens in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Cards slider",
-        "category": "Image"
-      }
-    },
     "announcement-bar": {
       "name": "Announcement bar",
       "blocks": {
@@ -709,6 +447,28 @@
         "name": "Announcement bar"
       }
     },
+    "article": {
+      "settings": {
+        "show_image": {
+          "label": "Show featured image"
+        },
+        "show_table_of_contents": {
+          "label": "Show table of contents"
+        },
+        "show_date": {
+          "label": "Show date"
+        },
+        "show_author": {
+          "label": "Show author"
+        },
+        "show_tags": {
+          "label": "Show tags"
+        },
+        "show_breadcrumb": {
+          "label": "Show breadcrumb"
+        }
+      }
+    },
     "blog": {
       "name": "Blog",
       "settings": {
@@ -716,6 +476,15 @@
           "label": "Title",
           "default": "Blog",
           "info": "If empty, the blog title will be used as a fallback."
+        },
+        "articles_per_page": {
+          "label": "Articles per page"
+        },
+        "show_tags": {
+          "label": "Show tags"
+        },
+        "show_excerpt": {
+          "label": "Show excerpt"
         }
       },
       "preset": {
@@ -755,11 +524,6 @@
         "accordion": {
           "name": "Accordion",
           "settings": {
-            "category": {
-              "label": "Category",
-              "default": "General",
-              "info": "Optional category used to group accordions"
-            },
             "title": {
               "label": "Title",
               "default": "Accordion title",
@@ -807,51 +571,6 @@
         }
       },
       "blocks": {
-        "menu_read_more": {
-          "name": "Read more link",
-          "settings": {
-            "handle": {
-              "label": "Handle",
-              "info": "Optional handle used for targeting or styling"
-            },
-            "menu": {
-              "label": "Menu",
-              "info": "Select the menu to display in this link block"
-            },
-            "image_1": {
-              "label": "Image 1",
-              "info": "First image displayed in the stack"
-            },
-            "image_2": {
-              "label": "Image 2",
-              "info": "Second image displayed in the stack"
-            },
-            "image_3": {
-              "label": "Image 3",
-              "info": "Third image displayed in the stack"
-            },
-            "title": {
-              "label": "Title",
-              "info": "Text displayed next to the images"
-            },
-            "url": {
-              "label": "URL",
-              "info": "Link destination"
-            },
-            "target": {
-              "label": "Link target",
-              "info": "Choose whether the link opens in the same tab or a new tab",
-              "options": {
-                "_self": {
-                  "label": "Same tab"
-                },
-                "_blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        },
         "push": {
           "name": "Push",
           "settings": {
@@ -913,6 +632,9 @@
         "name": "Search"
       }
     },
+    "predictive_search": {
+      "name": "Predictive search results"
+    },
     "404": {
       "name": "404",
       "title": "Page not found",
@@ -934,292 +656,64 @@
     },
     "styleguide": {
       "name": "Style guide",
+      "settings": {
+        "title": {
+          "label": "Title"
+        },
+        "intro": {
+          "label": "Introduction"
+        },
+        "comparison": {
+          "header": "Before / after demo",
+          "before": {
+            "label": "Before image",
+            "info": "Left side of the window splitter comparison. Uses a placeholder if empty."
+          },
+          "after": {
+            "label": "After image",
+            "info": "Right side of the window splitter comparison. Uses a placeholder if empty."
+          }
+        }
+      },
       "presets": {
         "name": "Style guide"
       }
     },
-    "social_media": {
-      "name": "Social media",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Follow us",
-          "info": "Optional heading for this section"
-        }
-      },
-      "presets": {
-        "name": "Social media",
-        "category": "Social"
-      },
-      "blocks": {
-        "link": {
-          "name": "Link",
-          "settings": {
-            "link": {
-              "label": "Link",
-              "info": "Set the destination URL of this social link"
-            },
-            "link_url": {
-              "label": "Link",
-              "info": "Set the destination URL of this social link"
-            },
-            "link_title": {
-              "label": "Title",
-              "info": "Set an optional label displayed for this social link"
-            },
-            "link_target": {
-              "label": "Open link in",
-              "info": "Choose whether the link opens in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        },
-        "media": {
-          "name": "Media",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Select an optional image when no video is selected"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Select an optional video; it is displayed instead of the image when set"
-            }
-          }
-        }
-      }
-    },
     "page": {
       "name": "Page",
+      "settings": {
+        "show_title": {
+          "label": "Show page title"
+        }
+      },
       "presets": {
         "name": "Page"
       }
     },
-    "contact": {
-      "name": "Contact",
+    "form": {
+      "name": "Form",
       "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed in this section"
+        "show_breadcrumb": {
+          "label": "Show breadcrumb",
+          "info": "Display breadcrumb navigation above the form"
         },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed in this section (takes precedence over the image)"
+        "title": {
+          "label": "Heading",
+          "info": "Optional heading displayed above the form"
         },
-        "push_image": {
-          "label": "Push image",
-          "info": "Select the image displayed in the push card"
-        },
-        "push_video": {
-          "label": "Push video",
-          "info": "Select the video displayed in the push card (takes precedence over the image)"
-        },
-        "push_title": {
-          "label": "Push title",
-          "info": "Set the title displayed in the push card"
-        },
-        "push_text": {
-          "label": "Push text",
-          "info": "Set the supporting text displayed in the push card"
-        },
-        "push_link_title": {
-          "label": "Push link title",
-          "info": "Set the text displayed for the push link"
-        },
-        "push_link_url": {
-          "label": "Push link URL",
-          "info": "Set the destination URL for the push link"
-        },
-        "push_link_target": {
-          "label": "Push link target",
-          "info": "Choose whether the push link opens in the same tab or a new tab",
-          "options": {
-            "_self": {
-              "label": "Same tab"
-            },
-            "_blank": {
-              "label": "New tab"
-            }
-          }
+        "text": {
+          "label": "Text",
+          "info": "Optional rich text displayed above the form"
         }
       },
       "presets": {
-        "name": "Contact"
+        "name": "Form"
       }
     },
     "collections": {
       "name": "Collections",
       "presets": {
         "name": "Collections"
-      }
-    },
-    "logos": {
-      "name": "Logos",
-      "settings": {
-        "title": {
-          "label": "Heading",
-          "info": "Optional heading displayed above the logo row",
-          "default": "As featured in"
-        }
-      },
-      "blocks": {
-        "logo": {
-          "name": "Logo",
-          "settings": {
-            "logo": {
-              "label": "Logo",
-              "info": "Image displayed for this logo"
-            },
-            "link_title": {
-              "label": "Link title",
-              "default": "Visit website",
-              "info": "Accessible link text when the logo is linked"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "default": "https://",
-              "info": "Set the destination URL when the logo is clicked"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Open the link in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Logos"
-      }
-    },
-    "key_figures": {
-      "name": "Key figures",
-      "settings": {
-        "title": {
-          "label": "Heading",
-          "default": "Our key figures",
-          "info": "Main heading for the key figures section"
-        }
-      },
-      "blocks": {
-        "key_figure": {
-          "name": "Key figure",
-          "settings": {
-            "title": {
-              "label": "Title",
-              "default": "Our key figures",
-              "info": "Heading displayed above the key figure"
-            },
-            "text": {
-              "label": "Text",
-              "default": "A short description",
-              "info": "Set the supporting text for the key figure"
-            },
-            "image": {
-              "label": "Image",
-              "info": "Optional image displayed for this key figure"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Optional video displayed for this key figure"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Key figures"
-      }
-    },
-    "steps": {
-      "name": "Steps",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "How it works",
-          "info": "Section title"
-        },
-        "step": {
-          "name": "Step",
-          "settings": {
-            "title": {
-              "label": "Title",
-              "default": "Step title",
-              "info": "Step heading"
-            },
-            "text": {
-              "label": "Text",
-              "default": "Step description",
-              "info": "Step description text"
-            },
-            "image": {
-              "label": "Image",
-              "info": "Optional image for this step"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Optional video for this step (takes precedence over the image)"
-            }
-          }
-        }
-      },
-      "blocks": {
-        "step": {
-          "settings": {
-            "title": {
-              "label": "Title",
-              "default": "Step title",
-              "info": "Step heading"
-            },
-            "text": {
-              "label": "Text",
-              "default": "Step description",
-              "info": "Step description text"
-            },
-            "image": {
-              "label": "Image",
-              "info": "Optional image for this step"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Optional video for this step (takes precedence over the image)"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Steps",
-        "category": "Text"
-      }
-    },
-    "subscription": {
-      "name": "Subscription",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Subscription",
-          "info": "Accessibility title for screen readers (used as the section heading)"
-        },
-        "products": {
-          "label": "Products",
-          "info": "Select the products to feature in this section"
-        }
-      },
-      "presets": {
-        "name": "Subscription"
       }
     },
     "collection": {
@@ -1264,196 +758,6 @@
             }
           }
         }
-      }
-    },
-    "image_gallery_masonry": {
-      "name": "Image gallery (masonry)",
-      "blocks": {
-        "image": {
-          "name": "Image",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "The image displayed in the masonry gallery"
-            },
-            "video": {
-              "label": "Video",
-              "info": "The video displayed in the masonry gallery"
-            },
-            "link_title": {
-              "label": "Link title",
-              "info": "Text displayed on the link, for accessibility"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "The URL that the image links to"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose whether the link opens in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            },
-            "show_on_mobile": {
-              "label": "Show on mobile",
-              "info": "Show this image on mobile devices"
-            },
-            "show_on_desktop": {
-              "label": "Show on desktop",
-              "info": "Show this image on desktop devices"
-            }
-          }
-        }
-      },
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Image gallery",
-          "info": "Accessibility title for screen readers (used as the section heading)"
-        }
-      },
-      "presets": {
-        "name": "Image gallery (masonry)"
-      }
-    },
-    "media_gallery_masonry": {
-      "name": "Media gallery (masonry)",
-      "blocks": {
-        "media": {
-          "name": "Media",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Optional image displayed when no video is selected"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Optional video displayed in the masonry gallery (takes precedence over the image if both are set)"
-            },
-            "link_title": {
-              "label": "Link title",
-              "info": "Text displayed on the link, for accessibility"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "The URL that the media links to"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose whether the link opens in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            },
-            "show_on_mobile": {
-              "label": "Show on mobile",
-              "info": "Show this media on mobile devices"
-            },
-            "show_on_desktop": {
-              "label": "Show on desktop",
-              "info": "Show this media on desktop devices"
-            }
-          }
-        }
-      },
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Media gallery",
-          "info": "Accessibility title for screen readers (used as the section heading)"
-        }
-      },
-      "presets": {
-        "name": "Media gallery (masonry)"
-      }
-    },
-    "full_page_slider": {
-      "name": "Full Page Slider",
-      "blocks": {
-        "slide": {
-          "name": "Slide",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Slide image"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Slide video (takes precedence over the image)"
-            },
-            "title": {
-              "label": "Title",
-              "info": "Slide title",
-              "placeholder": "Add a title"
-            },
-            "text": {
-              "label": "Text",
-              "info": "Slide text",
-              "placeholder": "Add text"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Full Page Slider",
-        "category": "Image"
-      }
-    },
-    "slider_production": {
-      "name": "Slider production",
-      "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed in this section"
-        },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed in this section (takes precedence over the image)"
-        },
-        "title": {
-          "label": "Title",
-          "info": "Section title used for accessibility and screen readers"
-        }
-      },
-      "presets": {
-        "name": "Slider production",
-        "category": "Image"
-      }
-    },
-    "team": {
-      "name": "Team",
-      "settings": {
-        "image_desktop": {
-          "label": "Desktop image",
-          "info": "Select the image displayed on desktop"
-        },
-        "video_desktop": {
-          "label": "Desktop video",
-          "info": "Select the video displayed on desktop (takes precedence over the image)"
-        },
-        "image_mobile": {
-          "label": "Mobile image",
-          "info": "Select the image displayed on mobile"
-        },
-        "video_mobile": {
-          "label": "Mobile video",
-          "info": "Select the video displayed on mobile (takes precedence over the image)"
-        }
-      },
-      "presets": {
-        "name": "Team",
-        "category": "Image"
       }
     },
     "richtext": {
@@ -1538,354 +842,6 @@
         }
       }
     },
-    "text_columns": {
-      "name": "Text columns",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Your title here",
-          "info": "Set the section title"
-        },
-        "text_right": {
-          "label": "Right text",
-          "default": "Your text here",
-          "info": "Set the text displayed in the right column"
-        },
-        "text_left": {
-          "label": "Left text",
-          "default": "Your text here",
-          "info": "Set the text displayed in the left column"
-        },
-        "link_title": {
-          "label": "Link title",
-          "default": "Learn more",
-          "info": "Set the text displayed on the link"
-        },
-        "link_right_title": {
-          "label": "Right link title",
-          "default": "Learn more",
-          "info": "Set the text displayed on the right link"
-        },
-        "link_left_title": {
-          "label": "Left link title",
-          "default": "Learn more",
-          "info": "Set the text displayed on the left link"
-        },
-        "link_url": {
-          "label": "Link URL",
-          "info": "Set the URL that the link points to"
-        },
-        "link_right_url": {
-          "label": "Right link URL",
-          "info": "Set the URL that the right link points to"
-        },
-        "link_left_url": {
-          "label": "Left link URL",
-          "info": "Set the URL that the left link points to"
-        },
-        "link_target": {
-          "label": "Link target",
-          "info": "Choose whether the link opens in the same tab or a new tab",
-          "options": {
-            "self": {
-              "label": "Same tab"
-            },
-            "blank": {
-              "label": "New tab"
-            }
-          }
-        },
-        "link_right_target": {
-          "label": "Right link target",
-          "info": "Choose whether the right link opens in the same tab or a new tab",
-          "options": {
-            "self": {
-              "label": "Same tab"
-            },
-            "blank": {
-              "label": "New tab"
-            }
-          }
-        },
-        "link_left_target": {
-          "label": "Left link target",
-          "info": "Choose whether the left link opens in the same tab or a new tab",
-          "options": {
-            "self": {
-              "label": "Same tab"
-            },
-            "blank": {
-              "label": "New tab"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Text columns",
-        "category": "Text"
-      }
-    },
-    "image_slider": {
-      "name": "Image slider",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Your title here",
-          "info": "Set the section title used for accessibility and screen readers"
-        }
-      },
-      "blocks": {
-        "item": {
-          "name": "Item",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Select the image displayed for this slide"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Select the video displayed for this slide"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "Set the URL for this slide link"
-            },
-            "link_title": {
-              "label": "Link title",
-              "info": "Set the text displayed for this slide link"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose whether this slide link opens in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Image slider",
-        "category": "Image"
-      }
-    },
-    "image_and_key_figures": {
-      "name": "Image and key figures",
-      "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed in this section"
-        },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed in this section"
-        },
-        "media_caption": {
-          "label": "Caption",
-          "default": "Your caption here",
-          "info": "Caption displayed with the media"
-        },
-        "media_copyright": {
-          "label": "Copyright",
-          "default": "Photo credit",
-          "info": "Copyright or photo credit displayed with the media"
-        }
-      },
-      "blocks": {
-        "key_figure": {
-          "name": "Key figure",
-          "settings": {
-            "title": {
-              "label": "Title",
-              "default": "Our key figure",
-              "info": "Heading for this key figure"
-            },
-            "text": {
-              "label": "Text",
-              "default": "A short description",
-              "info": "Supporting text for this key figure"
-            }
-          }
-        },
-        "content": {
-          "name": "Content",
-          "settings": {
-            "title": {
-              "label": "Title",
-              "default": "Your title here",
-              "info": "Set the heading for this content block"
-            },
-            "text": {
-              "label": "Text",
-              "default": "Your text here",
-              "info": "Set the content text for this block"
-            }
-          }
-        },
-        "media": {
-          "name": "Media",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Image displayed for this media block"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Video displayed for this media block"
-            },
-            "caption": {
-              "label": "Caption",
-              "default": "Your caption here",
-              "info": "Caption displayed with this media block"
-            },
-            "copyright": {
-              "label": "Copyright",
-              "default": "Photo credit",
-              "info": "Set the copyright or photo credit for this media block"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Image and key figures"
-      }
-    },
-    "origin": {
-      "name": "Origin",
-      "settings": {
-        "media_desktop": {
-          "header": {
-            "content": "Desktop media"
-          },
-          "image": {
-            "label": "Desktop image",
-            "info": "Select the image displayed on desktop. If empty, the mobile image is used."
-          },
-          "video": {
-            "label": "Desktop video",
-            "info": "Select the video displayed on desktop. If empty, the mobile video is used. Videos always take precedence over images."
-          }
-        },
-        "media_mobile": {
-          "header": {
-            "content": "Mobile media"
-          },
-          "image": {
-            "label": "Mobile image",
-            "info": "Select the image displayed on mobile. If empty, the desktop image is used."
-          },
-          "video": {
-            "label": "Mobile video",
-            "info": "Select the video displayed on mobile. If empty, the desktop video is used. Videos always take precedence over images."
-          }
-        }
-      },
-      "blocks": {
-        "item": {
-          "name": "Item",
-          "settings": {
-            "title": {
-              "label": "Title",
-              "default": "Your title here",
-              "info": "Set the title displayed for this item"
-            },
-            "text": {
-              "label": "Text",
-              "default": "Your text here",
-              "info": "Set the text displayed for this item"
-            },
-            "color_scheme": {
-              "label": "Color scheme"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Origin"
-      }
-    },
-    "histoire": {
-      "name": "Histoire",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Our story",
-          "info": "Set the section heading used for accessibility and screen readers"
-        }
-      },
-      "blocks": {
-        "item": {
-          "name": "Item",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Image displayed for this item"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Video displayed for this item"
-            },
-            "caption": {
-              "label": "Caption",
-              "default": "Your caption here",
-              "info": "Set the caption text displayed for this item"
-            },
-            "copyright": {
-              "label": "Copyright",
-              "default": "Photo credit",
-              "info": "Set the photo credit or copyright notice"
-            },
-            "content_position": {
-              "label": "Content position",
-              "options": {
-                "above_image": {
-                  "label": "Above image"
-                },
-                "on_image": {
-                  "label": "On image"
-                },
-                "below_image": {
-                  "label": "Below image"
-                }
-              }
-            },
-            "link": {
-              "label": "Link",
-              "info": "Set the URL for this item"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "Set the URL for this item"
-            },
-            "link_title": {
-              "label": "Link title",
-              "info": "Set the text displayed on this item link"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose whether this item link opens in the same tab or a new tab",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Histoire",
-        "category": "Text"
-      }
-    },
     "product": {
       "name": "Product",
       "settings": {
@@ -1915,114 +871,11 @@
         "breadcrumb": {
           "name": "Breadcrumb"
         },
-        "siblings": {
-          "name": "Siblings",
-          "settings": {
-            "layout": {
-              "label": "Layout",
-              "info": "Choose how siblings are displayed",
-              "options": {
-                "link": {
-                  "label": "Links"
-                },
-                "select": {
-                  "label": "Select"
-                }
-              }
-            }
-          }
-        },
-        "bullets": {
-          "name": "Bullets"
-        },
-        "variations": {
-          "name": "Variations",
-          "settings": {
-            "layout": {
-              "label": "Layout",
-              "info": "Choose how variations are displayed",
-              "options": {
-                "link": {
-                  "label": "Links"
-                },
-                "select": {
-                  "label": "Select"
-                }
-              }
-            }
-          }
-        },
-        "shop-the-look": {
-          "name": "Shop the Look",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Select the image where the Shop the look button will be displayed"
-            },
-            "product": {
-              "label": "Product",
-              "info": "Select the product to feature in the Shop the look drawer"
-            },
-            "option": {
-              "label": "Option",
-              "info": "Select the product option (e.g. Blue Denim) to feature in the Shop the look drawer",
-              "options": {
-                "blue-denim": {
-                  "label": "Blue Denim"
-                },
-                "black": {
-                  "label": "Black"
-                }
-              }
-            }
-          }
-        },
         "accordion-group": {
           "name": "Accordion Group"
         },
-        "tabs": {
-          "name": "Tabs",
-          "settings": {
-            "reassurance": {
-              "label": "Reassurance",
-              "default": "Complimentary shipping worldwide, duties included.\nFree returns within 30 days.",
-              "info": "Reassurance message displayed below the tabs"
-            },
-            "link_title": {
-              "label": "Title",
-              "default": "Contact & Customer Care",
-              "info": "Text displayed on the link"
-            },
-            "link_url": {
-              "label": "URL",
-              "info": "Set the URL that the link points to"
-            }
-          }
-        },
         "variants-picker": {
           "name": "Variants Picker"
-        },
-        "colors-picker": {
-          "name": "Colors Picker"
-        },
-        "styles-picker": {
-          "name": "Styles Picker"
-        },
-        "introduction": {
-          "name": "Introduction",
-          "settings": {
-            "text": {
-              "label": "Text",
-              "default": "Your text here",
-              "info": "The text displayed in the introduction"
-            }
-          }
-        },
-        "rating": {
-          "name": "Rating"
-        },
-        "descriptions": {
-          "name": "Descriptions"
         },
         "add-to-cart-button": {
           "name": "Add to cart button"
@@ -2044,14 +897,6 @@
               "label": "Text 3",
               "default": "",
               "info": "Third reassurance text (optional)"
-            }
-          }
-        },
-        "push": {
-          "name": "Push",
-          "settings": {
-            "push_product": {
-              "label": "Push product"
             }
           }
         }
@@ -2111,10 +956,6 @@
           "menu": {
             "label": "Menu",
             "info": "Main footer menu. Nested items become columns."
-          },
-          "legals": {
-            "label": "Legal links",
-            "info": "Links shown in the footer bottom bar"
           }
         },
         "newsletter": {
@@ -2140,59 +981,6 @@
           "label": "Show localization",
           "info": "Show the country/language selector in the footer"
         }
-      }
-    },
-    "features": {
-      "name": "Features",
-      "category": {
-        "name": "Content"
-      },
-      "blocks": {
-        "feature": {
-          "name": "Feature",
-          "settings": {
-            "text": {
-              "label": "Text",
-              "info": "Short line displayed in the features row",
-              "default": "Feature"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Features"
-      }
-    },
-    "reassurances": {
-      "name": "Reassurances",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "default": "Reassurances",
-          "info": "Accessibility title for screen readers (used as the section heading)"
-        }
-      },
-      "category": {
-        "name": "Content"
-      },
-      "blocks": {
-        "reassurance": {
-          "name": "Reassurance",
-          "settings": {
-            "text": {
-              "label": "Text",
-              "info": "Short reassurance message displayed to customers",
-              "default": "Reassurance"
-            },
-            "image": {
-              "label": "Image",
-              "info": "Optional icon or illustration for this reassurance"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Reassurances"
       }
     },
     "shared": {
@@ -2358,7 +1146,11 @@
         },
         "compensate_header": {
           "label": "Compensate for header",
-          "info": "Adds space equal to the fixed header height above this section"
+          "info": "Offsets this section below the fixed header. Turn off on full-bleed heroes that should sit under the header."
+        },
+        "subtitle": {
+          "label": "Subtitle",
+          "info": "Optional eyebrow label shown above the title"
         },
         "margin": {
           "header": "Margin",
@@ -2553,353 +1345,6 @@
       },
       "presets": {
         "name": "Hero"
-      }
-    },
-    "product_features": {
-      "name": "Product features",
-      "category": {
-        "name": "Products"
-      },
-      "blocks": {
-        "feature": {
-          "name": "Feature",
-          "settings": {
-            "text": {
-              "label": "Text",
-              "info": "Short line describing this product feature",
-              "default": "Feature"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Product features"
-      }
-    },
-    "product_benefits": {
-      "name": "Product benefits",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "info": "Used as the section’s accessible heading/label",
-          "default": "All benefits"
-        },
-        "show_all_categories": {
-          "label": "Show all categories",
-          "info": "If enabled, displays an \"All\" category button selected by default. If disabled, the first category is selected by default."
-        }
-      },
-      "category": {
-        "name": "Products"
-      },
-      "blocks": {
-        "benefit": {
-          "name": "Benefit",
-          "settings": {
-            "text": {
-              "label": "Text",
-              "info": "Short line describing this product benefit",
-              "default": "Benefit"
-            },
-            "category": {
-              "label": "Category",
-              "info": "Optional category label displayed above the benefit",
-              "default": "Benefit"
-            },
-            "title": {
-              "label": "Title",
-              "info": "Benefit title",
-              "default": "Benefit title"
-            },
-            "features": {
-              "label": "Features",
-              "info": "One feature per line",
-              "default": ""
-            },
-            "image": {
-              "label": "Image",
-              "info": "Optional image for this benefit",
-              "default": ""
-            },
-            "video": {
-              "label": "Video",
-              "info": "Optional video for this benefit (takes precedence over the image)",
-              "default": ""
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Product benefits"
-      }
-    },
-    "cover_and_text": {
-      "name": "Cover and text",
-      "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed in this section"
-        },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed in this section"
-        },
-        "title": {
-          "label": "Title",
-          "info": "Set the title displayed in this section"
-        }
-      },
-      "presets": {
-        "name": "Cover and text",
-        "category": "Text"
-      }
-    },
-    "text_and_images_column": {
-      "name": "Text and images column",
-      "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed in this section"
-        },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed in this section"
-        },
-        "title": {
-          "label": "Title",
-          "info": "Set the section title (used as an accessibility heading)"
-        },
-        "key_figure_1_title": {
-          "label": "Key figure 1 title",
-          "info": "Set the title for key figure 1"
-        },
-        "key_figure_1_text": {
-          "label": "Key figure 1 text",
-          "info": "Set the text for key figure 1"
-        },
-        "key_figure_2_title": {
-          "label": "Key figure 2 title",
-          "info": "Set the title for key figure 2"
-        },
-        "key_figure_2_text": {
-          "label": "Key figure 2 text",
-          "info": "Set the text for key figure 2"
-        }
-      },
-      "blocks": {
-        "item": {
-          "name": "Item",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Select the image displayed for this item"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Select the video displayed for this item"
-            },
-            "subtitle": {
-              "label": "Subtitle",
-              "info": "Set the subtitle displayed for this item",
-              "default": "Your subtitle here"
-            },
-            "title": {
-              "label": "Title",
-              "info": "Set the title displayed for this item",
-              "default": "Your title here"
-            },
-            "text": {
-              "label": "Text",
-              "info": "Set the text displayed for this item",
-              "default": "<p>Your text here</p>"
-            },
-            "link_title": {
-              "label": "Link title",
-              "info": "Set the text displayed for the link",
-              "default": "Learn more"
-            },
-            "link_text": {
-              "label": "Link text",
-              "info": "Set the text displayed for the link"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "Set the URL for the link"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose how the link opens",
-              "options": {
-                "_self": {
-                  "label": "Same tab"
-                },
-                "_blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Text and images column",
-        "category": "Text"
-      }
-    },
-    "text_and_images_production": {
-      "name": "Text and image production",
-      "settings": {
-        "image": {
-          "label": "Image",
-          "info": "Select the image displayed in this section"
-        },
-        "video": {
-          "label": "Video",
-          "info": "Select the video displayed in this section (takes precedence over the image)"
-        },
-        "key_figure_1_title": {
-          "label": "Key figure 1 title",
-          "info": "Set the title for key figure 1",
-          "default": "Key figure title"
-        },
-        "key_figure_1_text": {
-          "label": "Key figure 1 text",
-          "info": "Set the text for key figure 1",
-          "default": "Key figure text"
-        },
-        "key_figure_2_title": {
-          "label": "Key figure 2 title",
-          "info": "Set the title for key figure 2",
-          "default": "Key figure title"
-        },
-        "key_figure_2_text": {
-          "label": "Key figure 2 text",
-          "info": "Set the text for key figure 2",
-          "default": "Key figure text"
-        }
-      },
-      "presets": {
-        "name": "Text and image production",
-        "category": "Text"
-      }
-    },
-    "image_bridge": {
-      "name": "Image bridge",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "info": "Section title used for accessibility and screen readers"
-        }
-      },
-      "blocks": {
-        "slide": {
-          "name": "Slide",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Select the image displayed for this slide"
-            },
-            "video": {
-              "label": "Video",
-              "info": "Select the video displayed for this slide"
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Image bridge",
-        "category": "Image"
-      }
-    },
-    "text_image": {
-      "name": "Text image",
-      "settings": {
-        "media": {
-          "header": {
-            "content": "Media"
-          },
-          "image": {
-            "label": "Image",
-            "info": "Select the image displayed in this section"
-          },
-          "video": {
-            "label": "Video",
-            "info": "Select the video displayed in this section"
-          },
-          "position": {
-            "label": "Media position",
-            "info": "Choose whether the media appears on the left or right of the text",
-            "options": {
-              "left": {
-                "label": "Left"
-              },
-              "right": {
-                "label": "Right"
-              }
-            }
-          },
-          "full_bleed": {
-            "label": "Full bleed",
-            "info": "Enable this option to make the media span the full viewport width"
-          }
-        }
-      },
-      "presets": {
-        "name": "Text image",
-        "category": "Text"
-      }
-    },
-    "content-cards": {
-      "name": "Content cards",
-      "settings": {
-        "title": {
-          "label": "Title",
-          "info": "Section heading",
-          "default": "Content cards"
-        }
-      },
-      "blocks": {
-        "card": {
-          "name": "Card",
-          "settings": {
-            "image": {
-              "label": "Image",
-              "info": "Card image"
-            },
-            "title": {
-              "label": "Title",
-              "info": "Card title"
-            },
-            "text": {
-              "label": "Text",
-              "info": "Card text"
-            },
-            "link_title": {
-              "label": "Link title",
-              "info": "Text displayed for the link"
-            },
-            "link_url": {
-              "label": "Link URL",
-              "info": "URL for the link"
-            },
-            "link_target": {
-              "label": "Link target",
-              "info": "Choose how the link opens",
-              "options": {
-                "self": {
-                  "label": "Same tab"
-                },
-                "blank": {
-                  "label": "New tab"
-                }
-              }
-            }
-          }
-        }
-      },
-      "presets": {
-        "name": "Content cards",
-        "category": "Content"
       }
     }
   },

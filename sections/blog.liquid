@@ -12,8 +12,8 @@
   assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
 
   if section.settings.compensate_header
-    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + 53px)'
-    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + 75px)'
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
   else
     assign padding_top_mobile = padding_top_mobile | append: 'rem'
     assign padding_top_desktop = padding_top_desktop | append: 'rem'
@@ -22,37 +22,39 @@
 
 {%- style -%}
   .section-{{ section.id }}-padding {
-  padding-top: {{ padding_top_mobile }};
-  padding-bottom: {{ padding_bottom_mobile }}rem;
+    padding-top: {{ padding_top_mobile }};
+    padding-bottom: {{ padding_bottom_mobile }}rem;
   }
 
   @media (width >= 64rem) {
-  .section-{{ section.id }}-padding {
-  padding-top: {{ padding_top_desktop }};
-  padding-bottom: {{ padding_bottom_desktop }}rem;
-  }
+    .section-{{ section.id }}-padding {
+      padding-top: {{ padding_top_desktop }};
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} space-y-24">
-  <div class="container space-y-14 text-center">
-    <h1 class="text-base font-semibold">
-      <a href="{{ blog.url }}">
-        {{- section.settings.title | default: blog.title -}}
-      </a>
-    </h1>
+<div class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} space-y-12">
+  <div class="container space-y-6 text-center">
+    <div class="space-y-2">
+      {%- render 'subtitle.html', subtitle: section.settings.subtitle -%}
+      <h1 class="text-base font-semibold">
+        <a href="{{ blog.url }}">
+          {{- section.settings.title | default: blog.title -}}
+        </a>
+      </h1>
+    </div>
 
-    {%- if blog.tags.size > 0 -%}
+    {%- if blog.all_tags.size > 0 -%}
       <ul class="flex flex-wrap items-center justify-center gap-x-12 gap-y-2.5">
         {%- for tag in blog.all_tags -%}
-          {% assign handle = tag | handleize %}
           <li>
             <a
-              href="{{ blog.url }}/tagged/{{ handle }}"
+              href="{{ blog.url }}/tagged/{{ tag | handleize }}"
               class="text-xs uppercase{% if current_tags contains tag %} underline{% endif %}"
               title="{{ 'sections.blog.filter_by_tag' | t: tag: tag }}"
             >
-              {{ tag }}
+              {{- tag -}}
             </a>
           </li>
         {%- endfor -%}
@@ -60,81 +62,54 @@
     {%- endif -%}
   </div>
 
-  {% paginate blog.articles by 5 %}
-    <div class="container grid grid-cols-4 gap-x-2 gap-y-6 lg:grid-cols-12 lg:gap-x-4 lg:gap-y-10">
-      {% for article in blog.articles %}
-        <div class="col-span-4 {% if forloop.first %}lg:col-span-12{% endif %}">
-          <article
-            {% if forloop.first != true %}
-              class="space-y-4"
-            {% endif %}
-          >
-            <a
-              href="{{ article.url }}"
-              class="block bg-gray-200 overflow-hidden{% if forloop.first %} lg:aspect-16/9{% else %} aspect-3/4{% endif %}{% if article.image %} relative after:absolute after:z-20 after:inset-0 after:[background:linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_100%)]{% endif %}"
-            >
-              {% liquid
-                if article.image
-                  assign width = 908
+  {% paginate blog.articles by section.settings.articles_per_page %}
+    {%- liquid
+      assign current = paginate.current_offset | plus: blog.articles.size
+      assign out_of = 'sections.blog.out-of' | t: current: current, total: blog.articles_count
+    -%}
 
-                  if forloop.first
-                    assign width = 2808
-                  endif
-                  echo article.image | image_url: width: width | image_tag: class: 'size-full object-cover object-center absolute inset-0 lg:relative z-10'
-                endif
-              %}
+    {%- capture articles_grid -%}
+      <ul
+        data-dom="container"
+        data-out-of="{{ out_of }}"
+        class="container grid grid-cols-2 gap-4 lg:grid-cols-4"
+      >
+        {%- for article in blog.articles -%}
+          <li>
+            {%- render 'tease-article.html',
+              article: article,
+              show_tags: section.settings.show_tags,
+              show_excerpt: section.settings.show_excerpt
+            -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endcapture -%}
 
-              {%- if forloop.first != true and article.tags.size > 0 -%}
-                <ul class="absolute inset-x-0 top-0 z-20 m-3 flex flex-wrap gap-2.5">
-                  {%- for tag in article.tags -%}
-                    <li>
-                      <p class="tag text-black/70">
-                        {{ tag }}
-                      </p>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
-
-              {%- if forloop.first -%}
-                <div class="relative z-30 mx-5 my-5 space-y-10 text-center text-white lg:absolute lg:inset-x-0 lg:bottom-0 lg:mt-0 lg:mb-24">
-                  {%- if article.tags.size > 0 -%}
-                    <ul class="flex flex-wrap items-center justify-center gap-2.5">
-                      {%- for tag in article.tags -%}
-                        <li>
-                          <p class="tag text-black/70">
-                            {{- tag -}}
-                          </p>
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-                  <div class="flex flex-col items-center gap-6">
-                    <h2 class="text-xl font-semibold">{{- article.title -}}</h2>
-                    {%- assign title = 'section.blog.read_more' | t -%}
-                    {%- render 'link.html', tag: 'p', title: title -%}
-                  </div>
-                </div>
-              {%- endif -%}
-            </a>
-            {%- if forloop.first != true -%}
-              <div class="space-y-4">
-                <p class="text-xs font-medium text-black/70 uppercase">
-                  {{ article.published_at | time_tag: format: 'date' }}
-                </p>
-                <h2 class="text-sm font-semibold">
-                  {{ article.title | link_to: article.url }}
-                </h2>
-              </div>
-            {%- endif -%}
-          </article>
-        </div>
-      {% endfor %}
-    </div>
     {%- if paginate.pages > 1 -%}
-      <div class="container flex justify-center">
-        {%- render 'pagination.html', paginate: paginate -%}
-      </div>
+      <c-load-more
+        id="BlogLoadMore-{{ section.id }}"
+        data-action="{{ paginate.next.url }}"
+        data-current-page="{{ paginate.current_page }}"
+        data-total-pages="{{ paginate.pages }}"
+        class="flex flex-col gap-y-10 transition-opacity duration-300 ease-out lg:gap-y-12"
+      >
+        {{ articles_grid }}
+
+        <div class="container space-y-4 text-center">
+          <div data-dom="out-of" class="text-center text-sm">
+            {{- out_of -}}
+          </div>
+          {%- assign title = 'sections.blog.see-more' | t -%}
+          {%- render 'button.html',
+            title: title,
+            variant: 'tertiary',
+            attributes: 'data-dom="load-more-button"'
+          -%}
+        </div>
+      </c-load-more>
+    {%- else -%}
+      {{ articles_grid }}
     {%- endif -%}
   {% endpaginate %}
 </div>
@@ -145,10 +120,37 @@
   "settings": [
     {
       "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info"
+    },
+    {
+      "type": "text",
       "id": "title",
       "label": "t:sections.blog.settings.title.label",
       "default": "t:sections.blog.settings.title.default",
       "info": "t:sections.blog.settings.title.info"
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12,
+      "label": "t:sections.blog.settings.articles_per_page.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:sections.blog.settings.show_tags.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "t:sections.blog.settings.show_excerpt.label",
+      "default": false
     },
     {
       "type": "header",
@@ -181,7 +183,7 @@
       "id": "compensate_header",
       "label": "t:sections.shared.settings.compensate_header.label",
       "info": "t:sections.shared.settings.compensate_header.info",
-      "default": false
+      "default": true
     },
     {
       "type": "header",

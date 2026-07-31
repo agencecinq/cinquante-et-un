@@ -156,6 +156,9 @@
   ],
   "blocks": [
     {
+      "type": "subtitle"
+    },
+    {
       "type": "title"
     },
     {
@@ -167,7 +170,28 @@
   ],
   "presets": [
     {
-      "name": "t:sections.404.presets.name"
+      "name": "t:sections.404.presets.name",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "404"
+          }
+        },
+        {
+          "type": "title",
+          "settings": {
+            "title": "Page not found",
+            "tag": "h1"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>The page you requested does not exist.</p>"
+          }
+        }
+      ]
     }
   ]
 }

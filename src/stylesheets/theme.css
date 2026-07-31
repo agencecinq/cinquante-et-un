@@ -1,25 +1,11 @@
 /*
  * Theme overrides for Tailwind.
- * Add tokens inside `@theme` to customize the default theme
- * (colors, fonts, spacing, etc.).
- *
- * Spacing rhythm (prefer Tailwind defaults):
- *   1–3  micro  |  4–6  small  |  8–12  medium  |  16–24  section
- * Avoid one-off values (*.25, *.75, 13, 15, 18, rem arbitraries).
- *
- * Z-index scale:
- *   z-10 / z-20  local stacking
- *   z-40         header / sticky chrome
- *   z-50         drawers, toasts, skip link
+ * Add tokens inside `@theme` only when you intentionally customize
+ * the default theme (colors, fonts, spacing, etc.).
  *
  * @see https://tailwindcss.com/docs/theme
  */
 @theme {
   --font-sans: var(--font-primary--family), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-secondary--family), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
-}
-
-/* Package snippet ships z-20; keep drawers above headroom (z-40). */
-cinq-drawer {
-  z-index: 50;
 }

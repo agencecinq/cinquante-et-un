@@ -1,25 +1,39 @@
 {% doc %}
   Renders social media icons with links to the respective profiles.
+  Reads theme settings `social_*` (Theme settings → Socials).
 
   @example {% render 'socials.html' %}
 {% enddoc %}
 
-<ul class="flex flex-wrap gap-3">
-  {% assign socials = 'facebook,instagram,twitter,youtube,tiktok' | split: ',' %}
-  {%- for social in socials -%}
-    {%- assign handle = 'social_' | append: social -%}
-    {%- if settings[handle] != blank -%}
-      <li>
-        <a
-          href="{{ settings[handle] }}"
-          aria-label="{{ social | capitalize }}"
-          class="flex size-10 items-center justify-center border border-black hover:bg-black hover:text-white"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {%- render 'use.html', icon: social, classes: 'size-5' -%}
-        </a>
-      </li>
-    {%- endif -%}
-  {%- endfor -%}
-</ul>
+{%- liquid
+  assign socials = 'facebook,instagram,twitter,youtube,tiktok' | split: ','
+  assign has_socials = false
+  for social in socials
+    assign handle = 'social_' | append: social
+    if settings[handle] != blank
+      assign has_socials = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_socials -%}
+  <ul class="flex flex-wrap gap-3">
+    {%- for social in socials -%}
+      {%- assign handle = 'social_' | append: social -%}
+      {%- if settings[handle] != blank -%}
+        <li>
+          <a
+            href="{{ settings[handle] }}"
+            aria-label="{{ social | capitalize }}"
+            class="flex size-10 items-center justify-center border border-black hover:bg-black hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {%- render 'use.html', icon: social, classes: 'size-5' -%}
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

@@ -24,9 +24,12 @@
 {%- if related_collection != blank and related_collection.products_count > 1 -%}
   <div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
     <div class="container space-y-6">
-      {%- if section.settings.title != blank -%}
-        <h2 class="text-lg">{{- section.settings.title -}}</h2>
-      {%- endif -%}
+      <div class="space-y-2">
+        {%- render 'subtitle.html', subtitle: section.settings.subtitle -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="text-lg font-semibold">{{- section.settings.title -}}</h2>
+        {%- endif -%}
+      </div>
 
       <ul class="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {%- assign shown = 0 -%}
@@ -51,6 +54,12 @@
 {
   "name": "t:sections.related-products.name",
   "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info"
+    },
     {
       "type": "text",
       "id": "title",

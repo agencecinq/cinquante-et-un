@@ -1,0 +1,30 @@
+{% doc %}
+  Subtitle / eyebrow block — small uppercase label above a title.
+{% enddoc %}
+
+{%- render 'subtitle.html', subtitle: block.settings.subtitle, block: block -%}
+
+{% schema %}
+{
+  "name": "t:blocks.subtitle.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:blocks.subtitle.settings.subtitle.label",
+      "default": "t:blocks.subtitle.settings.subtitle.default",
+      "info": "t:blocks.subtitle.settings.subtitle.info",
+      "placeholder": "t:blocks.subtitle.settings.subtitle.placeholder"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.subtitle.presets.name",
+      "settings": {
+        "subtitle": "Subtitle"
+      }
+    }
+  ]
+}
+{% endschema %}

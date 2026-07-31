@@ -11,53 +11,51 @@
 %}
 
 {%- capture content -%}
-  <header class="flex items-center justify-between gap-2.5 lg:gap-5">
-    <p class="text-xs font-medium">{{- 'cart.recommendations.title' | t -}}</p>
+  <header>
+    <p class="text-xs font-medium uppercase">{{- 'cart.recommendations.title' | t -}}</p>
   </header>
 
   {%- if mode == 'slider' -%}
     <div class="slideshow">
       <div id="slider-{{ id }}" class="slider scrollbar-hidden">
         {% for product in products %}
-        {% assign price = product.price | money_with_currency %}
-        <div
-        class="slide gap"
-        id="slider-{{ id }}-slide-{{ forloop.index0 }}"
-        data-dom="slide"
-        >
-        <article class="bg-gray-50 p-1.5">
-        <div class="flex w-80 items-center gap-3">
-        <div class="aspect-square h-16 w-14 shrink-0 overflow-hidden bg-white">
-        {{-
-        product.media[0]
-        | image_url: width: 118
-        | image_tag: class: 'size-full object-contain object-center'
-        -}}
-        </div>
-
-        <div class="space-y-3">
-                <p class="text-xs font-bold">{{- product.title -}}</p>
-                  {%- if product -%}
-                    {% capture button %}
-                      <button
-                        data-dom="button"
-                        type="submit"
-                        class="border border-gray-700 px-4 py-3 text-xs font-medium"
-                        aria-label="{{ 'cart.recommendations.add_to_cart' | t }}"
-                      >
-                       {{- 'cart.recommendations.add_to_cart' | t: price: price -}}
-                      </button>
-                    {%- endcapture -%}
-                    {%- render 'add-to-cart.html', product: product, events: 'cartUpdate', button: button -%}
+          {% assign price = product.price | money_with_currency %}
+          <div
+            class="slide gap"
+            id="slider-{{ id }}-slide-{{ forloop.index0 }}"
+            data-dom="slide"
+          >
+            <article class="border border-black p-3">
+              <div class="flex w-72 items-center gap-3 sm:w-80">
+                <div class="aspect-3/4 h-16 w-12 shrink-0 overflow-hidden border border-black bg-gray-100">
+                  {%- if product.featured_media -%}
+                    {{-
+                      product.featured_media
+                      | image_url: width: 118
+                      | image_tag: class: 'size-full object-cover object-center'
+                    -}}
                   {%- else -%}
-                    <p
-                      type="button"
-                      class="mt-auto flex size-10 shrink-0 items-center justify-center"
-                      aria-label="{{ 'cart.recommendations.add_to_cart' | t }}"
-                    >
-                      {%- render 'use.html', icon: 'cart', classes: 'size-full pointer-events-none' -%}
-                    </p>
+                    {{- 'product-1' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40' -}}
                   {%- endif -%}
+                </div>
+
+                <div class="min-w-0 grow space-y-3">
+                  <p class="truncate text-sm">{{- product.title -}}</p>
+                  {%- liquid
+                    assign reco_title = 'cart.recommendations.add_to_cart' | t: price: price
+                    assign reco_label = 'cart.recommendations.add_to_cart' | t
+                  -%}
+                  {% capture reco_attributes %}data-dom="button" aria-label="{{ reco_label | escape }}"{% endcapture %}
+                  {% capture button %}
+                    {%- render 'button.html',
+                      title: reco_title,
+                      type: 'submit',
+                      classes: 'w-full',
+                      variant: 'secondary',
+                      attributes: reco_attributes
+                    -%}
+                  {%- endcapture -%}
+                  {%- render 'add-to-cart.html', product: product, events: 'cartUpdate', button: button -%}
                 </div>
               </div>
             </article>
@@ -68,10 +66,10 @@
   {%- endif -%}
 
   {%- if mode == 'grid' -%}
-    <ul class="grid grid-cols-3 gap-2.5 lg:gap-5">
+    <ul class="grid grid-cols-2 gap-4 lg:grid-cols-4">
       {%- for product in products -%}
-        <li class="col-span-3">
-        {%- render 'tease-product.html', product: product -%}
+        <li>
+          {%- render 'tease-product.html', product: product -%}
         </li>
       {%- endfor -%}
     </ul>
@@ -79,7 +77,7 @@
 {%- endcapture -%}
 
 {%- if products -%}
-  <div class="space-y-5" id="CartRecommandations-{{ id }}">
+  <div class="space-y-4" id="CartRecommandations-{{ id }}">
     {{- content -}}
   </div>
 {%- endif -%}

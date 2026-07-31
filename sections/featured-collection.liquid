@@ -30,11 +30,14 @@
   <div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
     <div class="container space-y-6">
       <div class="flex flex-wrap items-end justify-between gap-4">
-        {%- if section.settings.title != blank -%}
-          <h2 class="text-lg">{{- section.settings.title -}}</h2>
-        {%- elsif collection != blank -%}
-          <h2 class="text-lg">{{- collection.title -}}</h2>
-        {%- endif -%}
+        <div class="space-y-2">
+          {%- render 'subtitle.html', subtitle: section.settings.subtitle -%}
+          {%- if section.settings.title != blank -%}
+            <h2 class="text-lg font-semibold">{{- section.settings.title -}}</h2>
+          {%- elsif collection != blank -%}
+            <h2 class="text-lg font-semibold">{{- collection.title -}}</h2>
+          {%- endif -%}
+        </div>
 
         {%- if section.settings.show_view_all and collection.url != blank -%}
           <a href="{{ collection.url }}" class="text-sm underline underline-offset-2">
@@ -58,6 +61,12 @@
 {
   "name": "t:sections.featured-collection.name",
   "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info"
+    },
     {
       "type": "text",
       "id": "title",

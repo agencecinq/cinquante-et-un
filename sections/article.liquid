@@ -1,86 +1,339 @@
 {% comment %}
-  This section is used in the article template to render the article page, which
-  displays the full content of the blog post and can optionally include a
-  comments section for customers (not shown in this example).
+  Article template — hero, table of contents, content, optional comments.
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/article
 {% endcomment %}
 
-<div class="relative aspect-9/16 bg-gray-200 text-white lg:aspect-3/1">
-  {%- if article.image -%}
-    {{-
-      article.image
-      | image_url: width: 2880
-      | image_tag: class: 'relative z-10 size-full object-cover object-center'
-    -}}
-  {%- endif -%}
+{%- liquid
+  assign content_id = 'article-content-' | append: section.id
+  assign show_hero = section.settings.show_image
+  assign show_toc = section.settings.show_table_of_contents
 
-  <div class="absolute inset-x-0 bottom-0 z-20 container mb-40 text-center">
-    <h1 class="text-center text-base font-semibold">{{- article.title -}}</h1>
-  </div>
-</div>
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+-%}
 
-<div class="container my-14 grid grid-cols-12 gap-x-2 gap-y-14 overflow-hidden lg:my-32 lg:gap-x-4">
-  <c-table-of-contents
-    data-content-id="article-{{ article.id }}"
-    class="scrollbar-hidden col-span-12 -mx-2.5 overflow-x-auto overflow-y-hidden px-2.5 lg:col-span-5 lg:mx-0 lg:overflow-visible lg:px-0"
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ padding_top_mobile }}rem;
+    padding-bottom: {{ padding_bottom_mobile }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ padding_top_desktop }}rem;
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
+  }
+{%- endstyle -%}
+
+{%- if show_hero -%}
+  <div
+    class="relative aspect-9/16 max-h-screen bg-gray-100 text-white after:absolute after:inset-0 after:z-20 after:size-full after:[background:linear-gradient(180deg,rgba(0,0,0,0)_40%,rgba(0,0,0,0.45)_100%)] lg:aspect-3/1"
   >
-    <ul
-      data-dom="content"
-      class="flex gap-5 whitespace-nowrap lg:block lg:gap-6 lg:space-y-10 lg:whitespace-normal [&>li]:shrink-0"
-    ></ul>
-  </c-table-of-contents>
-  <div id="article-{{ article.id }}" class="wysiwyg col-span-12 lg:col-span-6 lg:col-start-6">
-    {{- article.content -}}
+    {%- if article.image -%}
+      {%- assign article_image_alt = article.image.alt | default: article.title -%}
+      {%- render 'image.html',
+        image: article.image,
+        width: 2880,
+        widths: '750,1100,1500,1780,2000,2400,2880',
+        alt: article_image_alt,
+        class: 'relative z-10 size-full object-cover object-center',
+        loading: 'eager',
+        fetchpriority: 'high'
+      -%}
+    {%- else -%}
+      {{- 'lifestyle-1' | placeholder_svg_tag: 'relative z-10 size-full object-cover object-center opacity-40' -}}
+    {%- endif -%}
+
+    <div class="absolute inset-x-0 bottom-0 z-30 container space-y-3 py-8 text-center lg:py-12">
+      <h1 class="text-balance text-base font-semibold">{{- article.title -}}</h1>
+
+      {%- if section.settings.show_date or section.settings.show_author -%}
+        <p class="text-sm opacity-80">
+          {%- if section.settings.show_date -%}
+            {{- article.published_at | time_tag: format: 'date' -}}
+          {%- endif -%}
+          {%- if section.settings.show_date and section.settings.show_author %}
+            ·
+          {% endif -%}
+          {%- if section.settings.show_author -%}
+            {{- article.author -}}
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.show_tags and article.tags.size > 0 -%}
+        <ul class="flex flex-wrap items-center justify-center gap-2">
+          {%- for tag in article.tags -%}
+            <li>
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="tag border-white text-white">
+                {{- tag -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<div class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="container space-y-12 lg:space-y-16">
+    {%- unless show_hero -%}
+      <header class="mx-auto max-w-3xl space-y-3 text-center">
+        {%- if section.settings.show_breadcrumb -%}
+          {%- render 'breadcrumb.html', classes: 'text-xs opacity-60', classes_list: 'justify-center' -%}
+        {%- endif -%}
+        <h1 class="text-balance text-base font-semibold">{{- article.title -}}</h1>
+        {%- if section.settings.show_date or section.settings.show_author -%}
+          <p class="text-sm opacity-60">
+            {%- if section.settings.show_date -%}
+              {{- article.published_at | time_tag: format: 'date' -}}
+            {%- endif -%}
+            {%- if section.settings.show_date and section.settings.show_author %}
+              ·
+            {% endif -%}
+            {%- if section.settings.show_author -%}
+              {{- article.author -}}
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.show_tags and article.tags.size > 0 -%}
+          <ul class="flex flex-wrap items-center justify-center gap-2">
+            {%- for tag in article.tags -%}
+              <li>
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="tag">{{- tag -}}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </header>
+    {%- elsif section.settings.show_breadcrumb -%}
+      {%- render 'breadcrumb.html', classes: 'text-xs opacity-60' -%}
+    {%- endunless -%}
+
+    <div class="grid grid-cols-4 gap-x-4 gap-y-10 lg:grid-cols-12 lg:gap-y-12">
+      {%- if show_toc -%}
+        <nav
+          class="col-span-4 lg:col-span-4"
+          aria-label="{{ 'sections.article.table_of_contents_label' | t }}"
+        >
+          <c-table-of-contents data-content-id="{{ content_id }}" class="block space-y-4">
+            <p class="text-xs font-medium uppercase tracking-wide opacity-60">
+              {{- 'sections.article.table_of_contents_title' | t -}}
+            </p>
+            <ul
+              data-dom="content"
+              class="scrollbar-hidden flex gap-6 overflow-x-auto whitespace-nowrap lg:block lg:space-y-4 lg:overflow-visible lg:whitespace-normal [&>li]:shrink-0"
+            ></ul>
+          </c-table-of-contents>
+        </nav>
+      {%- endif -%}
+
+      <div
+        id="{{ content_id }}"
+        class="wysiwyg col-span-4{% if show_toc %} lg:col-span-7 lg:col-start-6{% else %} lg:col-span-8 lg:col-start-3{% endif %}"
+      >
+        {{- article.content -}}
+      </div>
+    </div>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="mx-auto grid max-w-3xl gap-10 lg:gap-12">
+        <div id="comments" class="space-y-6">
+          <h2 class="text-base font-semibold">{{ 'blog.article_comments' | t }}</h2>
+
+          {% paginate article.comments by 10 %}
+            {%- if article.comments_count > 0 -%}
+              <ul class="space-y-4">
+                {%- for comment in article.comments -%}
+                  <li class="surface surface--padded space-y-2 text-sm">
+                    <div class="flex flex-wrap items-baseline justify-between gap-2">
+                      <p class="font-medium">{{ comment.author }}</p>
+                      <p class="opacity-60">
+                        {{- comment.created_at | time_tag: format: 'date' -}}
+                      </p>
+                    </div>
+                    <div class="opacity-80">{{ comment.content }}</div>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+              {%- if paginate.pages > 1 -%}
+                <div class="text-sm">
+                  {{ paginate | default_pagination: anchor: 'comments' }}
+                </div>
+              {%- endif -%}
+            {%- else -%}
+              <p class="text-sm opacity-60">{{ 'sections.article.comments_empty' | t }}</p>
+            {%- endif -%}
+          {% endpaginate %}
+        </div>
+
+        {% form 'new_comment', article, class: 'space-y-4' %}
+          <h2 class="text-base font-semibold">{{ 'blog.comment_form_title' | t }}</h2>
+
+          {%- if form.posted_successfully? -%}
+            <p class="surface px-4 py-3 text-sm" role="status" tabindex="-1" autofocus>
+              {%- if blog.moderated? -%}
+                {{- 'sections.article.comment_success_moderated' | t -}}
+              {%- else -%}
+                {{- 'sections.article.comment_success' | t -}}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="surface px-4 py-3 text-sm" role="alert">
+              {{- form.errors | default_errors -}}
+            </div>
+          {%- endif -%}
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="space-y-2">
+              <label class="text-xs font-medium" for="CommentForm-author-{{ section.id }}">
+                {{- 'blog.comment_form_name' | t -}}
+              </label>
+              <input
+                type="text"
+                name="comment[author]"
+                id="CommentForm-author-{{ section.id }}"
+                value="{{ form.author }}"
+                required
+                autocomplete="name"
+                class="w-full border border-black bg-transparent px-3 py-3 text-sm placeholder:opacity-40"
+              >
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-medium" for="CommentForm-email-{{ section.id }}">
+                {{- 'blog.comment_form_email' | t -}}
+              </label>
+              <input
+                type="email"
+                name="comment[email]"
+                id="CommentForm-email-{{ section.id }}"
+                value="{{ form.email }}"
+                required
+                autocomplete="email"
+                autocapitalize="off"
+                spellcheck="false"
+                class="w-full border border-black bg-transparent px-3 py-3 text-sm placeholder:opacity-40"
+              >
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs font-medium" for="CommentForm-body-{{ section.id }}">
+              {{- 'blog.comment_form_body' | t -}}
+            </label>
+            <textarea
+              name="comment[body]"
+              id="CommentForm-body-{{ section.id }}"
+              rows="5"
+              required
+              class="w-full border border-black bg-transparent px-3 py-3 text-sm placeholder:opacity-40"
+            >{{ form.body }}</textarea>
+          </div>
+
+          {%- if blog.moderated? -%}
+            <p class="text-xs opacity-60">{{ 'sections.article.comment_moderated' | t }}</p>
+          {%- endif -%}
+
+          {%- assign submit_title = 'blog.comment_form_submit' | t -%}
+          {%- render 'button.html',
+            title: submit_title,
+            type: 'submit',
+            variant: 'primary',
+            classes: 'w-full sm:w-auto'
+          -%}
+        {% endform %}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
-{% if blog.comments_enabled? %}
-  <h2>{{ 'blog.article_comments' | t }}</h2>
-
-  <div id="comments">
-    {% paginate article.comments by 10 %}
-      {% for comment in article.comments %}
-        <div>
-          <p>{{ comment.author }}</p>
-          <p>
-            {{- comment.created_at | time_tag: format: 'date' -}}
-          </p>
-          <p>{{ comment.content }}</p>
-        </div>
-      {% endfor %}
-
-      {{ paginate | default_pagination: anchor: 'comments' }}
-    {% endpaginate %}
-  </div>
-
-  {% form 'new_comment', article %}
-    <h2>{{ 'blog.comment_form_title' | t }}</h2>
-
-    {{ form.errors | default_errors }}
-
-    <div>
-      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
-      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
-    </div>
-
-    <div>
-      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
-      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
-    </div>
-
-    <div>
-      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
-      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
-    </div>
-
-    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
-  {% endform %}
-{% endif %}
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
 
 {% schema %}
 {
   "name": "t:general.article",
-  "settings": []
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:sections.article.settings.show_image.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_table_of_contents",
+      "label": "t:sections.article.settings.show_table_of_contents.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "t:sections.article.settings.show_date.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:sections.article.settings.show_author.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:sections.article.settings.show_tags.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "t:sections.article.settings.show_breadcrumb.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 16,
+      "max": 116,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 116,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "default": 56
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ]
 }
 {% endschema %}

@@ -1,43 +1,66 @@
 {% doc %}
-  @param {number} total - The total price of the cart
-  @param {string} id - The unique identifier for the section
+  Free-delivery progress toward the cart threshold.
+
+  @param {number} total - Cart total price in cents
+  @param {string} id - Unique section ID
 {% enddoc %}
 
 {%- liquid
+  assign threshold = settings.free_delivery_amount | default: 0 | times: 100
   assign progress = 0
-  assign free_delivery = settings.free_delivery_amount | times: 100
+  assign rest_cents = 0
 
-  if total > free_delivery
-    assign progress = 100
-  else
-    assign progress = total | times: 100 | divided_by: free_delivery
+  if threshold > 0
+    if total >= threshold
+      assign progress = 100
+      assign rest_cents = 0
+    else
+      assign progress = total | times: 100.0 | divided_by: threshold | round
+      if progress > 100
+        assign progress = 100
+      endif
+      assign rest_cents = threshold | minus: total
+    endif
   endif
-
-  assign rest = free_delivery | minus: total | divided_by: 100
 -%}
 
-{%- if settings.free_delivery_enable -%}
-  <div class="space-y-4" data-section-id="{{ id }}" id="cart-progress-{{ id }}">
-    <p class="flex justify-between gap-2 text-gray-700">
-      <span class="text-xs">{{- settings.free_delivery_label -}}</span>
-      {%- liquid
-        echo '<span class="text-xs ml-auto">'
+{%- if settings.free_delivery_enable and threshold > 0 -%}
+  <div
+    class="space-y-3"
+    data-section-id="{{ id }}"
+    id="cart-progress-{{ id }}"
+    role="status"
+    aria-live="polite"
+  >
+    <p class="flex justify-between gap-4 text-xs opacity-60">
+      {%- if settings.free_delivery_label != blank -%}
+        <span>{{- settings.free_delivery_label -}}</span>
+      {%- endif -%}
 
-        if settings.free_delivery_text and rest > 0
-          assign rest = rest | times: 100 | money
-
-          echo settings.free_delivery_text | replace: 'xx', rest
-        else
-          echo 'cart.progress.label' | t
-        endif
-
-        echo '</span>'
-      -%}
+      <span class="ms-auto">
+        {%- if rest_cents > 0 -%}
+          {%- assign rest_money = rest_cents | money -%}
+          {%- if settings.free_delivery_text != blank -%}
+            {{- settings.free_delivery_text | replace: 'xx', rest_money -}}
+          {%- else -%}
+            {{- 'cart.progress.remaining_html' | t: amount: rest_money -}}
+          {%- endif -%}
+        {%- else -%}
+          {{- 'cart.progress.label' | t -}}
+        {%- endif -%}
+      </span>
     </p>
 
-    <div class="relative h-1 w-full overflow-hidden bg-gray-200">
+    <div
+      class="relative h-1 w-full overflow-hidden bg-gray-200"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ progress }}"
+      aria-label="{{ 'cart.progress.aria_label' | t: progress: progress }}"
+    >
       <span
-        class="absolute inset-0 size-full origin-left scale-x-(--progress) bg-gray-700"
+        class="absolute inset-0 size-full origin-left scale-x-(--progress) bg-black transition-transform duration-300 ease-out"
         style="--progress: {{ progress }}%;"
       ></span>
     </div>

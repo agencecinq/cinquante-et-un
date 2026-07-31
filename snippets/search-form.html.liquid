@@ -1,16 +1,79 @@
-<form action="{{ routes.search_url }}" class="relative text-sm" method="get">
-  <input
-    type="search"
-    name="q"
-    placeholder="{{ 'snippets.search-form.placeholder' | t }}"
-    class="w-full border py-3 pr-14 pl-5 placeholder:text-gray-500"
-    aria-label="{{ 'snippets.search-form.placeholder' | t }}"
+{% doc %}
+  Search form with Shopify predictive search (`@agencecinq/combobox`).
+
+  @param {string} [classes] - Classes on the host element.
+  @param {string} [id] - Unique id suffix for listbox / aria-controls. Optional.
+  @param {string} [value] - Initial input value. Optional.
+
+  @example
+  {%- render 'search-form.html', id: 'header', classes: 'w-full' -%}
+{% enddoc %}
+
+{%- liquid
+  assign form_id = id | default: 'search'
+  assign listbox_id = 'predictive-search-listbox-' | append: form_id
+-%}
+
+<cinq-combobox
+  class="relative block [&:has([aria-expanded='true'])_[data-dom=results]]:block{% if classes %} {{ classes }}{% endif %}"
+  data-combobox-mode="external"
+  data-combobox-select-mode="custom"
+  data-combobox-debounce="280"
+  data-combobox-min-length="2"
+  data-combobox-open-on-empty
+  data-section-id="predictive-search"
+  data-results-count-one="{{ 'sections.predictive_search.results_count.one' | t }}"
+  data-results-count-other="{{ 'sections.predictive_search.results_count.other' | t: count: '__COUNT__' }}"
+  data-no-results="{{ 'sections.predictive_search.no_results' | t: terms: '__TERMS__' }}"
+>
+  <form
+    action="{{ routes.search_url }}"
+    class="relative w-full text-sm"
+    method="get"
+    role="search"
   >
-  <button
-    type="submit"
-    aria-label="{{ 'snippets.search-form.submit' | t }}"
-    class="absolute inset-y-0 right-0 my-auto mr-4 size-5"
+    <input
+      type="search"
+      name="q"
+      value="{{ value | escape }}"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      placeholder="{{ 'snippets.search-form.placeholder' | t }}"
+      class="w-full border border-black bg-transparent py-3 pr-12 pl-4 placeholder:opacity-40"
+      aria-label="{{ 'snippets.search-form.placeholder' | t }}"
+      role="combobox"
+      aria-controls="{{ listbox_id }}"
+      aria-expanded="false"
+      aria-autocomplete="list"
+    >
+    <button
+      type="submit"
+      aria-label="{{ 'snippets.search-form.submit' | t }}"
+      class="absolute inset-y-0 right-0 my-auto mr-3 size-5"
+    >
+      {%- render 'use.html', icon: 'search', classes: 'size-5' -%}
+    </button>
+  </form>
+
+  <div
+    class="absolute inset-x-0 top-full z-50 mt-1 hidden"
+    data-dom="results"
   >
-    {%- render 'use.html', icon: 'search', classes: 'size-5' -%}
-  </button>
-</form>
+    <div
+      id="{{ listbox_id }}"
+      role="listbox"
+      aria-label="{{ 'sections.predictive_search.listbox_label' | t }}"
+      class="surface max-h-80 overflow-x-hidden overflow-y-auto not-has-[[role=option]]:hidden"
+      hidden
+    ></div>
+    <p
+      class="surface px-4 py-3 text-sm opacity-70"
+      data-dom="status"
+      role="status"
+      hidden
+    ></p>
+    <p class="sr-only" data-dom="live" aria-live="polite" aria-atomic="true"></p>
+  </div>
+</cinq-combobox>

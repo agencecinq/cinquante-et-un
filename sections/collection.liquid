@@ -10,17 +10,25 @@
   assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
   assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
   assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+
+  if section.settings.compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
 -%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ padding_top_mobile }}rem;
+    padding-top: {{ padding_top_mobile }};
     padding-bottom: {{ padding_bottom_mobile }}rem;
   }
 
   @media (width >= 64rem) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ padding_top_desktop }}rem;
+      padding-top: {{ padding_top_desktop }};
       padding-bottom: {{ padding_bottom_desktop }}rem;
     }
   }
@@ -53,25 +61,10 @@
     </div>
   {%- endif -%}
 
-  {%- if collection.description == blank -%}
-    {%- if collection.metafields.custom.subtitle != blank -%}
-      <div class="container grid grid-cols-4 gap-x-2.5 gap-y-10 text-center lg:grid-cols-12 lg:gap-x-5">
-        <div class="col-span-full space-y-10 lg:col-span-6 lg:col-start-4">
-          <h2 class="text-sm font-semibold">{{- collection.title -}}</h2>
-        </div>
-      </div>
-    {%- endif -%}
-  {%- endif -%}
-
   {%- if collection.description != blank -%}
     <div class="container grid grid-cols-4 gap-x-2.5 gap-y-10 text-center lg:grid-cols-12 lg:gap-x-5">
-      <div class="col-span-full space-y-10 lg:col-span-6 lg:col-start-4">
-        {%- if collection.metafields.custom.subtitle != blank -%}
-          <h2 class="text-sm font-semibold">{{- collection.title -}}</h2>
-        {%- endif -%}
-        {%- if collection.description != blank -%}
-          <div class="wysiwyg text-xs">{{- collection.description -}}</div>
-        {%- endif -%}
+      <div class="wysiwyg col-span-full text-xs lg:col-span-6 lg:col-start-4">
+        {{- collection.description -}}
       </div>
     </div>
   {%- endif -%}
@@ -80,17 +73,17 @@
     {%- if section.settings.show_filters or section.settings.show_sorting -%}
       <div class="container">
         <div class="flex flex-col items-center gap-2 lg:flex-row lg:justify-between lg:gap-4">
-          <cinq-drawer-button class="block w-full border border-gray-200 px-4 py-3 lg:w-auto">
-            <button
-              data-dom="button"
-              aria-controls="filter-drawer"
-              aria-expanded="false"
-              type="button"
-              class="text-xs font-medium uppercase"
-              aria-label="{{ 'sections.collection.filters.title' | t }}"
-            >
-              {{ 'sections.collection.filters.title' | t }}
-            </button>
+          <cinq-drawer-button class="block w-full lg:w-auto">
+            {%- assign title = 'sections.collection.filters.title' | t -%}
+            {%- capture filter_button_attributes -%}
+              data-dom="button" aria-controls="filter-drawer" aria-expanded="false" aria-label="{{ title | escape }}"
+            {%- endcapture -%}
+            {%- render 'button.html',
+              title: title,
+              variant: 'secondary',
+              classes: 'w-full',
+              attributes: filter_button_attributes
+            -%}
           </cinq-drawer-button>
 
           <c-select-controller
@@ -164,10 +157,9 @@
               </div>
               {%- assign title = 'sections.collection.see-more' | t %}
               {%- render 'button.html',
-                tag: 'button',
                 title: title,
-                data-dom: 'load-more-button',
-                variant: 'tertiary'
+                variant: 'tertiary',
+                attributes: 'data-dom="load-more-button"'
               -%}
             </div>
           </c-load-more>
@@ -290,7 +282,13 @@
  {%- render 'button.html', classes: 'grow w-full', url: collection.url, title: title -%}
  
  {%- assign title = 'sections.collection.filters.drawer.apply' | t -%}
- {%- render 'button.html', tag: 'button', type: 'submit', form: 'CollectionFiltersForm', classes: 'grow w-full', title: title, variant: 'secondary', id: 'ApplyFilters' -%}
+ {%- render 'button.html',
+   type: 'submit',
+   classes: 'grow w-full',
+   title: title,
+   variant: 'secondary',
+   attributes: 'form="CollectionFiltersForm" id="ApplyFilters"'
+ -%}
  </footer>
 
  </div>
@@ -344,6 +342,13 @@
       "label": "t:sections.shared.settings.padding.bottom.label",
       "info": "t:sections.shared.settings.padding.bottom.info",
       "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": true
     },
     {
       "type": "header",

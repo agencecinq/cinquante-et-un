@@ -2,12 +2,19 @@
   Button block
 {% enddoc %}
 
+{%- liquid
+  if block.settings.target == '_blank'
+    assign button_attributes = 'target="_blank" rel="noopener noreferrer"'
+  endif
+-%}
+
 {%- render 'button.html',
   title: block.settings.title,
   url: block.settings.url,
-  target: block.settings.target,
   variant: block.settings.variant,
-  classes: block.settings.width
+  classes: block.settings.width,
+  attributes: button_attributes,
+  block: block
 -%}
 
 {% schema %}

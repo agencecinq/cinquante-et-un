@@ -24,8 +24,13 @@ package-lock.json
 release/
 *.zip
 
-# Editor / local tooling (keep shared configs tracked)
-.cursor/
+# Editor / local tooling — keep shared agent skills tracked
+.cursor/*
+!.cursor/skills/
+!.cursor/skills/**
+.claude/*
+!.claude/skills/
+!.claude/skills/**
 
 # Optional local overrides
 .prettierignore

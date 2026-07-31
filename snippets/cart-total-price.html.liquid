@@ -1,12 +1,12 @@
 {% doc %}
   Total price
 
- This snippet is used to display the total price of the cart.
+  This snippet is used to display the total price of the cart.
 
   @param {string} id - section id.
   @param {string} [classes] - additional classes to add to the wrapper element. Optional.
 
-  @example {% render 'cart-total-price', id: section.id, classes: 'ml-auto' %}
+  @example {% render 'cart-total-price.html', id: section.id, classes: 'ml-auto' %}
 {% enddoc %}
 
 <div
@@ -14,5 +14,5 @@
   class="inline {{ classes }}"
   data-section-id="{{ id }}"
 >
-  <span class="text-xs font-bold">{{- cart.total_price | money_with_currency -}}</span>
+  <span class="text-sm font-medium">{{- cart.total_price | money_with_currency -}}</span>
 </div>

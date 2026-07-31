@@ -3,7 +3,7 @@
 
   @param {string} id - Unique section ID.
 
-  @example {% render 'cart-footer', id: section.id, classes: 'mt-auto' %}
+  @example {% render 'cart-footer.html', id: section.id %}
 {% enddoc %}
 
 {% liquid
@@ -24,44 +24,47 @@
 
 <footer
   id="CartFooter-{{ id }}"
-  class="js-cart-footer mt-auto bg-white"
+  class="js-cart-footer mt-auto border-t border-black bg-white"
 >
   {%- if complementary_products != blank -%}
-    <div class="px-2.5 pt-2 pb-5">
+    <div class="space-y-4 px-5 pt-5">
       {%- render 'cart-recommendations.html', id: id, mode: 'slider', products: complementary_products -%}
     </div>
   {%- endif -%}
 
-  <div class="space-y-6 bg-gray-50 px-2.5 pt-5 pb-2.5 lg:pb-5">
+  <div class="space-y-4 px-5 py-5">
     {%- render 'cart-progress.html', total: cart.total_price, id: id -%}
 
-    <div class="space-y-4">
-      <div class="flex items-center justify-between gap-2.5">
+    <div class="space-y-2">
+      <div class="flex items-center justify-between gap-4">
         <span class="text-xs font-medium uppercase">{{- 'snippets.cart-footer.total' | t -}}</span>
         {%- render 'cart-total-price.html', classes: 'ml-auto', id: id -%}
       </div>
       {%- if settings.tax_included_text != blank -%}
-        <p class="wysiwyg text-xs text-gray-700">{{ settings.tax_included_text }}</p>
+        <div class="wysiwyg text-xs opacity-60">{{ settings.tax_included_text }}</div>
       {%- endif -%}
     </div>
 
     {%- assign title = 'cart.checkout' | t -%}
 
     {%- if cart.empty? -%}
-      <p class="bg-gray-200/30 p-2.5 py-8 text-center text-xs font-medium text-gray-500 uppercase">
-        {{- title -}}
-      </p>
-    {%- else %}
+      {%- render 'button.html',
+        title: title,
+        type: 'button',
+        variant: 'primary',
+        classes: 'w-full',
+        attributes: 'disabled aria-disabled="true"'
+      -%}
+    {%- else -%}
       {%- assign form = 'CartForm-' | append: id -%}
+      {% capture checkout_attributes %}name="checkout" form="{{ form }}"{% endcapture %}
 
       {%- render 'button.html',
         title: title,
         type: 'submit',
-        name: 'checkout',
-        tag: 'button',
-        form: form,
         variant: 'primary',
-        classes: 'w-full'
+        classes: 'w-full',
+        attributes: checkout_attributes
       -%}
     {%- endif -%}
   </div>

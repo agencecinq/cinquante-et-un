@@ -3,11 +3,25 @@
 {% enddoc %}
 
 {%- liquid
-  assign title = block.settings.link_title | default: block.settings.link_title
-  assign classes = ''
-  assign label = block.settings.link_aria_label | default: block.settings.link_title
+  assign title = block.settings.link_title
+  assign label = block.settings.link_aria_label | default: title
+  assign link_attributes = ''
 
-  render 'link.html', block: block, url: block.settings.link_url, classes: classes, target: block.settings.target, title: title, label: label
+  if block.settings.link_target == '_blank'
+    assign link_attributes = 'target="_blank" rel="noopener noreferrer"'
+  endif
+
+  if label != blank
+    assign escaped_label = label | escape
+    assign link_attributes = link_attributes | append: ' aria-label="' | append: escaped_label | append: '"'
+  endif
+-%}
+
+{%- render 'link.html',
+  block: block,
+  url: block.settings.link_url,
+  title: title,
+  attributes: link_attributes
 -%}
 
 {% schema %}

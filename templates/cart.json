@@ -2,7 +2,11 @@
   "sections": {
     "main": {
       "type": "cart",
-      "settings": {}
+      "settings": {
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "compensate_header": true
+      }
     }
   },
   "order": ["main"]

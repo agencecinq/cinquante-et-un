@@ -1,0 +1,33 @@
+{% doc %}
+  Tag block — label/badge for hero and other sections.
+{% enddoc %}
+
+{%- if block.settings.title != blank -%}
+  <span class="tag" {{ block.shopify_attributes }}>
+    {{- block.settings.title -}}
+  </span>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.tag.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:blocks.tag.settings.title.label",
+      "default": "t:blocks.tag.settings.title.default",
+      "info": "t:blocks.tag.settings.title.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.tag.presets.name",
+      "settings": {
+        "title": "New"
+      }
+    }
+  ]
+}
+{% endschema %}

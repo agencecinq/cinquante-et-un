@@ -4,16 +4,31 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/search
 {% endcomment %}
 
+{%- liquid
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+
+  if section.settings.compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
+-%}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-top: {{ padding_top_mobile }};
+    padding-bottom: {{ padding_bottom_mobile }}rem;
   }
 
   @media (width >= 64rem) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
-      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+      padding-top: {{ padding_top_desktop }};
+      padding-bottom: {{ padding_bottom_desktop }}rem;
     }
   }
 {%- endstyle -%}
@@ -23,23 +38,7 @@
     <div class="space-y-4">
       <h1 class="text-xl font-semibold">{{ 'search.title' | t }}</h1>
 
-      <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
-        <input
-          type="search"
-          name="q"
-          value="{{ search.terms | escape }}"
-          placeholder="{{ 'search.placeholder' | t }}"
-          aria-label="{{ 'search.placeholder' | t }}"
-          class="w-full border border-black bg-transparent py-3 pr-12 pl-4 placeholder:opacity-40"
-        >
-        <button
-          type="submit"
-          class="absolute inset-y-0 right-0 my-auto mr-3 size-5"
-          aria-label="{{ 'search.submit' | t }}"
-        >
-          {%- render 'use.html', icon: 'search', classes: 'size-5' -%}
-        </button>
-      </form>
+      {%- render 'search-form.html', id: 'page', value: search.terms -%}
     </div>
 
     {%- if search.performed -%}
@@ -54,9 +53,11 @@
               <li>
                 {%- if result.object_type == 'product' -%}
                   {%- render 'tease-product.html', product: result -%}
+                {%- elsif result.object_type == 'article' -%}
+                  {%- render 'tease-article.html', article: result -%}
                 {%- else -%}
                   {%- assign featured_image = result.image | default: result.featured_image -%}
-                  <article class="flex h-full flex-col gap-3 border border-black p-4">
+                  <article class="surface surface--padded flex h-full flex-col gap-3">
                     {%- if featured_image != blank -%}
                       <a
                         href="{{ result.url }}"
@@ -126,6 +127,13 @@
       "unit": "px",
       "label": "t:sections.shared.settings.padding.bottom.label",
       "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": true
     },
     {
       "type": "header",

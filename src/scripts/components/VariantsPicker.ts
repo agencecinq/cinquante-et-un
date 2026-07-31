@@ -1,8 +1,4 @@
 import { Piece } from 'piecesjs';
-// Side-effect import: register `c-variants-picker-option` in this chunk
-// before the picker mounts and calls methods on its children.
-import './VariantsPickerOption.ts';
-import type { VariantsPickerOption } from './VariantsPickerOption.ts';
 import { EVENTS } from '@agencecinq/utils';
 import { formatCurrency } from '../utils/format-currency.ts';
 
@@ -32,13 +28,9 @@ interface Variant {
   };
 }
 
-function isVariantsPickerOption(element: Element): element is VariantsPickerOption {
-  return typeof (element as VariantsPickerOption).getSelectedValue === 'function';
-}
-
 export class VariantsPicker extends Piece {
   private $input: HTMLInputElement | null = null;
-  private options: VariantsPickerOption[] = [];
+  private $options: HTMLElement[] = [];
   private variants: Variant[] = [];
 
   constructor() {
@@ -46,31 +38,36 @@ export class VariantsPicker extends Piece {
   }
 
   mount() {
-    this.$input = this.domAttr('variant-id');
+    this.$input = this.domAttr('variant-id') as HTMLInputElement | null;
     this.variants = JSON.parse(this.getAttribute('data-variants') || '[]');
+    this.$options = Array.from(this.querySelectorAll('[data-dom="option"]'));
 
-    this.options = Array.from(this.querySelectorAll('c-variants-picker-option')).filter(isVariantsPickerOption);
-
-    this.options.forEach((option) => {
-      this.on('option:change', option, this.handleOptionChange);
-    });
-
+    this.on('change', this, this.handleChange);
     this.update();
   }
 
-  handleOptionChange = () => {
+  handleChange = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+
+    if (input.type !== 'radio' || !input.matches('[data-dom="option-value"]')) return;
+
+    const $value = input.closest('[data-dom="option"]')?.querySelector('[data-dom="value"]');
+    if ($value && input.checked) {
+      $value.textContent = input.value;
+    }
+
     this.updateVariant();
   };
 
   getSelectedOptions() {
     const selectedOptions: Record<string, string> = {};
 
-    this.options.forEach((option) => {
-      const { position } = option;
-      const value = option.getSelectedValue();
+    this.$options.forEach(($option) => {
+      const { position } = $option.dataset;
+      const $checked = $option.querySelector<HTMLInputElement>('[data-dom="option-value"]:checked');
 
-      if (position && value) {
-        selectedOptions[`option${position}`] = value;
+      if (position && $checked?.value) {
+        selectedOptions[`option${position}`] = $checked.value;
       }
     });
 
@@ -88,16 +85,15 @@ export class VariantsPicker extends Piece {
   update() {
     const selectedOptions = this.getSelectedOptions();
 
-    this.options.forEach((option) => {
-      const { position, inputs } = option;
-      if (!inputs) return;
+    this.$options.forEach(($option) => {
+      const { position } = $option.dataset;
+      if (!position) return;
 
-      inputs.forEach((input) => {
-        const value = input.value;
-        const test = { ...selectedOptions, [`option${position}`]: value };
+      $option.querySelectorAll<HTMLInputElement>('[data-dom="option-value"]').forEach((input) => {
+        const test = { ...selectedOptions, [`option${position}`]: input.value };
         const variant = this.find(test);
 
-        option.setInputAvailability(value, variant?.available ?? false);
+        input.disabled = !(variant?.available ?? false);
       });
     });
   }
@@ -115,12 +111,12 @@ export class VariantsPicker extends Piece {
         window.history.replaceState({}, '', url.toString());
       }
 
-      const $selectedValue = this.domAttr('selected-value');
+      const $selectedValue = this.domAttr('selected-value') as HTMLElement | null;
       if ($selectedValue) {
         $selectedValue.textContent = Object.values(selectedOptions).join(' / ');
       }
 
-      const $price = this.domAttr('price');
+      const $price = this.domAttr('price') as HTMLElement | null;
       if ($price) {
         if (variant.compare_at_price && variant.compare_at_price > variant.price) {
           $price.innerHTML = `<s>${formatCurrency(variant.compare_at_price, Shopify.money_format)}</s>&nbsp;${formatCurrency(variant.price, Shopify.money_format)}`;
@@ -149,9 +145,7 @@ export class VariantsPicker extends Piece {
   }
 
   unmount() {
-    this.options.forEach((option) => {
-      this.off('option:change', option, this.handleOptionChange);
-    });
+    this.off('change', this, this.handleChange);
   }
 }
 

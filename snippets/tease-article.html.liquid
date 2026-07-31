@@ -1,0 +1,59 @@
+{% doc %}
+  Tease Article — article card aligned with tease-product.
+
+  @param {object} article - Article object.
+  @param {string} [classes] - Classes for the article element. Optional.
+  @param {boolean} [show_tags] - Show tags on the image. Default true.
+  @param {boolean} [show_excerpt] - Show excerpt under the title. Default false.
+
+  @example {% render 'tease-article.html', article: article %}
+{% enddoc %}
+
+<article
+  class="group/tease-article relative flex flex-col gap-3{% if classes %} {{ classes }}{% endif %}"
+  aria-label="{{ article.title }}"
+>
+  <a
+    href="{{ article.url }}"
+    aria-label="{{ 'snippets.tease-article.view_article' | t: title: article.title }}"
+    class="relative block aspect-3/4 overflow-hidden border border-black bg-gray-100"
+  >
+    {%- if show_tags != false and article.tags.size > 0 -%}
+      <ul class="absolute inset-x-0 top-0 z-20 m-2 flex flex-wrap gap-2">
+        {%- for tag in article.tags limit: 3 -%}
+          <li>
+            <span class="tag">{{- tag -}}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if request.visual_preview_mode or article.image == blank -%}
+      {{- 'image' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40' -}}
+    {%- else -%}
+      {%- assign article_image_alt = article.image.alt | default: article.title -%}
+      {%- render 'image.html',
+        image: article.image,
+        width: 668,
+        widths: '650,668',
+        alt: article_image_alt,
+        class: 'size-full object-cover object-center transition-transform duration-300 ease-out group-hover/tease-article:scale-105'
+      -%}
+    {%- endif -%}
+  </a>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex items-baseline justify-between gap-3">
+      <p class="text-balance">
+        <a href="{{ article.url }}" class="hover:underline">{{- article.title -}}</a>
+      </p>
+      <p class="shrink-0 text-sm opacity-60">
+        {{- article.published_at | time_tag: format: 'date' -}}
+      </p>
+    </div>
+
+    {%- if show_excerpt and article.excerpt != blank -%}
+      <div class="line-clamp-2 text-sm opacity-70">{{- article.excerpt -}}</div>
+    {%- endif -%}
+  </div>
+</article>

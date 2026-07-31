@@ -2,77 +2,55 @@
   @param {object} item - Cart item object
   @param {string} id - Section ID
 
-  @example {%- render 'cart-item', item: item, id: section.id -%}
+  @example {%- render 'cart-item.html', item: item, id: section.id -%}
 {% enddoc %}
 
 {% liquid
-  # assign min = item.variant.quantity_rule.min | default: 1
   assign max = item.variant.quantity_rule.max | default: 10
 %}
 
-{%- capture remove -%}
- <button
- type="button"
- class="flex size-5 items-center justify-center text-black/50 transition-colors duration-300 ease-in-out hover:text-black"
- data-dom="remove"
- >
- <span class="sr-only">{{- 'snippets.cart-item.remove' | t -}}</span>
- {%- render 'use.html', icon: 'trash', classes: 'size-5 pointer-events-none' -%}
- </button>
-{%- endcapture -%}
-
 <c-cart-item
-  class="flex gap-3 py-3"
+  class="flex gap-4 py-4"
   loading="false"
   id="CartItem-{{ item.key }}"
   data-item-id="{{ item.key }}"
   data-section-id="{{ id }}"
   data-trap="Cart-{{ id }}"
 >
-  <div class="aspect-3/4 w-16 shrink-0 bg-gray-50">
+  <div class="aspect-3/4 w-16 shrink-0 overflow-hidden border border-black bg-gray-100">
     {%- liquid
       if item.variant.image != null
         echo item.variant.image | image_url: width: 134 | image_tag: class: 'size-full object-cover object-center'
       elsif item.image != null
         echo item.image | image_url: width: 134 | image_tag: class: 'size-full object-cover object-center'
       else
-        echo 'product-1' | placeholder_svg_tag: 'size-full object-cover object-center'
+        echo 'product-1' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40'
       endif
     -%}
   </div>
 
-  <div class="flex grow flex-col gap-2.5">
-    <div class="flex justify-between gap-x-2.5 lg:gap-x-5">
-      <div class="space-y-2">
-        <p class="text-xs font-bold">
-          {%- render 'product-title.html', title: item.title -%}
-        </p>
-      </div>
+  <div class="flex min-w-0 grow flex-col gap-3">
+    <div class="flex justify-between gap-4">
+      <p class="text-sm">
+        {{- item.product.title -}}
+      </p>
 
-      <p class="flex flex-col flex-wrap items-end gap-1">
-        <span class="flex items-center gap-1.5">
-          <span class="sr-only">
-            {{- 'cart.price.sale_price' | t -}}
-          </span>
-          <span class="text-xs font-bold">
-            {{- item.final_line_price | money -}}
-          </span>
+      <p class="shrink-0 space-y-1 text-end">
+        <span class="block text-sm font-medium">
+          <span class="sr-only">{{- 'cart.price.sale_price' | t -}}</span>
+          {{- item.final_line_price | money -}}
         </span>
         {%- if item.original_line_price != item.final_line_price -%}
-          <span class="flex flex-wrap items-center justify-end gap-1.5">
-            <span class="sr-only">
-              {{- 'cart.price.regular_price' | t -}}
-            </span>
-            <s class="text-xs text-gray-700">
-              {{- item.original_line_price | money -}}
-            </s>
+          <span class="block text-xs opacity-60">
+            <span class="sr-only">{{- 'cart.price.regular_price' | t -}}</span>
+            <s>{{- item.original_line_price | money -}}</s>
           </span>
         {%- endif -%}
       </p>
     </div>
 
     {%- if item.product.has_only_default_variant == false -%}
-      <dl class="space-y-1 text-gray-500">
+      <dl class="space-y-1 text-xs opacity-60">
         {%- for option in item.options_with_values -%}
           <div class="flex gap-1">
             <dt>{{- 'snippets.cart-item.options.name' | t: name: option.name -}}</dt>
@@ -83,54 +61,59 @@
     {%- endif -%}
 
     {%- if item.instructions.can_update_quantity == true or item.instructions.can_remove == true -%}
-      <div class="mt-auto flex justify-between gap-2.5">
-        <div class="flex grow items-center justify-between gap-2.5">
-          {% if item.instructions and item.instructions.can_update_quantity == true %}
-            <c-cart-quantity class="block">
-              <cinq-spinbutton class="flex items-center gap-3" data-spinbutton-step="1">
-                <button
-                  type="button"
-                  data-spinbutton-action="decrease"
-                  class="flex size-5 items-center justify-center"
-                  tabindex="-1"
-                  aria-label="{{ 'snippets.cart-item.quantity.decrease' | t }}"
-                >
-                  −
-                </button>
+      <div class="mt-auto flex items-center justify-between gap-4">
+        {%- if item.instructions and item.instructions.can_update_quantity == true -%}
+          <c-cart-quantity class="block">
+            <cinq-spinbutton class="flex items-center border border-black" data-spinbutton-step="1">
+              <button
+                type="button"
+                data-spinbutton-action="decrease"
+                class="flex size-8 items-center justify-center"
+                tabindex="-1"
+                aria-label="{{ 'snippets.cart-item.quantity.decrease' | t }}"
+              >
+                {%- render 'use.html', icon: 'minus', classes: 'size-3 pointer-events-none' -%}
+              </button>
 
-                <input
-                  type="text"
-                  inputmode="numeric"
-                  pattern="[0-9]*"
-                  role="spinbutton"
-                  name="quantity"
-                  value="{{ item.quantity }}"
-                  class="size-7 bg-gray-100 text-center text-xs"
-                  data-dom="input"
-                  data-spinbutton-input
-                  aria-label="{{ 'snippets.cart-item.quantity.label' | t }}"
-                  aria-valuemin="0"
-                  aria-valuemax="{{ max }}"
-                  aria-valuenow="{{ item.quantity }}"
-                >
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                role="spinbutton"
+                name="quantity"
+                value="{{ item.quantity }}"
+                class="w-8 bg-transparent text-center text-xs"
+                data-dom="input"
+                data-spinbutton-input
+                aria-label="{{ 'snippets.cart-item.quantity.label' | t }}"
+                aria-valuemin="0"
+                aria-valuemax="{{ max }}"
+                aria-valuenow="{{ item.quantity }}"
+              >
 
-                <button
-                  type="button"
-                  data-spinbutton-action="increase"
-                  class="flex size-5 items-center justify-center"
-                  tabindex="-1"
-                  aria-label="{{ 'snippets.cart-item.quantity.increase' | t }}"
-                >
-                  +
-                </button>
-              </cinq-spinbutton>
-            </c-cart-quantity>
-          {% endif %}
+              <button
+                type="button"
+                data-spinbutton-action="increase"
+                class="flex size-8 items-center justify-center"
+                tabindex="-1"
+                aria-label="{{ 'snippets.cart-item.quantity.increase' | t }}"
+              >
+                {%- render 'use.html', icon: 'plus', classes: 'size-3 pointer-events-none' -%}
+              </button>
+            </cinq-spinbutton>
+          </c-cart-quantity>
+        {%- endif -%}
 
-          {% if item.instructions and item.instructions.can_remove == true %}
-            {{ remove }}
-          {% endif %}
-        </div>
+        {%- if item.instructions and item.instructions.can_remove == true -%}
+          <button
+            type="button"
+            class="flex size-8 items-center justify-center opacity-60 transition-opacity hover:opacity-100"
+            data-dom="remove"
+          >
+            <span class="sr-only">{{- 'snippets.cart-item.remove' | t -}}</span>
+            {%- render 'use.html', icon: 'trash', classes: 'size-4 pointer-events-none' -%}
+          </button>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>

@@ -1,45 +1,121 @@
 {% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+  Cart template — overview of items in the customer's cart.
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
 {% endcomment %}
 
-{%- capture cart_empty -%}
- <div id="CartEmpty-{{ section.id }}" class="px-5 text-center">
- <h1 class="text-xl font-semibold">{{- 'cart.empty' | t -}}</h1>
- </div>
+{%- liquid
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
 
- <footer id="CartFooter-{{ section.id }}">
- {%- render 'cart-recommendations.html', id: section.id -%}
- </footer>
-{%- endcapture -%}
+  if section.settings.compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
+-%}
 
-<div id="cart" class="overflow-hidden">
-  <div class="my-8 max-w-none lg:mx-auto lg:my-16">
-    <div class="space-y-10 lg:px-5">
-      {%- liquid
-        if cart == empty
-          echo cart_empty
-        else
-          assign title = 'cart.title' | t
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ padding_top_mobile }};
+    padding-bottom: {{ padding_bottom_mobile }}rem;
+  }
 
-          echo '<h1 class="px-5 text-xl font-semibold">' | append: title | append: '</h1>'
-          echo '<div><div class="px-5"><hr class="h-px w-full border-none"></div>'
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ padding_top_desktop }};
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
+  }
+{%- endstyle -%}
 
-          render 'cart-items.html', items: cart.items, id: section.id
-          render 'cart-footer.html', id: section.id
+<div
+  id="cart"
+  class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+>
+  <div class="container space-y-10 lg:space-y-12">
+    {%- if cart == empty -%}
+      <div id="CartEmpty-{{ section.id }}" class="space-y-6 text-center">
+        <h1 class="text-base font-semibold">{{- 'cart.empty' | t -}}</h1>
+        {%- liquid
+          assign title = 'snippets.cart-empty.title' | t
+          assign url = routes.all_products_collection_url
 
-          echo '</div>'
-        endif
-      -%}
-    </div>
+          if settings.cart_empty_title != blank
+            assign title = settings.cart_empty_title
+          endif
+
+          if settings.cart_empty_url != blank
+            assign url = settings.cart_empty_url
+          endif
+
+          render 'button.html', title: title, url: url, variant: 'secondary'
+        -%}
+      </div>
+    {%- else -%}
+      <h1 class="text-base font-semibold">{{- 'cart.title' | t -}}</h1>
+
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-4">
+        <div class="lg:col-span-7">
+          {%- render 'cart-items.html', items: cart.items, id: section.id, classes: '' -%}
+        </div>
+        <div class="lg:col-span-4 lg:col-start-9">
+          {%- render 'cart-footer.html', id: section.id -%}
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
 {% schema %}
 {
   "name": "t:general.cart",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 16,
+      "max": 116,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 116,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "default": 56
+    },
+    {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ]
 }
 {% endschema %}

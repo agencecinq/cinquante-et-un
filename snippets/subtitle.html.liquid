@@ -1,0 +1,12 @@
+{% doc %}
+  Subtitle / eyebrow — small uppercase label above a section title.
+
+  @param {string} subtitle - The label text.
+  @param {object} [block] - Theme block (for `shopify_attributes`). Optional.
+{% enddoc %}
+
+{%- if subtitle != blank -%}
+  <p class="subtitle" {{ block.shopify_attributes }}>
+    {{- subtitle | escape -}}
+  </p>
+{%- endif -%}

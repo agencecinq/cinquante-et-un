@@ -27,19 +27,27 @@
 %}
 
 {%- unless button -%}
+  {%- liquid
+    assign atc_title = 'snippets.add-to-cart.add_to_cart' | t
+    assign atc_product_title = variant.product.title | default: product.title
+    assign atc_label = 'sections.product.add_to_cart' | t | append: ' ' | append: atc_product_title
+    assign atc_disabled = false
+    if variant.available == false or quantity_rule_soldout or variant == null
+      assign atc_disabled = true
+    endif
+  -%}
+  {% capture atc_attributes -%}
+    data-dom="button" aria-label="{{ atc_label | escape }}"{% if atc_disabled %} disabled{% endif %}
+  {%- endcapture %}
   {% capture button %}
- <button
- data-dom="button"
- type="submit"
- class="button button--primary w-full"
- aria-label="{{ 'sections.product.add_to_cart' | t }} {{ variant.product.title | default: product.title }}"
- {% if variant.available == false or quantity_rule_soldout or variant == null %}
- disabled
- {% endif %}
- >
- {{- 'snippets.add-to-cart.add_to_cart' | t -}}
- </button>
- {%- endcapture -%}
+    {%- render 'button.html',
+      title: atc_title,
+      type: 'submit',
+      classes: 'w-full',
+      variant: 'primary',
+      attributes: atc_attributes
+    -%}
+  {%- endcapture -%}
 {%- endunless -%}
 
 {% unless id == false or id == null or id == blank or variant.available == false -%}

@@ -183,7 +183,7 @@
       {
         "id": "free_delivery_amount",
         "label": "t:settings_schema.cart.settings.free_delivery_amount.label",
-        "default": 200,
+        "default": 100,
         "type": "number",
         "info": "t:settings_schema.cart.settings.free_delivery_amount.info"
       },
@@ -191,12 +191,14 @@
         "id": "free_delivery_label",
         "label": "t:settings_schema.cart.settings.free_delivery_label.label",
         "type": "inline_richtext",
+        "default": "t:settings_schema.cart.settings.free_delivery_label.default",
         "info": "t:settings_schema.cart.settings.free_delivery_label.info"
       },
       {
         "id": "free_delivery_text",
         "label": "t:settings_schema.cart.settings.free_delivery_text.label",
         "type": "inline_richtext",
+        "default": "t:settings_schema.cart.settings.free_delivery_text.default",
         "info": "t:settings_schema.cart.settings.free_delivery_text.info"
       },
       {

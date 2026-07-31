@@ -3,16 +3,21 @@
 
   @param {object} items - Array of cart items
   @param {string} id - Section ID
+  @param {string} [classes] - Extra classes on the scroll wrapper. Optional.
 
   @example {%- render 'cart-items.html', items: cart.items, id: section.id -%}
 {% enddoc %}
 
-<div class="js-cart-items scrollbar-hidden overflow-y-scroll scroll-smooth px-5">
+{%- liquid
+  assign classes = classes | default: 'grow overflow-y-auto scroll-smooth px-5'
+-%}
+
+<div class="js-cart-items scrollbar-hidden {{ classes }}">
   <form
     action="{{ routes.cart_url }}"
     id="CartForm-{{ id }}"
     method="post"
-    class="divide-y divide-gray-200 border-b border-gray-200"
+    class="divide-y divide-black border-b border-black"
   >
     {%- for item in items -%}
       {%- render 'cart-item.html', item: item, id: id -%}

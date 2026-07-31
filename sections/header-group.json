@@ -21,6 +21,8 @@
     "header": {
       "type": "section-header",
       "settings": {
+        "main_menu": "main-menu",
+        "secondary_menu": "secondary-menu",
         "show_account": true,
         "show_search": true
       }

@@ -1,14 +1,29 @@
+{%- liquid
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+
+  if section.settings.compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
+-%}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
-  padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
-  padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-top: {{ padding_top_mobile }};
+    padding-bottom: {{ padding_bottom_mobile }}rem;
   }
 
   @media (width >= 64rem) {
-  .section-{{ section.id }}-padding {
-  padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
-  padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00}}rem;
-  }
+    .section-{{ section.id }}-padding {
+      padding-top: {{ padding_top_desktop }};
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
   }
 {%- endstyle -%}
 
@@ -233,6 +248,13 @@
       "content": "t:sections.shared.settings.padding.header.content"
     },
     {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": false
+    },
+    {
       "type": "range",
       "id": "padding_top",
       "min": 16,
@@ -286,6 +308,12 @@
     {
       "name": "t:sections.hero.presets.name",
       "blocks": [
+        {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "New collection"
+          }
+        },
         {
           "type": "title",
           "settings": {

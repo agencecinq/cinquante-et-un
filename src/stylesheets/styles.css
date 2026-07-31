@@ -42,10 +42,21 @@
   .shopify-policy__container {
     margin: 2em auto !important;
     max-width: 40rem;
+    padding-top: var(--header-height, 4.5rem);
   }
 
-  .shopify-policy__container > * + * {
-    margin-top: 1.5em;
+  .shopify-policy__title {
+    margin-bottom: 1.5em;
+  }
+
+  .shopify-policy__title h1 {
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+    font-weight: 600;
+  }
+
+  cinq-drawer {
+    z-index: 50 !important;
   }
 }
 
@@ -57,5 +68,7 @@
 
 /* Components */
 @import './components/button.css';
+@import './components/subtitle.css';
+@import './components/surface.css';
 @import './components/tag.css';
 @import './components/wysiwyg.css';

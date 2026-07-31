@@ -1,79 +1,97 @@
 @layer components {
-  .wysiwyg,
-  .wysiwyg > .metafield-rich_text_field {
+  /*
+   * Opt-in rich text. Shopify often wraps product/metafield HTML in
+   * .rte / .rte-full / .metafield-rich_text_field — include those so
+   * child spacing reaches the real paragraphs.
+   */
+  :is(
+    .wysiwyg,
+    .wysiwyg :is(.rte, .rte-full, .metafield-rich_text_field),
+    .shopify-policy__body .rte
+  ) {
     min-width: 0;
     overflow-wrap: anywhere;
   }
 
-  .wysiwyg > * + *,
-  .wysiwyg > .metafield-rich_text_field > * + * {
+  :is(
+    .wysiwyg,
+    .wysiwyg :is(.rte, .rte-full, .metafield-rich_text_field),
+    .shopify-policy__body .rte
+  )
+    > * + * {
     margin-top: 1em;
   }
 
-  .wysiwyg > *:first-child,
-  .wysiwyg > .metafield-rich_text_field > *:first-child {
+  :is(
+    .wysiwyg,
+    .wysiwyg :is(.rte, .rte-full, .metafield-rich_text_field),
+    .shopify-policy__body .rte
+  )
+    > *:first-child {
     margin-top: 0;
   }
 
-  .wysiwyg > *:last-child,
-  .wysiwyg > .metafield-rich_text_field > *:last-child {
+  :is(
+    .wysiwyg,
+    .wysiwyg :is(.rte, .rte-full, .metafield-rich_text_field),
+    .shopify-policy__body .rte
+  )
+    > *:last-child {
     margin-bottom: 0;
   }
 
-  .wysiwyg p:empty,
-  .wysiwyg > .metafield-rich_text_field > p:empty {
+  :is(
+    .wysiwyg,
+    .wysiwyg :is(.rte, .rte-full, .metafield-rich_text_field),
+    .shopify-policy__body .rte
+  )
+    p:empty {
     display: none;
   }
 
-  .wysiwyg a {
+  :is(.wysiwyg, .shopify-policy__body .rte) a {
     text-decoration: underline;
   }
 
-  .wysiwyg ul {
+  :is(.wysiwyg, .shopify-policy__body .rte) ul {
     margin: 1em 0 1em 1.25em;
     list-style-type: disc;
   }
 
-  .wysiwyg table {
+  :is(.wysiwyg, .shopify-policy__body .rte) table {
     width: 100%;
     margin: 1.5rem 0;
     border-collapse: collapse;
     border: 1px solid var(--color-black);
   }
 
-  .wysiwyg table th,
-  .wysiwyg table td {
+  :is(.wysiwyg, .shopify-policy__body .rte) table :is(th, td) {
     border: 1px solid var(--color-gray-200);
     padding: 0.5rem 0.75rem;
     text-align: left;
   }
 
-  .wysiwyg img {
+  :is(.wysiwyg, .shopify-policy__body .rte) img {
     outline: 1px solid var(--color-gray-200);
     margin: 1em 0;
   }
 
-  .wysiwyg h1,
-  .wysiwyg h2,
-  .wysiwyg h3,
-  .wysiwyg h4,
-  .wysiwyg h5 {
+  :is(.wysiwyg, .shopify-policy__body .rte) :is(h1, h2, h3, h4, h5) {
     margin: 1em 0 0.5em;
     font-weight: 600;
   }
 
-  .wysiwyg h2 {
+  :is(.wysiwyg, .shopify-policy__body .rte) h2 {
     font-size: var(--text-xl);
     line-height: var(--text-xl--line-height);
   }
 
-  .wysiwyg h3 {
+  :is(.wysiwyg, .shopify-policy__body .rte) h3 {
     font-size: var(--text-base);
     line-height: var(--text-base--line-height);
   }
 
-  .wysiwyg h4,
-  .wysiwyg h5 {
+  :is(.wysiwyg, .shopify-policy__body .rte) :is(h4, h5) {
     font-size: var(--text-sm);
     line-height: var(--text-sm--line-height);
   }

@@ -64,19 +64,23 @@
     </div>
 
     {%- if quick_add != false and product.available -%}
+      {%- liquid
+        assign quick_add_title = 'snippets.add-to-cart.add_to_cart' | t
+        assign quick_add_label = 'sections.product.add_to_cart' | t | append: ' ' | append: product.title
+      -%}
+      {% capture quick_add_attributes %}data-dom="button" aria-label="{{ quick_add_label | escape }}"{% endcapture %}
       {% capture quick_add_button %}
- <button
- data-dom="button"
- type="submit"
- class="button button--primary w-full"
- aria-label="{{ 'sections.product.add_to_cart' | t }} {{ product.title }}"
- >
- {{- 'snippets.add-to-cart.add_to_cart' | t -}}
- </button>
- {% endcapture %}
+        {%- render 'button.html',
+          title: quick_add_title,
+          type: 'submit',
+          classes: 'w-full',
+          variant: 'primary',
+          attributes: quick_add_attributes
+        -%}
+      {% endcapture %}
       {%- render 'add-to-cart.html', classes: 'block', product: product, button: quick_add_button -%}
     {%- elsif quick_add != false and product.available == false -%}
-      <p class="border border-black px-3 py-2 text-center text-sm opacity-50">
+      <p class="surface px-3 py-2 text-center text-sm opacity-50">
         {{- 'snippets.product-tags.sold_out' | t -}}
       </p>
     {%- endif -%}

@@ -1,26 +1,26 @@
 {% doc %}
-  Renders button.
+  Renders a button or link.
 
-  @param {string} title - button title.
-  @param {string} [id] - button id. Optional.
-  @param {string} [url] - button url.
-  @param {string} [target] - button target (optional).
-  @param {string} [classes] - button classes (optional).
-  @param {string} [tag] - button tag (optional). Possible values: 'button', 'a'. Default is 'a'.
-  @param {string} [type] - button type (optional). Possible values: 'button', 'submit'. Default is 'button'.
-  @param {string} [form] - button form (optional). Applicable only if tag is 'button'.
-  @param {boolean} [disabled] - whether the button is disabled (optional). Default is false.
-  @param {string} [name] - name attribute for the button (optional).
-  @param {string} [variant] - button variant (optional). Possible values: 'primary', 'secondary', 'tertiary'. Default is 'primary'.
-  @param {string} [value] - button value (optional).
-  @param {string} [data-dom] - data-dom attribute for the button (optional).
-  @param {object} [block] - block object to add Shopify attributes (optional).
-  @param {string} [icon] - icon to display inside the button (optional).
-  @param {string} [aria-controls] - aria-controls attribute for the button (optional).
-  @param {string} [aria-expanded] - aria-expanded attribute for the button (optional).
+  If `url` is set → `<a>`. Otherwise → `<button>`.
+
+  @param {string} title - Label (HTML allowed).
+  @param {string} [url] - If present, renders an `<a href>`.
+  @param {string} [classes] - Extra classes (optional).
+  @param {string} [variant] - `primary` | `secondary` | `tertiary`. Default `primary`.
+  @param {string} [type] - Button type when no `url`. Default `button`.
+  @param {string} [icon] - Icon name for `use.html` (optional).
+  @param {object} [block] - Theme block (`shopify_attributes`) (optional).
+  @param {string} [attributes] - Raw HTML attributes, e.g. `id="x" form="y" disabled data-dom="button" aria-label="Open"`.
 
   @example
-  {% render 'button.html', title: 'Click me', url: '/some-url', variant: 'primary' %}
+  {% render 'button.html', title: 'Shop', url: '/collections/all' %}
+
+  @example
+  {% render 'button.html',
+    title: 'Add',
+    type: 'submit',
+    attributes: 'data-dom="button" disabled'
+  %}
 {% enddoc %}
 
 {%- liquid
@@ -40,73 +40,28 @@
   endif
 -%}
 
-{%- if tag == 'button' -%}
+{%- if url != blank -%}
+  <a
+    href="{{ url }}"
+    class="{{ classes | strip }}"
+    {{ attributes }}
+    {{ block.shopify_attributes }}
+  >
+    {%- if icon != blank -%}
+      {%- render 'use.html', icon: icon, classes: 'size-4' -%}
+    {%- endif -%}
+    {{- title -}}
+  </a>
+{%- else -%}
   <button
     type="{{ type | default: 'button' }}"
     class="{{ classes | strip }}"
-    {% if id %}
-      id="{{ id }}"
-    {% endif %}
-    {% if form != blank %}
-      form="{{ form }}"
-    {% endif %}
-    {% if disabled %}
-      disabled
-    {% endif %}
-    {% if name %}
-      name="{{ name }}"
-    {% endif %}
-    {% if value %}
-      value="{{ value }}"
-    {% endif %}
-    {% if data-dom %}
-      data-dom="{{ data-dom }}"
-    {% endif %}
-    {% if aria-controls %}
-      aria-controls="{{ aria-controls }}"
-    {% endif %}
-    {% if aria-expanded %}
-      aria-expanded="{{ aria-expanded }}"
-    {% endif %}
+    {{ attributes }}
     {{ block.shopify_attributes }}
   >
-    {%- if icon -%}
+    {%- if icon != blank -%}
       {%- render 'use.html', icon: icon, classes: 'size-4' -%}
     {%- endif -%}
     {{- title -}}
   </button>
-{%- else -%}
-  {%- if url -%}
-    <a
-      href="{{ url }}"
-      class="{{ classes | strip }}"
-      {% if id %}
-        id="{{ id }}"
-      {% endif %}
-      {% if target != blank and target == '_blank' %}
-        target="{{ target }}" rel="noopener noreferer"
-      {% endif %}
-      {% if disabled %}
-        disabled
-      {% endif %}
-      {% if name %}
-        name="{{ name }}"
-      {% endif %}
-      {% if data-dom %}
-        data-dom="{{ data-dom }}"
-      {% endif %}
-      {% if aria-controls %}
-        aria-controls="{{ aria-controls }}"
-      {% endif %}
-      {% if aria-expanded %}
-        aria-expanded="{{ aria-expanded }}"
-      {% endif %}
-      {{ block.shopify_attributes }}
-    >
-      {%- if icon -%}
-        {%- render 'use.html', icon: icon, classes: 'size-4' -%}
-      {%- endif -%}
-      {{- title -}}
-    </a>
-  {%- endif -%}
 {%- endif -%}

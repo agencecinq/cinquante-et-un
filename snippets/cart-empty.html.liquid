@@ -3,20 +3,20 @@
 
   @param {string} id - Unique section ID.
 
-  @example {% render 'cart-empty', id: section.id %}
+  @example {% render 'cart-empty.html', id: section.id %}
 {%- enddoc -%}
 
 {%- render 'cart-header.html', id: id -%}
 
-<div id="CartDrawerEmpty-{{ id }}" class="js-cart-items flex grow items-center justify-center p-5">
-  <div class="space-y-10 text-center">
-    <p class="text-lg">
+<div id="CartDrawerEmpty-{{ id }}" class="js-cart-items flex grow items-center justify-center px-5 py-12">
+  <div class="space-y-6 text-center">
+    <p class="text-sm">
       {{- 'cart.drawer.empty.message' | t -}}
     </p>
 
     {%- liquid
       assign title = 'snippets.cart-empty.title' | t
-      assign url = '/collections/all'
+      assign url = routes.all_products_collection_url
 
       if settings.cart_empty_title != blank
         assign title = settings.cart_empty_title
@@ -26,7 +26,7 @@
         assign url = settings.cart_empty_url
       endif
 
-      render 'button.html', title: title, tag: 'a', url: url
+      render 'button.html', title: title, url: url, variant: 'secondary'
     -%}
   </div>
 </div>

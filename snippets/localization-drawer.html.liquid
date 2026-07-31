@@ -1,76 +1,88 @@
 {% doc %}
-  Renders a localization drawer (country + language via Shopify localization form).
+  Localization drawer — Shopify `{% form 'localization' %}` for country + language.
 
-  Usage: capture markup, then render cinq-drawer.html with that content — never put this markup inside cinq-drawer.html.liquid itself.
-
-  @example
-  {% render 'localization-drawer.html' %}
+  @example {% render 'localization-drawer.html' %}
 {% enddoc %}
 
-{%- capture content -%}
-  <div class="flex h-full flex-col">
-    {% assign title = 'snippets.localization.title' | t %}
-    {%- render 'drawer-header.html', title: title, id: 'locale-currency-drawer' -%}
+{%- liquid
+  assign show_country = false
+  assign show_language = false
+  if localization.available_countries.size > 1
+    assign show_country = true
+  endif
+  if localization.available_languages.size > 1
+    assign show_language = true
+  endif
+-%}
 
-    <div class="space-y-14 px-8 py-14">
-      {% liquid
-        assign name = '<span class="text-black">' | append: localization.country.name | append: '</span>'
-        echo '<p class="text-base font-medium text-gray-500">'
-        echo 'snippets.localization.text_html' | t: name: name
-        echo '</p>'
-      %}
+{%- if show_country or show_language -%}
+  {%- capture content -%}
+    <div class="flex h-full flex-col">
+      {%- assign title = 'snippets.localization.title' | t -%}
+      {%- render 'drawer-header.html', title: title, id: 'locale-currency-drawer' -%}
 
-      <div class="space-y-10">
-        {%- form 'localization', return_to: request.path -%}
-          <div class="space-y-5">
-            <p class="text-xs leading-tight tracking-widest text-gray-500 uppercase">
-              {{- 'snippets.localization.country_title' | t -}}
-            </p>
-            <c-select-controller class="relative block" data-action="submit">
-              {% # theme-check-disable RemoteAsset %}
-              <img
-                data-dom="flag"
-                src="https://flagcdn.com/{{ localization.country.iso_code | downcase }}.svg"
-                width="16"
-                height="16"
-                alt="{{ localization.country.name }}"
-                loading="lazy"
-                class="pointer-events-none absolute inset-y-0 left-0 my-auto ml-6 size-4 overflow-hidden object-cover object-center"
-              >
+      <div class="space-y-8 px-5 py-8 lg:px-8">
+        {%- if localization.country -%}
+          <p class="text-sm opacity-60">
+            {{- 'snippets.localization.text_html' | t: name: localization.country.name -}}
+          </p>
+        {%- endif -%}
 
-              <select
-                data-dom="select"
-                name="country_code"
-                class="w-full appearance-none border border-gray-200 bg-transparent py-5 pr-6 pl-14 text-xs font-medium"
-              >
-                {%- for country in localization.available_countries -%}
-                  <option
-                    value="{{ country.iso_code }}"
-                    data-flag-src="https://flagcdn.com/{{ country.iso_code | downcase }}.svg"
-                    {% if country.iso_code == localization.country.iso_code %}
-                      selected
-                    {% endif %}
-                  >
-                    {{- country.name -}}
-                    &nbsp;&lpar;{{- country.currency.symbol -}}&rpar;
-                  </option>
-                {%- endfor -%}
-              </select>
+        {%- form 'localization', return_to: request.path, class: 'space-y-8' -%}
+          {%- if show_country -%}
+            <div class="space-y-3">
+              <p class="text-xs font-medium uppercase tracking-wide opacity-60">
+                {{- 'snippets.localization.country_title' | t -}}
+              </p>
+              <c-select-controller class="relative block" data-action="submit">
+                {% # theme-check-disable RemoteAsset %}
+                <img
+                  data-dom="flag"
+                  src="https://flagcdn.com/{{ localization.country.iso_code | downcase }}.svg"
+                  width="16"
+                  height="16"
+                  alt=""
+                  loading="lazy"
+                  class="pointer-events-none absolute inset-y-0 left-0 my-auto ml-4 size-4 overflow-hidden object-cover object-center"
+                >
 
-              {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5 absolute inset-y-0 right-0 my-auto mr-6 pointer-events-none' -%}
-            </c-select-controller>
-          </div>
+                <select
+                  data-dom="select"
+                  name="country_code"
+                  class="w-full appearance-none border border-black bg-transparent py-3 pr-10 pl-12 text-sm"
+                >
+                  {%- for country in localization.available_countries -%}
+                    <option
+                      value="{{ country.iso_code }}"
+                      data-flag-src="https://flagcdn.com/{{ country.iso_code | downcase }}.svg"
+                      {% if country.iso_code == localization.country.iso_code %}
+                        selected
+                      {% endif %}
+                    >
+                      {{- country.name -}}
+                      &nbsp;&lpar;{{- country.currency.symbol -}}&rpar;
+                    </option>
+                  {%- endfor -%}
+                </select>
 
-          {%- if localization.available_languages.size > 1 -%}
-            <div class="space-y-5">
-              <p class="text-xs leading-tight tracking-widest text-gray-500 uppercase">
+                {%- render 'use.html',
+                  icon: 'chevron-down',
+                  classes: 'pointer-events-none absolute inset-y-0 right-0 my-auto mr-4 size-3.5'
+                -%}
+              </c-select-controller>
+            </div>
+          {%- endif -%}
+
+          {%- if show_language -%}
+            <div class="space-y-3">
+              <p class="text-xs font-medium uppercase tracking-wide opacity-60">
                 {{- 'snippets.localization.language_title' | t -}}
               </p>
               <c-select-controller class="relative block" data-action="submit">
                 <select
                   data-dom="select"
                   name="locale_code"
-                  class="w-full appearance-none border border-gray-200 bg-transparent px-6 py-5 text-xs font-medium"
+                  class="w-full appearance-none border border-black bg-transparent px-4 py-3 pr-10 text-sm"
                 >
                   {%- for language in localization.available_languages -%}
                     <option
@@ -83,19 +95,22 @@
                     </option>
                   {%- endfor -%}
                 </select>
-                {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5 absolute inset-y-0 right-0 my-auto mr-6 pointer-events-none' -%}
+                {%- render 'use.html',
+                  icon: 'chevron-down',
+                  classes: 'pointer-events-none absolute inset-y-0 right-0 my-auto mr-4 size-3.5'
+                -%}
               </c-select-controller>
             </div>
           {%- endif -%}
         {%- endform -%}
       </div>
     </div>
-  </div>
-{%- endcapture -%}
+  {%- endcapture -%}
 
-{%- render 'cinq-drawer.html',
-  direction: 'from-right',
-  content: content,
-  id: 'locale-currency-drawer',
-  background: 'bg-white'
--%}
+  {%- render 'cinq-drawer.html',
+    direction: 'from-right',
+    content: content,
+    id: 'locale-currency-drawer',
+    background: 'bg-white'
+  -%}
+{%- endif -%}

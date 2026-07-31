@@ -25,11 +25,7 @@
     >
 
     {%- for option in product.options_with_values -%}
-      <c-variants-picker-option
-        class="block"
-        data-dom="option"
-        data-position="{{ option.position }}"
-      >
+      <div class="block" data-dom="option" data-position="{{ option.position }}">
         <fieldset class="space-y-2">
           <legend class="text-xs">
             {{- option.name -}}
@@ -54,7 +50,7 @@
             {%- endfor -%}
           </div>
         </fieldset>
-      </c-variants-picker-option>
+      </div>
     {%- endfor -%}
   </c-variants-picker>
 {%- endunless -%}

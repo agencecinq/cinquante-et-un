@@ -2,7 +2,12 @@
   "sections": {
     "main": {
       "type": "blog",
-      "settings": {}
+      "settings": {
+        "articles_per_page": 12,
+        "show_tags": true,
+        "show_excerpt": false,
+        "compensate_header": true
+      }
     }
   },
   "order": ["main"]

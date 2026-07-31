@@ -5,8 +5,7 @@
 {% endcomment %}
 
 {%- liquid
-  assign menu = section.settings.menu.links
-  assign menu_legals = section.settings.menu_legals.links
+  assign menu = linklists[section.settings.menu].links
 -%}
 
 <footer class="border-t border-black color-{{ section.settings.color_scheme }}">
@@ -107,19 +106,13 @@
           <p class="opacity-70">{{ powered_by_link }}</p>
         </div>
 
-        {%- if menu_legals.size > 0 -%}
+        {%- if shop.policies.size > 0 -%}
           <nav aria-label="{{ 'sections.footer.nav_legal_aria_label' | t }}">
             <ul class="flex flex-wrap gap-x-4 gap-y-2">
-              {%- for link in menu_legals -%}
+              {%- for policy in shop.policies -%}
                 <li>
-                  <a
-                    href="{{ link.url }}"
-                    class="hover:underline"
-                    {% if link.type == 'http_link' %}
-                      target="_blank" rel="noopener noreferrer"
-                    {% endif %}
-                  >
-                    {{- link.title -}}
+                  <a href="{{ policy.url }}" class="hover:underline">
+                    {{- policy.title -}}
                   </a>
                 </li>
               {%- endfor -%}
@@ -186,13 +179,8 @@
       "type": "link_list",
       "id": "menu",
       "label": "t:sections.footer.settings.links.menu.label",
-      "info": "t:sections.footer.settings.links.menu.info"
-    },
-    {
-      "type": "link_list",
-      "id": "menu_legals",
-      "label": "t:sections.footer.settings.links.legals.label",
-      "info": "t:sections.footer.settings.links.legals.info"
+      "info": "t:sections.footer.settings.links.menu.info",
+      "default": "footer"
     },
     {
       "type": "checkbox",
@@ -210,7 +198,7 @@
       "type": "checkbox",
       "id": "show_localization",
       "label": "t:sections.footer.settings.show_localization.label",
-      "default": false
+      "default": true
     }
   ]
 }

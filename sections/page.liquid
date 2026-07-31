@@ -1,16 +1,72 @@
 {% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
+  Page template section — classic title + rich text layout (Dawn / Horizon style).
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
-{%- render 'page-hero.html', thumbnail: page.metafields.custom.thumbnail, id: section.id, classes: 'section-' | append: section.id | append: '-padding', content: page.content, title: page.title, padding_top: section.settings.padding_top, padding_bottom: section.settings.padding_bottom -%}
+{%- render 'page-hero.html',
+  id: section.id,
+  title: page.title,
+  subtitle: section.settings.subtitle,
+  content: page.content,
+  show_title: section.settings.show_title,
+  text_alignment: section.settings.text_alignment,
+  color_scheme: section.settings.color_scheme,
+  padding_top: section.settings.padding_top,
+  padding_bottom: section.settings.padding_bottom,
+  compensate_header: section.settings.compensate_header
+-%}
 
 {% schema %}
 {
   "name": "t:sections.page.name",
+  "tag": "section",
+  "class": "section-page",
   "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.page.settings.show_title.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.text_alignment.header.content"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "info": "t:sections.shared.settings.text_alignment.info",
+      "options": [
+        {
+          "value": "text-center",
+          "label": "t:sections.shared.settings.text_alignment.options.center.label"
+        },
+        {
+          "value": "text-start",
+          "label": "t:sections.shared.settings.text_alignment.options.left.label"
+        },
+        {
+          "value": "text-end",
+          "label": "t:sections.shared.settings.text_alignment.options.right.label"
+        }
+      ],
+      "default": "text-center"
+    },
+    {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": true
+    },
     {
       "type": "header",
       "content": "t:sections.shared.settings.padding.header.content"
@@ -24,7 +80,7 @@
       "unit": "px",
       "label": "t:sections.shared.settings.padding.top.label",
       "info": "t:sections.shared.settings.padding.top.info",
-      "default": 100
+      "default": 36
     },
     {
       "type": "range",
@@ -35,7 +91,7 @@
       "unit": "px",
       "label": "t:sections.shared.settings.padding.bottom.label",
       "info": "t:sections.shared.settings.padding.bottom.info",
-      "default": 100
+      "default": 36
     },
     {
       "type": "header",

@@ -1,67 +1,71 @@
 {% doc %}
-  @param {string} classes - The classes.
-  @param {object} thumbnail - The thumbnail.
-  @param {string} content - The content.
-  @param {string} title - The title.
-  @param {number} [padding_top] - The padding top.
-  @param {number} [padding_bottom] - The padding bottom.
-  @param {string} id - The section ID.
+  Classic page layout (Dawn-style): optional title + rich text in a narrow column.
+
+  @param {string} [classes] - Extra classes on the root.
+  @param {string} [color_scheme] - Color scheme class suffix (e.g. background-1).
+  @param {string} content - Page rich text content.
+  @param {string} title - Page title.
+  @param {string} [subtitle] - Optional eyebrow above the title.
+  @param {boolean} [show_title] - Whether to render the title (default true).
+  @param {string} [text_alignment] - Tailwind text alignment class.
+  @param {number} [padding_top] - Padding top in px.
+  @param {number} [padding_bottom] - Padding bottom in px.
+  @param {boolean} [compensate_header] - Offset content below the fixed header.
+  @param {string} id - Section ID (for padding CSS).
 {% enddoc %}
 
-{%- if padding_top != blank or padding_bottom != blank -%}
-  {%- style -%}
-    .section-{{ id }}-padding {
-    {% if padding_top != blank %}
-    padding-top: {{ padding_top | times: 0.6 | divided_by: 16.00 }}rem;
-    {% endif %}
-    {% if padding_bottom != blank %}
-    padding-bottom: {{ padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
-    {% endif %}
-    }
+{%- liquid
+  assign show_title = show_title | default: true, allow_false: true
+  assign text_alignment = text_alignment | default: 'text-center'
+  assign color_scheme = color_scheme | default: 'background-1'
 
-    @media (width >= 64rem) {
-    .section-{{ id }}-padding {
-    {% if padding_top != blank %}
-    padding-top: {{ padding_top | divided_by: 16.00 }}rem;
-    {% endif %}
-    {% if padding_bottom != blank %}
-    padding-bottom: {{ padding_bottom | divided_by: 16.00}}rem;
-    {% endif %}
-    }
-    }
-  {%- endstyle -%}
-{%- endif -%}
+  assign padding_top_mobile = padding_top | default: 0 | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = padding_top | default: 0 | divided_by: 16.00
+  assign padding_bottom_mobile = padding_bottom | default: 0 | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = padding_bottom | default: 0 | divided_by: 16.00
 
-<div class="{{ classes }}">
-  {%- if title != blank or thumbnail != blank -%}
-    <div class="relative flex aspect-square flex-col justify-center bg-gray-200 text-center text-white after:absolute after:inset-0 after:z-20 after:size-full after:[background:linear-gradient(0deg,rgba(0,0,0,0.2),rgba(0,0,0,0.2))] lg:aspect-3/1">
-      {%- if title != blank -%}
-        <div class="relative z-30 container">
-          <div class="grid grid-cols-4 gap-x-2.5 gap-y-5 lg:grid-cols-12">
-            <div class="col-span-4 space-y-12 lg:col-span-full">
-              <h1 class="text-xl font-medium font-semibold lg:text-base">{{- title -}}</h1>
-            </div>
-          </div>
+  if compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + var(--header-height, 4.5rem))'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + var(--header-height, 4.5rem))'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ id }}-padding {
+    padding-top: {{ padding_top_mobile }};
+    padding-bottom: {{ padding_bottom_mobile }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ id }}-padding {
+      padding-top: {{ padding_top_desktop }};
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ id }}-padding color-{{ color_scheme }} {{ classes }}">
+  <div class="container">
+    <div class="mx-auto max-w-3xl space-y-8 {{ text_alignment }}">
+      {%- if subtitle != blank or show_title and title != blank -%}
+        <div class="space-y-2">
+          {%- render 'subtitle.html', subtitle: subtitle -%}
+          {%- if show_title and title != blank -%}
+            <h1 class="text-3xl font-semibold text-balance lg:text-4xl">
+              {{- title | escape -}}
+            </h1>
+          {%- endif -%}
         </div>
       {%- endif -%}
 
-      {%- if thumbnail != blank -%}
-        {{-
-          thumbnail
-          | image_url: width: 1440
-          | image_tag: class: 'size-full absolute inset-0 z-10 object-center object-cover'
-        -}}
-      {%- endif -%}
-    </div>
-  {%- endif -%}
-
-  {%- if content != blank -%}
-    <div class="container{% if padding_top != blank or padding_bottom != blank %} section-{{ id }}-padding{% endif %}">
-      <div class="grid grid-cols-4 gap-x-2.5 gap-y-5 lg:grid-cols-12">
-        <div class="wysiwyg col-span-4 space-y-12 text-xs lg:col-span-6 lg:col-start-4">
+      {%- if content != blank -%}
+        <div class="wysiwyg">
           {{- content -}}
         </div>
-      </div>
+      {%- endif -%}
     </div>
-  {%- endif -%}
+  </div>
 </div>

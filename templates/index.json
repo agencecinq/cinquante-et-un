@@ -3,6 +3,13 @@
     "hero": {
       "type": "section-hero",
       "blocks": {
+        "hero_subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "Starter"
+          },
+          "blocks": {}
+        },
         "hero_title": {
           "type": "title",
           "settings": {
@@ -32,7 +39,7 @@
           "blocks": {}
         }
       },
-      "block_order": ["hero_title", "hero_text", "hero_link"],
+      "block_order": ["hero_subtitle", "hero_title", "hero_text", "hero_link"],
       "settings": {
         "full_bleed": false,
         "show_media_overlay": false,
@@ -46,6 +53,13 @@
     "intro": {
       "type": "section-richtext",
       "blocks": {
+        "intro_subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "Intro"
+          },
+          "blocks": {}
+        },
         "intro_title": {
           "type": "title",
           "settings": {
@@ -65,7 +79,7 @@
           "blocks": {}
         }
       },
-      "block_order": ["intro_title", "intro_text"],
+      "block_order": ["intro_subtitle", "intro_title", "intro_text"],
       "settings": {
         "text_alignment": "text-start",
         "space_between": "space-y-4",
@@ -77,6 +91,13 @@
     "stack": {
       "type": "section-richtext",
       "blocks": {
+        "stack_subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "Tech"
+          },
+          "blocks": {}
+        },
         "stack_title": {
           "type": "title",
           "settings": {
@@ -106,7 +127,7 @@
           "blocks": {}
         }
       },
-      "block_order": ["stack_title", "stack_text", "stack_link"],
+      "block_order": ["stack_subtitle", "stack_title", "stack_text", "stack_link"],
       "settings": {
         "text_alignment": "text-start",
         "space_between": "space-y-4",
@@ -118,6 +139,7 @@
     "featured": {
       "type": "featured-collection",
       "settings": {
+        "subtitle": "Shop",
         "title": "Nos produits",
         "products_to_show": 4,
         "columns": "4",
@@ -133,7 +155,6 @@
         "faq_1": {
           "type": "accordion",
           "settings": {
-            "category": "Starter",
             "title": "Comment démarrer ?",
             "content": "<p>Configurez shopify.theme.toml, lancez pnpm install puis pnpm dev.</p>"
           }
@@ -141,7 +162,6 @@
         "faq_2": {
           "type": "accordion",
           "settings": {
-            "category": "Starter",
             "title": "Où personnaliser le design ?",
             "content": "<p>Tokens dans src/stylesheets/theme.css, composants Liquid dans sections/ et snippets/.</p>"
           }
@@ -149,7 +169,6 @@
         "faq_3": {
           "type": "accordion",
           "settings": {
-            "category": "Starter",
             "title": "Le style wireframe est volontaire ?",
             "content": "<p>Oui. Le starter reste neutre pour éviter de reporter une identité de marque d’un projet précédent.</p>"
           }
@@ -157,6 +176,7 @@
       },
       "block_order": ["faq_1", "faq_2", "faq_3"],
       "settings": {
+        "subtitle": "Help",
         "title": "FAQ",
         "padding_top": 48,
         "padding_bottom": 48
@@ -165,6 +185,13 @@
     "cta": {
       "type": "section-richtext",
       "blocks": {
+        "cta_subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "Next"
+          },
+          "blocks": {}
+        },
         "cta_title": {
           "type": "title",
           "settings": {
@@ -194,15 +221,25 @@
           "blocks": {}
         }
       },
-      "block_order": ["cta_title", "cta_text", "cta_link"],
+      "block_order": ["cta_subtitle", "cta_title", "cta_text", "cta_link"],
       "settings": {
         "text_alignment": "text-start",
         "space_between": "space-y-4",
         "columns": "lg:col-start-1 lg:col-span-6",
         "padding_top": 64,
+        "padding_bottom": 48
+      }
+    },
+    "styleguide": {
+      "type": "section-styleguide",
+      "settings": {
+        "subtitle": "Style guide",
+        "title": "Cinquante-et-un",
+        "intro": "<p>Philosophy, features, and live demos of every @agencecinq Web Component.</p>",
+        "padding_top": 48,
         "padding_bottom": 80
       }
     }
   },
-  "order": ["hero", "intro", "featured", "stack", "faq", "cta"]
+  "order": ["hero", "intro", "featured", "stack", "faq", "cta", "styleguide"]
 }

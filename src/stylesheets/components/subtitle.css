@@ -1,0 +1,14 @@
+@layer components {
+  /**
+   * Eyebrow / section subtitle — use via snippets/subtitle.html or .subtitle
+   */
+  .subtitle {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+    overflow-wrap: anywhere;
+  }
+}

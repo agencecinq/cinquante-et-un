@@ -1,43 +1,56 @@
 {% doc %}
-  Renders a localization button.
+  Opens the localization drawer (country / language).
 
-  @example
-  {% render 'localization-button.html' %}
+  @example {% render 'localization-button.html' %}
 {% enddoc %}
 
-<cinq-drawer-button class="block">
-  <button
-    type="button"
-    aria-controls="locale-currency-drawer"
-    aria-expanded="false"
-    class="flex items-center justify-center gap-2 border border-gray-700 px-5 py-2"
-  >
-    {%- if localization.country and localization.country.iso_code -%}
-      <span class="flex items-center gap-2">
-        {% # theme-check-disable RemoteAsset %}
-        <img
-          src="https://flagcdn.com/{{ localization.country.iso_code | downcase }}.svg"
-          width="16"
-          height="16"
-          alt="{{ localization.country.name }}"
-          loading="lazy"
-          class="size-4 overflow-hidden object-cover object-center"
-        >
-        <span class="text-xs font-medium">
-          {{- localization.country.name -}}
-          &nbsp;&lpar;{{ localization.country.currency.symbol }}&rpar;</span
-        >
-      </span>
-    {%- else -%}
-      <span class="text-xs font-medium">{{- request.locale.iso_code -}}</span>
-    {%- endif -%}
+{%- liquid
+  assign show_country = false
+  assign show_language = false
+  if localization.available_countries.size > 1
+    assign show_country = true
+  endif
+  if localization.available_languages.size > 1
+    assign show_language = true
+  endif
+-%}
 
-    {{- '&verbar;' -}}
+{%- if show_country or show_language -%}
+  <cinq-drawer-button class="block">
+    <button
+      type="button"
+      data-dom="button"
+      aria-controls="locale-currency-drawer"
+      aria-expanded="false"
+      aria-label="{{ 'snippets.localization.title' | t }}"
+      class="flex items-center justify-center gap-2 border border-black px-4 py-2"
+    >
+      {%- if localization.country and localization.country.iso_code -%}
+        <span class="flex items-center gap-2">
+          {% # theme-check-disable RemoteAsset %}
+          <img
+            src="https://flagcdn.com/{{ localization.country.iso_code | downcase }}.svg"
+            width="16"
+            height="16"
+            alt=""
+            loading="lazy"
+            class="size-4 overflow-hidden object-cover object-center"
+          >
+          <span class="text-xs font-medium">
+            {{- localization.country.name -}}
+            &nbsp;&lpar;{{- localization.country.currency.symbol -}}&rpar;
+          </span>
+        </span>
+      {%- elsif localization.language -%}
+        <span class="text-xs font-medium">{{- localization.language.endonym_name -}}</span>
+      {%- endif -%}
 
-    <span class="text-xs font-medium">
-      {{- localization.language.endonym_name -}}
-    </span>
+      {%- if localization.country and localization.language and show_language -%}
+        <span aria-hidden="true" class="opacity-40">|</span>
+        <span class="text-xs font-medium">{{- localization.language.endonym_name -}}</span>
+      {%- endif -%}
 
-    {%- render 'use.html', icon: 'chevron-right', classes: 'size-3' -%}
-  </button>
-</cinq-drawer-button>
+      {%- render 'use.html', icon: 'chevron-down', classes: 'size-3' -%}
+    </button>
+  </cinq-drawer-button>
+{%- endif -%}
