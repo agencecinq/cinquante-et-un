@@ -2925,16 +2925,16 @@
     "settings": {
       "background_image": {
         "label": "Background image",
-        "info": "The image displayed in the background of the password page"
+        "info": "Displayed behind the password form"
       },
       "title": {
         "label": "Title",
-        "default": "An invisible revolution is underway.",
-        "info": "Set the main heading on the password page"
+        "default": "This shop is private",
+        "info": "Main heading on the password page"
       },
       "text": {
         "label": "Text",
-        "default": "<p>Enter the password to access the store.</p>",
+        "default": "<p>Enter the password to access the store, or leave your email to be notified when we open.</p>",
         "info": "Text displayed below the title"
       }
     }

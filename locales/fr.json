@@ -95,9 +95,16 @@
   "password": {
     "title": "Cette boutique est privée",
     "password": "Mot de passe",
+    "password_placeholder": "Entrez le mot de passe",
     "enter": "Entrer",
+    "login_heading": "Accéder avec le mot de passe",
+    "login_error": "Mot de passe incorrect. Réessayez.",
+    "admin_link_html": "Propriétaire de la boutique ? <a href=\"/admin\" class=\"underline\">Connectez-vous ici</a>",
     "placeholder": "Votre email",
-    "email": "Prévenez-moi lorsque la boutique sera ouverte"
+    "email": "Prévenez-moi lorsque la boutique sera ouverte",
+    "email_label": "Email",
+    "email_submit": "Envoyer",
+    "email_success": "Merci ! Nous vous préviendrons à l’ouverture."
   },
   "search": {
     "title": "Recherche",

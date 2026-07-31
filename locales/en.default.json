@@ -99,9 +99,16 @@
   "password": {
     "title": "This shop is private",
     "password": "Password",
+    "password_placeholder": "Enter store password",
     "enter": "Enter",
+    "login_heading": "Enter using password",
+    "login_error": "Wrong password. Try again.",
+    "admin_link_html": "Store owner? <a href=\"/admin\" class=\"underline\">Log in here</a>",
     "placeholder": "Your email",
-    "email": "Notify me when the shop is open"
+    "email": "Notify me when the shop is open",
+    "email_label": "Email",
+    "email_submit": "Submit",
+    "email_success": "Thanks! We’ll notify you when we open."
   },
   "search": {
     "title": "Search",

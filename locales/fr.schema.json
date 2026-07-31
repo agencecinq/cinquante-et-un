@@ -2811,21 +2811,21 @@
     }
   },
   "password": {
-    "name": "Password",
+    "name": "Mot de passe",
     "settings": {
       "background_image": {
-        "label": "Background image",
-        "info": "The image displayed in the background of the password page"
+        "label": "Image de fond",
+        "info": "Affichée derrière le formulaire"
       },
       "title": {
-        "label": "Title",
-        "default": "An invisible revolution is underway.",
-        "info": "Set the main heading on the password page"
+        "label": "Titre",
+        "default": "Cette boutique est privée",
+        "info": "Titre principal de la page mot de passe"
       },
       "text": {
-        "label": "Text",
-        "default": "<p>Enter the password to access the store.</p>",
-        "info": "Text displayed below the title"
+        "label": "Texte",
+        "default": "<p>Entrez le mot de passe pour accéder à la boutique, ou laissez votre email pour être prévenu à l’ouverture.</p>",
+        "info": "Texte affiché sous le titre"
       }
     }
   },
