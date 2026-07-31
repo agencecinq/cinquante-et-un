@@ -1,0 +1,86 @@
+{% comment %}
+  This section is used in the article template to render the article page, which
+  displays the full content of the blog post and can optionally include a
+  comments section for customers (not shown in this example).
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/article
+{% endcomment %}
+
+<div class="relative aspect-9/16 bg-gray-200 text-white lg:aspect-3/1">
+  {%- if article.image -%}
+    {{-
+      article.image
+      | image_url: width: 2880
+      | image_tag: class: 'relative z-10 size-full object-cover object-center'
+    -}}
+  {%- endif -%}
+
+  <div class="absolute inset-x-0 bottom-0 z-20 container mb-40 text-center">
+    <h1 class="text-center text-base font-semibold">{{- article.title -}}</h1>
+  </div>
+</div>
+
+<div class="container my-14 grid grid-cols-12 gap-x-2 gap-y-14 overflow-hidden lg:my-32 lg:gap-x-4">
+  <c-table-of-contents
+    data-content-id="article-{{ article.id }}"
+    class="scrollbar-hidden col-span-12 -mx-2.5 overflow-x-auto overflow-y-hidden px-2.5 lg:col-span-5 lg:mx-0 lg:overflow-visible lg:px-0"
+  >
+    <ul
+      data-dom="content"
+      class="flex gap-5 whitespace-nowrap lg:block lg:gap-6 lg:space-y-10 lg:whitespace-normal [&>li]:shrink-0"
+    ></ul>
+  </c-table-of-contents>
+  <div id="article-{{ article.id }}" class="wysiwyg col-span-12 lg:col-span-6 lg:col-start-6">
+    {{- article.content -}}
+  </div>
+</div>
+
+{% if blog.comments_enabled? %}
+  <h2>{{ 'blog.article_comments' | t }}</h2>
+
+  <div id="comments">
+    {% paginate article.comments by 10 %}
+      {% for comment in article.comments %}
+        <div>
+          <p>{{ comment.author }}</p>
+          <p>
+            {{- comment.created_at | time_tag: format: 'date' -}}
+          </p>
+          <p>{{ comment.content }}</p>
+        </div>
+      {% endfor %}
+
+      {{ paginate | default_pagination: anchor: 'comments' }}
+    {% endpaginate %}
+  </div>
+
+  {% form 'new_comment', article %}
+    <h2>{{ 'blog.comment_form_title' | t }}</h2>
+
+    {{ form.errors | default_errors }}
+
+    <div>
+      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
+      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
+    </div>
+
+    <div>
+      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
+      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
+    </div>
+
+    <div>
+      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
+      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
+    </div>
+
+    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
+  {% endform %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:general.article",
+  "settings": []
+}
+{% endschema %}

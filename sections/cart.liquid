@@ -1,0 +1,45 @@
+{% comment %}
+  This section is used in the cart template to render /cart page with an
+  overview of the items in customer's cart.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
+{% endcomment %}
+
+{%- capture cart_empty -%}
+ <div id="CartEmpty-{{ section.id }}" class="px-5 text-center">
+ <h1 class="text-xl font-semibold">{{- 'cart.empty' | t -}}</h1>
+ </div>
+
+ <footer id="CartFooter-{{ section.id }}">
+ {%- render 'cart-recommendations.html', id: section.id -%}
+ </footer>
+{%- endcapture -%}
+
+<div id="cart" class="overflow-hidden">
+  <div class="my-8 max-w-none lg:mx-auto lg:my-16">
+    <div class="space-y-10 lg:px-5">
+      {%- liquid
+        if cart == empty
+          echo cart_empty
+        else
+          assign title = 'cart.title' | t
+
+          echo '<h1 class="px-5 text-xl font-semibold">' | append: title | append: '</h1>'
+          echo '<div><div class="px-5"><hr class="h-px w-full border-none"></div>'
+
+          render 'cart-items.html', items: cart.items, id: section.id
+          render 'cart-footer.html', id: section.id
+
+          echo '</div>'
+        endif
+      -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:general.cart",
+  "settings": []
+}
+{% endschema %}

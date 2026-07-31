@@ -1,3 +1,40 @@
+{%- doc -%}
+  Meta Tags Snippet
+
+ This snippet generates essential HTML meta tags for SEO and social media sharing.
+ It should be included in the <head> section of your theme's layout files.
+
+ Features:
+ - Basic HTML meta tags (charset, viewport, X-UA-Compatible)
+ - Open Graph meta tags for social media sharing (Facebook, LinkedIn, etc.)
+ - Twitter Card meta tags for Twitter sharing
+ - Dynamic page titles with pagination and tag support
+ - Canonical URLs for SEO
+ - Product-specific structured data (JSON-LD) for rich snippets
+ - Product pricing meta tags for Open Graph
+ - Image meta tags with dimensions when available
+
+ Variables used:
+ - page_title: The current page title
+ - page_description: The current page description
+ - page_image: The current page image (if available)
+ - canonical_url: The canonical URL for the current page
+ - shop.name: The shop name
+ - shop.description: The shop description
+ - product: The current product object (on product pages)
+ - cart.currency.iso_code: The current currency code
+
+ Page types supported:
+ - General pages (website)
+ - Product pages (product)
+ - Article pages (article)
+ - Password pages (website with origin URL)
+{%- enddoc -%}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 {%- liquid
   assign og_title = page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
@@ -13,27 +50,97 @@
   endif
 %}
 
-<meta property="og:site_name" content="{{ shop.name }}">
-<meta property="og:url" content="{{ og_url }}">
-<meta property="og:title" content="{{ og_title | escape }}">
-<meta property="og:type" content="{{ og_type }}">
-<meta property="og:description" content="{{ og_description | escape }}">
+<meta
+  property="og:site_name"
+  content="{{ shop.name }}"
+>
+<meta
+  property="og:url"
+  content="{{ og_url }}"
+>
+<meta
+  property="og:title"
+  content="{{ og_title | escape }}"
+>
+<meta
+  property="og:type"
+  content="{{ og_type }}"
+>
+<meta
+  property="og:description"
+  content="{{ og_description | escape }}"
+>
 
 {%- if page_image -%}
-  <meta property="og:image" content="http:{{ page_image | image_url }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
+  <meta
+    property="og:image"
+    content="http:{{ page_image | image_url }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="https:{{ page_image | image_url }}"
+  >
+  <meta
+    property="og:image:width"
+    content="{{ page_image.width }}"
+  >
+  <meta
+    property="og:image:height"
+    content="{{ page_image.height }}"
+  >
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
-  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
-  <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+  <script type="application/ld+json">
+    {{ product | structured_data }}
+  </script>
+
+  <meta
+    property="og:price:amount"
+    content="{{ product.price | money_without_currency | strip_html }}"
+  >
+  <meta
+    property="og:price:currency"
+    content="{{ cart.currency.iso_code }}"
+  >
 {%- endif -%}
 
-{%- if settings.social_twitter_link != blank -%}
-  <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}">
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+>
+<meta
+  name="twitter:title"
+  content="{{ og_title | escape }}"
+>
+<meta
+  name="twitter:description"
+  content="{{ og_description | escape }}"
+>
+
+<title>
+  {{ page_title }}
+  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+</title>
+
+<link
+  rel="canonical"
+  href="{{ canonical_url }}"
+>
+
+{% if page_description %}
+  <meta
+    name="description"
+    content="{{ page_description | escape }}"
+  >
+{% endif %}
+
+{%- if settings.favicon -%}
+  <link
+    rel="icon"
+    href="{{ settings.favicon | image_url }}"
+    type="image/png"
+  >
 {%- endif -%}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ og_title | escape }}">
-<meta name="twitter:description" content="{{ og_description | escape }}">

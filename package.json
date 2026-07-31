@@ -1,35 +1,41 @@
 {
   "name": "@cinq/cinquante-et-un",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Shopify theme starter for Cinq (Vite, Tailwind, piecesjs, @agencecinq)",
   "license": "MIT",
-  "keywords": [],
+  "packageManager": "pnpm@11.1.3",
+  "keywords": ["shopify", "theme", "vite", "tailwind", "cinq"],
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agencecinq/cinquante-et-un.git"
+  },
   "scripts": {
     "dev": "run-p shopify:dev vite:watch",
     "build": "run-s vite:build",
-    "deploy": "run-s vite:build && shopify theme push --environment production",
-    "deploy:dev": "run-s vite:build && shopify theme push --environment development",
-    "deploy:staging": "run-s vite:build && shopify theme push --path shopify -e staging",
-    "deploy:new": "run-s vite:build && shopify theme push --unpublished",
+    "shopify:dev": "shopify theme dev --environment development",
     "vite:watch": "cross-env NODE_ENV=development vite",
-    "vite:build": "cross-env NODE_ENV=production vite build",
-    "shopify:dev": "shopify theme dev --poll --live-reload=\"hot-reload\" --notify=/tmp/theme.update --theme-editor-sync --environment development",
-    "shopify:pull": "shopify theme pull",
-    "shopify:pull-dev": "shopify theme pull -d"
+    "vite:build": "cross-env NODE_ENV=production vite build"
   },
   "devDependencies": {
     "@by-association-only/vite-plugin-shopify-clean": "^2.2.0",
-    "@tailwindcss/vite": "^4.0.12",
-    "cross-env": "^7.0.3",
-    "tailwindcss": "^4.0.12",
-    "vite": "^6.2.1",
-    "vite-plugin-shopify": "^3.2.0",
-    "vite-svg-sprite-wrapper": "^1.4.1",
-    "yarn-run-all": "^3.1.1"
+    "@shopify/prettier-plugin-liquid": "^1.11.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "cross-env": "^10.1.0",
+    "npm-run-all2": "^9.0.2",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "vite": "^8.1.5",
+    "vite-plugin-shopify": "^4.1.2",
+    "vite-svg-sprite-wrapper": "^1.5.0"
   },
   "dependencies": {
-    "@19h47/accordion": "^5.1.1",
-    "piecesjs": "^0.2.3",
-    "swup": "^4.8.1"
+    "@agencecinq/accordion": "^1.0.3",
+    "@agencecinq/disclosure-button": "^2.0.0",
+    "@agencecinq/drawer": "5.0.3",
+    "@agencecinq/spinbutton": "^1.0.4",
+    "@agencecinq/utils": "^5.2.1",
+    "piecesjs": "^0.5.5",
+    "tailwindcss": "^4.3.3"
   }
 }

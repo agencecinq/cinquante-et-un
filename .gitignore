@@ -7,11 +7,26 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
-.shopify
-node_modules
-.ruby-version
 
-# Shopify #
-###################
+# Shopify CLI / local env
+.shopify/
 config.yml
 config/settings_data.json
+shopify.theme.toml
+
+# Dependencies & locks (pnpm only)
+node_modules/
+.pnpm-store/
+yarn.lock
+package-lock.json
+
+# Build / release
+release/
+*.zip
+
+# Editor / local tooling (keep shared configs tracked)
+.cursor/
+
+# Optional local overrides
+.prettierignore
+translation.yml

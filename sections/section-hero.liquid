@@ -1,0 +1,306 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00}}rem;
+  }
+  }
+{%- endstyle -%}
+
+{% capture media %}
+ {%- liquid
+ assign show_mobile = false
+ if section.settings.video_mobile != blank or section.settings.image_mobile != blank
+ assign show_mobile = true
+ endif
+ -%}
+
+ {%- if show_mobile -%}
+ <div class="absolute inset-0 z-10 lg:hidden">
+ {%- if section.settings.video_mobile != blank -%}
+ {{-
+ section.settings.video_mobile
+ | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'size-full object-cover object-center', image_size: '390x', fetchpriority: 'high'
+ -}}
+ {%- elsif section.settings.image_mobile != blank -%}
+ {%- render 'image.html', width: 1920, image: section.settings.image_mobile, class: 'size-full object-cover object-center' -%}
+ {%- endif -%}
+ </div>
+ {%- endif -%}
+
+ <div class="absolute inset-0 z-10 border border-black {% if show_mobile %}hidden lg:block{% endif %}">
+ {%- if section.settings.video != blank -%}
+ {{-
+ section.settings.video
+ | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'size-full object-cover object-center', image_size: '1440x', fetchpriority: 'high'
+ -}}
+ {%- elsif section.settings.image != blank -%}
+ {%- render 'image.html', width: 2880, image: section.settings.image, class: 'size-full object-cover object-center' -%}
+ {%- else -%}
+ {{- 'hero-apparel-1' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40' -}}
+ {%- endif -%}
+ </div>
+{% endcapture %}
+
+{% capture blocks %}
+ {%- content_for 'blocks' -%}
+{% endcapture %}
+
+{%- liquid
+  assign classes = 'lg:aspect-16/9 relative aspect-9/16 max-h-screen min-w-full'
+
+  if section.settings.show_media_overlay
+    assign classes = classes | append: ' after:absolute after:inset-0 after:z-20 after:size-full after:[background:linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.2)_100%)]'
+  endif
+-%}
+
+{% if section.settings.full_bleed %}
+  <div class="container section-{{ section.id }}-padding">
+    <div class="overflow-hidden color-{{ section.settings.color_scheme }} {{ classes }}">
+      <div class="{{ section.settings.alignment_vertical }} absolute inset-0 z-30 grid size-full grid-cols-12 gap-5 px-2.5 py-14 lg:px-16">
+        <div class="col-span-full {{ section.settings.space_between }} text-center lg:col-span-4 {{ section.settings.alignment_horizontal }}">
+          {{- blocks -}}
+        </div>
+      </div>
+
+      {{- media -}}
+    </div>
+  </div>
+{% else %}
+  <div class="color-{{ section.settings.color_scheme }} {{ classes }}">
+    <div class="z-30 container py-14 {{ section.settings.alignment_vertical }} section-{{ section.id }}-padding absolute inset-0 grid grid-cols-12 gap-5">
+      <div class="col-span-full {{ section.settings.space_between }} text-center lg:col-span-4 {{ section.settings.alignment_horizontal }}">
+        {{- blocks -}}
+      </div>
+    </div>
+
+    {{- media -}}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.media.header.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:sections.hero.settings.media.image_mobile.label",
+      "info": "t:sections.hero.settings.media.image_mobile.info"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "t:sections.hero.settings.media.video_mobile.label",
+      "info": "t:sections.hero.settings.media.video_mobile.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.hero.settings.media.image.label",
+      "info": "t:sections.hero.settings.media.image.info"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.hero.settings.media.video.label",
+      "info": "t:sections.hero.settings.media.video.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_bleed",
+      "label": "t:sections.hero.settings.media.full_bleed.label",
+      "info": "t:sections.hero.settings.media.full_bleed.info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_media_overlay",
+      "label": "t:sections.hero.settings.media.show_media_overlay.label",
+      "info": "t:sections.hero.settings.media.show_media_overlay.info",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.space_between.header.content"
+    },
+    {
+      "type": "select",
+      "id": "space_between",
+      "label": "t:sections.shared.settings.space_between.label",
+      "info": "t:sections.shared.settings.space_between.info",
+      "options": [
+        {
+          "value": "space-y-0",
+          "label": "t:sections.shared.settings.space_between.options.space-y-0.label"
+        },
+        {
+          "value": "space-y-2",
+          "label": "t:sections.shared.settings.space_between.options.space-y-2.label"
+        },
+        {
+          "value": "space-y-4",
+          "label": "t:sections.shared.settings.space_between.options.space-y-4.label"
+        },
+        {
+          "value": "space-y-6",
+          "label": "t:sections.shared.settings.space_between.options.space-y-6.label"
+        },
+        {
+          "value": "space-y-8",
+          "label": "t:sections.shared.settings.space_between.options.space-y-8.label"
+        },
+        {
+          "value": "space-y-10",
+          "label": "t:sections.shared.settings.space_between.options.space-y-10.label"
+        },
+        {
+          "value": "space-y-12",
+          "label": "t:sections.shared.settings.space_between.options.space-y-12.label"
+        },
+        {
+          "value": "space-y-14",
+          "label": "t:sections.shared.settings.space_between.options.space-y-14.label"
+        },
+        {
+          "value": "space-y-16",
+          "label": "t:sections.shared.settings.space_between.options.space-y-16.label"
+        },
+        {
+          "value": "space-y-20",
+          "label": "t:sections.shared.settings.space_between.options.space-y-20.label"
+        }
+      ],
+      "default": "space-y-10"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.alignment.header.content"
+    },
+    {
+      "type": "select",
+      "id": "alignment_horizontal",
+      "label": "t:sections.hero.settings.alignment.horizontal.label",
+      "info": "t:sections.hero.settings.alignment.horizontal.info",
+      "options": [
+        {
+          "value": "lg:col-start-1 lg:text-start",
+          "label": "t:sections.hero.settings.alignment.horizontal.options.left.label"
+        },
+        {
+          "value": "lg:col-start-5",
+          "label": "t:sections.hero.settings.alignment.horizontal.options.center.label"
+        },
+        {
+          "value": "lg:col-start-10 lg:text-end",
+          "label": "t:sections.hero.settings.alignment.horizontal.options.right.label"
+        }
+      ],
+      "default": "lg:col-start-5"
+    },
+    {
+      "type": "select",
+      "id": "alignment_vertical",
+      "label": "t:sections.hero.settings.alignment.vertical.label",
+      "info": "t:sections.hero.settings.alignment.vertical.info",
+      "options": [
+        {
+          "value": "items-start",
+          "label": "t:sections.hero.settings.alignment.vertical.options.top.label"
+        },
+        {
+          "value": "items-center",
+          "label": "t:sections.hero.settings.alignment.vertical.options.center.label"
+        },
+        {
+          "value": "items-end",
+          "label": "t:sections.hero.settings.alignment.vertical.options.bottom.label"
+        }
+      ],
+      "default": "items-center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 16,
+      "max": 116,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 105
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 116,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 59
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title"
+    },
+    {
+      "type": "link"
+    },
+    {
+      "type": "subtitle"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "tag"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.presets.name",
+      "blocks": [
+        {
+          "type": "title",
+          "settings": {
+            "title": "Discover our Essentials set"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_title": "SHOP NOW",
+            "link_url": "#"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

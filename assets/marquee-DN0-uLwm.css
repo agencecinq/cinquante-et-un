@@ -1,0 +1,1 @@
+@keyframes marquee{0%{transform:translate(0)}to{transform:translate(-50%)}}@utility animate-marquee{animation: marquee 20s linear infinite;}

@@ -1,0 +1,33 @@
+{% doc %}
+  Cart drawer header snippet.
+
+  @param {string} id - Unique section ID.
+
+  @example {% render 'cart-header', id: section.id %}
+{% enddoc %}
+
+<header
+  id="CartDrawerHeader-{{ id }}"
+  class="js-cart-header space-y-5 px-5 py-7 lg:gap-5"
+>
+  <div class="flex items-center justify-between gap-2.5">
+    <p class="text-base font-medium uppercase">
+      {{- 'cart.drawer.header.title' | t -}}
+      &nbsp;&lpar;
+      {{- cart.item_count -}}
+      &rpar;
+    </p>
+    <cinq-drawer-button class="relative block">
+      <button
+        data-dom="button"
+        aria-controls="cart-drawer"
+        aria-expanded="false"
+        type="button"
+        aria-label=""
+        class="flex size-6 items-center justify-center"
+      >
+        {%- render 'use.html', icon: 'times', classes: 'size-full' -%}
+      </button>
+    </cinq-drawer-button>
+  </div>
+</header>

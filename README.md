@@ -1,59 +1,52 @@
-# Cinquante et un
+# Cinquante-et-un
 
-## Description
+Shopify theme **starter** for Cinq projects — Vite 8, Tailwind 4, piecesjs, `@agencecinq/*`.
 
-Cinquante et un is a Shopify theme that is designed to be simple and easy to use. It is a minimalist theme that is perfect for small businesses and startups. The theme is fully responsive and looks great on all devices.
+Wireframe ecommerce baseline (header, collection, PDP, cart drawer, localization). Not a Theme Store submission: classic **customer account** templates are out of scope (use Shopify’s New Customer Accounts / hosted login).
 
-## Features
+## Prerequisites
 
-## Installation
+- [Node.js](https://nodejs.org/) LTS
+- [pnpm](https://pnpm.io/) 11 (`corepack enable && corepack prepare pnpm@11.1.3 --activate`)
+- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)
 
-To install Cinquante et un, follow these steps:
-
-```bash
-yarn install
-```
-Setup your shopify.theme.toml file with your store information.
-
-Password came from Theme Access app.
-
-Setup theses for each environment you want to work on.
-
-```toml
-[development]
-store = "your-store.myshopify.com"
-password = "your-password"
-```
-
-```toml
-[production]
-store = "your-store.myshopify.com"
-password = "your-password"
-```      
-
-And so on.
-
-If your environment is protected by a password, you can add it to the shopify.theme.toml file.
-
-```toml
-[development]
-store = "your-store.myshopify.com"
-password = "your-password"
-store-password = "your-store-password"
-```
-> See [https://shopify.dev/docs/storefronts/themes/tools/cli/environments](https://shopify.dev/docs/storefronts/themes/tools/cli/environments) for more information.
-
-Then run:
+## Setup
 
 ```bash
-yarn dev
+pnpm install
+cp shopify.theme.toml.example shopify.theme.toml
+# edit store / theme / passwords
 ```
 
-When you are ready to deploy your theme, run:
+Add your storefront origin to `vite.config.js` → `server.cors.origin` for HMR (see comment in file).
 
 ```bash
-yarn deploy:dev
+pnpm dev
 ```
 
-## Contributing
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Theme preview + Vite watch |
+| `pnpm build` | Production assets → `assets/` |
+| `pnpm shopify:dev` | Shopify CLI only |
 
+## Architecture
+
+- **Entry:** `src/scripts/app.ts` + `src/stylesheets/styles.css`
+- **Web components:** `@agencecinq/drawer`, accordion, disclosure-button, spinbutton — registered via `src/scripts/cinq/`
+- **Drawer Liquid:** `cinqDrawerPlugin()` copies `snippets/cinq-drawer.html.liquid` on each Vite start — **do not edit that snippet**; override with CSS / params
+- **Cart:** Ajax APIs + Section Rendering (`cart-drawer`, `cart`, `cart-count-bubble`). Header badge uses snippet `id="cart-count-bubble"`; section file exists for bundled re-renders
+- **piecesjs:** `load('c-*', …)` for lazy custom elements
+
+## Deploy
+
+```bash
+pnpm build
+shopify theme push --environment production
+```
+
+`shopify.theme.toml` is gitignored — never commit store passwords.
+
+## License
+
+MIT — see [LICENSE](./LICENSE).

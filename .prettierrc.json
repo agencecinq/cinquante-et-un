@@ -8,5 +8,6 @@
         "singleQuote": false
       }
     }
-  ]
+  ],
+  "plugins": ["@shopify/prettier-plugin-liquid", "prettier-plugin-tailwindcss"]
 }

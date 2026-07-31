@@ -1,0 +1,60 @@
+{% doc %}
+  Variant picker — radios for product options.
+
+  @param {object} product - Product object.
+  @param {object} block - Section block.
+  @param {string} form_id - Product form id for external inputs.
+{% enddoc %}
+
+{%- unless product.has_only_default_variant -%}
+  {%- capture variants -%}{{- product.variants | json -}}{%- endcapture -%}
+
+  <c-variants-picker
+    class="block space-y-4"
+    data-product-id="{{ product.id }}"
+    data-variants="{{ variants | escape }}"
+    data-update-url
+    {{ block.shopify_attributes }}
+  >
+    <input
+      type="hidden"
+      name="id"
+      value="{{ product.selected_or_first_available_variant.id }}"
+      form="{{ form_id }}"
+      data-dom="variant-id"
+    >
+
+    {%- for option in product.options_with_values -%}
+      <c-variants-picker-option
+        class="block"
+        data-dom="option"
+        data-position="{{ option.position }}"
+      >
+        <fieldset class="space-y-2">
+          <legend class="text-xs">
+            {{- option.name -}}
+            <span class="ms-2 font-medium" data-dom="value">{{- option.selected_value -}}</span>
+          </legend>
+
+          <div class="flex flex-wrap gap-1">
+            {%- for value in option.values -%}
+              <label class="border border-black px-3 py-2 text-xs has-[:checked]:bg-black has-[:checked]:text-white has-[:disabled]:pointer-events-none has-[:disabled]:opacity-40">
+                <input
+                  type="radio"
+                  name="option-{{ product.id }}-{{ option.position }}"
+                  value="{{ value | escape }}"
+                  class="sr-only"
+                  data-dom="option-value"
+                  {% if option.selected_value == value %}
+                    checked
+                  {% endif %}
+                >
+                <span>{{- value -}}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      </c-variants-picker-option>
+    {%- endfor -%}
+  </c-variants-picker>
+{%- endunless -%}

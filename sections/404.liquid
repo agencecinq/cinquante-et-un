@@ -1,0 +1,174 @@
+{% comment %}
+  This section is used in the 404 template to render page shown when customers
+  enter an invalid store URL.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/404
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00}}rem;
+  }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding lg:relative lg:overflow-x-clip">
+  {%- if section.settings.image != blank and section.settings.video == blank -%}
+    {{-
+      section.settings.image
+      | image_url: width: 1654
+      | image_tag:
+        class: 'absolute inset-y-0 end-0 size-full object-cover object-center aspect-square lg:h-full lg:w-1/2'
+    -}}
+  {%- endif -%}
+  {%- if section.settings.video != blank -%}
+    {{-
+      section.settings.video
+      | video_tag:
+        class: 'absolute inset-y-0 end-0 size-full object-cover object-center aspect-square lg:h-full lg:w-1/2',
+        loading: 'lazy',
+        muted: true,
+        autoplay: true,
+        loop: true,
+        playsinline: true,
+        image_size: '1654x'
+    -}}
+  {%- endif -%}
+  <div class="container grid grid-cols-4 items-center gap-x-2.5 gap-y-5 py-14 lg:min-h-screen lg:grid-cols-12 lg:py-24">
+    <div class="col-span-4 text-center lg:col-span-5 lg:mx-auto lg:max-w-md lg:text-start {{ section.settings.space_between }}">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.404.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.404.settings.image.label",
+      "info": "t:sections.404.settings.image.info"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.404.settings.video.label",
+      "info": "t:sections.404.settings.video.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.space_between.header.content"
+    },
+    {
+      "type": "select",
+      "id": "space_between",
+      "label": "t:sections.shared.settings.space_between.label",
+      "info": "t:sections.shared.settings.space_between.info",
+      "options": [
+        {
+          "value": "space-y-0",
+          "label": "t:sections.shared.settings.space_between.options.space-y-0.label"
+        },
+        {
+          "value": "space-y-2",
+          "label": "t:sections.shared.settings.space_between.options.space-y-2.label"
+        },
+        {
+          "value": "space-y-4",
+          "label": "t:sections.shared.settings.space_between.options.space-y-4.label"
+        },
+        {
+          "value": "space-y-6",
+          "label": "t:sections.shared.settings.space_between.options.space-y-6.label"
+        },
+        {
+          "value": "space-y-8",
+          "label": "t:sections.shared.settings.space_between.options.space-y-8.label"
+        },
+        {
+          "value": "space-y-10",
+          "label": "t:sections.shared.settings.space_between.options.space-y-10.label"
+        },
+        {
+          "value": "space-y-12",
+          "label": "t:sections.shared.settings.space_between.options.space-y-12.label"
+        },
+        {
+          "value": "space-y-14",
+          "label": "t:sections.shared.settings.space_between.options.space-y-14.label"
+        },
+        {
+          "value": "space-y-16",
+          "label": "t:sections.shared.settings.space_between.options.space-y-16.label"
+        },
+        {
+          "value": "space-y-20",
+          "label": "t:sections.shared.settings.space_between.options.space-y-20.label"
+        }
+      ],
+      "default": "space-y-10"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.404.presets.name"
+    }
+  ]
+}
+{% endschema %}

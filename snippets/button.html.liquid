@@ -1,0 +1,112 @@
+{% doc %}
+  Renders button.
+
+  @param {string} title - button title.
+  @param {string} [id] - button id. Optional.
+  @param {string} [url] - button url.
+  @param {string} [target] - button target (optional).
+  @param {string} [classes] - button classes (optional).
+  @param {string} [tag] - button tag (optional). Possible values: 'button', 'a'. Default is 'a'.
+  @param {string} [type] - button type (optional). Possible values: 'button', 'submit'. Default is 'button'.
+  @param {string} [form] - button form (optional). Applicable only if tag is 'button'.
+  @param {boolean} [disabled] - whether the button is disabled (optional). Default is false.
+  @param {string} [name] - name attribute for the button (optional).
+  @param {string} [variant] - button variant (optional). Possible values: 'primary', 'secondary', 'tertiary'. Default is 'primary'.
+  @param {string} [value] - button value (optional).
+  @param {string} [data-dom] - data-dom attribute for the button (optional).
+  @param {object} [block] - block object to add Shopify attributes (optional).
+  @param {string} [icon] - icon to display inside the button (optional).
+  @param {string} [aria-controls] - aria-controls attribute for the button (optional).
+  @param {string} [aria-expanded] - aria-expanded attribute for the button (optional).
+
+  @example
+  {% render 'button.html', title: 'Click me', url: '/some-url', variant: 'primary' %}
+{% enddoc %}
+
+{%- liquid
+  assign classes = classes | default: '' | append: ' button'
+  assign variant = variant | default: 'primary'
+
+  if variant == 'primary'
+    assign classes = classes | append: ' button--primary'
+  endif
+
+  if variant == 'secondary'
+    assign classes = classes | append: ' button--secondary'
+  endif
+
+  if variant == 'tertiary'
+    assign classes = classes | append: ' button--tertiary'
+  endif
+-%}
+
+{%- if tag == 'button' -%}
+  <button
+    type="{{ type | default: 'button' }}"
+    class="{{ classes | strip }}"
+    {% if id %}
+      id="{{ id }}"
+    {% endif %}
+    {% if form != blank %}
+      form="{{ form }}"
+    {% endif %}
+    {% if disabled %}
+      disabled
+    {% endif %}
+    {% if name %}
+      name="{{ name }}"
+    {% endif %}
+    {% if value %}
+      value="{{ value }}"
+    {% endif %}
+    {% if data-dom %}
+      data-dom="{{ data-dom }}"
+    {% endif %}
+    {% if aria-controls %}
+      aria-controls="{{ aria-controls }}"
+    {% endif %}
+    {% if aria-expanded %}
+      aria-expanded="{{ aria-expanded }}"
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if icon -%}
+      {%- render 'use.html', icon: icon, classes: 'size-4' -%}
+    {%- endif -%}
+    {{- title -}}
+  </button>
+{%- else -%}
+  {%- if url -%}
+    <a
+      href="{{ url }}"
+      class="{{ classes | strip }}"
+      {% if id %}
+        id="{{ id }}"
+      {% endif %}
+      {% if target != blank and target == '_blank' %}
+        target="{{ target }}" rel="noopener noreferer"
+      {% endif %}
+      {% if disabled %}
+        disabled
+      {% endif %}
+      {% if name %}
+        name="{{ name }}"
+      {% endif %}
+      {% if data-dom %}
+        data-dom="{{ data-dom }}"
+      {% endif %}
+      {% if aria-controls %}
+        aria-controls="{{ aria-controls }}"
+      {% endif %}
+      {% if aria-expanded %}
+        aria-expanded="{{ aria-expanded }}"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- if icon -%}
+        {%- render 'use.html', icon: icon, classes: 'size-4' -%}
+      {%- endif -%}
+      {{- title -}}
+    </a>
+  {%- endif -%}
+{%- endif -%}

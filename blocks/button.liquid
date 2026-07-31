@@ -1,0 +1,77 @@
+{% doc %}
+  Button block
+{% enddoc %}
+
+{%- render 'button.html',
+  title: block.settings.title,
+  url: block.settings.url,
+  target: block.settings.target,
+  variant: block.settings.variant,
+  classes: block.settings.width
+-%}
+
+{% schema %}
+{
+  "name": "t:blocks.button.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:blocks.button.settings.title.label",
+      "default": "t:blocks.button.settings.title.default",
+      "info": "t:blocks.button.settings.title.info"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:blocks.button.settings.url.label",
+      "info": "t:blocks.button.settings.url.info"
+    },
+    {
+      "type": "select",
+      "id": "target",
+      "label": "t:blocks.button.settings.target.label",
+      "info": "t:blocks.button.settings.target.info",
+      "options": [
+        { "value": "_self", "label": "t:blocks.button.settings.target.options._self.label" },
+        { "value": "_blank", "label": "t:blocks.button.settings.target.options._blank.label" }
+      ],
+      "default": "_self"
+    },
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "t:blocks.button.settings.variant.label",
+      "info": "t:blocks.button.settings.variant.info",
+      "options": [
+        { "value": "primary", "label": "t:blocks.button.settings.variant.options.primary.label" },
+        { "value": "secondary", "label": "t:blocks.button.settings.variant.options.secondary.label" },
+        { "value": "tertiary", "label": "t:blocks.button.settings.variant.options.tertiary.label" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:blocks.button.settings.width.label",
+      "info": "t:blocks.button.settings.width.info",
+      "options": [
+        { "value": "w-full", "label": "t:blocks.button.settings.width.options.full.label" },
+        { "value": "w-auto", "label": "t:blocks.button.settings.width.options.auto.label" },
+        { "value": "w-full lg:w-auto", "label": "t:blocks.button.settings.width.options.full-lg-auto.label" }
+      ],
+      "default": "w-full lg:w-auto"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.button.presets.name",
+      "settings": {
+        "title": "Shop Now",
+        "url": "#"
+      }
+    }
+  ]
+}
+{% endschema %}

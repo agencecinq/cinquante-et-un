@@ -1,0 +1,67 @@
+{% doc %}
+  Breadcrumb for the current template context.
+ Renders Home → … → current page. Hidden when there is only Home.
+
+  @param {string} [classes] - Classes on the `<nav>`. Optional.
+  @param {string} [classes_list] - Classes on the `<ol>`. Optional.
+  @param {object} [block] - Section block (for `shopify_attributes`). Optional.
+
+  @example {% render 'breadcrumb.html', classes: 'text-xs text-gray-500' %}
+{% enddoc %}
+
+{%- liquid
+  assign show = false
+
+  case request.page_type
+    when 'product', 'collection', 'list-collections', 'blog', 'article', 'page', 'search', 'cart'
+      assign show = true
+  endcase
+-%}
+
+{%- if show -%}
+  <nav
+    aria-label="{{ 'breadcrumb.label' | t }}"
+    class="{{ classes }}"
+    {{ block.shopify_attributes }}
+  >
+    <ol class="flex flex-wrap items-center gap-x-2 *:flex *:items-center *:gap-x-2 *:after:opacity-40 *:after:content-['/'] *:last:after:hidden {{ classes_list }}">
+      <li>
+        <a href="{{ routes.root_url }}">{{- 'breadcrumb.home' | t -}}</a>
+      </li>
+
+      {%- case request.page_type -%}
+        {%- when 'list-collections' -%}
+          <li aria-current="page">{{- 'breadcrumb.collections' | t -}}</li>
+
+        {%- when 'collection' -%}
+          <li aria-current="page">{{- collection.title -}}</li>
+
+        {%- when 'product' -%}
+          {%- if collection -%}
+            <li>
+              <a href="{{ collection.url }}">{{- collection.title -}}</a>
+            </li>
+          {%- endif -%}
+          <li aria-current="page">{{- product.title -}}</li>
+
+        {%- when 'blog' -%}
+          <li aria-current="page">{{- blog.title -}}</li>
+
+        {%- when 'article' -%}
+          <li>
+            <a href="{{ blog.url }}">{{- blog.title -}}</a>
+          </li>
+          <li aria-current="page">{{- article.title -}}</li>
+
+        {%- when 'page' -%}
+          <li aria-current="page">{{- page.title -}}</li>
+
+        {%- when 'search' -%}
+          <li aria-current="page">{{- 'breadcrumb.search' | t -}}</li>
+
+        {%- when 'cart' -%}
+          <li aria-current="page">{{- 'breadcrumb.cart' | t -}}</li>
+      {%- endcase -%}
+    </ol>
+  </nav>
+{%- endif -%}

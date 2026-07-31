@@ -1,0 +1,3 @@
+@utility scrollbar-hidden {
+  @apply scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden;
+}

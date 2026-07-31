@@ -1,0 +1,53 @@
+{% doc %}
+  Renders generic product badges (sale, sold out, new).
+
+  @param {object} [product] - The product object.
+  @param {string} [classes] - The classes to add to the ul element.
+
+  @example {% render 'product-tags.html', product: product, classes: 'classes' %}
+{% enddoc %}
+
+{%- liquid
+  assign is_on_sale = false
+  assign discount_percent = 0
+
+  if product.compare_at_price != null and product.compare_at_price > product.price
+    assign is_on_sale = true
+    assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  assign is_new = false
+  for t in product.tags
+    assign tag = t | downcase | strip
+    if tag == 'new' or tag == 'nouveau'
+      assign is_new = true
+      break
+    endif
+  endfor
+
+  assign show_tags = false
+  if product.available == false or is_on_sale or is_new
+    assign show_tags = true
+  endif
+-%}
+
+{%- if show_tags -%}
+  <ul class="flex flex-wrap gap-1 {{ classes }}">
+    {%- if product.available == false -%}
+      <li>
+        <span class="tag">{{- 'snippets.product-tags.sold_out' | t -}}</span>
+      </li>
+    {%- else -%}
+      {%- if is_on_sale -%}
+        <li>
+          <span class="tag">{{- 'snippets.product-tags.discount' | t: percent: discount_percent -}}</span>
+        </li>
+      {%- endif -%}
+      {%- if is_new -%}
+        <li>
+          <span class="tag">{{- 'snippets.product-tags.new' | t -}}</span>
+        </li>
+      {%- endif -%}
+    {%- endif -%}
+  </ul>
+{%- endif -%}

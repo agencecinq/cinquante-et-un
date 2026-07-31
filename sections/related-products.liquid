@@ -1,86 +1,111 @@
-{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{% comment %}
+  Related products grid for the product template.
+{% endcomment %}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
   }
 
-  @media screen and (min-width: 750px) {
+  @media (width >= 64rem) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
     }
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
-  <div class="container">
-    <h2>RELATED PRODUCTS</h2>
+{%- liquid
+  assign limit = section.settings.products_to_show | default: 4
+  assign related_collection = product.collections.first
+-%}
 
-    <ul>
-      {%- for recommendation in recommendations.products -%}
-        <li>{{- recommendation.title -}}</li>
-      {%- endfor -%}
-    </ul>
+{%- if related_collection != blank and related_collection.products_count > 1 -%}
+  <div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+    <div class="container space-y-6">
+      {%- if section.settings.title != blank -%}
+        <h2 class="text-lg">{{- section.settings.title -}}</h2>
+      {%- endif -%}
+
+      <ul class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {%- assign shown = 0 -%}
+        {%- for related in related_collection.products -%}
+          {%- if related.id == product.id -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- if shown >= limit -%}
+            {%- break -%}
+          {%- endif -%}
+          <li>
+            {%- render 'tease-product.html', product: related, quick_add: section.settings.show_quick_add -%}
+          </li>
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endfor -%}
+      </ul>
+    </div>
   </div>
-</div>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "t:sections.related-products.name",
-  "tag": "section",
-  "class": "section related-products",
   "settings": [
     {
-      "type": "paragraph",
-      "content": "t:sections.related-products.settings.paragraph__1.content"
-    },
-    {
-      "type": "inline_richtext",
-      "id": "heading",
-      "default": "t:sections.related-products.settings.paragraph__1.default",
-      "label": "t:sections.related-products.settings.heading.label"
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.related-products.settings.title.label",
+      "default": "You may also like"
     },
     {
       "type": "range",
       "id": "products_to_show",
       "min": 2,
-      "max": 10,
+      "max": 8,
       "step": 1,
-      "default": 4,
-      "label": "t:sections.related-products.settings.products_to_show.label"
+      "label": "t:sections.related-products.settings.products_to_show.label",
+      "default": 4
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "info": "t:sections.all.colors.has_cards_info",
-      "default": "scheme-1"
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "t:sections.related-products.settings.show_quick_add.label",
+      "default": true
     },
     {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "content": "t:sections.shared.settings.padding.header.content"
     },
     {
       "type": "range",
       "id": "padding_top",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
-      "label": "t:sections.all.padding.top",
-      "default": 36
+      "label": "t:sections.shared.settings.padding.top.label",
+      "default": 48
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
-      "label": "t:sections.all.padding.bottom",
-      "default": 36
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "default": 48
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.related-products.name"
     }
   ]
 }

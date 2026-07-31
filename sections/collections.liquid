@@ -1,0 +1,132 @@
+{% comment %}
+  This section is used in the list-collections template to render a list of
+  collections.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/list-collections
+{% endcomment %}
+
+{%- liquid
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+
+  if section.settings.compensate_header
+    assign padding_top_mobile = 'calc(' | append: padding_top_mobile | append: 'rem + 53px)'
+    assign padding_top_desktop = 'calc(' | append: padding_top_desktop | append: 'rem + 75px)'
+  else
+    assign padding_top_mobile = padding_top_mobile | append: 'rem'
+    assign padding_top_desktop = padding_top_desktop | append: 'rem'
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+  padding-top: {{ padding_top_mobile }};
+  padding-bottom: {{ padding_bottom_mobile }}rem;
+  }
+
+  @media (width >= 64rem) {
+  .section-{{ section.id }}-padding {
+  padding-top: {{ padding_top_desktop }};
+  padding-bottom: {{ padding_bottom_desktop }}rem;
+  }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding space-y-12 color-{{ section.settings.color_scheme }}">
+  <div class="container grid grid-cols-4 gap-2.5 py-8 text-center lg:grid-cols-12 lg:gap-5 lg:py-12">
+    <div class="col-span-full space-y-6 lg:col-span-6 lg:col-start-4">
+      {%- render 'breadcrumb.html', classes: 'text-xs opacity-60', classes_list: 'justify-center' -%}
+      <h1 class="text-base font-semibold">{{- 'collections.title' | t -}}</h1>
+    </div>
+  </div>
+
+  {% paginate collections by 50 %}
+    <div class="container grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-12 lg:gap-x-4">
+      {% for collection in collections %}
+        <div class="col-span-full md:col-span-2 lg:col-span-3">
+          <article class="space-y-4">
+            <a
+              href="{{ collection.url }}"
+              class="block aspect-3/4 overflow-hidden bg-gray-200"
+            >
+              {%- if collection.image != blank -%}
+                {%- liquid
+                  assign image_alt = collection.image.alt | default: collection.title
+                  echo collection.image | image_url: width: 668 | image_tag: class: 'size-full object-cover object-center', alt: image_alt
+                -%}
+              {%- endif -%}
+            </a>
+            <div class="space-y-2">
+              <h2 class="text-sm font-semibold">
+                {{ collection.title | link_to: collection.url }}
+              </h2>
+              {%- if collection.description != blank -%}
+                <p class="text-xs text-black/70">
+                  {{- collection.description | strip_html | truncatewords: 15 -}}
+                </p>
+              {%- endif -%}
+            </div>
+          </article>
+        </div>
+      {% endfor %}
+    </div>
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.collections.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "compensate_header",
+      "label": "t:sections.shared.settings.compensate_header.label",
+      "info": "t:sections.shared.settings.compensate_header.info",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.collections.presets.name"
+    }
+  ]
+}
+{% endschema %}

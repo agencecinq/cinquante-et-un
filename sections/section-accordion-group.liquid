@@ -1,0 +1,139 @@
+{% comment %}
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00}}rem;
+  }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign items = section.blocks
+  assign classes = 'section-' | append: section.id | append: '-padding block'
+  assign scheme = section.settings.color_scheme
+
+  render 'accordion-group.html', items: items, source: 'blocks', id: section.id, classes: classes, scheme: scheme, title: section.settings.title, link_url: section.settings.link_url, link_title: section.settings.link_title, link_target: section.settings.link_target
+-%}
+
+{% schema %}
+{
+  "name": "t:sections.accordion-group.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.accordion-group.settings.title.label",
+      "default": "t:sections.accordion-group.settings.title.default",
+      "info": "t:sections.accordion-group.settings.title.info"
+    },
+    {
+      "type": "text",
+      "id": "link_title",
+      "label": "t:sections.accordion-group.settings.link_title.label",
+      "default": "t:sections.accordion-group.settings.link_title.default",
+      "info": "t:sections.accordion-group.settings.link_title.info"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "t:sections.accordion-group.settings.link_url.label",
+      "info": "t:sections.accordion-group.settings.link_url.info"
+    },
+    {
+      "type": "select",
+      "id": "link_target",
+      "label": "t:sections.accordion-group.settings.link_target.label",
+      "options": [
+        {
+          "value": "_self",
+          "label": "t:sections.accordion-group.settings.link_target.options._self.label"
+        },
+        {
+          "value": "_blank",
+          "label": "t:sections.accordion-group.settings.link_target.options._blank.label"
+        }
+      ],
+      "default": "_self"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "t:sections.accordion-group.blocks.accordion.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "t:sections.accordion-group.blocks.accordion.settings.category.label",
+          "default": "t:sections.accordion-group.blocks.accordion.settings.category.default",
+          "info": "t:sections.accordion-group.blocks.accordion.settings.category.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.accordion-group.blocks.accordion.settings.title.label",
+          "default": "t:sections.accordion-group.blocks.accordion.settings.title.default",
+          "info": "t:sections.accordion-group.blocks.accordion.settings.title.info"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.accordion-group.blocks.accordion.settings.content.label",
+          "default": "t:sections.accordion-group.blocks.accordion.settings.content.default",
+          "info": "t:sections.accordion-group.blocks.accordion.settings.content.info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.accordion-group.presets.name",
+      "category": "t:sections.accordion-group.presets.category"
+    }
+  ]
+}
+{% endschema %}

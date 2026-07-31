@@ -1,0 +1,137 @@
+{% comment %}
+  Sections: Announcement bar
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+    }
+  }
+{%- endstyle -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div
+    class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding block overflow-hidden text-xs"
+    data-announcement-bar
+  >
+    <ul
+      class="animate-marquee pointer-events-none relative flex w-max flex-nowrap items-center will-change-transform"
+      style="animation-duration: {{ section.blocks.size | times: 8 | at_least: 20 }}s;"
+    >
+      {%- for i in (0..4) -%}
+        {%- for block in section.blocks %}
+          <li
+            class="shrink-0 pr-16 lg:pr-48"
+            {% unless forloop.parentloop.first and forloop.first %}
+              aria-hidden="true"
+            {% endunless %}
+          >
+            {{- block.settings.text -}}
+          </li>
+        {%- endfor -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.querySelector('[data-announcement-bar]');
+      if (!bar) return;
+      var setHeight = function () {
+        document.documentElement.style.setProperty('--announcement-bar-height', bar.offsetHeight + 'px');
+      };
+      setHeight();
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(setHeight).observe(bar);
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "t:sections.announcement-bar.blocks.text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.announcement-bar.blocks.text.settings.text.label",
+          "default": "t:sections.announcement-bar.blocks.text.settings.text.default",
+          "info": "t:sections.announcement-bar.blocks.text.settings.text.info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement-bar.presets.name",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text": "Free shipping from €40"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "-15% on your first order"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

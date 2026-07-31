@@ -1,0 +1,1 @@
+import{t as e}from"./piecesjs-41EcyIeW.js";import t from"./cart-NhAdGmm4.js";var n=class extends e{unsubscribe;constructor(){super(`CartDrawer`)}mount(){this.unsubscribe=t.subscribePending(e=>{e?this.setAttribute(`aria-busy`,`true`):this.removeAttribute(`aria-busy`)})}unmount(){this.unsubscribe?.()}};customElements.get(`c-cart-drawer`)||customElements.define(`c-cart-drawer`,n);

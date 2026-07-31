@@ -1,0 +1,12 @@
+{%- comment -%}
+  Thin section for Cart Ajax bundled Section Rendering.
+  Live badge is the snippet in the header (`id="cart-count-bubble"`).
+{%- endcomment -%}
+{%- render 'cart-count-bubble.html', classes: 'absolute size-4.5 z-20 top-0 right-0 -mt-1 -mr-1' -%}
+
+{% schema %}
+{
+  "name": "Cart count",
+  "settings": []
+}
+{% endschema %}

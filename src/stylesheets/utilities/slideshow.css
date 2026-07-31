@@ -1,0 +1,17 @@
+@utility slideshow {
+  display: block;
+
+  .slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+
+  .slider .slide {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    outline: 1px solid var(--color-gray-200);
+  }
+}

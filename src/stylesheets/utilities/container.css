@@ -1,5 +1,5 @@
 @utility container {
-  @apply max-w-[97.5rem] mx-auto;
-
-  padding-inline: calc(var(--spacing) * 5) /* 1.25rem = 20px */;
+  margin-inline: auto;
+  max-width: none;
+  padding-inline: 1.25rem;
 }

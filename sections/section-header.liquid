@@ -1,0 +1,593 @@
+{% comment %}
+  Sections: Header
+{% endcomment %}
+
+{% liquid
+  assign main = linklists[section.settings.main_menu]
+  assign secondary = linklists[section.settings.secondary_menu]
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    z-index: 40;
+  }
+
+  #shopify-section-{{ section.id }} c-headroom {
+    z-index: 40;
+  }
+{% endstyle %}
+
+<c-headroom class="pointer-events-none fixed inset-0 z-40 block pt-4 transition-transform duration-300 ease-in-out in-[.is-on-top]:translate-y-(--announcement-bar-height)">
+  <div class="pointer-events-auto container">
+    <header>
+      <div class="relative flex items-center gap-2.5 border border-black bg-white px-6 py-2.5 text-black lg:px-10 lg:py-4">
+        <div class="relative z-20 flex grow basis-0 gap-2.5">
+          <cinq-drawer-button class="block lg:hidden">
+            <button
+              aria-controls="menu-drawer"
+              aria-expanded="false"
+              type="button"
+              class="block text-xs font-medium uppercase lg:hidden"
+              aria-label="{{ 'sections.header.menu' | t }}"
+            >
+              <span class="sr-only">{{- 'sections.header.menu' | t -}}</span>
+              {%- render 'use.html', icon: 'bars', classes: 'size-6' -%}
+            </button>
+          </cinq-drawer-button>
+
+          {% if main.links.size > 0 %}
+            <ul
+              class="hidden gap-9 text-xs font-medium lg:flex"
+              itemscope
+              itemtype="http://schema.org/SiteNavigationElement"
+            >
+              {% for link in main.links -%}
+                {% if link.links.size > 0 %}
+                  <li class="group/li">
+                    <a
+                      href="{{ link.url }}"
+                      {% if link.type == 'http_link' %}
+                        target="_blank" rel="noopener noreferer"
+                      {% endif %}
+                      itemprop="url"
+                      class="relative z-20 flex items-center gap-2 hover:underline"
+                    >
+                      <span class="text-xs font-medium">{{- link.title -}}</span>
+                      {%- render 'use.html', icon: 'chevron-down', classes: 'size-2' -%}
+                    </a>
+
+                    <div class="pointer-events-none invisible fixed inset-x-0 top-0 z-10 max-h-full overflow-auto bg-white pt-32 pb-6 opacity-0 transition-opacity duration-200 group-focus-within/li:pointer-events-auto group-focus-within/li:visible group-focus-within/li:opacity-100 group-hover/li:pointer-events-auto group-hover/li:visible group-hover/li:opacity-100">
+                      <div class="container">
+                        <div class="grid grid-cols-5 gap-20 px-10">
+                          <div class="col-span-3 grid grid-cols-3 gap-x-20 gap-y-4">
+                            {% for child in link.links %}
+                              <div class="col-span-1 space-y-3">
+                                {% if child.links.size > 0 %}
+                                  <a
+                                    href="{{ child.url }}"
+                                    class="block border-b border-gray-200 pb-4 text-sm font-medium hover:underline"
+                                  >
+                                    {{- child.title -}}
+                                  </a>
+
+                                  <ul class="space-y-3">
+                                    {%- for grandchild in child.links -%}
+                                      <li>
+                                        <a
+                                          href="{{ grandchild.url }}"
+                                          class="flex items-center gap-2 text-xs font-medium leading-7.5{% if forloop.last %} text-gray-500{% endif %}"
+                                        >
+                                          {{- grandchild.title -}}
+                                        </a>
+                                      </li>
+                                    {%- endfor -%}
+                                  </ul>
+                                {% else %}
+                                  <a href="{{ child.url }}" class="text-xs font-medium hover:underline">
+                                    {{- child.title -}}
+                                  </a>
+                                {% endif %}
+                              </div>
+                            {% endfor %}
+
+                            <div class="col-span-3 mt-auto">
+                              {% for block in section.blocks %}
+                                {% if block.type == 'read_more_link' and block.settings.handle == link.handle %}
+                                  {% render 'button-stack.html',
+                                    url: block.settings.url,
+                                    target: block.settings.target,
+                                    title: block.settings.title,
+                                    image_1: block.settings.image_1,
+                                    image_2: block.settings.image_2,
+                                    image_3: block.settings.image_3,
+                                    block: block
+                                  %}
+                                {% endif %}
+                              {% endfor %}
+                            </div>
+                          </div>
+
+                          <div class="col-span-2">
+                            {% for block in section.blocks %}
+                              {% if block.type == 'push' and block.settings.handle == link.handle %}
+                                {% render 'content-card.html',
+                                  link_url: block.settings.link_url,
+                                  link_target: block.settings.link_target,
+                                  link_title: block.settings.link_title,
+                                  tag: block.settings.tag,
+                                  image: block.settings.image,
+                                  title: block.settings.title,
+                                  text: block.settings.text
+                                %}
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {% else %}
+                  <li>
+                    <a
+                      href="{{ link.url }}"
+                      {% if link.type == 'http_link' %}
+                        target="_blank" rel="noopener noreferer"
+                      {% endif %}
+                      itemprop="url"
+                      class="relative z-20"
+                    >
+                      <span class="flex items-center gap-0.5 text-xs font-medium">
+                        {{- link.title -}}
+                      </span>
+                    </a>
+                  </li>
+                {% endif %}
+              {%- endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <a
+          href="{{ routes.root_url }}"
+          class="relative z-20 text-sm font-semibold tracking-wide uppercase"
+          aria-label="{{ shop.name }}"
+        >
+          {{- shop.name -}}
+        </a>
+
+        <div class="relative flex grow basis-0 items-center justify-end gap-6">
+          {% if secondary.links.size > 0 %}
+            <ul
+              class="hidden gap-9 text-xs font-medium lg:flex"
+              itemscope
+              itemtype="http://schema.org/SiteNavigationElement"
+            >
+              {% for link in secondary.links %}
+                {% if link.links.size > 0 %}
+                  <li class="group/li">
+                    <a
+                      href="{{ link.url }}"
+                      {% if link.type == 'http_link' %}
+                        target="_blank" rel="noopener noreferer"
+                      {% endif %}
+                      itemprop="url"
+                      class="relative z-20 flex items-center gap-2 hover:underline"
+                    >
+                      <span class="text-xs font-medium">{{- link.title -}}</span>
+                      {%- render 'use.html', icon: 'chevron-down', classes: 'size-2' -%}
+                    </a>
+
+                    <div class="pointer-events-none invisible fixed inset-x-0 top-0 z-10 max-h-full overflow-auto bg-white pt-32 pb-6 opacity-0 transition-opacity duration-200 group-focus-within/li:pointer-events-auto group-focus-within/li:visible group-focus-within/li:opacity-100 group-hover/li:pointer-events-auto group-hover/li:visible group-hover/li:opacity-100">
+                      <div class="container">
+                        <div class="grid grid-cols-4 gap-x-4 gap-y-9 px-10">
+                          {% for child in link.links %}
+                            <div class="col-span-1 space-y-3">
+                              {%- render 'content-card.html',
+                                link_url: child.url,
+                                image: child.object.metafields.custom.thumbnail,
+                                title: child.title,
+                                text: child.object.metafields.custom.excerpt
+                              -%}
+                            </div>
+                          {% endfor %}
+
+                          <div class="col-span-4 text-center">
+                            {% for block in section.blocks %}
+                              {% if block.type == 'read_more_link' and block.settings.handle == link.handle %}
+                                {% render 'button-stack.html',
+                                  url: block.settings.url,
+                                  target: block.settings.target,
+                                  title: block.settings.title,
+                                  image_1: block.settings.image_1,
+                                  image_2: block.settings.image_2,
+                                  image_3: block.settings.image_3,
+                                  block: block
+                                %}
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {% else %}
+                  <li>
+                    <a
+                      href="{{ link.url }}"
+                      {% if link.type == 'http_link' %}
+                        target="_blank" rel="noopener noreferer"
+                      {% endif %}
+                      itemprop="url"
+                      class="relative z-20"
+                    >
+                      <span class="flex items-center gap-0.5 text-xs font-medium">
+                        {{- link.title -}}
+                      </span>
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          {% if section.settings.show_search %}
+            <a
+              href="{{ routes.search_url }}"
+              class="relative z-20 hidden size-6 items-center justify-center lg:flex"
+              aria-label="{{ 'search.title' | t }}"
+            >
+              {%- render 'use.html', icon: 'search', classes: 'size-full' -%}
+            </a>
+          {% endif %}
+
+          {% if shop.customer_accounts_enabled and section.settings.show_account %}
+            <a
+              href="{{ routes.account_url }}"
+              class="relative z-20 hidden size-6 items-center justify-center lg:flex"
+              aria-label="{{ 'sections.header.account' | t }}"
+            >
+              {%- render 'use.html', icon: 'user', classes: 'size-full' -%}
+            </a>
+          {% endif %}
+
+          <cinq-drawer-button class="relative block">
+            <button
+              aria-controls="cart-drawer"
+              aria-expanded="false"
+              type="button"
+              aria-label="{{ 'sections.header.cart' | t }}"
+              class="relative z-20 flex size-6 items-center justify-center text-xs font-medium"
+            >
+              {%- render 'use.html', icon: 'cart', classes: 'size-full' -%}
+            </button>
+            {%- render 'cart-count-bubble.html',
+              id: section.id,
+              classes: 'absolute size-4.5 top-0 right-0 -mt-1 -mr-1 z-20'
+            -%}
+          </cinq-drawer-button>
+        </div>
+      </div>
+    </header>
+  </div>
+</c-headroom>
+
+{%- capture content -%}
+ <div id="MenuDrawer-{{ section.id }}" class="flex h-full flex-col">
+ {% liquid
+ assign links = main.links | concat: secondary.links
+ render 'drawer-header.html', id: 'menu-drawer'
+ %}
+
+ {%- if section.settings.show_search -%}
+ <div class="border-b border-gray-200 px-5 py-4">
+ {%- render 'search-form.html' -%}
+ </div>
+ {%- endif -%}
+
+ <c-menubar class="relative flex min-h-0 flex-1 flex-col overflow-hidden">
+ <div
+ id="menubar-main-panel-{{ section.id }}"
+ class="scrollbar-hidden absolute inset-0 z-10 flex flex-col overflow-y-auto"
+ >
+ {%- if links.size > 0 -%}
+ <ul class="divide-y divide-gray-200">
+ {% for link in links %}
+ <li>
+ {% if link.links.size > 0 %}
+ <button
+ type="button"
+ data-dom="open"
+ class="flex w-full items-center justify-between gap-2.5 px-5 py-8 text-start uppercase"
+ aria-controls="menu-submenu-{{ section.id }}-{{ forloop.index }}"
+ aria-expanded="false"
+ aria-haspopup="true"
+ >
+ <span class="flex items-center gap-2.5 text-sm font-medium">
+ {{- link.title -}}
+ </span>
+ {%- render 'use.html', icon: 'chevron-right', classes: 'size-2.5 ms-auto' -%}
+ </button>
+ {% else %}
+ <a
+ href="{{ link.url }}"
+ {% if link.type == 'http_link' %}
+ target="_blank" rel="noopener noreferer"
+ {% endif %}
+ class="flex items-center gap-2.5 px-5 py-8 text-sm font-medium uppercase"
+ >
+ {{- link.title -}}
+ </a>
+ {% endif %}
+ </li>
+ {% endfor %}
+ </ul>
+ {%- endif -%}
+
+ {%- liquid
+ if shop.customer_accounts_enabled and section.settings.show_account
+ assign title = 'sections.header.account' | t
+ 
+ echo '<footer class="mt-auto border-t border-gray-200 px-5 py-8">'
+ echo '<a href="' | append: routes.account_url | append: '" class="text-sm font-medium font-bold">' | append: title | append: '</a>'
+ echo '</footer>'
+ endif
+ -%}
+ </div>
+
+ {%- for link in links -%}
+ {%- if link.links.size > 0 -%}
+ <div
+ id="menu-submenu-{{ section.id }}-{{ forloop.index }}"
+ data-dom="panel"
+ class="scrollbar-hidden absolute inset-0 z-20 flex -translate-x-full flex-col overflow-y-auto scroll-smooth bg-white transition-transform duration-300 ease-out [&.is-active]:translate-x-0"
+ >
+ <header class="border-b border-gray-200 px-5 py-6">
+ 
+ <button
+ type="button"
+ data-dom="close"
+ class="flex items-center gap-1"
+ aria-label="{{ 'sections.header.back' | t }}"
+ >
+ {%- render 'use.html', icon: 'chevron-left', classes: 'size-2.5' -%}
+ <span class="text-xs font-medium uppercase">
+ {{- 'sections.header.back' | t -}}
+ </span>
+ </button>
+ 
+ <p class="sr-only">{{ link.title }}</p>
+ </header>
+ 
+ <ul class="divide-y divide-gray-200">
+ {%- for child in link.links -%}
+ <li class="space-y-3 px-5 py-6">
+ {%- if child.links.size > 0 -%}
+ <a href="{{ child.url }}" class="block font-bold uppercase">
+ {{- child.title -}}
+ </a>
+
+ <ul class="space-y-3">
+ {%- for grandchild in child.links -%}
+ <li>
+ {%- if forloop.last -%}
+ <a href="{{ grandchild.url }}" {% if grandchild.type == 'http_link' %} target="_blank" rel="noopener noreferer" {% endif %} class="min-h-8 py-2.5 text-xs font-semibold text-gray-500 uppercase underline">
+ {{- grandchild.title -}}
+ </a>
+ {% else %}
+ <a href="{{ grandchild.url }}" {% if grandchild.type == 'http_link' %} target="_blank" rel="noopener noreferer" {% endif %} class="flex min-h-8 items-center gap-4 uppercase">
+ {{- grandchild.title -}}
+ </a>
+ {% endif %}
+ </li>
+ {%- endfor -%}
+ </ul>
+ {% else %}
+ <a href="{{ child.url }}" {% if child.type == 'http_link' %} target="_blank" rel="noopener noreferer" {% endif %} class="block uppercase">
+ {{- child.title -}}
+ </a>
+ {% endif %}
+ </li>
+ {%- endfor -%}
+ </ul>
+
+ {%- liquid 
+ # Push blocks
+ for block in section.blocks
+ if block.type == 'push' and block.settings.handle == link.handle
+ echo '<div class="p-6">'
+ render 'content-card.html', link_url: block.settings.link_url, link_target: block.settings.link_target, link_title: block.settings.link_title, tag: block.settings.tag, image: block.settings.image, title: block.settings.title, text: block.settings.text
+ echo '</div>'
+ endif
+ endfor
+
+ # Read more link blocks
+ for block in section.blocks
+ if block.type == 'read_more_link' and block.settings.handle == link.handle
+ echo '<div class="p-6 text-center">'
+ render 'button-stack.html', url: block.settings.url, target: block.settings.target, title: block.settings.title, image_1: block.settings.image_1, image_2: block.settings.image_2, image_3: block.settings.image_3, block: block 
+ echo '</div>'
+ endif
+ endfor 
+ -%}
+
+ </div>
+ {%- endif -%}
+ {% endfor %}
+ </c-menubar>
+
+ 
+ </div>
+{%- endcapture -%}
+
+{%- render 'cinq-drawer.html', direction: 'from-left', content: content, id: 'menu-drawer', background: 'bg-white' -%}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "relative",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "t:sections.header.settings.main_menu.label",
+      "info": "t:sections.header.settings.main_menu.info"
+    },
+    {
+      "type": "link_list",
+      "id": "secondary_menu",
+      "label": "t:sections.header.settings.secondary_menu.label",
+      "info": "t:sections.header.settings.secondary_menu.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "t:sections.header.settings.show_account.label",
+      "default": true,
+      "info": "t:sections.header.settings.show_account.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "t:sections.header.settings.show_search.label",
+      "default": true,
+      "info": "t:sections.header.settings.show_search.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "t:sections.header.settings.show_wishlist.label",
+      "default": true,
+      "info": "t:sections.header.settings.show_wishlist.info"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "read_more_link",
+      "name": "t:sections.header.blocks.menu_read_more.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "t:sections.header.blocks.menu_read_more.settings.handle.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.handle.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.header.blocks.menu_read_more.settings.title.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.title.info"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "t:sections.header.blocks.menu_read_more.settings.url.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.url.info"
+        },
+        {
+          "type": "select",
+          "id": "target",
+          "label": "t:sections.header.blocks.menu_read_more.settings.target.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.target.info",
+          "options": [
+            {
+              "value": "_self",
+              "label": "t:sections.header.blocks.menu_read_more.settings.target.options._self.label"
+            },
+            {
+              "value": "_blank",
+              "label": "t:sections.header.blocks.menu_read_more.settings.target.options._blank.label"
+            }
+          ],
+          "default": "_self"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "t:sections.header.blocks.menu_read_more.settings.image_1.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.image_1.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "t:sections.header.blocks.menu_read_more.settings.image_2.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.image_2.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "t:sections.header.blocks.menu_read_more.settings.image_3.label",
+          "info": "t:sections.header.blocks.menu_read_more.settings.image_3.info"
+        }
+      ]
+    },
+    {
+      "type": "push",
+      "name": "t:sections.header.blocks.push.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "t:sections.header.blocks.push.settings.handle.label",
+          "info": "t:sections.header.blocks.push.settings.handle.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.header.blocks.push.settings.image.label",
+          "info": "t:sections.header.blocks.push.settings.image.info"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "t:sections.header.blocks.push.settings.tag.label",
+          "info": "t:sections.header.blocks.push.settings.tag.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.header.blocks.push.settings.title.label",
+          "info": "t:sections.header.blocks.push.settings.title.info"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.header.blocks.push.settings.text.label",
+          "info": "t:sections.header.blocks.push.settings.text.info"
+        },
+        {
+          "type": "text",
+          "id": "link_title",
+          "label": "t:sections.header.blocks.push.settings.link_title.label",
+          "info": "t:sections.header.blocks.push.settings.link_title.info"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "t:sections.header.blocks.push.settings.link_url.label",
+          "info": "t:sections.header.blocks.push.settings.link_url.info"
+        },
+        {
+          "type": "select",
+          "id": "link_target",
+          "label": "t:sections.header.blocks.push.settings.link_target.label",
+          "info": "t:sections.header.blocks.push.settings.link_target.info",
+          "options": [
+            { "value": "_self", "label": "t:sections.header.blocks.push.settings.link_target.options._self.label" },
+            { "value": "_blank", "label": "t:sections.header.blocks.push.settings.link_target.options._blank.label" }
+          ],
+          "default": "_self"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.header.presets.name"
+    }
+  ]
+}
+{% endschema %}

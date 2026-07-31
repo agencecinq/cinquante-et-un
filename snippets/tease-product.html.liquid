@@ -1,0 +1,84 @@
+{% doc %}
+  Tease Product — generic product card (wireframe).
+
+  @param {object} [product] - product object.
+  @param {string} [classes] - Classes for the article element. Optional.
+  @param {boolean} [quick_add] - Show add to cart button. Default true.
+
+  @example {% render 'tease-product', product: product, quick_add: true %}
+{% enddoc %}
+
+{% liquid
+  assign price = product.price | money_with_currency
+
+  if product.compare_at_price > product.price
+    assign compare_at_price = product.compare_at_price | money_with_currency
+    assign price = '<s class="opacity-50">' | append: compare_at_price | append: '</s> ' | append: price
+  endif
+%}
+
+<article
+  class="group/tease-product relative flex flex-col gap-3{% if classes %} {{ classes }}{% endif %}"
+  aria-label="{{ product.title }}"
+>
+  <a
+    href="{{ product.url }}"
+    aria-label="{{ 'snippets.tease-product.view_product' | t: title: product.title }}"
+    class="relative block aspect-3/4 overflow-hidden border border-black bg-gray-100"
+  >
+    {%- render 'product-tags.html', product: product, classes: 'absolute z-20 top-0 inset-x-0 m-2' -%}
+
+    {%- if request.visual_preview_mode or product.media.size == 0 -%}
+      {{- 'product-1' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40' -}}
+    {%- else -%}
+      <span class="block size-full">
+        {%- liquid
+          if product.media[0].media_type == 'video'
+            echo product.media[0] | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'size-full object-cover object-center', image_size: '668x'
+          elsif product.media[0].media_type == 'image'
+            assign alt = product.media[0].alt | default: product.title
+            render 'image.html', image: product.media[0], width: 668, widths: '650,668', alt: alt, class: 'size-full object-cover object-center'
+          endif
+        -%}
+      </span>
+
+      {%- if product.media.size > 1 -%}
+        <span class="absolute inset-0 size-full opacity-0 transition-opacity duration-300 ease-out group-focus-within/tease-product:opacity-100 group-hover/tease-product:opacity-100">
+          {%- liquid
+            if product.media[1].media_type == 'video'
+              echo product.media[1] | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'size-full object-cover object-center', image_size: '668x'
+            elsif product.media[1].media_type == 'image'
+              assign alt = product.media[1].alt | default: product.title
+              render 'image.html', image: product.media[1], width: 668, widths: '650,668', alt: alt, class: 'size-full object-cover object-center'
+            endif
+          -%}
+        </span>
+      {%- endif -%}
+    {%- endif -%}
+  </a>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex items-baseline justify-between gap-3">
+      <p class="text-balance">{{- product.title -}}</p>
+      <p class="shrink-0 text-sm">{{- price -}}</p>
+    </div>
+
+    {%- if quick_add != false and product.available -%}
+      {% capture quick_add_button %}
+ <button
+ data-dom="button"
+ type="submit"
+ class="button button--primary w-full"
+ aria-label="{{ 'sections.product.add_to_cart' | t }} {{ product.title }}"
+ >
+ {{- 'snippets.add-to-cart.add_to_cart' | t -}}
+ </button>
+ {% endcapture %}
+      {%- render 'add-to-cart.html', classes: 'block', product: product, button: quick_add_button -%}
+    {%- elsif quick_add != false and product.available == false -%}
+      <p class="border border-black px-3 py-2 text-center text-sm opacity-50">
+        {{- 'snippets.product-tags.sold_out' | t -}}
+      </p>
+    {%- endif -%}
+  </div>
+</article>

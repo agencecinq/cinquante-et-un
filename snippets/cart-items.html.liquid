@@ -1,0 +1,21 @@
+{% doc %}
+  Cart items
+
+  @param {object} items - Array of cart items
+  @param {string} id - Section ID
+
+  @example {%- render 'cart-items.html', items: cart.items, id: section.id -%}
+{% enddoc %}
+
+<div class="js-cart-items scrollbar-hidden overflow-y-scroll scroll-smooth px-5">
+  <form
+    action="{{ routes.cart_url }}"
+    id="CartForm-{{ id }}"
+    method="post"
+    class="divide-y divide-gray-200 border-b border-gray-200"
+  >
+    {%- for item in items -%}
+      {%- render 'cart-item.html', item: item, id: id -%}
+    {%- endfor -%}
+  </form>
+</div>

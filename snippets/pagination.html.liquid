@@ -1,0 +1,91 @@
+{% doc %}
+  Renders a set of links for paginated results. Must be used within paginate tags.
+
+  @param {object} paginate - The pagination object containing information about the current page, total pages, and links to previous and next pages.
+  @param {string} [anchor] - An optional anchor to append to the pagination links.
+
+  @example {% render 'pagination.html', paginate: paginate %}
+{% enddoc %}
+
+{%- if paginate.pages > 1 -%}
+  <nav
+    role="navigation"
+    class="text-sm"
+    aria-label="{{ 'snippets.pagination.label' | t }}"
+  >
+    <ol class="flex gap-2.5">
+      {%- if paginate.previous -%}
+        <li class="hidden lg:list-item">
+          <a
+            class="flex size-14 items-center justify-center"
+            href="{{ paginate.previous.url }}{{ anchor }}"
+            aria-label="{{ 'snippets.pagination.previous' | t }}"
+          >
+            <span aria-hidden="true">{%- render 'use.html', classes: 'w-3 h-4', icon: 'arrow-left' -%}</span>
+            <span class="sr-only">{{ 'snippets.pagination.previous' | t }}</span>
+          </a>
+        </li>
+      {%- else -%}
+        <li class="disabled hidden cursor-not-allowed opacity-30 lg:list-item">
+          <p class="flex size-14 items-center justify-center">
+            <span aria-hidden="true">{%- render 'use.html', classes: 'w-3 h-4', icon: 'arrow-left' -%}</span>
+            <span class="sr-only">{{ 'snippets.pagination.previous' | t }}</span>
+          </p>
+        </li>
+      {%- endif -%}
+
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}
+          <li>
+            <a
+              aria-label="{{ 'snippets.pagination.page' | t: number: part.title }}"
+              href="{{ part.url }}{{ anchor }}"
+              class="flex size-14 items-center justify-center"
+            >
+              <span class="sr-only">{{- 'snippets.pagination.page' | t: number: part.title -}}</span> {{ part.title }}
+            </a>
+          </li>
+        {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+            <li
+              class="active"
+              aria-current="page"
+              aria-disabled="true"
+              aria-label="{{ 'snippets.pagination.page' | t: number: part.title }}"
+            >
+              <span class="sr-only">{{- 'snippets.pagination.page' | t: number: part.title -}}</span>
+              <p class="flex size-14 items-center justify-center">
+                {{- part.title -}}
+              </p>
+            </li>
+          {%- else -%}
+            <li>
+              <span class="sr-only">{{- 'snippets.pagination.page' | t: number: part.title -}}</span>
+              <p class="flex size-14 items-center justify-center">{{- part.title -}}</p>
+            </li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if paginate.next -%}
+        <li class="hidden lg:list-item">
+          <a
+            href="{{ paginate.next.url }}{{ anchor }}"
+            class="flex size-14 items-center justify-center"
+            aria-label="{{ 'snippets.pagination.next' | t }}"
+          >
+            <span class="sr-only">{{- 'snippets.pagination.next' | t -}}</span>
+            <span aria-hidden="true">{%- render 'use.html', classes: 'w-3 h-4', icon: 'arrow-right' -%}</span>
+          </a>
+        </li>
+      {%- else -%}
+        <li class="disabled hidden cursor-not-allowed opacity-30 lg:list-item">
+          <p class="flex size-14 items-center justify-center">
+            <span class="sr-only">{{- 'snippets.pagination.next' | t -}}</span>
+            <span aria-hidden="true">{%- render 'use.html', classes: 'w-3 h-4', icon: 'arrow-right' -%}</span>
+          </p>
+        </li>
+      {%- endif -%}
+    </ol>
+  </nav>
+{%- endif -%}

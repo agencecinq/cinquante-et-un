@@ -1,0 +1,366 @@
+{% comment %}
+  This section is used in the collection template to render collection page
+  listing all products within a collection.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+{% endcomment %}
+
+{%- liquid
+  assign padding_top_mobile = section.settings.padding_top | times: 0.6 | divided_by: 16.00
+  assign padding_top_desktop = section.settings.padding_top | divided_by: 16.00
+  assign padding_bottom_mobile = section.settings.padding_bottom | times: 0.6 | divided_by: 16.00
+  assign padding_bottom_desktop = section.settings.padding_bottom | divided_by: 16.00
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ padding_top_mobile }}rem;
+    padding-bottom: {{ padding_bottom_mobile }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ padding_top_desktop }}rem;
+      padding-bottom: {{ padding_bottom_desktop }}rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding space-y-12 color-{{ section.settings.color_scheme }}">
+  {%- if collection.image != blank %}
+    <div class="relative flex aspect-2/1 flex-col justify-end">
+      <div class="relative z-20 container grid grid-cols-4 items-center gap-2.5 py-2.5 lg:grid-cols-12 lg:gap-5 lg:py-8">
+        <div class="col-span-3 col-start-5 space-y-5 text-center">
+          {%- render 'breadcrumb.html', classes: 'text-xs opacity-60', classes_list: 'justify-center' -%}
+          <h1 class="text-base font-semibold">{{- collection.title -}}</h1>
+        </div>
+      </div>
+
+      {%- liquid
+        if collection.image != blank
+          echo collection.image | image_url: width: 2880 | image_tag: class: 'size-full absolute inset-0 z-10 object-cover object-center'
+        endif
+      -%}
+    </div>
+  {%- endif -%}
+
+  {%- if collection.image == blank -%}
+    <div class="container grid grid-cols-4 gap-2.5 py-8 text-center lg:grid-cols-12 lg:gap-5 lg:py-12">
+      <div class="col-span-full space-y-6 lg:col-span-6 lg:col-start-4">
+        {%- render 'breadcrumb.html', classes: 'text-xs opacity-60', classes_list: 'justify-center' -%}
+        <h1 class="text-base font-semibold">{{- collection.title -}}</h1>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if collection.description == blank -%}
+    {%- if collection.metafields.custom.subtitle != blank -%}
+      <div class="container grid grid-cols-4 gap-x-2.5 gap-y-10 text-center lg:grid-cols-12 lg:gap-x-5">
+        <div class="col-span-full space-y-10 lg:col-span-6 lg:col-start-4">
+          <h2 class="text-sm font-semibold">{{- collection.title -}}</h2>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if collection.description != blank -%}
+    <div class="container grid grid-cols-4 gap-x-2.5 gap-y-10 text-center lg:grid-cols-12 lg:gap-x-5">
+      <div class="col-span-full space-y-10 lg:col-span-6 lg:col-start-4">
+        {%- if collection.metafields.custom.subtitle != blank -%}
+          <h2 class="text-sm font-semibold">{{- collection.title -}}</h2>
+        {%- endif -%}
+        {%- if collection.description != blank -%}
+          <div class="wysiwyg text-xs">{{- collection.description -}}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="space-y-6">
+    {%- if section.settings.show_filters or section.settings.show_sorting -%}
+      <div class="container">
+        <div class="flex flex-col items-center gap-2 lg:flex-row lg:justify-between lg:gap-4">
+          <cinq-drawer-button class="block w-full border border-gray-200 px-4 py-3 lg:w-auto">
+            <button
+              data-dom="button"
+              aria-controls="filter-drawer"
+              aria-expanded="false"
+              type="button"
+              class="text-xs font-medium uppercase"
+              aria-label="{{ 'sections.collection.filters.title' | t }}"
+            >
+              {{ 'sections.collection.filters.title' | t }}
+            </button>
+          </cinq-drawer-button>
+
+          <c-select-controller
+            data-action="redirect"
+            class="block w-full border border-gray-200 px-4 py-3 lg:w-auto"
+          >
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            <label for="SortBy" class="sr-only">{{ 'sections.collection.sorting.title' | t }}</label>
+
+            <select
+              name="sort_by"
+              id="SortBy"
+              data-dom="select"
+              class="w-full cursor-pointer bg-transparent text-xs"
+            >
+              {%- for option in collection.sort_options -%}
+                <option
+                  value="{{ option.value }}"
+                  data-url="?sort_by={{ option.value }}"
+                  {% if option.value == sort_by %}
+                    selected
+                  {% endif %}
+                >
+                  {{ option.name }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </c-select-controller>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if collection.products.count == 0 -%}
+      <div class="container">
+        <p>{{- 'sections.collection.no-products' | t -}}</p>
+      </div>
+    {%- else -%}
+      {% paginate collection.products by 13 %}
+        {% liquid
+          assign current = paginate.current_offset | plus: collection.products.size
+          assign out_of = 'sections.collection.out-of' | t: current: current, total: collection.products_count
+        %}
+
+        {%- capture products_grid -%}
+ <div
+ data-dom="container"
+ data-out-of="{{ out_of }}"
+ class="container grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-12 lg:gap-x-4"
+ >
+ {% for product in collection.products %}
+ <div class="col-span-full md:col-span-2 lg:col-span-3">
+ {%- render 'tease-product.html', product: product -%}
+ </div>
+ {% endfor %}
+ </div>
+ {%- endcapture -%}
+
+        {%- if paginate.pages > 1 -%}
+          <c-load-more
+            id="CollectionLoadMore-{{ section.id }}"
+            data-action="{{ paginate.next.url }}"
+            data-current-page="{{ paginate.current_page }}"
+            data-total-pages="{{ paginate.pages }}"
+            class="flex flex-col gap-y-10 transition-opacity duration-300 ease-out lg:gap-y-20"
+          >
+            {{ products_grid }}
+
+            <div class="container space-y-4 text-center">
+              <div data-dom="out-of" class="text-center text-sm">
+                {{- out_of -}}
+              </div>
+              {%- assign title = 'sections.collection.see-more' | t %}
+              {%- render 'button.html',
+                tag: 'button',
+                title: title,
+                data-dom: 'load-more-button',
+                variant: 'tertiary'
+              -%}
+            </div>
+          </c-load-more>
+        {%- else -%}
+          {{ products_grid }}
+        {%- endif -%}
+      {% endpaginate %}
+    {%- endif -%}
+  </div>
+</div>
+
+{%- capture content -%}
+ <div class="bg-gray flex h-full flex-col">
+ 
+ {% assign title = 'sections.collection.filters.drawer.title' | t %}
+ {%- render 'drawer-header.html', title: title, id: 'filter-drawer' -%}
+
+ <div class="grow p-5">
+ <form id="CollectionFiltersForm" data-collection-url="{{ collection.url }}">
+ <div class="block">
+ {% for filter in collection.filters %}
+ <div class="space-y-4 border-b border-gray-200 py-5">
+ 
+ <h3 class="text-xs font-medium text-black/90" id="CollectionFilterLabel-{{ forloop.index0 }}">
+ {{- filter.label -}}
+ </h3>
+
+ 
+ 
+ <div>
+ {% case filter.type %}
+ {% when 'list' %}
+ <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
+ {% for value in filter.values %}
+ <label class="col-span-1 flex cursor-pointer items-center gap-3 text-sm">
+ <input
+ type="checkbox"
+ name="{{ value.param_name }}"
+ value="{{ value.value }}"
+ class="peer sr-only"
+ {% if value.active %}checked{% endif %}
+ >
+
+ <span
+ aria-hidden="true"
+ class="flex size-6 shrink-0 items-center justify-center border border-gray-200 bg-white text-black transition-colors duration-200 ease-out peer-checked:border-gray-100 peer-checked:bg-gray-100 peer-focus-visible:ring-2 peer-focus-visible:ring-gray-100/30 peer-focus-visible:ring-offset-2 [&_svg]:opacity-0 [&_svg]:transition-opacity [&_svg]:duration-200 [&_svg]:ease-out peer-checked:[&_svg]:opacity-100"
+ >
+ {%- render 'use.html', icon: 'check', classes: 'size-3.5 pointer-events-none' -%}
+ </span>
+
+ <span>{{- value.label -}}</span>
+ </label>
+ {% endfor %}
+ </div>
+
+                  {% when 'price_range' %}
+                    {%- liquid
+                      assign range_max = filter.range_max | default: 0
+                      assign min_value = filter.min_value.value | default: 0
+                      assign max_value = filter.max_value.value | default: range_max
+
+                      assign factor = 100
+                      if shop.money_format contains 'amount_no_decimals'
+                        assign factor = 1
+                      endif
+
+                      assign range_max_major = range_max | divided_by: factor
+                      assign min_value_major = min_value | divided_by: factor
+                      assign max_value_major = max_value | divided_by: factor
+                    -%}
+
+                    <div class="flex justify-between gap-2 lg:gap-4">
+                      <label class="grow text-xs">
+                        <span class="sr-only">{{- 'sections.collection.filters.min_price' | t -}}</span>
+                        <div class="relative border border-gray-200">
+                          <input
+                            class="w-full px-3 py-2 pr-10"
+                            type="number"
+                            inputmode="numeric"
+                            name="{{ filter.min_value.param_name }}"
+                            value="{{ min_value_major }}"
+                            min="0"
+                            max="{{ range_max_major }}"
+                          >
+                          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            {{- cart.currency.symbol -}}
+                          </span>
+                        </div>
+                      </label>
+
+                      <label class="grow text-xs">
+                        <span class="sr-only">{{- 'sections.collection.filters.max_price' | t -}}</span>
+                        <div class="relative border border-gray-200">
+                          <input
+                            class="w-full px-3 py-2 pr-10 text-sm"
+                            type="number"
+                            inputmode="numeric"
+                            name="{{ filter.max_value.param_name }}"
+                            value="{{ max_value_major }}"
+                            min="0"
+                            max="{{ range_max_major }}"
+                          >
+                          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-500">
+                            {{- cart.currency.symbol -}}
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                  {% endcase %}
+ </div>
+ 
+ </div>
+ {% endfor %}
+ </div>
+ </form>
+ </div>
+
+ <footer class="flex gap-2.5 px-5 py-8">
+ {%- assign title = 'sections.collection.filters.drawer.clear' | t -%}
+ {%- render 'button.html', classes: 'grow w-full', url: collection.url, title: title -%}
+ 
+ {%- assign title = 'sections.collection.filters.drawer.apply' | t -%}
+ {%- render 'button.html', tag: 'button', type: 'submit', form: 'CollectionFiltersForm', classes: 'grow w-full', title: title, variant: 'secondary', id: 'ApplyFilters' -%}
+ </footer>
+
+ </div>
+{%- endcapture -%}
+
+{%- render 'cinq-drawer.html',
+  margin_top: 'var(--headroom-top, 0px)',
+  content: content,
+  id: 'filter-drawer',
+  background: 'bg-white'
+-%}
+
+{% schema %}
+{
+  "name": "t:sections.collection.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "t:sections.collection.settings.show_filters.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sorting",
+      "label": "t:sections.collection.settings.show_sorting.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "info": "t:sections.shared.settings.padding.top.info",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "info": "t:sections.shared.settings.padding.bottom.info",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "t:sections.collection.preset.name"
+    }
+  ]
+}
+{% endschema %}

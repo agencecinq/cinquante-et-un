@@ -1,0 +1,88 @@
+{% doc %}
+  Text block
+{% enddoc %}
+
+<{{ block.settings.tag }}
+  class="wysiwyg [&_a]:underline [&_strong]:font-medium {{ block.settings.font_size }}"
+  {{ block.shopify_attributes }}
+>
+  {{- block.settings.text -}}
+</{{ block.settings.tag }}>
+
+{% schema %}
+{
+  "name": "t:blocks.text.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:blocks.text.settings.text.label",
+      "default": "t:blocks.text.settings.text.default",
+      "info": "t:blocks.text.settings.text.info"
+    },
+    {
+      "type": "select",
+      "id": "tag",
+      "label": "t:blocks.text.settings.tag.label",
+      "info": "t:blocks.text.settings.tag.info",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:blocks.text.settings.tag.options.h1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:blocks.text.settings.tag.options.h2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:blocks.text.settings.tag.options.h3.label"
+        },
+        {
+          "value": "div",
+          "label": "t:blocks.text.settings.tag.options.div.label"
+        }
+      ],
+      "default": "div"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:blocks.text.settings.font_size.label",
+      "info": "t:blocks.text.settings.font_size.info",
+      "options": [
+        {
+          "value": "text-xl",
+          "label": "t:blocks.text.settings.font_size.options.xl.label"
+        },
+        {
+          "value": "text-lg",
+          "label": "t:blocks.text.settings.font_size.options.l.label"
+        },
+        {
+          "value": "text-base",
+          "label": "t:blocks.text.settings.font_size.options.m.label"
+        },
+        {
+          "value": "text-sm",
+          "label": "t:blocks.text.settings.font_size.options.s.label"
+        },
+        {
+          "value": "text-xs",
+          "label": "t:blocks.text.settings.font_size.options.xs.label"
+        }
+      ],
+      "default": "text-base"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.text.presets.name",
+      "settings": {
+        "text": "<p>Your text here</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{%- capture content -%}
+ {%- liquid
+ echo '<c-cart-drawer id="CartDrawer-' | append: section.id | append: '" class="h-full flex flex-col aria-busy:cursor-wait aria-busy:opacity-60 aria-busy:**:pointer-events-none">'
+
+ if cart == empty
+ render 'cart-empty.html', id: section.id
+ else
+ render 'cart-header.html', id: section.id
+ render 'cart-items.html', items: cart.items, id: section.id
+ render 'cart-footer.html', id: section.id
+ endif
+
+ echo '</c-cart-drawer>'
+ -%}
+{%- endcapture -%}
+
+{%- render 'cinq-drawer.html', content: content, id: 'cart-drawer', background: 'bg-white' -%}

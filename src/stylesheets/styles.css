@@ -1,14 +1,61 @@
 @import 'tailwindcss';
 
+/* Scan Liquid / JSON so utilities used only in theme files are generated. */
+@source '../../sections/**/*.{liquid,json}';
+@source '../../snippets/**/*.liquid';
+@source '../../blocks/**/*.liquid';
+@source '../../layout/**/*.liquid';
+@source '../../templates/**/*.json';
+
 @import './theme.css';
 
-/* Base */
+@layer base {
+  html {
+    color: var(--color-black);
+    background: var(--color-white);
+  }
 
-@import './base/base.css';
-@import './base/font-face.css';
+  body {
+    font-family: var(--font-sans);
+    font-style: var(--font-primary--style, normal);
+    font-weight: var(--font-primary--weight, 400);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
 
-/* Components */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  img,
+  video,
+  svg:not([class]) {
+    outline: 1px solid var(--color-gray-200);
+  }
+
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+
+  .shopify-policy__container {
+    margin: 2em auto !important;
+    max-width: 40rem;
+  }
+
+  .shopify-policy__container > * + * {
+    margin-top: 1.5em;
+  }
+}
 
 /* Utilities */
-
 @import './utilities/container.css';
+@import './utilities/scrollbar-hidden.css';
+@import './utilities/slideshow.css';
+@import './utilities/marquee.css';
+
+/* Components */
+@import './components/button.css';
+@import './components/tag.css';
+@import './components/wysiwyg.css';

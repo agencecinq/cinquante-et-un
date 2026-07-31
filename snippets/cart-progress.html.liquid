@@ -1,0 +1,45 @@
+{% doc %}
+  @param {number} total - The total price of the cart
+  @param {string} id - The unique identifier for the section
+{% enddoc %}
+
+{%- liquid
+  assign progress = 0
+  assign free_delivery = settings.free_delivery_amount | times: 100
+
+  if total > free_delivery
+    assign progress = 100
+  else
+    assign progress = total | times: 100 | divided_by: free_delivery
+  endif
+
+  assign rest = free_delivery | minus: total | divided_by: 100
+-%}
+
+{%- if settings.free_delivery_enable -%}
+  <div class="space-y-4" data-section-id="{{ id }}" id="cart-progress-{{ id }}">
+    <p class="flex justify-between gap-2 text-gray-700">
+      <span class="text-xs">{{- settings.free_delivery_label -}}</span>
+      {%- liquid
+        echo '<span class="text-xs ml-auto">'
+
+        if settings.free_delivery_text and rest > 0
+          assign rest = rest | times: 100 | money
+
+          echo settings.free_delivery_text | replace: 'xx', rest
+        else
+          echo 'cart.progress.label' | t
+        endif
+
+        echo '</span>'
+      -%}
+    </p>
+
+    <div class="relative h-1 w-full overflow-hidden bg-gray-200">
+      <span
+        class="absolute inset-0 size-full origin-left scale-x-(--progress) bg-gray-700"
+        style="--progress: {{ progress }}%;"
+      ></span>
+    </div>
+  </div>
+{%- endif -%}

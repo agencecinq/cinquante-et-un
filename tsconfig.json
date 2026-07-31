@@ -1,18 +1,24 @@
 {
-    "include": [
-      "."
-    ],
-    "exclude": [
-      "dist",
-      "build",
-      "node_modules"
-    ],
-    "compilerOptions": {
-      "lib": ["esnext", "dom"],
-      "baseUrl": ".",
-      "paths": {
-        "@/*": ["src/*"],
-        "~/*": ["src/*"],
-      }
-    }
-  }
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./src/*"]
+    },
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["piecesjs"],
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src/scripts", "src/scripts/**/*.d.ts"],
+  "exclude": ["dist", "build"]
+}

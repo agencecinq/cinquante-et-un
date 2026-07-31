@@ -1,0 +1,84 @@
+{%- doc -%}
+  Renders a responsive image using Shopify's native image_tag filter, with sizes computed from a 12-column grid system.
+
+  @param {object} image - Shopify image object
+  @param {number} [desktop] - Columns occupied at desktop (1-12) (default: 12)
+  @param {number} [width] - Cap for largest generated width (default: 2000)
+  @param {number} [tablet] - Columns occupied at tablet (1-12) (default: mobile)
+  @param {number} [mobile] - Columns occupied at mobile (1-12) (default: 12)
+  @param {string} [alt] - Override alt text (default: image.alt)
+  @param {string} [loading] - 'lazy' | 'eager' (default: 'lazy')
+  @param {string} [fetchpriority] - 'auto' | 'high' | 'low' (default: 'auto')
+  @param {string} [class] - CSS classes
+  @param {string} [style] - CSS styles
+  @param {string} [widths] - Override generated widths (comma-separated, e.g. '650,668')
+
+  @example
+  {% render 'image.html', image: image, desktop: 12, tablet: 12, mobile: 12, alt: 'Image alt text', loading: 'lazy', fetchpriority: 'auto', class: 'w-full h-auto object-contain object-center', style: 'aspect-ratio: 1/1;', widths: '344, 688, 1032', width: 1376 %}
+
+ Breakpoints:
+ - mobile: < 750px
+ - tablet: 750-1023px
+ - desktop: ≥ 1024px
+{%- enddoc -%}
+
+{%- liquid
+  unless image == blank
+    assign mobile = mobile | default: 12
+    assign tablet = tablet | default: mobile
+    assign desktop = desktop | default: 12
+
+    assign loading = loading | default: 'lazy'
+    assign fetchpriority = fetchpriority | default: 'auto'
+    assign width = width | default: 2000
+    assign alt = alt | default: image.alt | default: ''
+    assign style = style | default: ''
+
+    # Columns
+    assign vw_mobile = mobile | times: 100 | divided_by: 12
+    assign vw_tablet = tablet | times: 100 | divided_by: 12
+    assign vw_desktop = desktop | times: 100 | divided_by: 12
+
+    # Sizes attribute
+    capture sizes_attr
+      echo '(min-width: 1024px) '
+      echo vw_desktop
+      echo 'vw, (min-width: 750px) '
+      echo vw_tablet
+      echo 'vw, '
+      echo vw_mobile
+      echo 'vw'
+    endcapture
+
+    # Filter widths to only what's useful for this layout
+    if widths == blank
+      assign max_useful = vw_desktop | times: 1440 | divided_by: 100 | times: 2
+
+      if max_useful > width
+        assign max_useful = width
+      endif
+
+      assign default_widths = '300,500,700,900,1200,1500,2000'
+      assign widths_array = default_widths | split: ','
+      assign filtered = ''
+
+      for w in widths_array
+        assign w_int = w | plus: 0
+        if w_int <= max_useful
+          if filtered == ''
+            assign filtered = w
+          else
+            assign filtered = filtered | append: ',' | append: w
+          endif
+        endif
+      endfor
+      assign last_w = filtered | split: ',' | last | plus: 0
+      if last_w < max_useful
+        assign filtered = filtered | append: ',' | append: max_useful
+      endif
+      assign widths = filtered
+    endif
+
+    echo image | image_url: width: width | image_tag: loading: loading, fetchpriority: fetchpriority, decoding: 'async', sizes: sizes_attr, widths: widths, alt: alt, class: class, style: style
+  endunless
+-%}

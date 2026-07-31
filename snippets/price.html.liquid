@@ -1,0 +1,94 @@
+{% doc %}
+  Renders a product's price.
+
+  @param {object} [product] - Product Liquid object (optional)
+  @param {object} [variant] - Variant Liquid object (optional). If provided, it takes precedence over product's selected variant.
+  @param {boolean} [use_variant] - If true, always render variant price (default: true when `variant` is present; otherwise false).
+  @param {boolean} [show_compare_at] - Whether to render compare-at price when on sale (default: true).
+  @param {boolean} [show_unit_price] - Whether to render unit price when available (default: true).
+
+  @example
+  {% render 'price', product: product %}
+{% enddoc %}
+
+{%- liquid
+  assign show_compare_at = show_compare_at | default: true
+  assign show_unit_price = show_unit_price | default: true
+
+  assign p = product
+  assign v = variant
+
+  if p == blank and v != blank
+    assign p = v.product
+  endif
+
+  assign use_variant_fallback = false
+  if v != blank
+    assign use_variant_fallback = true
+  endif
+
+  assign use_variant = use_variant | default: use_variant_fallback
+
+  if p == blank and v == blank
+    assign price_is_blank = true
+  endif
+
+  if price_is_blank != true
+    if use_variant and v == blank and p != blank
+      assign v = p.selected_or_first_available_variant
+    endif
+
+    if use_variant and v != blank
+      assign price = v.price
+      assign compare_at_price = v.compare_at_price
+      assign available = v.available
+      assign unit_price_measurement = v.unit_price_measurement
+      assign unit_price = v.unit_price
+    else
+      assign price = p.price
+      assign compare_at_price = p.compare_at_price
+      assign available = p.available
+      assign unit_price_measurement = p.selected_or_first_available_variant.unit_price_measurement
+      assign unit_price = p.selected_or_first_available_variant.unit_price
+    endif
+
+    assign price_varies = false
+    if use_variant != true and p != blank and p.price_varies
+      assign price_varies = true
+    endif
+
+    assign on_sale = false
+    if show_compare_at and compare_at_price > price
+      assign on_sale = true
+    endif
+  endif
+-%}
+
+{%- if price_is_blank != true -%}
+  {%- if price_varies and p != blank -%}
+    <span>{{- 'snippets.price.from' | t -}}</span>
+    <span>{{- p.price_min | money_with_currency -}}</span>
+  {%- else -%}
+    <span>{{- price | money_with_currency -}}</span>
+  {%- endif -%}
+
+  {%- if on_sale -%}
+    <s>{{- compare_at_price | money_with_currency -}}</s>
+  {%- endif -%}
+
+  {%- unless available -%}
+    <span>{{- 'snippets.product-tags.sold_out' | t -}}</span>
+  {%- endunless -%}
+
+  {%- if show_unit_price and unit_price_measurement -%}
+    <span>
+      {{- 'snippets.price.unit_price' | t -}}
+      {{- unit_price | money_with_currency -}}
+      /
+      {%- if unit_price_measurement.reference_value != 1 -%}
+        {{- unit_price_measurement.reference_value -}}
+      {%- endif -%}
+      {{- unit_price_measurement.reference_unit -}}
+    </span>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,60 @@
+{% doc %}
+  @description Renders a customizable link with specified URL, text, target, and styling options.
+
+  @param {object} [block] - The block object. Optional.
+  @param {string} [url] - The URL for the link. Optional.
+  @param {string} [tag] - The HTML tag to use for the link (e.g., 'a', 'button'). Optional.
+  @param {string} [classes] - Additional CSS classes for the link. Optional.
+  @param {string} [target] - The target attribute for the link (_self or _blank). Optional.
+  @param {string} title - The text content of the link. Mandatory.
+  @param {string} [label] - The aria-label for the link. Optional.
+  @param {string} [type] - The type attribute for button tags (e.g., 'button', 'submit'). Optional. Default is 'button' when tag is 'button'.
+  @param {string} [data-dom] - A data attribute for DOM manipulation. Optional.
+  @param {string} [aria-controls] - The aria-controls attribute for accessibility. Optional.
+  @param {string} [aria-expanded] - The aria-expanded attribute for accessibility. Optional.
+  @param {string} [aria-selected] - The aria-selected attribute for accessibility. Optional.
+
+  @example
+  {% render 'link.html', 
+ url: 'https://example.com', 
+ classes: 'custom-class', 
+ target: '_blank', 
+ title: 'Click Here', 
+ label: 'Click here to visit example.com' 
+ %}
+{% enddoc %}
+
+{%- if title != blank -%}
+  <{{ tag | default: 'a' }}
+    {% if url %}
+      href="{{ url }}"
+    {% endif %}
+    class="underline-offset-2 hover:underline{% if classes %} {{ classes }}{% endif %}"
+    {% if target == '_blank' %}
+      target="_blank" rel="noopener noreferrer"
+    {% endif %}
+    {% if block %}
+      {{- block.shopify_attributes -}}
+    {% endif %}
+    {% if label %}
+      aria-label="{{ label }}"
+    {% endif %}
+    {% if tag == 'button' %}
+      type="{{ type | default: 'button' }}"
+    {% endif %}
+    {% if data-dom %}
+      data-dom="{{ data-dom }}"
+    {% endif %}
+    {% if aria-controls %}
+      aria-controls="{{ aria-controls }}"
+    {% endif %}
+    {% if aria-expanded %}
+      aria-expanded="{{ aria-expanded }}"
+    {% endif %}
+    {% if aria-selected %}
+      aria-selected="{{ aria-selected }}"
+    {% endif %}
+  >
+    {{- title -}}
+  </{{ tag | default: 'a' }}>
+{%- endif -%}

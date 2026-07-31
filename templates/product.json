@@ -1,141 +1,65 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
+        "breadcrumb": {
+          "type": "breadcrumb",
+          "settings": {}
         },
         "title": {
           "type": "title",
           "settings": {}
         },
-        "caption": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.metafields.descriptors.subtitle.value }}",
-            "text_style": "subtitle"
-          }
-        },
         "price": {
           "type": "price",
           "settings": {}
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button"
-          }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
+        "variants": {
+          "type": "variants-picker",
           "settings": {}
         },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
-        "description": {
-          "type": "description",
+        "buy": {
+          "type": "add-to-cart-button",
           "settings": {}
         },
-        "collapsible-row-0": {
-          "type": "collapsible_tab",
+        "reassurance": {
+          "type": "reassurance",
           "settings": {
-            "heading": "Materials",
-            "icon": "leather",
-            "content": "",
-            "page": ""
+            "text_0": "Livraison offerte dès 40 €",
+            "text_1": "Retours sous 30 jours",
+            "text_2": "Paiement sécurisé"
           }
         },
-        "collapsible-row-1": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Shipping & Returns",
-            "icon": "truck",
-            "content": "",
-            "page": ""
-          }
-        },
-        "collapsible-row-2": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Dimensions",
-            "icon": "ruler",
-            "content": "",
-            "page": ""
-          }
-        },
-        "collapsible-row-3": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Care Instructions",
-            "icon": "heart",
-            "content": "",
-            "page": ""
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
+        "accordion": {
+          "type": "accordion-group",
+          "settings": {}
         }
       },
       "block_order": [
-        "vendor",
+        "breadcrumb",
         "title",
-        "caption",
         "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description",
-        "collapsible-row-0",
-        "collapsible-row-1",
-        "collapsible-row-2",
-        "collapsible-row-3",
-        "share"
+        "variants",
+        "buy",
+        "reassurance",
+        "accordion"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "gallery_layout": "stacked",
-        "mobile_thumbnails": "hide",
-        "hide_variants": true,
         "padding_top": 40,
         "padding_bottom": 40
       }
     },
-    "related-products": {
+    "related": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
-        "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "title": "Vous aimerez aussi",
+        "products_to_show": 4,
+        "show_quick_add": true,
+        "padding_top": 48,
+        "padding_bottom": 64
       }
     }
   },
-  "order": [
-    "main",
-    "related-products"
-  ]
+  "order": ["main", "related"]
 }

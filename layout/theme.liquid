@@ -1,95 +1,84 @@
 <!doctype html>
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html
+  class="is-on-top"
+  lang="{{ request.locale.iso_code }}"
+  style="--announcement-bar-height: 0px; --header-height: 4.5rem;"
+>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="">
-    <link rel="canonical" href="{{ canonical_url }}">
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
 
-    <link rel="icon" type="image/png" href="{{ 'favicon.png' | asset_url }}">
-
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
-
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
-
+    {% # Social, title, etc. %}
     {%- render 'meta-tags' -%}
     {%- render 'vite-tag' with 'stylesheets/styles.css', preload_stylesheet: true -%}
     {%- render 'vite-tag' with 'scripts/app.ts' -%}
-
     {{ content_for_header }}
-
-    <style>
-      {% for scheme in settings.color_schemes -%}
-        {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
-
-        {% if forloop.index == 1 -%}
-          :root,
-        {%- endif %}
-
-        .color-{{ scheme.id }} {
-          --color-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
-
-          {% if scheme.settings.background_gradient != empty %}
-          --gradient-background: {{ scheme.settings.background_gradient }};
-        {% else %}
-          --gradient-background: {{ scheme.settings.background }};
-        {% endif %}
-
-        {% liquid
-          assign background_color = scheme.settings.background
-          assign background_color_brightness = background_color | color_brightness
-
-          if background_color_brightness <= 26
-            assign background_color_contrast = background_color | color_lighten: 50
-          elsif background_color_brightness <= 65
-            assign background_color_contrast = background_color | color_lighten: 5
-          else
-            assign background_color_contrast = background_color | color_darken: 25
-          endif
-        %}
-
-        --color-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
-        --color-background-contrast: {{ background_color_contrast.red }},{{ background_color_contrast.green }},{{ background_color_contrast.blue }};
-        --color-shadow: {{ scheme.settings.shadow.red }},{{ scheme.settings.shadow.green }},{{ scheme.settings.shadow.blue }};
-        --color-button: {{ scheme.settings.button.red }},{{ scheme.settings.button.green }},{{ scheme.settings.button.blue }};
-        --color-button-text: {{ scheme.settings.button_label.red }},{{ scheme.settings.button_label.green }},{{ scheme.settings.button_label.blue }};
-        --color-secondary-button: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
-        --color-secondary-button-text: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
-        --color-link: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
-        --color-badge-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
-        --color-badge-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
-        --color-badge-border: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
-        --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
-      }
-      {% endfor %}
-
-      {{ scheme_classes | prepend: 'body' }} {
-        color: rgba(var(--color-foreground), 1);
-        background-color: rgb(var(--color-background));
-      }
-    </style>
-
-    <script>
-      if (Shopify.designMode) {
-        document.documentElement.classList.add('shopify-design-mode');
-      }
-    </script>
   </head>
 
-  <body class="antialiased">
+  <body class="text-base template-{{ template | replace: '.', '-' }}">
+    <a
+      href="#MainContent"
+      class="fixed -top-96 left-4 z-50 block border border-black bg-white px-3 py-2 text-sm text-black focus:top-4 focus-visible:top-4"
+    >
+      {{- 'accessibility.skip_to_content' | t -}}
+    </a>
+
     {% sections 'header-group' %}
 
-    <main id="swup" class="transition-fade">{{ content_for_layout }}</main>
+    <main
+      id="MainContent"
+      tabindex="-1"
+      {% unless template.name == 'index' %}
+        style="padding-top: var(--header-height);"
+      {% endunless %}
+    >
+      {{ content_for_layout }}
+    </main>
 
-    {% sections 'footer-group' %}
-    {{ 'sprite.svg' | inline_asset_content }}
+    {%- sections 'footer-group' -%}
+    {%- section 'cart-drawer' -%}
+
+    <div class="hidden">
+      {%
+        # ⚠️ inline_asset_content doesn't work with file larger than 15kb
+        # If so copy the content of sprite.svg into a snippet and render it instead.
+        # See: https://shopify.dev/docs/api/liquid/filters/asset-filters#inline_asset_content
+      %}
+      {{- 'sprite.svg' | inline_asset_content -}}
+    </div>
+
+    <c-toast
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      class="after:ease-none fixed top-0 right-0 z-50 my-4 ml-4 flex w-[calc(100%-1rem)] max-w-md translate-x-full items-center gap-4 overflow-hidden border border-black bg-white px-4 py-3 transition-transform duration-200 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:w-full after:origin-left after:scale-x-(--counter) after:bg-black open:translate-x-0"
+      style="--counter: 0%;"
+      data-counter="0"
+      tabindex="-1"
+    >
+      <div data-dom="content"></div>
+      <button
+        class="ml-auto flex size-8 shrink-0 items-center justify-center border border-black"
+        aria-label="close"
+        data-dom="button"
+      >
+        {%- render 'use.html', icon: 'times', classes: 'size-4' -%}
+      </button>
+    </c-toast>
+
+    <script>
+      window.shopUrl = '{{ request.origin }}';
+      window.routes = {
+      cart_add_url: '{{ routes.cart_add_url }}',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      cart_update_url: '{{ routes.cart_update_url }}',
+      cart_url: '{{ routes.cart_url }}',
+      predictive_search_url: '{{ routes.predictive_search_url }}',
+      };
+      window.cart = {{ cart | json }};
+
+      var Shopify = Shopify || {};
+      Shopify.money_format = '{{ shop.money_format }}';
+    </script>
   </body>
 </html>

@@ -1,0 +1,67 @@
+{% doc %}
+  @param {string} classes - The classes.
+  @param {object} thumbnail - The thumbnail.
+  @param {string} content - The content.
+  @param {string} title - The title.
+  @param {number} [padding_top] - The padding top.
+  @param {number} [padding_bottom] - The padding bottom.
+  @param {string} id - The section ID.
+{% enddoc %}
+
+{%- if padding_top != blank or padding_bottom != blank -%}
+  {%- style -%}
+    .section-{{ id }}-padding {
+    {% if padding_top != blank %}
+    padding-top: {{ padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+    {% endif %}
+    {% if padding_bottom != blank %}
+    padding-bottom: {{ padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+    {% endif %}
+    }
+
+    @media (width >= 64rem) {
+    .section-{{ id }}-padding {
+    {% if padding_top != blank %}
+    padding-top: {{ padding_top | divided_by: 16.00 }}rem;
+    {% endif %}
+    {% if padding_bottom != blank %}
+    padding-bottom: {{ padding_bottom | divided_by: 16.00}}rem;
+    {% endif %}
+    }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+<div class="{{ classes }}">
+  {%- if title != blank or thumbnail != blank -%}
+    <div class="relative flex aspect-square flex-col justify-center bg-gray-200 text-center text-white after:absolute after:inset-0 after:z-20 after:size-full after:[background:linear-gradient(0deg,rgba(0,0,0,0.2),rgba(0,0,0,0.2))] lg:aspect-3/1">
+      {%- if title != blank -%}
+        <div class="relative z-30 container">
+          <div class="grid grid-cols-4 gap-x-2.5 gap-y-5 lg:grid-cols-12">
+            <div class="col-span-4 space-y-12 lg:col-span-full">
+              <h1 class="text-xl font-medium font-semibold lg:text-base">{{- title -}}</h1>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if thumbnail != blank -%}
+        {{-
+          thumbnail
+          | image_url: width: 1440
+          | image_tag: class: 'size-full absolute inset-0 z-10 object-center object-cover'
+        -}}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if content != blank -%}
+    <div class="container{% if padding_top != blank or padding_bottom != blank %} section-{{ id }}-padding{% endif %}">
+      <div class="grid grid-cols-4 gap-x-2.5 gap-y-5 lg:grid-cols-12">
+        <div class="wysiwyg col-span-4 space-y-12 text-xs lg:col-span-6 lg:col-start-4">
+          {{- content -}}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>

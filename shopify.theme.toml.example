@@ -1,0 +1,16 @@
+# Example Shopify CLI environments.
+# Copy to `shopify.theme.toml` (gitignored) and fill in your store.
+
+[environments.development]
+store = "your-store.myshopify.com"
+theme = "Theme name"
+# password = "shptka_xxx"           # Theme Access app token (optional)
+# store-password = "storefront-pw" # If the storefront is password-protected
+
+[environments.staging]
+store = "your-store.myshopify.com"
+theme = "Theme name"
+
+[environments.production]
+store = "your-store.myshopify.com"
+theme = "Theme name"

@@ -1,0 +1,85 @@
+{% doc %}
+  @param {string} id - Unique section ID.
+  @param {string} [mode] - Display mode. Options: 'grid', 'slider'. Default: 'grid'. Optional.
+  @param {object} [products] - List of products to display. Optional, required if mode is 'grid'.
+
+  @example {%- render 'cart-recommendations.html', id: section.id -%}
+{% enddoc %}
+
+{% liquid
+  assign mode = mode | default: 'grid'
+%}
+
+{%- capture content -%}
+  <header class="flex items-center justify-between gap-2.5 lg:gap-5">
+    <p class="text-xs font-medium">{{- 'cart.recommendations.title' | t -}}</p>
+  </header>
+
+  {%- if mode == 'slider' -%}
+    <div class="slideshow">
+      <div id="slider-{{ id }}" class="slider scrollbar-hidden">
+        {% for product in products %}
+        {% assign price = product.price | money_with_currency %}
+        <div
+        class="slide gap"
+        id="slider-{{ id }}-slide-{{ forloop.index0 }}"
+        data-dom="slide"
+        >
+        <article class="bg-gray-50 p-1.5">
+        <div class="flex w-80 items-center gap-3">
+        <div class="aspect-square h-16 w-14 shrink-0 overflow-hidden bg-white">
+        {{-
+        product.media[0]
+        | image_url: width: 118
+        | image_tag: class: 'size-full object-contain object-center'
+        -}}
+        </div>
+
+        <div class="space-y-3">
+                <p class="text-xs font-bold">{{- product.title -}}</p>
+                  {%- if product -%}
+                    {% capture button %}
+                      <button
+                        data-dom="button"
+                        type="submit"
+                        class="border border-gray-700 px-4 py-3 text-xs font-medium"
+                        aria-label="{{ 'cart.recommendations.add_to_cart' | t }}"
+                      >
+                       {{- 'cart.recommendations.add_to_cart' | t: price: price -}}
+                      </button>
+                    {%- endcapture -%}
+                    {%- render 'add-to-cart.html', product: product, events: 'cartUpdate', button: button -%}
+                  {%- else -%}
+                    <p
+                      type="button"
+                      class="mt-auto flex size-10 shrink-0 items-center justify-center"
+                      aria-label="{{ 'cart.recommendations.add_to_cart' | t }}"
+                    >
+                      {%- render 'use.html', icon: 'cart', classes: 'size-full pointer-events-none' -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if mode == 'grid' -%}
+    <ul class="grid grid-cols-3 gap-2.5 lg:gap-5">
+      {%- for product in products -%}
+        <li class="col-span-3">
+        {%- render 'tease-product.html', product: product -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if products -%}
+  <div class="space-y-5" id="CartRecommandations-{{ id }}">
+    {{- content -}}
+  </div>
+{%- endif -%}

@@ -1,0 +1,31 @@
+{% doc %}
+  This snippet is used to render a cart count bubble.
+
+  @param {string} [classes] - Additional classes to apply to the cart count bubble. Optional.
+  @param {string} [id] - The section ID to associate with the cart count bubble. Optional.
+
+  @example
+  {% render 'cart-count-bubble.html', classes: 'absolute top-0 right-0' %}
+{% enddoc %}
+
+{% liquid
+  assign classes = classes | default: ''
+%}
+
+<div
+  id="cart-count-bubble"
+  data-section-id="{{ id }}"
+  class="pointer-events-none{% if classes != blank %} {{ classes }}{% endif %}"
+>
+  {%- if cart != empty -%}
+    {%- if cart.item_count < 100 -%}
+      <span
+        aria-hidden="true"
+        class="flex size-full items-center justify-center bg-black text-xs leading-none text-white"
+      >
+        {{- cart.item_count -}}
+      </span>
+    {%- endif -%}
+    <span class="sr-only">{{- 'cart.count' | t: count: cart.item_count -}}</span>
+  {%- endif -%}
+</div>

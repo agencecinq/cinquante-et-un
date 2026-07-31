@@ -1,30 +1,9 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "banner": {
-      "type": "main-collection-banner",
-      "settings": {
-        "color_scheme": "scheme-1"
-      }
-    },
-    "product-grid": {
-      "type": "main-collection-product-grid",
-      "settings": {
-        "padding_top": 50,
-        "padding_bottom": 50
-      }
+    "main": {
+      "type": "collection",
+      "settings": {}
     }
   },
-  "order": [
-    "banner",
-    "product-grid"
-  ]
+  "order": ["main"]
 }

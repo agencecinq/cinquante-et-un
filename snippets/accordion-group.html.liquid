@@ -1,0 +1,151 @@
+{%- doc -%}
+  Accordion group.
+
+  @param {object} [items] - The items.
+  @param {string} [source] - The source: 'blocks' | 'metaobjects' (default: 'blocks')
+  @param {string} [classes] - The classes. (optional, e.g. 'section-123-padding block color-scheme-3')
+  @param {string} [scheme] - The color scheme. (optional, e.g. 'scheme-3')
+  @param {string} [category_key] - The category key. (optional, defaults to 'category')
+  @param {string} [title_key] - The title key. (optional, defaults to 'title')
+  @param {string} [content_key] - The content key. (optional, defaults to 'content')
+  @param {string} [id] - The id. (required for stable DOM ids)
+  @param {string} [title] - The title. (optional)
+  @param {string} [link_url] - The link url. (optional)
+  @param {string} [link_title] - The link title. (optional)
+  @param {string} [link_target] - The link target. (optional)
+
+  @example
+  {% render 'accordion-group.html',
+ items: items,
+ source: 'blocks',
+ classes: 'section-123-padding block color-scheme-3',
+ scheme: 'scheme-3',
+ category_key: 'category',
+ title_key: 'title',
+ content_key: 'content',
+ id: '123',
+ title: 'Title',
+ link_url: 'https://example.com',
+ link_title: 'Link Title',
+ link_target: '_self'
+ %}
+{%- enddoc -%}
+
+{%- liquid
+  assign source = source | default: 'blocks'
+  assign category_key = category_key | default: 'category'
+  assign title_key = title_key | default: 'title'
+  assign content_key = content_key | default: 'content'
+
+  assign categories = ''
+
+  for item in items
+    assign label = item.settings[category_key] | strip
+
+    if source == 'metaobjects'
+      assign label = item[category_key].value | strip
+    endif
+
+    if label == blank
+      continue
+    endif
+
+    assign handle = label | handle
+    assign token = '|' | append: handle | append: '::'
+
+    unless categories contains token
+      assign categories = categories | append: token | append: label | append: '|'
+    endunless
+  endfor
+
+  assign categories = categories | remove_first: '|' | remove_last: '|' | split: '|'
+
+  assign first_category = ''
+
+  if categories.size > 0
+    assign first_pair = categories | first
+    if first_pair != blank
+      assign first_parts = first_pair | split: '::'
+      assign first_category = first_parts[0]
+    endif
+  endif
+-%}
+
+<div class="{{ classes }}{% if scheme != blank %} color-{{ scheme }}{% endif %}">
+  <div class="container grid grid-cols-4 gap-x-2 gap-y-8 lg:grid-cols-12 lg:gap-x-4">
+    <div class="col-span-full space-y-10 lg:sticky lg:inset-x-0 lg:top-0 lg:col-span-3">
+      {%- if title != blank -%}
+        <h2 class="text-xl font-semibold">{{- title -}}</h2>
+      {%- endif -%}
+
+      {%- render 'link.html', url: link_url, title: link_title, target: link_target -%}
+    </div>
+
+    <cinq-accordion class="col-span-full lg:col-span-8" data-dom="accordion-group">
+      {%- assign did_open_first = false -%}
+      {%- for item in items -%}
+        {%- liquid
+          assign category = item.settings[category_key] | strip | handle
+          assign title = item.settings[title_key] | strip
+          assign content = item.settings[content_key]
+
+          if source == 'metaobjects'
+            assign category = item[category_key] | handle
+            assign title = item[title_key]
+            assign content = item[content_key]
+          endif
+
+          assign slug = title | handle
+          assign id = slug | append: '-' | append: category | append: forloop.index0 | append: '-' | append: id
+
+          assign is_open = false
+          if did_open_first == false
+            assign is_open = true
+            assign did_open_first = true
+          endif
+        -%}
+
+        {%- if title != blank and content != blank -%}
+          <div
+            data-accordion-panel
+            class="js-accordion-panel border-t border-gray-200"
+            data-accordion-open="{% if is_open %}true{% else %}false{% endif %}"
+            data-accordion-deselect="true"
+          >
+            <button
+              data-accordion-header
+              class="js-accordion-header group flex w-full items-center justify-between gap-2 py-6 text-start lg:gap-4"
+              type="button"
+              aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+              aria-controls="{{ id }}-body"
+              id="{{ id }}-header"
+            >
+              <strong class="text-sm font-semibold">{{- title -}}</strong>
+
+              <span class="relative size-8 shrink-0 bg-gray-100">
+                {%- liquid
+                  render 'use.html', icon: 'plus', classes: 'size-3 absolute m-auto inset-0 block group-aria-expanded:hidden'
+                  render 'use.html', icon: 'minus', classes: 'size-3 absolute m-auto inset-0 hidden group-aria-expanded:block'
+                -%}
+              </span>
+            </button>
+
+            <div id="{{ id }}-body" role="region" aria-labelledby="{{ id }}-header">
+              <div data-accordion-inner class="js-accordion-inner wysiwyg max-w-3xl pb-6 text-sm">
+                {%- liquid
+                  if source == 'metaobjects'
+                    echo content | metafield_tag
+                  endif
+
+                  if source == 'blocks'
+                    echo content
+                  endif
+                -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </cinq-accordion>
+  </div>
+</div>

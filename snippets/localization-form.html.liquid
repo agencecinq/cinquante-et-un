@@ -1,0 +1,21 @@
+<div class="text-sm">
+  <h2 class="text-gray-500">{{- 'snippets.localization-form.title' | t -}}</h2>
+  {%- form 'localization', return_to: request.path -%}
+    <select name="country_code" onchange="this.form.submit()" class="w-full border-b py-3">
+      {%- for country in localization.available_countries -%}
+        <option
+          value="{{ country.iso_code }}"
+          {% if country == localization.country %}
+            selected
+          {% endif %}
+        >
+          {{- country.name -}}
+          &nbsp;&lpar;
+          {{- country.currency.iso_code -}}
+          {{- country.currency.symbol -}}
+          &rpar;
+        </option>
+      {%- endfor -%}
+    </select>
+  {%- endform -%}
+</div>

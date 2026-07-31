@@ -1,0 +1,50 @@
+{% doc %}
+  This snippet is used to render a drawer.
+
+  @param {string} id - The drawer ID. Required.
+  @param {string} content - The drawer content. Required.
+  @param {string} [direction] - The direction the drawer will open from. Possible values are 'from-left' and 'from-right'. Default is 'from-right'.
+  @param {string} [classes] - Additional classes to apply to the drawer. Optional.
+  @param {string} [margin_top] - The top margin of the drawer. Optional. Default is '0rem'.
+  @param {string} [background] - The background color of the drawer. Optional. Default is 'bg-white'.
+
+  @example
+  {% render 'drawer.html', id: 'drawer1', direction: 'from-left' %}
+{% enddoc %}
+
+{% liquid
+  assign direction = direction | default: 'from-right'
+  assign translate = 'translate-x-full right-0 group-open:translate-x-0 w-125 max-w-full'
+  assign margin_top = margin_top | default: null
+  assign background = background | default: 'bg-white'
+
+  if direction == 'from-left'
+    assign translate = '-translate-x-full left-0 group-open:translate-x-0 w-125 max-w-full inset-y-0'
+  endif
+
+  if direction == 'from-bottom'
+    assign translate = 'translate-y-full bottom-0 group-open:translate-y-0 inset-x-0'
+  endif
+%}
+<cinq-drawer
+  id="{{ id }}"
+  cid="{{ id }}"
+  class="group fixed inset-0 z-20 w-full block{% if classes %} {{ classes }}{% endif %}"
+  style="opacity: 0; visibility: hidden; height: {% if margin_top %}calc(100% - {{ margin_top }}); margin-top: {{ margin_top }}{% else %}100%{% endif %};"
+>
+  <div
+    data-dom="overlay"
+    class="absolute inset-0 z-1 size-full bg-[#000000]/30 opacity-0 transition-opacity duration-300 ease-out group-open:opacity-100"
+  ></div>
+  <div
+    role="dialog"
+    aria-modal="true"
+    class="transition-transform duration-300 ease-out {{ translate }} h-full max-h-full {{ background }} absolute z-2"
+  >
+    <div
+      class="scrollbar-hidden h-full overflow-y-auto scroll-smooth"
+    >
+      {{- content -}}
+    </div>
+  </div>
+</cinq-drawer>

@@ -1,167 +1,208 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "counter_xatWBD": {
-      "type": "counter",
-      "settings": {}
-    },
-    "multirow_iemtEV": {
-      "type": "multirow",
+    "hero": {
+      "type": "section-hero",
       "blocks": {
-        "row_FGrhX8": {
-          "type": "row",
+        "hero_title": {
+          "type": "title",
           "settings": {
-            "title": "Site clé en main",
-            "content": "<p>Courte intro</p>",
-            "button_label": "Découvrir",
-            "button_link": "#"
-          }
+            "title": "Cinquante-et-un",
+            "tag": "h1",
+            "font_size": "text-xl font-semibold lg:text-3xl"
+          },
+          "blocks": {}
         },
-        "row_VVxmh6": {
-          "type": "row",
+        "hero_text": {
+          "type": "text",
           "settings": {
-            "title": "Sur-mesure",
-            "content": "<p>Courte intro</p>",
-            "button_label": "Découvrir",
-            "button_link": "#"
-          }
+            "text": "<p>Starter Shopify wireframe — Vite, Tailwind, piecesjs et composants @agencecinq.</p>",
+            "tag": "div",
+            "font_size": "text-base"
+          },
+          "blocks": {}
         },
-        "row_JN9cba": {
-          "type": "row",
+        "hero_link": {
+          "type": "link",
           "settings": {
-            "title": "Accompagnement e-commerce",
-            "content": "<p>Courte intro</p>",
-            "button_label": "Découvrir",
-            "button_link": "#"
-          }
+            "link_url": "shopify://collections/all",
+            "link_title": "Voir la boutique",
+            "link_aria_label": "Voir la boutique",
+            "link_target": "_self"
+          },
+          "blocks": {}
         }
       },
-      "block_order": [
-        "row_FGrhX8",
-        "row_VVxmh6",
-        "row_JN9cba"
-      ],
+      "block_order": ["hero_title", "hero_text", "hero_link"],
       "settings": {
-        "title": "Nos services Shopify",
-        "content": "<p>Adapter le texte de la HP pour éviter le duplicate content</p>",
-        "color_scheme": "",
+        "full_bleed": false,
+        "show_media_overlay": false,
+        "space_between": "space-y-6",
+        "alignment_horizontal": "lg:col-start-1 lg:text-start",
+        "alignment_vertical": "items-end",
         "padding_top": 40,
         "padding_bottom": 40
       }
     },
-    "multirow_g7nE9J": {
-      "type": "multirow",
+    "intro": {
+      "type": "section-richtext",
       "blocks": {
-        "row_DqWGGK": {
-          "type": "row",
+        "intro_title": {
+          "type": "title",
           "settings": {
-            "image": "shopify://shop_images/placeholder.jpg",
-            "title": "",
-            "content": "",
-            "button_label": "",
-            "button_link": ""
-          }
+            "title": "Point de départ",
+            "tag": "h2",
+            "font_size": "text-base font-semibold"
+          },
+          "blocks": {}
         },
-        "row_8fTjxp": {
-          "type": "row",
+        "intro_text": {
+          "type": "text",
           "settings": {
-            "image": "shopify://shop_images/placeholder.jpg",
-            "title": "",
-            "content": "",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "row_LXn4kM": {
-          "type": "row",
-          "settings": {
-            "image": "shopify://shop_images/placeholder.jpg",
-            "title": "",
-            "content": "",
-            "button_label": "",
-            "button_link": "#"
-          }
+            "text": "<p>Ce thème est volontairement minimal. Remplacez les textes, branchez vos menus, puis construisez les sections projet par-dessus ce socle.</p>",
+            "tag": "div",
+            "font_size": "text-base"
+          },
+          "blocks": {}
         }
       },
-      "block_order": [
-        "row_DqWGGK",
-        "row_8fTjxp",
-        "row_LXn4kM"
-      ],
+      "block_order": ["intro_title", "intro_text"],
       "settings": {
-        "title": "Réalisations",
-        "content": "",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "text_alignment": "text-start",
+        "space_between": "space-y-4",
+        "columns": "lg:col-start-1 lg:col-span-8",
+        "padding_top": 64,
+        "padding_bottom": 32
       }
     },
-    "accordion_group_Hde8r9": {
-      "type": "accordion-group",
+    "stack": {
+      "type": "section-richtext",
       "blocks": {
-        "accordion_PXFhKt": {
+        "stack_title": {
+          "type": "title",
+          "settings": {
+            "title": "Stack inclus",
+            "tag": "h2",
+            "font_size": "text-base font-semibold"
+          },
+          "blocks": {}
+        },
+        "stack_text": {
+          "type": "text",
+          "settings": {
+            "text": "<ul><li>Vite 8 + Tailwind 4</li><li>Cart store Ajax (sections bundlées)</li><li>Web Components @agencecinq</li><li>Header, footer, panier drawer, product/collection de base</li></ul>",
+            "tag": "div",
+            "font_size": "text-base"
+          },
+          "blocks": {}
+        },
+        "stack_link": {
+          "type": "link",
+          "settings": {
+            "link_url": "shopify://pages/contact",
+            "link_title": "Page contact",
+            "link_aria_label": "Page contact",
+            "link_target": "_self"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["stack_title", "stack_text", "stack_link"],
+      "settings": {
+        "text_alignment": "text-start",
+        "space_between": "space-y-4",
+        "columns": "lg:col-start-1 lg:col-span-8",
+        "padding_top": 32,
+        "padding_bottom": 64
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Nos produits",
+        "products_to_show": 4,
+        "columns": "4",
+        "show_quick_add": true,
+        "show_view_all": true,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "faq": {
+      "type": "section-accordion-group",
+      "blocks": {
+        "faq_1": {
           "type": "accordion",
           "settings": {
-            "title": "Quels types de services propose CINQ ?",
-            "content": "<p>Accordion content</p>"
+            "category": "Starter",
+            "title": "Comment démarrer ?",
+            "content": "<p>Configurez shopify.theme.toml, lancez pnpm install puis pnpm dev.</p>"
           }
         },
-        "accordion_TyTPFQ": {
+        "faq_2": {
           "type": "accordion",
           "settings": {
-            "title": "Pourquoi choisir une agence Shopify plutôt que de créer mon site seul ?",
-            "content": "<p>Accordion content</p>"
+            "category": "Starter",
+            "title": "Où personnaliser le design ?",
+            "content": "<p>Tokens dans src/stylesheets/theme.css, composants Liquid dans sections/ et snippets/.</p>"
           }
         },
-        "accordion_Pqmgxg": {
+        "faq_3": {
           "type": "accordion",
           "settings": {
-            "title": "Quels sont vos délais de livraison pour un projet Shopify ?",
-            "content": "<p>Accordion content</p>"
-          }
-        },
-        "accordion_Gj7w4p": {
-          "type": "accordion",
-          "settings": {
-            "title": "Proposez-vous des facilités de paiement ?",
-            "content": "<p>Accordion content</p>"
-          }
-        },
-        "accordion_EKn74F": {
-          "type": "accordion",
-          "settings": {
-            "title": "Est-ce que CINQ s’occupe aussi des boutiques déjà existantes sur Shopify ?",
-            "content": "<p>Accordion content</p>"
+            "category": "Starter",
+            "title": "Le style wireframe est volontaire ?",
+            "content": "<p>Oui. Le starter reste neutre pour éviter de reporter une identité de marque d’un projet précédent.</p>"
           }
         }
       },
-      "block_order": [
-        "accordion_PXFhKt",
-        "accordion_TyTPFQ",
-        "accordion_Pqmgxg",
-        "accordion_Gj7w4p",
-        "accordion_EKn74F"
-      ],
+      "block_order": ["faq_1", "faq_2", "faq_3"],
       "settings": {
-        "title": "FAQ sur nos services",
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
+        "title": "FAQ",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "cta": {
+      "type": "section-richtext",
+      "blocks": {
+        "cta_title": {
+          "type": "title",
+          "settings": {
+            "title": "Prêt à itérer",
+            "tag": "h2",
+            "font_size": "text-base font-semibold"
+          },
+          "blocks": {}
+        },
+        "cta_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Ajoutez vos sections métier, vos tokens et votre contenu. Ce squelette est là pour accélérer le premier commit.</p>",
+            "tag": "div",
+            "font_size": "text-base"
+          },
+          "blocks": {}
+        },
+        "cta_link": {
+          "type": "link",
+          "settings": {
+            "link_url": "shopify://collections/all",
+            "link_title": "Explorer les produits",
+            "link_aria_label": "Explorer les produits",
+            "link_target": "_self"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["cta_title", "cta_text", "cta_link"],
+      "settings": {
+        "text_alignment": "text-start",
+        "space_between": "space-y-4",
+        "columns": "lg:col-start-1 lg:col-span-6",
+        "padding_top": 64,
         "padding_bottom": 80
       }
     }
   },
-  "order": [
-    "counter_xatWBD",
-    "multirow_iemtEV",
-    "multirow_g7nE9J",
-    "accordion_group_Hde8r9"
-  ]
+  "order": ["hero", "intro", "featured", "stack", "faq", "cta"]
 }

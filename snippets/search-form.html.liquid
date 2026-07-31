@@ -1,0 +1,16 @@
+<form action="{{ routes.search_url }}" class="relative text-sm" method="get">
+  <input
+    type="search"
+    name="q"
+    placeholder="{{ 'snippets.search-form.placeholder' | t }}"
+    class="w-full border py-3 pr-14 pl-5 placeholder:text-gray-500"
+    aria-label="{{ 'snippets.search-form.placeholder' | t }}"
+  >
+  <button
+    type="submit"
+    aria-label="{{ 'snippets.search-form.submit' | t }}"
+    class="absolute inset-y-0 right-0 my-auto mr-4 size-5"
+  >
+    {%- render 'use.html', icon: 'search', classes: 'size-5' -%}
+  </button>
+</form>

@@ -1,0 +1,147 @@
+{% comment %}
+  Featured collection — product grid for homepage and other templates.
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign collection = section.settings.collection
+  if collection == blank
+    assign collection = collections.all
+  endif
+
+  assign limit = section.settings.products_to_show | default: 4
+  assign columns = section.settings.columns | default: '4'
+-%}
+
+{%- if collection != blank and collection.products_count > 0 -%}
+  <div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+    <div class="container space-y-6">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        {%- if section.settings.title != blank -%}
+          <h2 class="text-lg">{{- section.settings.title -}}</h2>
+        {%- elsif collection != blank -%}
+          <h2 class="text-lg">{{- collection.title -}}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.show_view_all and collection.url != blank -%}
+          <a href="{{ collection.url }}" class="text-sm underline underline-offset-2">
+            {{- 'sections.featured-collection.view_all' | t -}}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <ul class="grid grid-cols-2 gap-4 {% if columns == '3' %}lg:grid-cols-3{% else %}lg:grid-cols-4{% endif %}">
+        {%- for product in collection.products limit: limit -%}
+          <li>
+            {%- render 'tease-product.html', product: product, quick_add: section.settings.show_quick_add -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.featured-collection.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.featured-collection.settings.title.label",
+      "default": "Featured products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-collection.settings.collection.label",
+      "info": "t:sections.featured-collection.settings.collection.info"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "t:sections.featured-collection.settings.products_to_show.label",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "t:sections.featured-collection.settings.columns.label",
+      "options": [
+        {
+          "value": "3",
+          "label": "t:sections.featured-collection.settings.columns.options.3"
+        },
+        {
+          "value": "4",
+          "label": "t:sections.featured-collection.settings.columns.options.4"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "t:sections.featured-collection.settings.show_quick_add.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "t:sections.featured-collection.settings.show_view_all.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "default": 48
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured-collection.name"
+    }
+  ]
+}
+{% endschema %}

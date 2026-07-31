@@ -1,0 +1,48 @@
+{% doc %}
+  Renders a content card.
+
+  @param {string} link_url - The URL for the link.
+  @param {string} [link_target] - The target for the link.
+  @param {string} [link_title] - The title for the link.
+  @param {string} [tag] - The tag for the card.
+  @param {object} [image] - The image for the card.
+  @param {string} title - The title for the card.
+  @param {string} text - The text for the card.
+
+  @example
+  {% render 'content-card.html', link_url: 'https://example.com', link_target: '_blank', link_title: 'Example', tag: 'New', image: image, title: 'Example Title', text: 'Example Text' %}
+{% enddoc %}
+
+<article class="space-y-6">
+  <a
+    href="{{ link_url }}"
+    {% if link_target == '_blank' %}
+      target="_blank" rel="noopener noreferer"
+    {% endif %}
+    aria-label="{{ link_title | default: title }}"
+    class="relative block aspect-square overflow-hidden bg-black/10"
+  >
+    {% if tag != blank %}
+      <div class="absolute inset-x-0 top-0 z-20 m-3">
+        <span class="tag">
+          {{- tag -}}
+        </span>
+      </div>
+    {% endif %}
+    {% liquid
+      if image != blank
+        echo image | image_url: width: 920 | image_tag: class: 'size-full object-cover object-center relative z-10'
+
+      else
+        echo 'image' | placeholder_svg_tag: 'size-full object-cover object-center relative z-10'
+      endif
+    %}
+  </a>
+
+  {% if title != blank or text != blank %}
+    <div class="space-y-3">
+      <p class="text-sm font-medium">{{- title -}}</p>
+      <p class="text-xs">{{- text -}}</p>
+    </div>
+  {% endif %}
+</article>

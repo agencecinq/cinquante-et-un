@@ -1,0 +1,41 @@
+{%- doc -%}
+  Product reassurance strip.
+
+  @param {object} block - Section block (type reassurance)
+{%- enddoc -%}
+
+{%- liquid
+  assign sep = '@@@'
+  assign joined = ''
+
+  if block.settings.text_0 != blank
+    assign joined = block.settings.text_0
+  endif
+
+  if block.settings.text_1 != blank
+    if joined != ''
+      assign joined = joined | append: sep
+    endif
+    assign joined = joined | append: block.settings.text_1
+  endif
+
+  if block.settings.text_2 != blank
+    if joined != ''
+      assign joined = joined | append: sep
+    endif
+    assign joined = joined | append: block.settings.text_2
+  endif
+
+  assign items = joined | split: sep
+-%}
+
+{%- if joined != blank -%}
+  <ul
+    class="space-y-1 border border-black p-4 text-xs"
+    {{ block.shopify_attributes }}
+  >
+    {%- for item in items -%}
+      <li>{{- item -}}</li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

@@ -1,0 +1,217 @@
+{% comment %}
+  Footer section: newsletter, menus, legal links, copyright.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/sections/section-groups
+{% endcomment %}
+
+{%- liquid
+  assign menu = section.settings.menu.links
+  assign menu_legals = section.settings.menu_legals.links
+-%}
+
+<footer class="border-t border-black color-{{ section.settings.color_scheme }}">
+  <div class="container space-y-10 py-10 lg:py-14">
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-8">
+      {%- if section.settings.newsletter_title != blank or section.settings.newsletter_text != blank -%}
+        <div class="space-y-4 lg:col-span-4">
+          {%- if section.settings.newsletter_title != blank -%}
+            <h2 class="text-sm font-semibold">{{ section.settings.newsletter_title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.newsletter_text != blank -%}
+            <p class="text-sm opacity-70">{{ section.settings.newsletter_text }}</p>
+          {%- endif -%}
+
+          {% form 'customer', id: 'FooterNewsletter', class: 'space-y-3' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="flex border border-black">
+              <label class="sr-only" for="FooterNewsletterEmail">
+                {{- 'footer.newsletter.label' | t -}}
+              </label>
+              <input
+                id="FooterNewsletterEmail"
+                type="email"
+                name="contact[email]"
+                required
+                autocomplete="email"
+                placeholder="{{ 'footer.newsletter.placeholder' | t }}"
+                class="min-w-0 flex-1 bg-transparent px-3 py-3 text-sm"
+              >
+              <button type="submit" class="border-l border-black px-4 text-sm font-medium">
+                {{- 'footer.newsletter.submit' | t -}}
+              </button>
+            </div>
+            {%- if form.posted_successfully? -%}
+              <p class="text-sm">{{ 'footer.newsletter.success' | t }}</p>
+            {%- elsif form.errors -%}
+              {{ form.errors | default_errors }}
+            {%- endif -%}
+          {% endform %}
+        </div>
+      {%- endif -%}
+
+      {%- if menu.size > 0 -%}
+        <nav
+          aria-label="{{ 'sections.footer.nav_aria_label' | t }}"
+          class="grid grid-cols-2 gap-8 sm:grid-cols-3 {% if section.settings.newsletter_title != blank or section.settings.newsletter_text != blank %}lg:col-span-8{% else %}lg:col-span-12{% endif %}"
+        >
+          {%- for link in menu -%}
+            <div class="space-y-3">
+              {%- if link.links.size > 0 -%}
+                <p class="text-sm font-semibold">{{ link.title }}</p>
+                <ul class="space-y-2 text-sm">
+                  {%- for child in link.links -%}
+                    <li>
+                      <a
+                        href="{{ child.url }}"
+                        class="hover:underline"
+                        {% if child.type == 'http_link' %}
+                          target="_blank" rel="noopener noreferrer"
+                        {% endif %}
+                      >
+                        {{- child.title -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- else -%}
+                <a
+                  href="{{ link.url }}"
+                  class="text-sm font-semibold hover:underline"
+                  {% if link.type == 'http_link' %}
+                    target="_blank" rel="noopener noreferrer"
+                  {% endif %}
+                >
+                  {{- link.title -}}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_socials -%}
+      <div>
+        {%- render 'socials.html' -%}
+      </div>
+    {%- endif -%}
+
+    <div class="flex flex-col gap-6 border-t border-black pt-6 text-xs">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="space-y-1">
+          <p>
+            &copy; {{ 'now' | date: '%Y' }}
+            <a href="{{ routes.root_url }}" class="hover:underline">{{ shop.name }}</a>.
+            {{ 'sections.footer.all_rights_reserved' | t }}
+          </p>
+          <p class="opacity-70">{{ powered_by_link }}</p>
+        </div>
+
+        {%- if menu_legals.size > 0 -%}
+          <nav aria-label="{{ 'sections.footer.nav_legal_aria_label' | t }}">
+            <ul class="flex flex-wrap gap-x-4 gap-y-2">
+              {%- for link in menu_legals -%}
+                <li>
+                  <a
+                    href="{{ link.url }}"
+                    class="hover:underline"
+                    {% if link.type == 'http_link' %}
+                      target="_blank" rel="noopener noreferrer"
+                    {% endif %}
+                  >
+                    {{- link.title -}}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+
+        {%- if section.settings.show_localization -%}
+          {%- render 'localization-button.html' -%}
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_payment_icons -%}
+        <ul class="flex flex-wrap items-center gap-2" role="list">
+          {%- for type in shop.enabled_payment_types -%}
+            <li class="[&>svg]:h-6 [&>svg]:w-auto">
+              {{ type | payment_type_svg_tag }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{%- if section.settings.show_localization -%}
+  {%- render 'localization-drawer.html' -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.newsletter.header.content"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "t:sections.footer.settings.newsletter.title.label",
+      "default": "Newsletter"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "t:sections.footer.settings.newsletter.text.label",
+      "default": "Subscribe to receive our latest news."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.links.header.content"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:sections.footer.settings.links.menu.label",
+      "info": "t:sections.footer.settings.links.menu.info"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_legals",
+      "label": "t:sections.footer.settings.links.legals.label",
+      "info": "t:sections.footer.settings.links.legals.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_socials",
+      "label": "t:sections.footer.settings.show_socials.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:sections.footer.settings.show_payment_icons.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_localization",
+      "label": "t:sections.footer.settings.show_localization.label",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

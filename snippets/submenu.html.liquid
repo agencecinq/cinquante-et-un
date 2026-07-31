@@ -1,0 +1,69 @@
+{%- doc -%}
+  Renders a submenu for navigation menus with child links.
+
+  @param {object} links - An array of link objects representing the submenu items.
+{%- enddoc -%}
+
+{%- assign unique_id = 'now' | date: '%N' -%}
+
+<cinq-accordion class="block space-y-5">
+  {% for child in links %}
+    {%- if child.links.size > 0 -%}
+      <div data-accordion-panel class="js-accordion-panel" data-accordion-open="false" data-accordion-deselect="true">
+        <button
+          data-accordion-header
+          class="js-accordion-header group flex w-full items-center gap-2.5 underline-offset-4 hover:underline aria-expanded:underline"
+          type="button"
+          aria-expanded="true"
+          aria-controls="{{ child.handle }}-body-{{ unique_id }}"
+          id="{{ child.handle }}-header-{{ unique_id }}"
+        >
+          {{- child.title -}}
+          {%- render 'use.html', classes: 'size-5 ml-auto block group-aria-expanded:rotate-180', icon: 'chevron-down' %}
+        </button>
+
+        <div
+          id="{{ child.handle }}-body-{{ unique_id }}"
+          role="region"
+          aria-labelledby="{{ child.handle }}-header-{{ unique_id }}"
+        >
+          <div data-accordion-inner class="js-accordion-inner">
+            <ul class="space-y-5 ps-5 pt-5 pb-1">
+              {% for grandchild in child.links %}
+                <li>
+                  <a
+                    href="{{ grandchild.url }}"
+                    {% if grandchild.type == 'http_link' %}
+                      target="_blank" rel="noopener noreferer"
+                    {% endif %}
+                    {% if grandchild.current %}
+                      aria-current="page"
+                    {% endif %}
+                    class="underline-offset-4 hover:underline"
+                  >
+                    {{- grandchild.title -}}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <div>
+        <a
+          href="{{ child.url }}"
+          {% if child.type == 'http_link' %}
+            target="_blank" rel="noopener noreferer"
+          {% endif %}
+          {% if child.current %}
+            aria-current="page"
+          {% endif %}
+          class="underline-offset-4 hover:underline"
+        >
+          {{- child.title -}}
+        </a>
+      </div>
+    {%- endif -%}
+  {% endfor %}
+</cinq-accordion>

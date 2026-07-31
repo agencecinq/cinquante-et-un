@@ -1,0 +1,66 @@
+{% doc %}
+  Link block
+{% enddoc %}
+
+{%- liquid
+  assign title = block.settings.link_title | default: block.settings.link_title
+  assign classes = ''
+  assign label = block.settings.link_aria_label | default: block.settings.link_title
+
+  render 'link.html', block: block, url: block.settings.link_url, classes: classes, target: block.settings.target, title: title, label: label
+-%}
+
+{% schema %}
+{
+  "name": "t:blocks.link.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "t:blocks.link.settings.link_url.label",
+      "info": "t:blocks.link.settings.link_url.info"
+    },
+    {
+      "type": "text",
+      "id": "link_title",
+      "label": "t:blocks.link.settings.link_title.label",
+      "default": "t:blocks.link.settings.link_title.default",
+      "info": "t:blocks.link.settings.link_title.info"
+    },
+    {
+      "type": "text",
+      "id": "link_aria_label",
+      "label": "t:blocks.link.settings.link_aria_label.label",
+      "default": "t:blocks.link.settings.link_aria_label.default",
+      "info": "t:blocks.link.settings.link_aria_label.info"
+    },
+    {
+      "type": "select",
+      "id": "link_target",
+      "label": "t:blocks.link.settings.link_target.label",
+      "info": "t:blocks.link.settings.link_target.info",
+      "options": [
+        {
+          "value": "_self",
+          "label": "t:blocks.link.settings.link_target.options.self.label"
+        },
+        {
+          "value": "_blank",
+          "label": "t:blocks.link.settings.link_target.options.blank.label"
+        }
+      ],
+      "default": "_self"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.link.presets.name",
+      "settings": {
+        "link_title": "t:blocks.link.presets.settings.link_title",
+        "link_url": "#"
+      }
+    }
+  ]
+}
+{% endschema %}

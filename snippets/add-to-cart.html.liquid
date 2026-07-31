@@ -1,0 +1,57 @@
+{% doc %}
+  @param {object} product - The product object to add to the cart. (Optional)
+  @param {number} [quantity] - The quantity of the product to add to the cart. Default is 1. Optional.
+  @param {string} [events] - The events to trigger after the cart is updated. A comma-separated list of events. Default is 'DRAWER_OPEN'. Optional.
+  @param {string} [button] - The HTML content of the button. The button needs to have a data-dom="button" attribute to be used by the JavaScript. Default is a button with an icon. Optional.
+  @param {string} [classes] - The classes to add to the button. Default is 'w-full'. Optional.
+
+  @example {% render 'add-to-cart-button.html', { product: product, quantity: 1, events: 'DRAWER_OPEN', button: '<button data-dom="button">My button</button>' } %}
+{% enddoc %}
+
+{% liquid
+  assign variant = product.selected_or_first_available_variant
+  assign id = variant.id
+  assign quantity = quantity | default: 1
+  assign events = events | default: 'DRAWER_OPEN'
+  assign classes = classes | default: 'block'
+
+  assign check_against_inventory = true
+
+  if variant.inventory_management != 'shopify' or variant.inventory_policy == 'continue'
+    assign check_against_inventory = false
+  endif
+
+  if variant.quantity_rule.min > variant.inventory_quantity and check_against_inventory
+    assign quantity_rule_soldout = true
+  endif
+%}
+
+{%- unless button -%}
+  {% capture button %}
+ <button
+ data-dom="button"
+ type="submit"
+ class="button button--primary w-full"
+ aria-label="{{ 'sections.product.add_to_cart' | t }} {{ variant.product.title | default: product.title }}"
+ {% if variant.available == false or quantity_rule_soldout or variant == null %}
+ disabled
+ {% endif %}
+ >
+ {{- 'snippets.add-to-cart.add_to_cart' | t -}}
+ </button>
+ {%- endcapture -%}
+{%- endunless -%}
+
+{% unless id == false or id == null or id == blank or variant.available == false -%}
+  <c-add-to-cart-button
+    class="{{ classes }}"
+    data-events="{{ events }}"
+    loading
+  >
+    <form action="{{ routes.cart_add_url }}" method="post" data-dom="form">
+      <input type="hidden" name="id" value="{{ id }}">
+      <input type="hidden" name="quantity" value="{{ quantity }}">
+      {{- button -}}
+    </form>
+  </c-add-to-cart-button>
+{%- endunless -%}

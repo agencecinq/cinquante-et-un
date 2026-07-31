@@ -1,0 +1,14 @@
+{%- doc -%}
+  Returns a random integer between min and max (inclusive).
+
+  @param {number} [min] - The minimum number (inclusive). Default is 1. Optional.
+  @param {number} [max] - The maximum number (inclusive). Default is 6. Optional.
+
+  @example {% render 'rand', min: 7, max: 10 %}
+{%- enddoc -%}
+{%- liquid
+  assign min = min | default: 1
+  assign max = max | default: 6
+  assign diff = max | minus: min
+  echo 'now' | date: '%N' | modulo: diff | plus: min
+-%}

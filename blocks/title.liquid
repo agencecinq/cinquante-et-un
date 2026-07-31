@@ -1,0 +1,85 @@
+{% doc %}
+  Title block
+{% enddoc %}
+
+<{{ block.settings.tag }}
+  class="{{ block.settings.font_size }} wrap-break-word"
+  {{ block.shopify_attributes }}
+>
+  {{- block.settings.title | newline_to_br -}}
+</{{ block.settings.tag }}>
+
+{% schema %}
+{
+  "name": "t:blocks.title.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "t:blocks.title.settings.title.label",
+      "default": "t:blocks.title.settings.title.default",
+      "info": "t:blocks.title.settings.title.info",
+      "placeholder": "t:blocks.title.settings.title.placeholder"
+    },
+    {
+      "type": "select",
+      "id": "tag",
+      "label": "t:shared.tag.label",
+      "info": "t:shared.tag.info",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:shared.tag.options.h1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:shared.tag.options.h2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:shared.tag.options.h3.label"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:blocks.title.settings.font_size.label",
+      "info": "t:blocks.title.settings.font_size.info",
+      "options": [
+        {
+          "value": "text-xl font-semibold lg:text-3xl",
+          "label": "t:blocks.title.settings.font_size.options.xl.label"
+        },
+        {
+          "value": "text-xl font-semibold lg:text-2xl",
+          "label": "t:blocks.title.settings.font_size.options.l.label"
+        },
+        {
+          "value": "text-base font-semibold lg:text-xl",
+          "label": "t:blocks.title.settings.font_size.options.m.label"
+        },
+        {
+          "value": "text-base font-semibold",
+          "label": "t:blocks.title.settings.font_size.options.s.label"
+        },
+        {
+          "value": "text-sm font-semibold",
+          "label": "t:blocks.title.settings.font_size.options.xs.label"
+        }
+      ],
+      "default": "text-base font-semibold lg:text-xl"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.title.presets.name",
+      "settings": {
+        "title": "Title"
+      }
+    }
+  ]
+}
+{% endschema %}

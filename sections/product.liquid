@@ -1,0 +1,326 @@
+{% comment %}
+  Product page — media, buy box, and add-to-cart form.
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+  .section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+  padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+  }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
+  assign variant = product.selected_or_first_available_variant
+  assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
+-%}
+
+<div class="color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="container">
+    <div class="grid grid-cols-4 gap-x-2 gap-y-8 lg:grid-cols-12 lg:items-start lg:gap-x-4 lg:gap-y-0">
+      <div class="col-span-4 lg:sticky lg:top-4 lg:col-span-6">
+        {%- if product.media.size == 0 -%}
+          <div class="aspect-3/4 border border-black bg-gray-100">
+            {{- 'product-1' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40' -}}
+          </div>
+        {%- else -%}
+          <c-slideshow cid="{{ slideshow_cid }}" class="relative block">
+            <div
+              class="scrollbar-hidden flex aspect-3/4 snap-x snap-mandatory overflow-x-auto scroll-smooth border border-black"
+              data-dom="slider-{{ slideshow_cid }}"
+              aria-label="{{ product.title | escape }}"
+            >
+              {%- for media in product.media -%}
+                <div
+                  class="relative w-full shrink-0 snap-center"
+                  data-dom="slide-{{ slideshow_cid }}"
+                  data-media-id="{{ media.id }}"
+                >
+                  {%- if media.media_type == 'image' -%}
+                    {%- assign alt = media.alt | default: product.title -%}
+                    {{-
+                      media
+                      | image_url: width: 1440
+                      | image_tag: class: 'size-full object-cover object-center', alt: alt
+                    -}}
+                  {%- elsif media.media_type == 'video' -%}
+                    {{-
+                      media
+                      | video_tag:
+                        autoplay: true,
+                        loop: true,
+                        muted: true,
+                        playsinline: true,
+                        image_size: '1440x',
+                        class: 'size-full object-cover object-center'
+                    -}}
+                  {%- elsif media.media_type == 'external_video' -%}
+                    {{- media | external_video_tag: class: 'size-full object-cover object-center' -}}
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+
+            {%- if product.media.size > 1 -%}
+              <div class="mt-2 flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  class="button button--tertiary"
+                  data-dom="previous-{{ slideshow_cid }}"
+                  aria-label="{{ 'sections.product.previous' | t }}"
+                >
+                  {%- render 'use.html', icon: 'chevron-left', classes: 'size-3' -%}
+                </button>
+                <div class="flex flex-wrap justify-center gap-1" data-dom="controls-{{ slideshow_cid }}">
+                  {%- for media in product.media -%}
+                    <button
+                      type="button"
+                      class="size-2 border border-black bg-transparent aria-current:bg-black"
+                      aria-label="{{ 'sections.product.thumbnail' | t: number: forloop.index }}"
+                    ></button>
+                  {%- endfor -%}
+                </div>
+                <button
+                  type="button"
+                  class="button button--tertiary"
+                  data-dom="next-{{ slideshow_cid }}"
+                  aria-label="{{ 'sections.product.next' | t }}"
+                >
+                  {%- render 'use.html', icon: 'chevron-right', classes: 'size-3' -%}
+                </button>
+              </div>
+            {%- endif -%}
+          </c-slideshow>
+        {%- endif -%}
+      </div>
+
+      <div class="col-span-4 space-y-6 lg:col-span-5 lg:col-start-8">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'breadcrumb' -%}
+              {%- render 'breadcrumb.html', block: block, classes: 'text-xs opacity-60' -%}
+
+            {%- when 'title' -%}
+              <h1 class="text-xl" {{ block.shopify_attributes }}>
+                {{- product.title -}}
+              </h1>
+
+            {%- when 'price' -%}
+              <div class="text-base" {{ block.shopify_attributes }}>
+                <c-price class="block" data-product-id="{{ product.id }}">
+                  {%- render 'price.html', product: product, variant: variant -%}
+                </c-price>
+              </div>
+
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div class="wysiwyg text-sm" {{ block.shopify_attributes }}>
+                  {{- product.description -}}
+                </div>
+              {%- endif -%}
+
+            {%- when 'variants-picker' -%}
+              {%- render 'product-variants.html', product: product, block: block, form_id: form_id -%}
+
+            {%- when 'add-to-cart-button' -%}
+              <c-add-to-cart-button
+                class="block"
+                data-product-id="{{ product.id }}"
+                {% if variant.available %}
+                  in-stock
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {%- form 'product', product, id: form_id, data-dom: 'form' -%}
+                  {%- if product.has_only_default_variant -%}
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                  {%- endif -%}
+                  <input type="hidden" name="quantity" value="1">
+
+                  <button
+                    data-dom="button"
+                    type="submit"
+                    class="button button--primary w-full"
+                    {% unless variant.available %}
+                      disabled
+                    {% endunless %}
+                  >
+                    {%- if variant.available -%}
+                      {{- 'sections.product.add_to_cart' | t -}}
+                      <span aria-hidden="true">&nbsp;‧&nbsp;</span>
+                      <c-price data-product-id="{{ product.id }}">
+                        {{- variant.price | money_with_currency -}}
+                      </c-price>
+                    {%- else -%}
+                      {{- 'sections.product.sold_out' | t -}}
+                    {%- endif -%}
+                  </button>
+                {%- endform -%}
+              </c-add-to-cart-button>
+
+            {%- when 'reassurance' -%}
+              {%- render 'product-reassurance.html', block: block -%}
+
+            {%- when 'accordion-group' -%}
+              {%- if product.description != blank -%}
+                <cinq-accordion {{ block.shopify_attributes }}>
+                  <div
+                    data-accordion-panel
+                    class="js-accordion-panel border-t border-black"
+                    data-accordion-open="false"
+                    data-accordion-deselect="true"
+                  >
+                    <button
+                      data-accordion-header
+                      class="js-accordion-header group flex w-full items-center justify-between gap-2 py-4 text-start"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="product-description-body-{{ section.id }}"
+                      id="product-description-header-{{ section.id }}"
+                    >
+                      <span class="text-xs uppercase">
+                        {{- 'sections.product.accordion-group.description' | t -}}
+                      </span>
+                      {%- render 'use.html',
+                        icon: 'chevron-down',
+                        classes: 'size-3 transition-transform duration-300 ease-out group-aria-expanded:rotate-180'
+                      -%}
+                    </button>
+
+                    <div
+                      id="product-description-body-{{ section.id }}"
+                      hidden
+                      role="region"
+                      aria-labelledby="product-description-header-{{ section.id }}"
+                    >
+                      <div data-accordion-inner class="js-accordion-inner wysiwyg pb-4 text-sm">
+                        {{- product.description -}}
+                      </div>
+                    </div>
+                  </div>
+                </cinq-accordion>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.product.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.color_scheme.header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "breadcrumb",
+      "name": "t:sections.product.blocks.breadcrumb.name",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "t:sections.product.blocks.title.name",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "t:sections.product.blocks.price.name",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "t:sections.product.blocks.description.name",
+      "limit": 1
+    },
+    {
+      "type": "variants-picker",
+      "name": "t:sections.product.blocks.variants-picker.name",
+      "limit": 1
+    },
+    {
+      "type": "add-to-cart-button",
+      "name": "t:sections.product.blocks.add-to-cart-button.name",
+      "limit": 1
+    },
+    {
+      "type": "reassurance",
+      "name": "t:sections.product.blocks.reassurance.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text_0",
+          "label": "t:sections.product.blocks.reassurance.settings.text_0.label",
+          "default": "t:sections.product.blocks.reassurance.settings.text_0.default"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_1",
+          "label": "t:sections.product.blocks.reassurance.settings.text_1.label",
+          "default": "t:sections.product.blocks.reassurance.settings.text_1.default"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_2",
+          "label": "t:sections.product.blocks.reassurance.settings.text_2.label",
+          "default": "t:sections.product.blocks.reassurance.settings.text_2.default"
+        }
+      ]
+    },
+    {
+      "type": "accordion-group",
+      "name": "t:sections.product.blocks.accordion-group.name",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
