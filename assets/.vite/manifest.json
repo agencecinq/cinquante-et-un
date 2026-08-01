@@ -102,7 +102,7 @@
     "isEntry": true
   },
   "src/scripts/api/fetchPredictiveSearchSection.ts": {
-    "file": "fetchPredictiveSearchSection-D5md-Mpw.js",
+    "file": "fetchPredictiveSearchSection-BZZDq1td.js",
     "name": "fetchPredictiveSearchSection",
     "src": "src/scripts/api/fetchPredictiveSearchSection.ts",
     "isEntry": true
@@ -138,7 +138,7 @@
     "isEntry": true
   },
   "src/scripts/app.ts": {
-    "file": "app-DmohfQHE.js",
+    "file": "app-CaCCjbSt.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -319,7 +319,7 @@
     ]
   },
   "src/scripts/predictive-search-mount.ts": {
-    "file": "predictive-search-mount-nTLOevv_.js",
+    "file": "predictive-search-mount-U2FgFvp4.js",
     "name": "predictive-search-mount",
     "src": "src/scripts/predictive-search-mount.ts",
     "isEntry": true,

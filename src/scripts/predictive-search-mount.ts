@@ -30,13 +30,21 @@ const wire = (host: Combobox): void => {
     parseInt(host.getAttribute('data-combobox-min-length') ?? '2', 10) || 2,
   );
 
-  host.search = async (query, { signal }) => ({
-    html: await fetchPredictiveSearchSection({
-      query,
-      sectionId,
-      signal,
-    }),
-  });
+  // Combobox `ensureOpen()` (click / ArrowDown) calls `run()` and bypasses
+  // `minLength` — Shopify's suggest API rejects an empty `q`.
+  host.search = async (query, { signal }) => {
+    if (query.trim().length < minLength) {
+      return { html: '' };
+    }
+
+    return {
+      html: await fetchPredictiveSearchSection({
+        query,
+        sectionId,
+        signal,
+      }),
+    };
+  };
 
   host.onSelect = ({ option }) => {
     option?.element.querySelector<HTMLAnchorElement>('a[href]')?.click();

@@ -20,6 +20,11 @@ export async function fetchPredictiveSearchSection({
   limit = 8,
   signal,
 }: FetchPredictiveSearchSectionOptions): Promise<string> {
+  // Shopify Predictive Search requires a non-empty `q`.
+  if (!query.trim()) {
+    return '';
+  }
+
   const params = new URLSearchParams({
     q: query,
     section_id: sectionId,
