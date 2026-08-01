@@ -370,11 +370,13 @@
         <p class="text-sm text-gray-600">{{- 'sections.styleguide.icons.description' | t -}}</p>
       </div>
       <ul class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8">
-        {%- assign icons = 'arrow-left,arrow-right,bars,cart,check,chevron-down,chevron-left,chevron-right,facebook,minus,plus,search,star,tiktok,times,trash,tumblr,twitter,user,youtube' | split: ',' -%}
+        {%- assign icons = 'arrow-left,arrow-right,bars,cart,check,chevron-down,chevron-left,chevron-right,facebook,minus,plus,search,star,tiktok,times,trash,tumblr,twitter,user,youtube'
+          | split: ','
+        -%}
         {%- for icon in icons -%}
           <li class="surface flex flex-col items-center gap-2 px-3 py-4">
             {%- render 'use.html', icon: icon, classes: 'size-5' -%}
-            <span class="font-mono text-[0.625rem] break-all text-center text-gray-500">{{ icon }}</span>
+            <span class="text-center font-mono text-[0.625rem] break-all text-gray-500">{{ icon }}</span>
           </li>
         {%- endfor -%}
       </ul>
@@ -406,7 +408,10 @@
                 class="group flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-medium"
               >
                 {{- 'sections.styleguide.components.accordion.item_1_title' | t -}}
-                {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5 shrink-0 transition-transform duration-300 ease-out group-aria-expanded:rotate-180' -%}
+                {%- render 'use.html',
+                  icon: 'chevron-down',
+                  classes: 'size-3.5 shrink-0 transition-transform duration-300 ease-out group-aria-expanded:rotate-180'
+                -%}
               </button>
               <div id="styleguide-acc-1-body-{{ sid }}" role="region" aria-labelledby="styleguide-acc-1-{{ sid }}">
                 <div data-accordion-inner class="px-4 pb-4 text-sm text-gray-600">
@@ -424,9 +429,17 @@
                 class="group flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-medium"
               >
                 {{- 'sections.styleguide.components.accordion.item_2_title' | t -}}
-                {%- render 'use.html', icon: 'chevron-down', classes: 'size-3.5 shrink-0 transition-transform duration-300 ease-out group-aria-expanded:rotate-180' -%}
+                {%- render 'use.html',
+                  icon: 'chevron-down',
+                  classes: 'size-3.5 shrink-0 transition-transform duration-300 ease-out group-aria-expanded:rotate-180'
+                -%}
               </button>
-              <div id="styleguide-acc-2-body-{{ sid }}" role="region" aria-labelledby="styleguide-acc-2-{{ sid }}" hidden>
+              <div
+                id="styleguide-acc-2-body-{{ sid }}"
+                role="region"
+                aria-labelledby="styleguide-acc-2-{{ sid }}"
+                hidden
+              >
                 <div data-accordion-inner class="px-4 pb-4 text-sm text-gray-600">
                   {{- 'sections.styleguide.components.accordion.item_2_text' | t -}}
                 </div>
@@ -437,7 +450,9 @@
 
         <article class="{{ card }}">
           <header class="space-y-1">
-            <p class="font-mono text-xs text-gray-500">@agencecinq/disclosure-button · &lt;cinq-disclosure-button&gt;</p>
+            <p class="font-mono text-xs text-gray-500">
+              @agencecinq/disclosure-button · &lt;cinq-disclosure-button&gt;
+            </p>
             <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.disclosure.title' | t -}}</h4>
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.disclosure.text' | t -}}</p>
           </header>
@@ -526,7 +541,7 @@
             <div
               role="tablist"
               aria-label="{{ 'sections.styleguide.components.tabs.label' | t }}"
-              class="mb-[-1px] flex flex-wrap gap-1 border-b border-gray-200"
+              class="-mb-px flex flex-wrap gap-1 border-b border-gray-200"
             >
               <button
                 id="styleguide-tab-a-{{ sid }}"
@@ -673,7 +688,7 @@
           </label>
           <cinq-combobox
             id="styleguide-combobox-{{ sid }}"
-            class="relative block max-w-xs [&_[role=listbox]]:absolute [&_[role=listbox]]:inset-x-0 [&_[role=listbox]]:top-full [&_[role=listbox]]:z-10 [&_[role=listbox]]:mt-1 [&_[role=listbox]]:max-h-48 [&_[role=listbox]]:overflow-auto [&_[role=listbox]]:border [&_[role=listbox]]:border-gray-200 [&_[role=listbox]]:bg-white [&_[role=option]]:cursor-pointer [&_[role=option]]:px-3 [&_[role=option]]:py-2 [&_[role=option]]:text-sm [&_[role=option][aria-selected=true]]:bg-gray-100 [&_[role=option]:hover]:bg-gray-100"
+            class="relative block max-w-xs [&_[role=option]:hover]:bg-gray-100 [&_[role=option][aria-selected=true]]:bg-gray-100 **:[[role=listbox]]:absolute **:[[role=listbox]]:inset-x-0 **:[[role=listbox]]:top-full **:[[role=listbox]]:z-10 **:[[role=listbox]]:mt-1 **:[[role=listbox]]:max-h-48 **:[[role=listbox]]:overflow-auto **:[[role=listbox]]:border **:[[role=listbox]]:border-gray-200 **:[[role=listbox]]:bg-white **:[[role=option]]:cursor-pointer **:[[role=option]]:px-3 **:[[role=option]]:py-2 **:[[role=option]]:text-sm"
           >
             <input
               id="styleguide-combobox-input-{{ sid }}"
@@ -879,11 +894,7 @@
     </div>
   </div>
 {%- endcapture -%}
-{%- render 'cinq-drawer.html',
-  content: styleguide_drawer_content,
-  id: 'styleguide-drawer',
-  background: 'bg-white'
--%}
+{%- render 'cinq-drawer.html', content: styleguide_drawer_content, id: 'styleguide-drawer', background: 'bg-white' -%}
 
 {% schema %}
 {

@@ -67,7 +67,7 @@
 {% endcapture %}
 
 {%- liquid
-  assign classes = 'lg:aspect-16/9 relative aspect-9/16 max-h-screen min-w-full'
+  assign classes = 'lg:aspect-video relative aspect-9/16 max-h-screen min-w-full'
 
   if section.settings.show_media_overlay
     assign classes = classes | append: ' after:absolute after:inset-0 after:z-20 after:size-full after:[background:linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.2)_100%)]'
