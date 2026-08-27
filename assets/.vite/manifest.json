@@ -1,10 +1,10 @@
 {
-  "_dist-CmZiYuZS.js": {
-    "file": "dist-CmZiYuZS.js",
+  "_dist-CLXdE6q2.js": {
+    "file": "dist-CLXdE6q2.js",
     "name": "dist"
   },
-  "_piecesjs-41EcyIeW.js": {
-    "file": "piecesjs-41EcyIeW.js",
+  "_piecesjs-BV-3uQvI.js": {
+    "file": "piecesjs-BV-3uQvI.js",
     "name": "piecesjs"
   },
   "_sprite-C76rI6pA.svg": {
@@ -138,12 +138,12 @@
     "isEntry": true
   },
   "src/scripts/app.ts": {
-    "file": "app-CaCCjbSt.js",
+    "file": "app-CQ6oDgyE.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
+      "_piecesjs-BV-3uQvI.js",
       "src/scripts/cinq/index.ts",
       "src/scripts/cinq/index.ts",
       "src/scripts/components/CartDrawer.ts",
@@ -168,16 +168,16 @@
     ]
   },
   "src/scripts/cinq/disclosure-button-labels.ts": {
-    "file": "disclosure-button-labels-KdqyKEnH.js",
+    "file": "disclosure-button-labels-Bdo-hIxx.js",
     "name": "disclosure-button-labels",
     "src": "src/scripts/cinq/disclosure-button-labels.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CmZiYuZS.js"
+      "_dist-CLXdE6q2.js"
     ]
   },
   "src/scripts/cinq/index.ts": {
-    "file": "index-Dc-0J6mP.js",
+    "file": "index-BqGjFyza.js",
     "name": "index",
     "src": "src/scripts/cinq/index.ts",
     "isEntry": true,
@@ -186,145 +186,145 @@
     ]
   },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-_VnnGJI1.js",
+    "file": "AddToCartButton-C5Xx9an7.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
-      "_dist-CmZiYuZS.js",
+      "_piecesjs-BV-3uQvI.js",
+      "_dist-CLXdE6q2.js",
       "src/scripts/utils/sections.ts",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartDrawer.ts": {
-    "file": "CartDrawer-C-K_n3CO.js",
+    "file": "CartDrawer-BLMrY_H6.js",
     "name": "CartDrawer",
     "src": "src/scripts/components/CartDrawer.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
+      "_piecesjs-BV-3uQvI.js",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartItem.ts": {
-    "file": "CartItem-CQySCPLc.js",
+    "file": "CartItem-13jfv0lt.js",
     "name": "CartItem",
     "src": "src/scripts/components/CartItem.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
+      "_piecesjs-BV-3uQvI.js",
       "src/scripts/utils/sections.ts",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartQuantity.ts": {
-    "file": "CartQuantity-BpHEoJBA.js",
+    "file": "CartQuantity-DNbb8LLU.js",
     "name": "CartQuantity",
     "src": "src/scripts/components/CartQuantity.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
-      "_dist-CmZiYuZS.js"
+      "_piecesjs-BV-3uQvI.js",
+      "_dist-CLXdE6q2.js"
     ]
   },
   "src/scripts/components/Headroom.ts": {
-    "file": "Headroom-CBlQMzQP.js",
+    "file": "Headroom-BsShsAn-.js",
     "name": "Headroom",
     "src": "src/scripts/components/Headroom.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js"
+      "_piecesjs-BV-3uQvI.js"
     ]
   },
   "src/scripts/components/LoadMore.ts": {
-    "file": "LoadMore-DA-K2sEo.js",
+    "file": "LoadMore-4hMKOkpR.js",
     "name": "LoadMore",
     "src": "src/scripts/components/LoadMore.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js"
+      "_piecesjs-BV-3uQvI.js"
     ]
   },
   "src/scripts/components/Menubar.ts": {
-    "file": "Menubar-SnfP1lfh.js",
+    "file": "Menubar-a5rIjg8U.js",
     "name": "Menubar",
     "src": "src/scripts/components/Menubar.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
-      "_dist-CmZiYuZS.js"
+      "_piecesjs-BV-3uQvI.js",
+      "_dist-CLXdE6q2.js"
     ]
   },
   "src/scripts/components/Price.ts": {
-    "file": "Price-DJYLSHG4.js",
+    "file": "Price-Bk-s-_u-.js",
     "name": "Price",
     "src": "src/scripts/components/Price.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
-      "_dist-CmZiYuZS.js",
+      "_piecesjs-BV-3uQvI.js",
+      "_dist-CLXdE6q2.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/components/SelectController.ts": {
-    "file": "SelectController-CpKihQ7q.js",
+    "file": "SelectController-O_JFDV3R.js",
     "name": "SelectController",
     "src": "src/scripts/components/SelectController.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js"
+      "_piecesjs-BV-3uQvI.js"
     ]
   },
   "src/scripts/components/Slideshow.ts": {
-    "file": "Slideshow-tPpXZ0lf.js",
+    "file": "Slideshow-B02xuyyI.js",
     "name": "Slideshow",
     "src": "src/scripts/components/Slideshow.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js"
+      "_piecesjs-BV-3uQvI.js"
     ]
   },
   "src/scripts/components/TableOfContents.ts": {
-    "file": "TableOfContents-DKUzg1iJ.js",
+    "file": "TableOfContents-DUYw-sIi.js",
     "name": "TableOfContents",
     "src": "src/scripts/components/TableOfContents.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
+      "_piecesjs-BV-3uQvI.js",
       "src/scripts/utils/slugify.ts",
       "src/scripts/utils/slugify.ts"
     ]
   },
   "src/scripts/components/Toast.ts": {
-    "file": "Toast-PO6SGnIl.js",
+    "file": "Toast-CE11pG4r.js",
     "name": "Toast",
     "src": "src/scripts/components/Toast.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js"
+      "_piecesjs-BV-3uQvI.js"
     ]
   },
   "src/scripts/components/VariantsPicker.ts": {
-    "file": "VariantsPicker-Bo2fvG1C.js",
+    "file": "VariantsPicker-RAYleyjT.js",
     "name": "VariantsPicker",
     "src": "src/scripts/components/VariantsPicker.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-41EcyIeW.js",
-      "_dist-CmZiYuZS.js",
+      "_piecesjs-BV-3uQvI.js",
+      "_dist-CLXdE6q2.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/predictive-search-mount.ts": {
-    "file": "predictive-search-mount-U2FgFvp4.js",
+    "file": "predictive-search-mount-BnYqtBdS.js",
     "name": "predictive-search-mount",
     "src": "src/scripts/predictive-search-mount.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CmZiYuZS.js",
+      "_dist-CLXdE6q2.js",
       "src/scripts/api/fetchPredictiveSearchSection.ts",
       "src/scripts/api/fetchPredictiveSearchSection.ts"
     ]
@@ -356,21 +356,21 @@
     "isEntry": true
   },
   "src/scripts/utils/environment.ts": {
-    "file": "environment-Dpicic42.js",
+    "file": "environment-O9mRfgR-.js",
     "name": "environment",
     "src": "src/scripts/utils/environment.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CmZiYuZS.js"
+      "_dist-CLXdE6q2.js"
     ]
   },
   "src/scripts/utils/events.ts": {
-    "file": "events-DN2KeIQG.js",
+    "file": "events-pgW1QmTj.js",
     "name": "events",
     "src": "src/scripts/utils/events.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CmZiYuZS.js"
+      "_dist-CLXdE6q2.js"
     ]
   },
   "src/scripts/utils/format-currency.ts": {

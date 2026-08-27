@@ -1,1 +1,0 @@
-import{t as e}from"./dist-CmZiYuZS.js";var t=document.documentElement,{body:n}=document;t.hasAttribute(`data-debug`);var r={x:0,y:0};window.addEventListener(`pointermove`,e(({x:e,y:t})=>{r.x=e,r.y=t},100),{passive:!0});
