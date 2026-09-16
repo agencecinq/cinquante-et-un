@@ -49,13 +49,13 @@
 
         {%- if item_title != blank and item_content != blank -%}
           <div
-            data-accordion-panel
+            data-panel
             class="js-accordion-panel border-t border-gray-200"
-            data-accordion-open="{% if forloop.first %}true{% else %}false{% endif %}"
-            data-accordion-deselect="true"
+            data-open="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-deselect="true"
           >
             <button
-              data-accordion-header
+              data-header
               class="js-accordion-header group flex w-full items-center justify-between gap-2 py-6 text-start lg:gap-4"
               type="button"
               aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
@@ -72,8 +72,15 @@
               </span>
             </button>
 
-            <div id="{{ panel_id }}-body" role="region" aria-labelledby="{{ panel_id }}-header">
-              <div data-accordion-inner class="js-accordion-inner wysiwyg max-w-3xl pb-6 text-sm">
+            <div
+              id="{{ panel_id }}-body"
+              role="region"
+              aria-labelledby="{{ panel_id }}-header"
+              {% unless forloop.first %}
+                hidden
+              {% endunless %}
+            >
+              <div data-inner class="js-accordion-inner wysiwyg max-w-3xl pb-6 text-sm">
                 {{- item_content -}}
               </div>
             </div>

@@ -10,8 +10,8 @@ import '@agencecinq/tabs';
 import '@agencecinq/toast';
 import '@agencecinq/windowsplitter';
 
-import { initDisclosureButtonLabels } from './disclosure-button-labels.ts';
-import { initToastPause } from './toast.ts';
+import { init as initDisclosureButton } from './disclosure-button.ts';
+import { init as initToast } from './toast.ts';
 
-initDisclosureButtonLabels();
-initToastPause();
+initDisclosureButton();
+initToast();

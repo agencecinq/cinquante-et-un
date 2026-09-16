@@ -398,10 +398,10 @@
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.accordion.text' | t -}}</p>
           </header>
           <cinq-accordion class="surface block divide-y divide-gray-200">
-            <div data-accordion-panel data-accordion-open="true" data-accordion-deselect="true">
+            <div data-panel data-open="true" data-deselect="true">
               <button
                 type="button"
-                data-accordion-header
+                data-header
                 id="styleguide-acc-1-{{ sid }}"
                 aria-expanded="true"
                 aria-controls="styleguide-acc-1-body-{{ sid }}"
@@ -414,15 +414,15 @@
                 -%}
               </button>
               <div id="styleguide-acc-1-body-{{ sid }}" role="region" aria-labelledby="styleguide-acc-1-{{ sid }}">
-                <div data-accordion-inner class="px-4 pb-4 text-sm text-gray-600">
+                <div data-inner class="px-4 pb-4 text-sm text-gray-600">
                   {{- 'sections.styleguide.components.accordion.item_1_text' | t -}}
                 </div>
               </div>
             </div>
-            <div data-accordion-panel data-accordion-open="false">
+            <div data-panel data-open="false">
               <button
                 type="button"
-                data-accordion-header
+                data-header
                 id="styleguide-acc-2-{{ sid }}"
                 aria-expanded="false"
                 aria-controls="styleguide-acc-2-body-{{ sid }}"
@@ -440,7 +440,7 @@
                 aria-labelledby="styleguide-acc-2-{{ sid }}"
                 hidden
               >
-                <div data-accordion-inner class="px-4 pb-4 text-sm text-gray-600">
+                <div data-inner class="px-4 pb-4 text-sm text-gray-600">
                   {{- 'sections.styleguide.components.accordion.item_2_text' | t -}}
                 </div>
               </div>

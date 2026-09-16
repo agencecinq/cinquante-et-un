@@ -335,7 +335,7 @@
         },
         "toast": {
           "title": "Toast",
-          "text": "Transient alert mounted once in the layout. Call showToast() from cart errors, or host.show() as in this demo. Hover or focus pauses the timer.",
+          "text": "Transient alert mounted once in the layout. Call show() from cart errors, or host.show() as in this demo. Hover or focus pauses the timer.",
           "show": "Show toast",
           "message": "Saved — toast from the style guide."
         },

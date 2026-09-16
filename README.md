@@ -34,7 +34,7 @@ pnpm dev
 
 - **Entry:** `src/scripts/app.ts` + `src/stylesheets/styles.css`
 - **Web components:** full `@agencecinq/*` UI kit (accordion, calendar, combobox, disclosure-button, drawer, modal, spinbutton, switch, tabs, toast, windowsplitter) — registered via `src/scripts/cinq/`
-- **Toast:** layout `<cinq-toast>` (`role` set in Liquid); helpers in `src/scripts/cinq/toast.ts` (`showToast`, pause wiring)
+- **Toast:** layout `<cinq-toast>` (`role` set in Liquid); helpers in `src/scripts/cinq/toast.ts` (`show`, pause wiring)
 - **Drawer Liquid:** `cinqDrawerPlugin()` copies `snippets/cinq-drawer.html.liquid` on each Vite start — **do not edit that snippet**; override with CSS / params
 - **Cart:** Ajax APIs + Section Rendering (`cart-drawer`, `cart`, `cart-count-bubble`). Header badge uses snippet `id="cart-count-bubble"`; section file exists for bundled re-renders
 - **piecesjs:** `load('c-*', …)` for lazy custom elements

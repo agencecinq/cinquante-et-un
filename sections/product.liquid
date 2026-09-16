@@ -199,13 +199,13 @@
               {%- if product.description != blank -%}
                 <cinq-accordion {{ block.shopify_attributes }}>
                   <div
-                    data-accordion-panel
+                    data-panel
                     class="js-accordion-panel border-t border-black"
-                    data-accordion-open="false"
-                    data-accordion-deselect="true"
+                    data-open="false"
+                    data-deselect="true"
                   >
                     <button
-                      data-accordion-header
+                      data-header
                       class="js-accordion-header group flex w-full items-center justify-between gap-2 py-4 text-start"
                       type="button"
                       aria-expanded="false"
@@ -227,7 +227,7 @@
                       role="region"
                       aria-labelledby="product-description-header-{{ section.id }}"
                     >
-                      <div data-accordion-inner class="js-accordion-inner wysiwyg pb-4 text-sm">
+                      <div data-inner class="js-accordion-inner wysiwyg pb-4 text-sm">
                         {{- product.description -}}
                       </div>
                     </div>

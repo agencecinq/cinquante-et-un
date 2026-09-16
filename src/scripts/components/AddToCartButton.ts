@@ -3,7 +3,7 @@ import { EVENTS } from '@agencecinq/utils';
 import { errorMessage } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import sections from '../utils/sections.ts';
-import { showToast } from '../cinq/toast.ts';
+import { show } from '../cinq/toast.ts';
 import { CartItem } from '../types/cart.ts';
 
 type VariantChangeDetail = {
@@ -77,7 +77,7 @@ class AddToCartButton extends Piece {
       });
       this.dispatchEvents();
     } catch (error) {
-      showToast(errorMessage(error));
+      show(errorMessage(error));
     } finally {
       this.$button!.disabled = !this.inStock;
       this.loading = 'false';

@@ -1,6 +1,6 @@
 {
   "name": "@cinq/cinquante-et-un",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Opinionated Shopify theme starter for Cinq (Vite, Tailwind, piecesjs, @agencecinq)",
   "license": "MIT",
   "packageManager": "pnpm@12.4.2",

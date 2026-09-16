@@ -3,13 +3,17 @@ import { EVENTS } from '@agencecinq/utils';
 function updateLabel(button: HTMLButtonElement, open: boolean) {
   const span = button.querySelector('span');
 
-  if (!span) return;
+  if (!span) {
+    return;
+  }
 
   const title = open
     ? button.getAttribute('data-readless-title')
     : button.getAttribute('data-readmore-title');
 
-  if (title) span.textContent = title;
+  if (title) {
+    span.textContent = title;
+  }
 }
 
 function getShortElement(button: HTMLButtonElement): HTMLElement | null {
@@ -22,31 +26,44 @@ function getShortElement(button: HTMLButtonElement): HTMLElement | null {
  * Theme glue for @agencecinq/disclosure-button read-more pattern:
  * swap labels and hide the excerpt when the full content opens.
  */
-export function initDisclosureButtonLabels(): void {
+export function init(): void {
   document.addEventListener(EVENTS.DISCLOSURE_BUTTON_OPEN, (event) => {
-    if (!(event instanceof CustomEvent)) return;
+    
+    if (!(event instanceof CustomEvent)) {
+      return;
+    }
 
     const button = event.detail?.el as HTMLButtonElement | undefined;
 
-    if (!button) return;
+    if (!button) {
+      return;
+    }
 
     const short = getShortElement(button);
 
-    if (short) short.hidden = true;
+    if (short) {
+      short.hidden = true;
+    }
 
     updateLabel(button, true);
   });
 
   document.addEventListener(EVENTS.DISCLOSURE_BUTTON_CLOSE, (event) => {
-    if (!(event instanceof CustomEvent)) return;
+    if (!(event instanceof CustomEvent)) {
+      return;
+    }
 
     const button = event.detail?.el as HTMLButtonElement | undefined;
 
-    if (!button) return;
+    if (!button) {
+      return;
+    }
 
     const short = getShortElement(button);
 
-    if (short) short.hidden = false;
+    if (short) {
+      short.hidden = false;
+    }
 
     updateLabel(button, false);
   });

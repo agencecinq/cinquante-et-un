@@ -201,7 +201,7 @@
     ]
   },
   "src/scripts/app.ts": {
-    "file": "app-DA9u-T6V.js",
+    "file": "app-Cg8n4034.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -229,34 +229,34 @@
       "src/scripts/components/VariantsPicker.ts"
     ]
   },
-  "src/scripts/cinq/disclosure-button-labels.ts": {
-    "file": "disclosure-button-labels-CLA7BfrK.js",
-    "name": "disclosure-button-labels",
-    "src": "src/scripts/cinq/disclosure-button-labels.ts",
+  "src/scripts/cinq/disclosure-button.ts": {
+    "file": "disclosure-button-CGv3W0sO.js",
+    "name": "disclosure-button",
+    "src": "src/scripts/cinq/disclosure-button.ts",
     "isEntry": true,
     "imports": [
       "_dist-BOFO8wgI.js"
     ]
   },
   "src/scripts/cinq/index.ts": {
-    "file": "index-DkfYjYx4.js",
+    "file": "index-CoUudeWs.js",
     "name": "index",
     "src": "src/scripts/cinq/index.ts",
     "isEntry": true,
     "imports": [
       "_dist-BOFO8wgI.js",
-      "src/scripts/cinq/disclosure-button-labels.ts",
+      "src/scripts/cinq/disclosure-button.ts",
       "src/scripts/cinq/toast.ts"
     ]
   },
   "src/scripts/cinq/toast.ts": {
-    "file": "toast-BQD4subE.js",
+    "file": "toast-D2h07utK.js",
     "name": "toast",
     "src": "src/scripts/cinq/toast.ts",
     "isEntry": true
   },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-BzguV-rf.js",
+    "file": "AddToCartButton-C0o3qLGU.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
@@ -280,7 +280,7 @@
     ]
   },
   "src/scripts/components/CartItem.ts": {
-    "file": "CartItem-DaMLUtfE.js",
+    "file": "CartItem-DqvKk7vT.js",
     "name": "CartItem",
     "src": "src/scripts/components/CartItem.ts",
     "isEntry": true,

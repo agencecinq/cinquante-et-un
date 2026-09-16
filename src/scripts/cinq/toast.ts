@@ -4,7 +4,7 @@ import type { Toast } from '@agencecinq/toast';
  * Show a message on the layout `<cinq-toast>`.
  * Package `show()` no-ops while already open — close first so a new message can replace it.
  */
-export const showToast = (message: string): void => {
+export const show = (message: string): void => {
   const host = document.querySelector('cinq-toast') as Toast | null;
   if (!host || !message) return;
 
@@ -23,7 +23,7 @@ export const showToast = (message: string): void => {
 /**
  * Consumer-owned pause on pointer / keyboard focus (package default is no pause).
  */
-export const initToastPause = (
+export const init = (
   host = document.querySelector('cinq-toast') as Toast | null,
 ): void => {
   if (!host) return;

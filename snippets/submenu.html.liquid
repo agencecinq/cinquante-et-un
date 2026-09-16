@@ -9,9 +9,9 @@
 <cinq-accordion class="block space-y-5">
   {% for child in links %}
     {%- if child.links.size > 0 -%}
-      <div data-accordion-panel class="js-accordion-panel" data-accordion-open="false" data-accordion-deselect="true">
+      <div data-panel class="js-accordion-panel" data-open="true" data-deselect="true">
         <button
-          data-accordion-header
+          data-header
           class="js-accordion-header group flex w-full items-center gap-2.5 underline-offset-4 hover:underline aria-expanded:underline"
           type="button"
           aria-expanded="true"
@@ -27,7 +27,7 @@
           role="region"
           aria-labelledby="{{ child.handle }}-header-{{ unique_id }}"
         >
-          <div data-accordion-inner class="js-accordion-inner">
+          <div data-inner class="js-accordion-inner">
             <ul class="space-y-5 ps-5 pt-5 pb-1">
               {% for grandchild in child.links %}
                 <li>
