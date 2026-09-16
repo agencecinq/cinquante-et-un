@@ -1,0 +1,1 @@
+import{parseHtml as e}from"./http-FXV6rOmG.js";import{swapRoot as t,swapScoped as n}from"./swapSection-Ci7y53vl.js";function r(r,i,a=null){if(!r)return;let o=e(r),s=i.startsWith(`#`)?i:`#${i}`,c=o.querySelector(s);if(c){if(a?.length){let e=document.querySelector(s);if(!e)return;n(e,c,a);return}t(o,s)}}export{r as renderBundledSection};

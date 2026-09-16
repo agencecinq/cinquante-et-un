@@ -333,6 +333,12 @@
           "dialog_title": "Demo modal",
           "dialog_text": "Useful for confirmations, size guides, or newsletter prompts."
         },
+        "toast": {
+          "title": "Toast",
+          "text": "Alerte temporaire montée une fois dans le layout. Appeler showToast() depuis les erreurs panier, ou host.show() comme ici. Survol / focus met le timer en pause.",
+          "show": "Afficher le toast",
+          "message": "Enregistré — toast depuis le style guide."
+        },
         "tabs": {
           "title": "Tabs",
           "text": "WAI-ARIA tabs with optional hash sync (disabled here).",

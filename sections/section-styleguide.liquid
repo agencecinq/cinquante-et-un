@@ -533,6 +533,20 @@
 
         <article class="{{ card }}">
           <header class="space-y-1">
+            <p class="font-mono text-xs text-gray-500">@agencecinq/toast · &lt;cinq-toast&gt;</p>
+            <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.toast.title' | t -}}</h4>
+            <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.toast.text' | t -}}</p>
+          </header>
+          {%- assign title = 'sections.styleguide.components.toast.show' | t -%}
+          {%- render 'button.html',
+            title: title,
+            variant: 'primary',
+            attributes: 'data-styleguide-toast'
+          -%}
+        </article>
+
+        <article class="{{ card }}">
+          <header class="space-y-1">
             <p class="font-mono text-xs text-gray-500">@agencecinq/tabs · &lt;cinq-tabs&gt;</p>
             <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.tabs.title' | t -}}</h4>
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.tabs.text' | t -}}</p>
@@ -614,10 +628,10 @@
             <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.spinbutton.title' | t -}}</h4>
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.spinbutton.text' | t -}}</p>
           </header>
-          <cinq-spinbutton class="inline-flex items-center gap-3" data-spinbutton-step="1">
+          <cinq-spinbutton class="inline-flex items-center gap-3" data-step="1">
             <button
               type="button"
-              data-spinbutton-action="decrease"
+              name="decrease"
               class="flex size-8 items-center justify-center border border-gray-200"
               tabindex="-1"
               aria-label="{{ 'sections.styleguide.components.spinbutton.decrease' | t }}"
@@ -631,7 +645,6 @@
               role="spinbutton"
               value="1"
               class="size-10 border border-gray-200 bg-gray-50 text-center text-sm"
-              data-spinbutton-input
               aria-label="{{ 'sections.styleguide.components.spinbutton.label' | t }}"
               aria-valuemin="0"
               aria-valuemax="10"
@@ -639,7 +652,7 @@
             >
             <button
               type="button"
-              data-spinbutton-action="increase"
+              name="increase"
               class="flex size-8 items-center justify-center border border-gray-200"
               tabindex="-1"
               aria-label="{{ 'sections.styleguide.components.spinbutton.increase' | t }}"
@@ -863,8 +876,26 @@
       'Spinbutton',
       'Switch',
       'Tabs',
+      'Toast',
       'Window splitter',
     ];
+
+    const toastMessage = {{ 'sections.styleguide.components.toast.message' | t | json }};
+
+    const showToast = (message) => {
+      const host = document.querySelector('cinq-toast');
+      if (!host || !message) return;
+      if (host.open) {
+        host.close();
+        requestAnimationFrame(() => host.show(message));
+        return;
+      }
+      host.show(message);
+    };
+
+    document.querySelectorAll('[data-styleguide-toast]').forEach((button) => {
+      button.addEventListener('click', () => showToast(toastMessage));
+    });
 
     const wire = () => {
       const host = document.getElementById('styleguide-combobox-{{ sid }}');

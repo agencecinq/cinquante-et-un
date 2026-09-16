@@ -128,22 +128,25 @@
         %}
 
         {%- capture products_grid -%}
- <div
- data-dom="container"
- data-out-of="{{ out_of }}"
- class="container grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-12 lg:gap-x-4"
- >
- {% for product in collection.products %}
- <div class="col-span-full md:col-span-2 lg:col-span-3">
- {%- render 'tease-product.html', product: product -%}
- </div>
- {% endfor %}
- </div>
- {%- endcapture -%}
+          <div
+            id="CollectionProducts-{{ section.id }}"
+            data-dom="container"
+            data-out-of="{{ out_of }}"
+            class="container grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-12 lg:gap-x-4"
+          >
+            {% for product in collection.products %}
+              <div class="col-span-full md:col-span-2 lg:col-span-3">
+                {%- render 'tease-product.html', product: product -%}
+              </div>
+            {% endfor %}
+          </div>
+        {%- endcapture -%}
 
         {%- if paginate.pages > 1 -%}
           <c-load-more
             id="CollectionLoadMore-{{ section.id }}"
+            data-section-id="{{ section.id }}"
+            data-products-id="CollectionProducts-{{ section.id }}"
             data-action="{{ paginate.next.url }}"
             data-current-page="{{ paginate.current_page }}"
             data-total-pages="{{ paginate.pages }}"
@@ -159,7 +162,7 @@
               {%- render 'button.html',
                 title: title,
                 variant: 'tertiary',
-                attributes: 'data-dom="load-more-button"'
+                attributes: 'data-dom="load-more-button" data-events-click="fetch"'
               -%}
             </div>
           </c-load-more>

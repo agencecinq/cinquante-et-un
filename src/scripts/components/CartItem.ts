@@ -1,6 +1,8 @@
 import { Piece } from 'piecesjs';
+import { errorMessage } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import sections from '../utils/sections.ts';
+import { showToast } from '../cinq/toast.ts';
 
 class CartItem extends Piece {
   static observedAttributes = ['loading'];
@@ -43,7 +45,7 @@ class CartItem extends Piece {
         },
       );
     } catch (error) {
-      this.call('toggle', { content: error }, 'Toast');
+      showToast(errorMessage(error));
     } finally {
       this.loading = 'false';
     }

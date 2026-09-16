@@ -64,10 +64,10 @@
       <div class="mt-auto flex items-center justify-between gap-4">
         {%- if item.instructions and item.instructions.can_update_quantity == true -%}
           <c-cart-quantity class="block">
-            <cinq-spinbutton class="flex items-center border border-black" data-spinbutton-step="1">
+            <cinq-spinbutton class="flex items-center border border-black" data-step="1">
               <button
                 type="button"
-                data-spinbutton-action="decrease"
+                name="decrease"
                 class="flex size-8 items-center justify-center"
                 tabindex="-1"
                 aria-label="{{ 'snippets.cart-item.quantity.decrease' | t }}"
@@ -84,7 +84,6 @@
                 value="{{ item.quantity }}"
                 class="w-8 bg-transparent text-center text-xs"
                 data-dom="input"
-                data-spinbutton-input
                 aria-label="{{ 'snippets.cart-item.quantity.label' | t }}"
                 aria-valuemin="0"
                 aria-valuemax="{{ max }}"
@@ -93,7 +92,7 @@
 
               <button
                 type="button"
-                data-spinbutton-action="increase"
+                name="increase"
                 class="flex size-8 items-center justify-center"
                 tabindex="-1"
                 aria-label="{{ 'snippets.cart-item.quantity.increase' | t }}"

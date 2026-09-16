@@ -1,5 +1,5 @@
 /**
- * Section descriptor used by the cart section-rendering helpers.
+ * Section descriptor for Shopify's Section Rendering API helpers.
  *
  * @see https://shopify.dev/docs/api/ajax/section-rendering
  */

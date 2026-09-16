@@ -7,8 +7,11 @@ import '@agencecinq/modal';
 import '@agencecinq/spinbutton';
 import '@agencecinq/switch';
 import '@agencecinq/tabs';
+import '@agencecinq/toast';
 import '@agencecinq/windowsplitter';
 
 import { initDisclosureButtonLabels } from './disclosure-button-labels.ts';
+import { initToastPause } from './toast.ts';
 
 initDisclosureButtonLabels();
+initToastPause();

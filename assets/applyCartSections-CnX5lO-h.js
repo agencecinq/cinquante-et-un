@@ -1,0 +1,1 @@
+function e(e,t={}){if(t.sections){let n=(Array.isArray(t.sections)?t.sections:t.sections.split(`,`)).map(e=>e.trim()).filter(Boolean);n.length>5&&console.warn(`[cart] Shopify accepts at most 5 sections per request; got ${n.length}.`),e.sections=n.slice(0,5).join(`,`)}return t.sections_url&&(e.sections_url=t.sections_url),e}export{e as applyCartSections};

@@ -1,3 +1,161 @@
+---
+lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    configDependencies: {}
+    packageManagerDependencies:
+      pnpm:
+        specifier: 12.4.2
+        version: 12.4.2
+
+packages:
+
+  '@pnpm/exe.android-arm64@12.4.2':
+    resolution: {integrity: sha512-E255MbcQ0V1577M2BV0ajWuP7KmTPYA0jqZnk3rK6Lq3kTvZWulMMb7iqRmnLsQbyWTkMEB2CfyM70loVDA8xg==}
+    cpu: [arm64]
+    os: [android]
+
+  '@pnpm/exe.android-x64@12.4.2':
+    resolution: {integrity: sha512-J1pSeCUwuKxMG70ZzpWn8JzElxiEa8NN/3N0SlZRtU2xbztChaJCKF3HaBNIj9yPfeofWzJo/lwNvDDjraQuZw==}
+    cpu: [x64]
+    os: [android]
+
+  '@pnpm/exe.darwin-arm64@12.4.2':
+    resolution: {integrity: sha512-A0WDo8iErfZBXgrLseQxw8i8Y9ctUpOEl/Uu+cubnTzpD8tT9ykIB548L8YTM2WD4OS+ZOHSxy8aGZcvKq8PaQ==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@pnpm/exe.darwin-x64@12.4.2':
+    resolution: {integrity: sha512-MSgJdovBWHcb5DEOvfPH9yNi/T5O1Xa4ess+E1ESGo/5yuty7S4JoiIjami+fsNXfnoQMlwsMUqYU4zAvBcNCw==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@pnpm/exe.freebsd-x64@12.4.2':
+    resolution: {integrity: sha512-h2YumlQSNvgbRPv+RXwABohX65f9bOBZn+jMIt7bFDISZPCzQ+Nvpt6Awbp4ip5PwQgYxbu5iREJ1fHE39Fm8A==}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@pnpm/exe.linux-arm64-musl@12.4.2':
+    resolution: {integrity: sha512-LwSEtSEDTv6S51YLs3YvSkPyun/QmfMic1UGICUkPWFu6ByP43RdMlkKvmVkfGhAYCpnxO057vrmyJqtfZrPCA==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/exe.linux-arm64@12.4.2':
+    resolution: {integrity: sha512-2dSiDXyhx+RTHsewxex8f/jVjqQXWJ2oow4kCVHEWdZKeBpgMxvZ6fHkTAUBJXgqhbKIDHvuNlZBP7gJfUWL5A==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-ppc64@12.4.2':
+    resolution: {integrity: sha512-8Itc+jQk+MTz04LS9D1RcH+VctAWmzM4l1cJQ+Sx7pAJNo7EKHdRMbC0Tok1jyQ7eEHNJZD5EleYneZqWfZM+g==}
+    cpu: [ppc64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-riscv64@12.4.2':
+    resolution: {integrity: sha512-hleOeqhTVpH+z9RVMGnxvU4ZnrkBUClWjCbHD9u6kwyqhGSpevoU1wTGish+CBRhmIgMAy9pAfFpqhbAKOKNfw==}
+    cpu: [riscv64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-s390x@12.4.2':
+    resolution: {integrity: sha512-LAsQRRdP9aToENR6dtcIJ9l+e1zMYOX0tQcLGpRyLPVBQcYRLlvAPcmDshsiIHQjp05SDa9FI0czX1ZQ1a7a/A==}
+    cpu: [s390x]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-x64-musl@12.4.2':
+    resolution: {integrity: sha512-kzfzH2/0BWdTABK14Yj5a1xsdkTEQUp2eXEPNakaD9jKL025lq3hyaKHIz/gIZaPDMe/1bFFK/En4ztFlbBJxw==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/exe.linux-x64@12.4.2':
+    resolution: {integrity: sha512-/pbt0UVTa8NMDhzOWLQRfZ6G9ROKXlJPZtx845BqyWfc7hCrWXhTLBd70yO2y8+E+IWN3oHM1s/JsIQNGk1yvg==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.win32-arm64@12.4.2':
+    resolution: {integrity: sha512-PsW19e4dAUNpZ0cS9flaxFuAmpt2dKlH/Vvi8TZ4qyJjjQzue/CEsWm+6wKVP4CJ7IT8RdL4qh+soOPWIgF2Zw==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@pnpm/exe.win32-x64@12.4.2':
+    resolution: {integrity: sha512-+xGoeE0g55ztWvl8i5QqdmNfW3nIrTVcoQrNshEOwxthm9Ag48oXton3uxOA3/SANyz5AXexEjj2KO20NnOrEw==}
+    cpu: [x64]
+    os: [win32]
+
+  pnpm@12.4.2:
+    resolution: {integrity: sha512-CK3GYTGAJ1x8ntraOdzwjJxhrU5+rzMKTzRh8QKw+QdCNFTRF/mOctR/7wYWBwZE17/8lzpqV/UJCm18NosHyQ==}
+    engines: {node: '>=18.*'}
+    hasBin: true
+
+snapshots:
+
+  '@pnpm/exe.android-arm64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.android-x64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.darwin-arm64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.darwin-x64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.freebsd-x64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-arm64-musl@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-arm64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-ppc64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-riscv64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-s390x@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-x64-musl@12.4.2':
+    optional: true
+
+  '@pnpm/exe.linux-x64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.win32-arm64@12.4.2':
+    optional: true
+
+  '@pnpm/exe.win32-x64@12.4.2':
+    optional: true
+
+  pnpm@12.4.2:
+    optionalDependencies:
+      '@pnpm/exe.android-arm64': 12.4.2
+      '@pnpm/exe.android-x64': 12.4.2
+      '@pnpm/exe.darwin-arm64': 12.4.2
+      '@pnpm/exe.darwin-x64': 12.4.2
+      '@pnpm/exe.freebsd-x64': 12.4.2
+      '@pnpm/exe.linux-arm64': 12.4.2
+      '@pnpm/exe.linux-arm64-musl': 12.4.2
+      '@pnpm/exe.linux-ppc64': 12.4.2
+      '@pnpm/exe.linux-riscv64': 12.4.2
+      '@pnpm/exe.linux-s390x': 12.4.2
+      '@pnpm/exe.linux-x64': 12.4.2
+      '@pnpm/exe.linux-x64-musl': 12.4.2
+      '@pnpm/exe.win32-arm64': 12.4.2
+      '@pnpm/exe.win32-x64': 12.4.2
+
+---
 lockfileVersion: '9.0'
 
 settings:
@@ -9,38 +167,41 @@ importers:
   .:
     dependencies:
       '@agencecinq/accordion':
-        specifier: ^2.0.2
-        version: 2.0.2(@agencecinq/utils@6.1.0)
+        specifier: ^3.0.0
+        version: 3.0.0(@agencecinq/utils@7.4.0)
       '@agencecinq/calendar':
         specifier: ^3.0.0
-        version: 3.0.0(@agencecinq/utils@6.1.0)
+        version: 3.0.0(@agencecinq/utils@7.4.0)
       '@agencecinq/combobox':
         specifier: ^1.0.4
-        version: 1.0.4(@agencecinq/utils@6.1.0)
+        version: 1.0.4(@agencecinq/utils@7.4.0)
       '@agencecinq/disclosure-button':
         specifier: ^3.0.1
-        version: 3.0.1(@agencecinq/utils@6.1.0)
+        version: 3.0.1(@agencecinq/utils@7.4.0)
       '@agencecinq/drawer':
-        specifier: 6.1.0
-        version: 6.1.0(@agencecinq/utils@6.1.0)
+        specifier: ^7.0.1
+        version: 7.0.1(@agencecinq/utils@7.4.0)
       '@agencecinq/modal':
-        specifier: ^3.1.0
-        version: 3.1.0(@agencecinq/utils@6.1.0)
+        specifier: ^4.0.1
+        version: 4.0.1(@agencecinq/utils@7.4.0)
       '@agencecinq/spinbutton':
-        specifier: ^2.0.0
-        version: 2.0.0(@agencecinq/utils@6.1.0)
+        specifier: ^4.0.0
+        version: 4.0.0(@agencecinq/utils@7.4.0)
       '@agencecinq/switch':
         specifier: ^3.0.1
-        version: 3.0.1(@agencecinq/utils@6.1.0)
+        version: 3.0.1(@agencecinq/utils@7.4.0)
       '@agencecinq/tabs':
-        specifier: ^10.0.4
-        version: 10.0.4(@agencecinq/utils@6.1.0)
+        specifier: ^11.0.0
+        version: 11.0.0(@agencecinq/utils@7.4.0)
+      '@agencecinq/toast':
+        specifier: ^1.0.0
+        version: 1.0.0(@agencecinq/utils@7.4.0)
       '@agencecinq/utils':
-        specifier: ^6.1.0
-        version: 6.1.0
+        specifier: ^7.4.0
+        version: 7.4.0
       '@agencecinq/windowsplitter':
         specifier: ^2.0.1
-        version: 2.0.1(@agencecinq/utils@6.1.0)
+        version: 2.0.1(@agencecinq/utils@7.4.0)
       piecesjs:
         specifier: ^0.5.5
         version: 0.5.5
@@ -81,8 +242,8 @@ importers:
 
 packages:
 
-  '@agencecinq/accordion@2.0.2':
-    resolution: {integrity: sha512-Pu75ybUvNsMYQ9GIRq0fuCIPczUus5PYr01jKKZqen2vFZgkNWRjnVvyiJlMM65FOjRPgqV0+9NA6TN18dqWQw==}
+  '@agencecinq/accordion@3.0.0':
+    resolution: {integrity: sha512-9+/DX10B7NL6g6RfP/C7HrsansCtIdDVOoJ4Pwo6CEWowL+LK0xf/zTWDqov8e0FkURp5ymtqp4B7e3p+SlLPw==}
     peerDependencies:
       '@agencecinq/utils': '*'
 
@@ -101,33 +262,40 @@ packages:
     peerDependencies:
       '@agencecinq/utils': '*'
 
-  '@agencecinq/drawer@6.1.0':
-    resolution: {integrity: sha512-M36NjqSgXZ+t9YoQp1dF+e/Hpa2Pvn0YOoJaTktKYta2jOEZsEKhWSYYiBdBOqElZCEa7SPFDpIbFO+Vl6/YQQ==}
+  '@agencecinq/drawer@7.0.1':
+    resolution: {integrity: sha512-q55mb0z2UAy3FP37PbrAj73vwlxYbdkz1cWJX+8+W3YMhjuNdTJLgiGra5WQNjLU3yt+JIFb4p+kGH4Z6cCcYQ==}
+    engines: {node: '>=18'}
     peerDependencies:
-      '@agencecinq/utils': '*'
+      '@agencecinq/utils': '>=7.0.0'
 
-  '@agencecinq/modal@3.1.0':
-    resolution: {integrity: sha512-8xZGYJMx0/8RrF0KaOPPzl/+wprurYPuQmuB+dd9aZIrGdm4hnH/bdCTRU0TbOI4vL924bzLqZLlZS9Q6WGEOQ==}
+  '@agencecinq/modal@4.0.1':
+    resolution: {integrity: sha512-NF6fBORh7hOvDMCNhe7q0sGbkbidOJiNnZyOH/XaK5HwQhmzMX0swfAJuSIokCPVDPSQDhNUD8Tu+6mkGD3zQw==}
+    engines: {node: '>=18'}
     peerDependencies:
-      '@agencecinq/utils': '*'
+      '@agencecinq/utils': '>=7.0.0'
 
-  '@agencecinq/spinbutton@2.0.0':
-    resolution: {integrity: sha512-NaMBAPXFnTnTTafwLtW06yUXJPZNcl2TTmGuAyz2VMZNTbF8Zh7HxeIqDC0xa7z3mRjaEHf10NDfCn0hpWuhzg==}
+  '@agencecinq/spinbutton@4.0.0':
+    resolution: {integrity: sha512-z1r11h3YtDPvpqqMaKkGxSeXFwM7+REvp2Xzjk6k05Z3fUiElWaFZduH2u2Xk9X6TlqCjgXF896ZQgzd1KUuBQ==}
     peerDependencies:
-      '@agencecinq/utils': '*'
+      '@agencecinq/utils': '>=7.0.0'
 
   '@agencecinq/switch@3.0.1':
     resolution: {integrity: sha512-pK/9cAghBcFZGdUuabIJrb2tgFpWluXQUF2O1Wrp+gVJKvQz2zwGEuHRrurZzVUBfVo9kyl7wp+RKT8YMMmzyw==}
     peerDependencies:
       '@agencecinq/utils': '*'
 
-  '@agencecinq/tabs@10.0.4':
-    resolution: {integrity: sha512-U1idEqttJi8gwWv2ySxd8ABn53cnJXtLqtb2qHS1KCwfMQu5g7tOytHWStZEoWbcZ25TcaNgf37R+04P7SyIrA==}
+  '@agencecinq/tabs@11.0.0':
+    resolution: {integrity: sha512-1czfBDqIECZjeAdrHSze6p6gtPK06DghFiz4hoHmI8Tl2JjMjp39nBcP6RGqatoji4tYcHhbwjJWtjfj6dnxEA==}
     peerDependencies:
       '@agencecinq/utils': '*'
 
-  '@agencecinq/utils@6.1.0':
-    resolution: {integrity: sha512-Xhj6uebzuR+edHsJ41bsWcTdnPnl993L5ZjmNvbfEoXLJ6MJRJ4WnpkzxoJR0BJjO212/kCb9oJW7Pra+Eew+Q==}
+  '@agencecinq/toast@1.0.0':
+    resolution: {integrity: sha512-MgFL+WKW3nlhxWFZEvEHoN4sTvnAUm0GOgLqhVR36HTFqMUDGxUNII6gJjQsDcX0JM5xadfMxdLcPPjtEWlQUA==}
+    peerDependencies:
+      '@agencecinq/utils': '>=7.0.0'
+
+  '@agencecinq/utils@7.4.0':
+    resolution: {integrity: sha512-oPDKnbSXKtmBa7ZxAoqOT3i0RyTAwrx4eqkvyZoXvsoPgv4fNn6hfI35I0gQTStuuZtkTjO1XZXtYfxXUYBVhQ==}
 
   '@agencecinq/windowsplitter@2.0.1':
     resolution: {integrity: sha512-rpw0fTsrFXPsHCriOBTYuP3WpW4kBXmeDKcVUq3t1tzhUzSJ0k4YbmKj9KSrbuH7Zcgp3Aalzn556umuyEJ26Q==}
@@ -678,17 +846,11 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@types/fs-extra@11.0.4':
-    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
-
   '@types/http-cache-semantics@4.2.0':
     resolution: {integrity: sha512-L3LgimLHXtGkWikKnsPg0/VFx9OGZaC+eN1u4r+OB1XRqH3meBIAVC2zr1WdMH+RHmnRkqliQAOHNJ/E0j/e0Q==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-
-  '@types/jsonfile@6.1.4':
-    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
   '@types/node@26.3.0':
     resolution: {integrity: sha512-L3fgrnchriRC2ExBflb8j4uZZURHZfQsmQeyVzhjcHW4kkwVyo8/0h1B2MVzMTrYUJYu6G7EWs14hW/L9putqw==}
@@ -1254,10 +1416,6 @@ packages:
 
   fs-extra@11.1.0:
     resolution: {integrity: sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==}
-    engines: {node: '>=14.14'}
-
-  fs-extra@11.4.0:
-    resolution: {integrity: sha512-EQsFzMUJkCKGr1ePqlYADkIUmHW1s3ZXr5Yqy6wbGrfUCphpl2maM/kyOIRA2HpP3AaFQTZXD4ldjek+nccddA==}
     engines: {node: '>=14.14'}
 
   fs.realpath@1.0.0:
@@ -2535,51 +2693,51 @@ packages:
 
 snapshots:
 
-  '@agencecinq/accordion@2.0.2(@agencecinq/utils@6.1.0)':
+  '@agencecinq/accordion@3.0.0(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/calendar@3.0.0(@agencecinq/utils@6.1.0)':
+  '@agencecinq/calendar@3.0.0(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/combobox@1.0.4(@agencecinq/utils@6.1.0)':
+  '@agencecinq/combobox@1.0.4(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/disclosure-button@3.0.1(@agencecinq/utils@6.1.0)':
+  '@agencecinq/disclosure-button@3.0.1(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/drawer@6.1.0(@agencecinq/utils@6.1.0)':
+  '@agencecinq/drawer@7.0.1(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
-      '@types/fs-extra': 11.0.4
-      fs-extra: 11.4.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/modal@3.1.0(@agencecinq/utils@6.1.0)':
+  '@agencecinq/modal@4.0.1(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
-      '@types/fs-extra': 11.0.4
-      fs-extra: 11.4.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/spinbutton@2.0.0(@agencecinq/utils@6.1.0)':
+  '@agencecinq/spinbutton@4.0.0(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/switch@3.0.1(@agencecinq/utils@6.1.0)':
+  '@agencecinq/switch@3.0.1(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/tabs@10.0.4(@agencecinq/utils@6.1.0)':
+  '@agencecinq/tabs@11.0.0(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
 
-  '@agencecinq/utils@6.1.0': {}
-
-  '@agencecinq/windowsplitter@2.0.1(@agencecinq/utils@6.1.0)':
+  '@agencecinq/toast@1.0.0(@agencecinq/utils@7.4.0)':
     dependencies:
-      '@agencecinq/utils': 6.1.0
+      '@agencecinq/utils': 7.4.0
+
+  '@agencecinq/utils@7.4.0': {}
+
+  '@agencecinq/windowsplitter@2.0.1(@agencecinq/utils@7.4.0)':
+    dependencies:
+      '@agencecinq/utils': 7.4.0
 
   '@alcalzone/ansi-tokenize@0.2.5':
     dependencies:
@@ -3105,18 +3263,9 @@ snapshots:
       tailwindcss: 4.3.3
       vite: 8.2.2(@types/node@26.3.0)(jiti@2.7.0)
 
-  '@types/fs-extra@11.0.4':
-    dependencies:
-      '@types/jsonfile': 6.1.4
-      '@types/node': 26.3.0
-
   '@types/http-cache-semantics@4.2.0': {}
 
   '@types/json-schema@7.0.15': {}
-
-  '@types/jsonfile@6.1.4':
-    dependencies:
-      '@types/node': 26.3.0
 
   '@types/node@26.3.0':
     dependencies:
@@ -3701,12 +3850,6 @@ snapshots:
   fs-constants@1.0.0: {}
 
   fs-extra@11.1.0:
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 6.2.1
-      universalify: 2.0.1
-
-  fs-extra@11.4.0:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.2.1

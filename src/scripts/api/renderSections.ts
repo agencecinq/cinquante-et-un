@@ -1,51 +1,34 @@
 import { Section } from '../types/section.ts';
+import { fetchJson, parseHtml } from './http.ts';
+import { swapGlobal, swapRoot } from './swapSection.ts';
 
 /**
  * Fetch several sections in a single request and swap them into the DOM.
+ * Prefer bundled section rendering on cart mutations when possible.
  *
  * @see https://shopify.dev/docs/api/ajax/section-rendering
  */
-async function renderSections(sections: Section[]): Promise<void> {
+export async function renderSections(sections: Section[]): Promise<void> {
   try {
     const ids = sections.map(({ id }) => id).join(',');
-    const response = await fetch(`${routes.cart_url}?sections=${ids}`);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch sections: ${response.status}`);
-    }
-
-    const data: Record<string, string> = await response.json();
+    const data = await fetchJson<Record<string, string | null>>(
+      `${routes.cart_url}?sections=${ids}`,
+      { fallback: 'Failed to fetch sections' },
+    );
 
     for (const section of sections) {
       const markup = data[section.id];
+      if (!markup) continue;
 
-      if (!markup) {
-        continue;
-      }
+      const html = parseHtml(markup);
 
-      const html = new DOMParser().parseFromString(markup, 'text/html');
-
-      if (section.selectors) {
-        for (const selector of section.selectors) {
-          const $target = document.querySelector(selector);
-          const $source = html.querySelector(selector);
-
-          if ($target && $source) {
-            $target.replaceWith($source);
-          }
-        }
+      if (section.selectors?.length) {
+        swapGlobal(html, section.selectors);
       } else {
-        const $target = document.querySelector(`#${section.id}`);
-        const $source = html.querySelector(`#${section.id}`);
-
-        if ($target && $source) {
-          $target.replaceWith($source);
-        }
+        swapRoot(html, section.id);
       }
     }
   } catch (error) {
     console.error('Error rendering sections:', error);
   }
 }
-
-export default renderSections;

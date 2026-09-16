@@ -1,0 +1,1 @@
+import{applyCartSections as e}from"./applyCartSections-CnX5lO-h.js";import{fetchJson as t}from"./http-FXV6rOmG.js";async function n(n,r={}){return t(`${routes.cart_update_url}.js`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify(e({...n},r)),fallback:`Failed to update cart`})}export{n as updateItems};

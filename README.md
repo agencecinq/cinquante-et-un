@@ -7,7 +7,7 @@ Wireframe ecommerce baseline (header, collection, PDP, cart drawer, localization
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) LTS
-- [pnpm](https://pnpm.io/) 11 (`corepack enable && corepack prepare pnpm@11.1.3 --activate`)
+- [pnpm](https://pnpm.io/) 12 (`corepack enable && corepack prepare pnpm@12.4.2 --activate`)
 - [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)
 
 ## Setup
@@ -33,7 +33,8 @@ pnpm dev
 ## Architecture
 
 - **Entry:** `src/scripts/app.ts` + `src/stylesheets/styles.css`
-- **Web components:** full `@agencecinq/*` UI kit (accordion, calendar, combobox, disclosure-button, drawer, modal, spinbutton, switch, tabs, windowsplitter) — registered via `src/scripts/cinq/`
+- **Web components:** full `@agencecinq/*` UI kit (accordion, calendar, combobox, disclosure-button, drawer, modal, spinbutton, switch, tabs, toast, windowsplitter) — registered via `src/scripts/cinq/`
+- **Toast:** layout `<cinq-toast>` (`role` set in Liquid); helpers in `src/scripts/cinq/toast.ts` (`showToast`, pause wiring)
 - **Drawer Liquid:** `cinqDrawerPlugin()` copies `snippets/cinq-drawer.html.liquid` on each Vite start — **do not edit that snippet**; override with CSS / params
 - **Cart:** Ajax APIs + Section Rendering (`cart-drawer`, `cart`, `cart-count-bubble`). Header badge uses snippet `id="cart-count-bubble"`; section file exists for bundled re-renders
 - **piecesjs:** `load('c-*', …)` for lazy custom elements

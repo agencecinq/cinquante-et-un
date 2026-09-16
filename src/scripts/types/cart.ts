@@ -57,7 +57,10 @@ export type CartSnapshot = Cart & { sections?: Record<string, string> };
  * @see https://shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering
  */
 export type CartSectionsOptions = {
-  /** Section ids to render. Accepts a comma-separated string or an array. */
+  /**
+   * Section ids to render. Accepts a comma-separated string or an array.
+   * Shopify accepts at most five ids per request.
+   */
   sections?: string | string[];
   /** URL of the page that hosts the sections (defaults to the current path). */
   sections_url?: string;

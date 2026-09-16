@@ -1,9 +1,9 @@
-import addItems from '../api/addItems.ts';
-import getCart from '../api/getCart.ts';
-import renderBundledSection from '../api/renderBundledSection.ts';
-import renderSections from '../api/renderSections.ts';
+import { addItems } from '../api/addItems.ts';
+import { getCart } from '../api/getCart.ts';
+import { renderBundledSection } from '../api/renderBundledSection.ts';
+import { renderSections } from '../api/renderSections.ts';
 import sections from '../utils/sections.ts';
-import updateItems from '../api/updateItems.ts';
+import { updateItems } from '../api/updateItems.ts';
 import { CartItem, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
 
 export type CartAction = () => Promise<CartSnapshot>;
@@ -102,7 +102,7 @@ class CartStore {
     }
 
     refresh(): Promise<CartSnapshot> {
-        return this.mutate(async () => this.current ?? (await getCart()));
+        return this.mutate(() => getCart());
     }
 
     private async commit(snapshot: CartSnapshot): Promise<void> {

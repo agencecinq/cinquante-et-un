@@ -1,4 +1,5 @@
 import { Piece } from 'piecesjs';
+import { fetchSectionByID } from '../api/fetchSectionByID.ts';
 
 class LoadMore extends Piece {
   static get observedAttributes() {
@@ -8,6 +9,7 @@ class LoadMore extends Piece {
   // Elements
   $button: HTMLButtonElement | null = null;
   $container: HTMLElement | null = null;
+  $outOf: HTMLElement | null = null;
 
   constructor() {
     super('LoadMore');
@@ -16,6 +18,7 @@ class LoadMore extends Piece {
   mount() {
     this.$button = this.domAttr('load-more-button') as HTMLButtonElement;
     this.$container = this.domAttr('container') as HTMLElement;
+    this.$outOf = this.domAttr('out-of') as HTMLElement | null;
 
     if (!this.$button) {
       throw new Error('LoadMore: button element not found');
@@ -24,32 +27,20 @@ class LoadMore extends Piece {
     if (!this.$container) {
       throw new Error('LoadMore: container element not found');
     }
-
-    this.on('click', this.$button, this.handleClick);
   }
 
   /**
-   * Handles the button click event.
+   * Loads the next page via Shopify's Section Rendering API and appends items.
+   * Wired from the button with `data-events-click="fetch"`.
    *
-   * @param {Event} event - The button click event.
-   * @returns {void}
+   * @see https://shopify.dev/docs/api/ajax/section-rendering
    */
-  handleClick(event: Event): void {
-    event.preventDefault();
+  async fetch(event?: Event): Promise<void> {
+    event?.preventDefault();
 
-    this.fetch();
-  }
-  /**
-   * Sends a GET request to the button's action URL with the form data.
-   *
-   * @async
-   * @function fetch
-   * @returns {Promise<void>} A promise that resolves when the fetch operation is complete.
-   */
-  async fetch(): Promise<void> {
     if (!this.$button || !this.$container) return;
 
-    if (!this.action) {
+    if (!this.action || !this.sectionId || !this.productsId) {
       this.$button.style.setProperty('display', 'none');
       return;
     }
@@ -58,60 +49,19 @@ class LoadMore extends Piece {
     this.setAttribute('loading', '');
 
     try {
-      const response = await fetch(this.action, {
-        method: 'GET',
-        headers: {
-          Accept: 'text/html',
-        },
-      });
+      const doc = await fetchSectionByID(this.action, this.sectionId);
+      const nextLoadMore = doc.getElementById(this.id);
+      const nextProducts = doc.getElementById(this.productsId);
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      if (!nextLoadMore || !nextProducts?.childElementCount) {
+        this.$button.disabled = false;
+        return;
       }
 
-      const data = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data, 'text/html');
-      const contentEl = doc.getElementById(this.id);
-      if (!contentEl || !contentEl.firstElementChild) return;
+      this.syncPagination(nextLoadMore);
+      this.$container.append(...Array.from(nextProducts.children));
+      this.syncOutOf(nextProducts.getAttribute('data-out-of'));
 
-      // Sync pagination state with the server response.
-      const nextAction = contentEl.getAttribute('data-action') ?? '';
-      const nextCurrentPageRaw = contentEl.getAttribute('data-current-page');
-      const nextTotalPagesRaw = contentEl.getAttribute('data-total-pages');
-      const nextCurrentPage = nextCurrentPageRaw ? parseInt(nextCurrentPageRaw, 10) : NaN;
-      const nextTotalPages = nextTotalPagesRaw ? parseInt(nextTotalPagesRaw, 10) : NaN;
-
-      this.action = nextAction;
-      if (Number.isFinite(nextCurrentPage)) this.currentPage = nextCurrentPage;
-      if (Number.isFinite(nextTotalPages)) {
-        this.setAttribute('data-total-pages', String(nextTotalPages));
-      }
-
-      const $nextContainer =
-        (contentEl.querySelector('[data-dom="container"]') as HTMLElement | null) ??
-        (contentEl.firstElementChild as HTMLElement | null);
-      if (!$nextContainer) return;
-
-      const newContent = $nextContainer.innerHTML;
-      if (!newContent) return;
-
-      this.$container.innerHTML += newContent;
-
-      // Prefer the rendered out-of node from the response; fall back to data-out-of.
-      const $outOf = this.domAttr('out-of');
-      const $nextOutOf = contentEl.querySelector('[data-dom="out-of"]');
-      const outOfValue =
-        ($nextOutOf instanceof HTMLElement && $nextOutOf.innerHTML.trim()) ||
-        $nextContainer.getAttribute('data-out-of') ||
-        '';
-
-      if ($outOf instanceof HTMLElement && outOfValue) {
-        $outOf.innerHTML = outOfValue;
-        this.$container.setAttribute('data-out-of', outOfValue);
-      }
-
-      // Stop when we reached the end or when there is no next action.
       if (this.currentPage >= this.totalPages || !this.action) {
         this.$button.style.setProperty('display', 'none');
       } else {
@@ -119,9 +69,33 @@ class LoadMore extends Piece {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+      this.$button.disabled = false;
     } finally {
       this.removeAttribute('loading');
     }
+  }
+
+  /**
+   * Copy pagination attrs from the fetched load-more root.
+   */
+  private syncPagination(source: Element): void {
+    this.action = source.getAttribute('data-action') ?? '';
+
+    const currentPage = Number.parseInt(source.getAttribute('data-current-page') ?? '', 10);
+    const totalPages = Number.parseInt(source.getAttribute('data-total-pages') ?? '', 10);
+
+    if (Number.isFinite(currentPage)) this.currentPage = currentPage;
+    if (Number.isFinite(totalPages)) this.setAttribute('data-total-pages', String(totalPages));
+  }
+
+  /**
+   * Update the visible "X out of Y" label from the fetched grid.
+   */
+  private syncOutOf(value: string | null): void {
+    if (!value || !this.$container) return;
+
+    this.$container.setAttribute('data-out-of', value);
+    if (this.$outOf) this.$outOf.textContent = value;
   }
 
   /**
@@ -143,6 +117,14 @@ class LoadMore extends Piece {
     }
   }
 
+  get sectionId() {
+    return this.getAttribute('data-section-id') || '';
+  }
+
+  get productsId() {
+    return this.getAttribute('data-products-id') || '';
+  }
+
   get totalPages() {
     return parseInt(this.getAttribute('data-total-pages') ?? '0', 10) || 0;
   }
@@ -161,10 +143,6 @@ class LoadMore extends Piece {
 
   set action(value: string) {
     this.setAttribute('data-action', value);
-  }
-
-  unmount() {
-    this.off('click', this.$button, this.handleClick);
   }
 }
 

@@ -18,5 +18,4 @@ load('c-price', () => import('./components/Price.ts'));
 load('c-select-controller', () => import('./components/SelectController.ts'));
 load('c-slideshow', () => import('./components/Slideshow.ts'));
 load('c-table-of-contents', () => import('./components/TableOfContents.ts'));
-load('c-toast', () => import('./components/Toast.ts'));
 load('c-variants-picker', () => import('./components/VariantsPicker.ts'));

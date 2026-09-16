@@ -1,9 +1,9 @@
 {
   "name": "@cinq/cinquante-et-un",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Opinionated Shopify theme starter for Cinq (Vite, Tailwind, piecesjs, @agencecinq)",
   "license": "MIT",
-  "packageManager": "pnpm@11.24.0",
+  "packageManager": "pnpm@12.4.2",
   "keywords": [
     "shopify",
     "theme",
@@ -36,16 +36,17 @@
     "vite-svg-sprite-wrapper": "^1.5.0"
   },
   "dependencies": {
-    "@agencecinq/accordion": "^2.0.2",
+    "@agencecinq/accordion": "^3.0.0",
     "@agencecinq/calendar": "^3.0.0",
     "@agencecinq/combobox": "^1.0.4",
     "@agencecinq/disclosure-button": "^3.0.1",
-    "@agencecinq/drawer": "6.1.0",
-    "@agencecinq/modal": "^3.1.0",
-    "@agencecinq/spinbutton": "^2.0.0",
+    "@agencecinq/drawer": "^7.0.1",
+    "@agencecinq/modal": "^4.0.1",
+    "@agencecinq/spinbutton": "^4.0.0",
     "@agencecinq/switch": "^3.0.1",
-    "@agencecinq/tabs": "^10.0.4",
-    "@agencecinq/utils": "^6.1.0",
+    "@agencecinq/tabs": "^11.0.0",
+    "@agencecinq/toast": "^1.0.0",
+    "@agencecinq/utils": "^7.4.0",
     "@agencecinq/windowsplitter": "^2.0.1",
     "piecesjs": "^0.5.5",
     "tailwindcss": "^4.3.3"

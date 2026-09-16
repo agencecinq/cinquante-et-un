@@ -1,0 +1,1 @@
+import{i as e}from"./dist-BOFO8wgI.js";var t=document.documentElement,{body:n}=document;t.hasAttribute(`data-debug`),window.addEventListener(`pointermove`,e(({x:e,y:t})=>{},100),{passive:!0});

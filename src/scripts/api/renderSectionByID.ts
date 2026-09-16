@@ -1,36 +1,27 @@
+import { fetchSectionByID } from './fetchSectionByID.ts';
 import { Section } from '../types/section.ts';
+import { swapGlobal, swapRoot } from './swapSection.ts';
 
 /**
- * Fetch a single section and swap matching selectors into the DOM.
+ * Fetch a single section in the Liquid context of `url` and swap matching
+ * selectors into the DOM. Defaults to the cart URL (legacy cart refresh).
  *
  * @see https://shopify.dev/docs/api/ajax/section-rendering
  */
-async function renderSectionByID(section: Section): Promise<void> {
+export async function renderSectionByID(
+  section: Section,
+  url: string = routes.cart_url,
+): Promise<void> {
   try {
-    const response = await fetch(`${routes.cart_url}?section_id=${section.id}`);
+    const html = await fetchSectionByID(url, section.id);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch section ${section.id}: ${response.status}`);
-    }
-
-    const data = await response.text();
-    const html = new DOMParser().parseFromString(data, 'text/html');
-
-    if (!section.selectors) {
+    if (section.selectors?.length) {
+      swapGlobal(html, section.selectors);
       return;
     }
 
-    for (const selector of section.selectors) {
-      const $target = document.querySelector(selector);
-      const $source = html.querySelector(selector);
-
-      if ($target && $source) {
-        $target.replaceWith($source);
-      }
-    }
+    swapRoot(html, section.id);
   } catch (error) {
     console.error('Error rendering section:', error);
   }
 }
-
-export default renderSectionByID;

@@ -1,7 +1,4 @@
 declare const Shopify: {
-  routes: {
-    root: string;
-  };
   money_format: string;
 };
 

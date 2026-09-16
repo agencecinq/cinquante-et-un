@@ -1,6 +1,6 @@
 {
-  "_dist-CLXdE6q2.js": {
-    "file": "dist-CLXdE6q2.js",
+  "_dist-BOFO8wgI.js": {
+    "file": "dist-BOFO8wgI.js",
     "name": "dist"
   },
   "_piecesjs-BV-3uQvI.js": {
@@ -96,49 +96,112 @@
     "src": "src/icons/youtube.svg"
   },
   "src/scripts/api/addItems.ts": {
-    "file": "addItems-CrTxAdjp.js",
+    "file": "addItems-CX1NdJyC.js",
     "name": "addItems",
     "src": "src/scripts/api/addItems.ts",
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/applyCartSections.ts",
+      "src/scripts/api/http.ts"
+    ]
+  },
+  "src/scripts/api/applyCartSections.ts": {
+    "file": "applyCartSections-CnX5lO-h.js",
+    "name": "applyCartSections",
+    "src": "src/scripts/api/applyCartSections.ts",
+    "isEntry": true
+  },
+  "src/scripts/api/errors.ts": {
+    "file": "errors-Cs_w39SE.js",
+    "name": "errors",
+    "src": "src/scripts/api/errors.ts",
     "isEntry": true
   },
   "src/scripts/api/fetchPredictiveSearchSection.ts": {
-    "file": "fetchPredictiveSearchSection-BZZDq1td.js",
+    "file": "fetchPredictiveSearchSection-BrBvhn5U.js",
     "name": "fetchPredictiveSearchSection",
     "src": "src/scripts/api/fetchPredictiveSearchSection.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/errors.ts",
+      "src/scripts/api/http.ts"
+    ]
+  },
+  "src/scripts/api/fetchSectionByID.ts": {
+    "file": "fetchSectionByID-CCC3S-Bj.js",
+    "name": "fetchSectionByID",
+    "src": "src/scripts/api/fetchSectionByID.ts",
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/errors.ts",
+      "src/scripts/api/http.ts"
+    ]
   },
   "src/scripts/api/getCart.ts": {
-    "file": "getCart-DvIlmc10.js",
+    "file": "getCart-CJPfP4Iy.js",
     "name": "getCart",
     "src": "src/scripts/api/getCart.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/http.ts"
+    ]
+  },
+  "src/scripts/api/http.ts": {
+    "file": "http-FXV6rOmG.js",
+    "name": "http",
+    "src": "src/scripts/api/http.ts",
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/errors.ts"
+    ]
   },
   "src/scripts/api/renderBundledSection.ts": {
-    "file": "renderBundledSection-BWxSv6Na.js",
+    "file": "renderBundledSection-5J7KN8Gg.js",
     "name": "renderBundledSection",
     "src": "src/scripts/api/renderBundledSection.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/http.ts",
+      "src/scripts/api/swapSection.ts"
+    ]
   },
   "src/scripts/api/renderSectionByID.ts": {
-    "file": "renderSectionByID-BvRk9kiK.js",
+    "file": "renderSectionByID-Cmye32On.js",
     "name": "renderSectionByID",
     "src": "src/scripts/api/renderSectionByID.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/fetchSectionByID.ts"
+    ]
   },
   "src/scripts/api/renderSections.ts": {
-    "file": "renderSections-v26zV17z.js",
+    "file": "renderSections-DxUmz2n6.js",
     "name": "renderSections",
     "src": "src/scripts/api/renderSections.ts",
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/http.ts",
+      "src/scripts/api/swapSection.ts"
+    ]
+  },
+  "src/scripts/api/swapSection.ts": {
+    "file": "swapSection-Ci7y53vl.js",
+    "name": "swapSection",
+    "src": "src/scripts/api/swapSection.ts",
     "isEntry": true
   },
   "src/scripts/api/updateItems.ts": {
-    "file": "updateItems-DJ355LUy.js",
+    "file": "updateItems-glyG7gET.js",
     "name": "updateItems",
     "src": "src/scripts/api/updateItems.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/applyCartSections.ts",
+      "src/scripts/api/http.ts"
+    ]
   },
   "src/scripts/app.ts": {
-    "file": "app-CQ6oDgyE.js",
+    "file": "app-DA9u-T6V.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -163,42 +226,51 @@
       "src/scripts/components/SelectController.ts",
       "src/scripts/components/Slideshow.ts",
       "src/scripts/components/TableOfContents.ts",
-      "src/scripts/components/Toast.ts",
       "src/scripts/components/VariantsPicker.ts"
     ]
   },
   "src/scripts/cinq/disclosure-button-labels.ts": {
-    "file": "disclosure-button-labels-Bdo-hIxx.js",
+    "file": "disclosure-button-labels-CLA7BfrK.js",
     "name": "disclosure-button-labels",
     "src": "src/scripts/cinq/disclosure-button-labels.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CLXdE6q2.js"
+      "_dist-BOFO8wgI.js"
     ]
   },
   "src/scripts/cinq/index.ts": {
-    "file": "index-BqGjFyza.js",
+    "file": "index-DkfYjYx4.js",
     "name": "index",
     "src": "src/scripts/cinq/index.ts",
     "isEntry": true,
     "imports": [
-      "src/scripts/cinq/disclosure-button-labels.ts"
+      "_dist-BOFO8wgI.js",
+      "src/scripts/cinq/disclosure-button-labels.ts",
+      "src/scripts/cinq/toast.ts"
     ]
   },
+  "src/scripts/cinq/toast.ts": {
+    "file": "toast-BQD4subE.js",
+    "name": "toast",
+    "src": "src/scripts/cinq/toast.ts",
+    "isEntry": true
+  },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-C5Xx9an7.js",
+    "file": "AddToCartButton-BzguV-rf.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-BV-3uQvI.js",
-      "_dist-CLXdE6q2.js",
+      "_dist-BOFO8wgI.js",
+      "src/scripts/cinq/toast.ts",
+      "src/scripts/api/errors.ts",
       "src/scripts/utils/sections.ts",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartDrawer.ts": {
-    "file": "CartDrawer-BLMrY_H6.js",
+    "file": "CartDrawer-BI68LiZw.js",
     "name": "CartDrawer",
     "src": "src/scripts/components/CartDrawer.ts",
     "isEntry": true,
@@ -208,24 +280,26 @@
     ]
   },
   "src/scripts/components/CartItem.ts": {
-    "file": "CartItem-13jfv0lt.js",
+    "file": "CartItem-DaMLUtfE.js",
     "name": "CartItem",
     "src": "src/scripts/components/CartItem.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-BV-3uQvI.js",
+      "src/scripts/cinq/toast.ts",
+      "src/scripts/api/errors.ts",
       "src/scripts/utils/sections.ts",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartQuantity.ts": {
-    "file": "CartQuantity-DNbb8LLU.js",
+    "file": "CartQuantity-DdfV5o7z.js",
     "name": "CartQuantity",
     "src": "src/scripts/components/CartQuantity.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-BV-3uQvI.js",
-      "_dist-CLXdE6q2.js"
+      "_dist-BOFO8wgI.js"
     ]
   },
   "src/scripts/components/Headroom.ts": {
@@ -238,32 +312,34 @@
     ]
   },
   "src/scripts/components/LoadMore.ts": {
-    "file": "LoadMore-4hMKOkpR.js",
+    "file": "LoadMore-Bus1OWBg.js",
     "name": "LoadMore",
     "src": "src/scripts/components/LoadMore.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js"
+      "_piecesjs-BV-3uQvI.js",
+      "src/scripts/api/fetchSectionByID.ts",
+      "src/scripts/api/fetchSectionByID.ts"
     ]
   },
   "src/scripts/components/Menubar.ts": {
-    "file": "Menubar-a5rIjg8U.js",
+    "file": "Menubar-efbs2Gik.js",
     "name": "Menubar",
     "src": "src/scripts/components/Menubar.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-BV-3uQvI.js",
-      "_dist-CLXdE6q2.js"
+      "_dist-BOFO8wgI.js"
     ]
   },
   "src/scripts/components/Price.ts": {
-    "file": "Price-Bk-s-_u-.js",
+    "file": "Price-BHAB62WW.js",
     "name": "Price",
     "src": "src/scripts/components/Price.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-BV-3uQvI.js",
-      "_dist-CLXdE6q2.js",
+      "_dist-BOFO8wgI.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
     ]
@@ -297,40 +373,31 @@
       "src/scripts/utils/slugify.ts"
     ]
   },
-  "src/scripts/components/Toast.ts": {
-    "file": "Toast-CE11pG4r.js",
-    "name": "Toast",
-    "src": "src/scripts/components/Toast.ts",
-    "isEntry": true,
-    "imports": [
-      "_piecesjs-BV-3uQvI.js"
-    ]
-  },
   "src/scripts/components/VariantsPicker.ts": {
-    "file": "VariantsPicker-RAYleyjT.js",
+    "file": "VariantsPicker-BZMi7lLd.js",
     "name": "VariantsPicker",
     "src": "src/scripts/components/VariantsPicker.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-BV-3uQvI.js",
-      "_dist-CLXdE6q2.js",
+      "_dist-BOFO8wgI.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/predictive-search-mount.ts": {
-    "file": "predictive-search-mount-BnYqtBdS.js",
+    "file": "predictive-search-mount-Dfcn6fls.js",
     "name": "predictive-search-mount",
     "src": "src/scripts/predictive-search-mount.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CLXdE6q2.js",
+      "_dist-BOFO8wgI.js",
       "src/scripts/api/fetchPredictiveSearchSection.ts",
       "src/scripts/api/fetchPredictiveSearchSection.ts"
     ]
   },
   "src/scripts/store/cart.ts": {
-    "file": "cart-NhAdGmm4.js",
+    "file": "cart-C9dXRnNL.js",
     "name": "cart",
     "src": "src/scripts/store/cart.ts",
     "isEntry": true,
@@ -356,21 +423,21 @@
     "isEntry": true
   },
   "src/scripts/utils/environment.ts": {
-    "file": "environment-O9mRfgR-.js",
+    "file": "environment-C5vZrshn.js",
     "name": "environment",
     "src": "src/scripts/utils/environment.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CLXdE6q2.js"
+      "_dist-BOFO8wgI.js"
     ]
   },
   "src/scripts/utils/events.ts": {
-    "file": "events-pgW1QmTj.js",
+    "file": "events-DoQyH2p9.js",
     "name": "events",
     "src": "src/scripts/utils/events.ts",
     "isEntry": true,
     "imports": [
-      "_dist-CLXdE6q2.js"
+      "_dist-BOFO8wgI.js"
     ]
   },
   "src/scripts/utils/format-currency.ts": {
@@ -443,7 +510,7 @@
     "isEntry": true
   },
   "src/stylesheets/styles.css": {
-    "file": "styles-BbhhFPJH.css",
+    "file": "styles-CHZPzSl2.css",
     "name": "styles",
     "names": [
       "styles.css"

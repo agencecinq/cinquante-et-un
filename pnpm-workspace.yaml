@@ -2,5 +2,9 @@ allowBuilds:
   esbuild: true
   protobufjs: false
 
+minimumReleaseAgeExclude:
+  - '@agencecinq/utils@7.3.0 || 7.4.0'
+  - '@agencecinq/toast@1.0.0'
+
 onlyBuiltDependencies:
   - protobufjs

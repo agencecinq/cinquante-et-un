@@ -1,4 +1,6 @@
 import { Cart, CartSectionsOptions } from '../types/cart.ts';
+import { applyCartSections } from './applyCartSections.ts';
+import { fetchJson } from './http.ts';
 
 export type UpdateItemsPayload = {
   updates?: Record<string, number> | number[];
@@ -12,36 +14,17 @@ export type UpdateItemsPayload = {
  *
  * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-update-js
  */
-async function updateItems(
+export async function updateItems(
   payload: UpdateItemsPayload,
   options: CartSectionsOptions = {},
 ): Promise<Cart & { sections?: Record<string, string> }> {
-  const body: Record<string, unknown> = { ...payload };
-
-  if (options.sections) {
-    body.sections = Array.isArray(options.sections) ? options.sections.join(',') : options.sections;
-  }
-
-  if (options.sections_url) {
-    body.sections_url = options.sections_url;
-  }
-
-  const response = await fetch(`${Shopify.routes.root}cart/update.js`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+  return fetchJson<Cart & { sections?: Record<string, string> }>(
+    `${routes.cart_update_url}.js`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(applyCartSections({ ...payload }, options)),
+      fallback: 'Failed to update cart',
     },
-    body: JSON.stringify(body),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw data.message || data.errors || 'Failed to update cart';
-  }
-
-  return data;
+  );
 }
-
-export default updateItems;

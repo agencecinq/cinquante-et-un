@@ -1,1 +1,0 @@
-async function e(){let e=await fetch(`${Shopify.routes.root}cart.js`,{headers:{Accept:`application/json`}}),t=await e.json();if(!e.ok)throw t.message||t.errors||`Failed to fetch cart`;return t}export{e as default};

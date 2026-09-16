@@ -1,7 +1,9 @@
 import { Piece } from 'piecesjs';
 import { EVENTS } from '@agencecinq/utils';
+import { errorMessage } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import sections from '../utils/sections.ts';
+import { showToast } from '../cinq/toast.ts';
 import { CartItem } from '../types/cart.ts';
 
 type VariantChangeDetail = {
@@ -73,10 +75,10 @@ class AddToCartButton extends Piece {
         sections: this.sections.map(({ id }) => id),
         sections_url: '/cart',
       });
-    } catch (error) {
-      this.call('toggle', { content: error }, 'Toast');
-    } finally {
       this.dispatchEvents();
+    } catch (error) {
+      showToast(errorMessage(error));
+    } finally {
       this.$button!.disabled = !this.inStock;
       this.loading = 'false';
     }
