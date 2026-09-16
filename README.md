@@ -56,3 +56,4 @@ Theme conventions live in **[AGENTS.md](./AGENTS.md)** (tool-agnostic). Claude C
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+Built by [CINQ - Agence Wordpress & Shopify](https://agencecinq.com).
