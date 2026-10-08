@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "t:general.header",
@@ -5,17 +14,41 @@
     "section_announcement_bar": {
       "type": "section-announcement-bar",
       "blocks": {
+        "text_EyCTNB": {
+          "type": "text",
+          "settings": {
+            "text": "Boutique de démonstration, rien n'est expédié"
+          }
+        },
+        "text_VHU4fY": {
+          "type": "text",
+          "settings": {
+            "text": "Code CTRLF5 : 5 % sur votre première commande"
+          }
+        },
+        "text_BXLcKT": {
+          "type": "text",
+          "settings": {
+            "text": "Nouveautés : appuyez sur F5"
+          }
+        },
         "text_1": {
           "type": "text",
           "settings": {
-            "text": "Starter Cinquante-et-un — wireframe ready"
+            "text": "Livraison offerte dès 40 €"
           }
         }
       },
-      "block_order": ["text_1"],
+      "block_order": [
+        "text_EyCTNB",
+        "text_VHU4fY",
+        "text_BXLcKT",
+        "text_1"
+      ],
       "settings": {
         "padding_top": 12,
-        "padding_bottom": 12
+        "padding_bottom": 12,
+        "color_scheme": ""
       }
     },
     "header": {
@@ -24,9 +57,13 @@
         "main_menu": "main-menu",
         "secondary_menu": "secondary-menu",
         "show_account": true,
-        "show_search": true
+        "show_search": true,
+        "show_wishlist": true
       }
     }
   },
-  "order": ["section_announcement_bar", "header"]
+  "order": [
+    "section_announcement_bar",
+    "header"
+  ]
 }
