@@ -71,6 +71,7 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 
 - `@agencecinq/*` in `src/scripts/cinq/index.ts`
 - Lazy pieces: `load('c-name', () => import('./components/Name.ts'))` in `app.ts`
+- `load()` only checks the initial DOM, once: pieces that can arrive via Ajax (cart re-render, `renderSection`, `LoadMore`, search results) must be imported statically in `app.ts`
 - Check `@agencecinq` before inventing drawer/modal/tabs/spinbutton/combobox
 - Icons: `src/icons/*.svg` → sprite → `{% render 'use.html', icon: %}`
 - Prefer `@agencecinq/utils` `EVENTS` when covered

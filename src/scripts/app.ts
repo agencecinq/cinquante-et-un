@@ -4,6 +4,7 @@ import.meta.glob('../img/**/*');
 
 import './cinq/index.ts';
 
+// Static: these pieces can be injected by cart re-renders, and `load()` only checks the initial DOM.
 import './components/CartDrawer.ts';
 import './components/CartItem.ts';
 import './components/CartQuantity.ts';
