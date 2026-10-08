@@ -390,19 +390,13 @@
       "src/scripts/api/fetchSections.ts",
       "src/scripts/api/updateCart.ts",
       "src/scripts/store/cartSections.ts",
-      "src/scripts/store/renderSection.ts"
+      "src/scripts/utils/renderSection.ts"
     ]
   },
   "src/scripts/store/cartSections.ts": {
     "file": "cartSections-D1co7UVt.js",
     "name": "cartSections",
     "src": "src/scripts/store/cartSections.ts",
-    "isEntry": true
-  },
-  "src/scripts/store/renderSection.ts": {
-    "file": "renderSection-Bhm8J6hZ.js",
-    "name": "renderSection",
-    "src": "src/scripts/store/renderSection.ts",
     "isEntry": true
   },
   "src/scripts/types/cart.ts": {
@@ -445,6 +439,12 @@
     "file": "i18n-BvRk9kiK.js",
     "name": "i18n",
     "src": "src/scripts/utils/i18n.ts",
+    "isEntry": true
+  },
+  "src/scripts/utils/renderSection.ts": {
+    "file": "renderSection-Bhm8J6hZ.js",
+    "name": "renderSection",
+    "src": "src/scripts/utils/renderSection.ts",
     "isEntry": true
   },
   "src/scripts/utils/slugify.ts": {
