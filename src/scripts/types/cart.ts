@@ -1,3 +1,5 @@
+import { SectionsMarkup } from './section.ts';
+
 /**
  * Item sent to `/cart/add.js` (not a line already in the cart: see `CartLineItem`).
  * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-add-js
@@ -48,7 +50,7 @@ export type Cart = {
  *
  * @see https://shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering
  */
-export type CartSnapshot = Cart & { sections?: Record<string, string> };
+export type CartSnapshot = Cart & { sections?: SectionsMarkup };
 
 /**
  * Options accepted by the cart Ajax helpers to opt-in to bundled section
@@ -72,5 +74,5 @@ export type CartSectionsOptions = {
  */
 export type AddCartItemsResponse = {
   items: CartLineItem[];
-  sections?: Record<string, string>;
+  sections?: SectionsMarkup;
 };

@@ -3,7 +3,7 @@ import { fetchCart } from '../api/fetchCart.ts';
 import { fetchSections } from '../api/fetchSections.ts';
 import { updateCart } from '../api/updateCart.ts';
 import { AddCartItem, Cart, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
-import { Section } from '../types/section.ts';
+import { Section, SectionsMarkup } from '../types/section.ts';
 import { cartSections } from './cartSections.ts';
 import { renderSection } from '../utils/renderSection.ts';
 
@@ -137,7 +137,7 @@ class CartStore {
     this.notify(cart);
   }
 
-  private async render(bundled?: Record<string, string>): Promise<void> {
+  private async render(bundled?: SectionsMarkup): Promise<void> {
     const sections = this.liveSections();
 
     if (!sections.length) {
