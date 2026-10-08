@@ -5,7 +5,7 @@ import { updateCart } from '../api/updateCart.ts';
 import { CartItem, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
 import { Section } from '../types/section.ts';
 import { cartSections } from './cartSections.ts';
-import { renderSection } from './renderSection.ts';
+import { renderSection } from '../utils/renderSection.ts';
 
 export type CartAction = () => Promise<CartSnapshot>;
 

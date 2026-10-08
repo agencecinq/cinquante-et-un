@@ -29,13 +29,20 @@ function replaceScoped(liveRoot: Element, sourceRoot: Element, selectors: string
 }
 
 /**
- * Swap freshly rendered section markup (bundled cart response or `?sections=`)
- * into the live DOM. With `selectors`, only those nodes are replaced, scoped to
- * the section root so identical selectors in other sections stay untouched.
- * Prefer stable `.js-*` roots so focus / scroll / open drawers survive.
- * No-ops when the section is not on the current page.
+ * Swap freshly rendered section markup (Section Rendering API, `?sections=` or
+ * bundled cart response) into the live DOM. With `selectors`, only those nodes
+ * are replaced, scoped to the section root so identical selectors in other
+ * sections stay untouched. Prefer stable `.js-*` roots so focus / scroll /
+ * open drawers survive. `section.id` is looked up as a DOM id in both the
+ * markup and the page; no-ops when either is missing.
  *
- * @see https://shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering
+ * @example
+ * renderSection(await fetchSection(url, 'main-collection'), {
+ *   id: 'main-collection',
+ *   selectors: ['.js-product-grid', '.js-facets'],
+ * });
+ *
+ * @see https://shopify.dev/docs/api/ajax/section-rendering
  */
 export function renderSection(markup: string, section: Section): void {
   const sourceRoot = new DOMParser().parseFromString(markup, 'text/html').getElementById(section.id);

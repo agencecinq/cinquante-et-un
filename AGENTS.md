@@ -102,6 +102,7 @@ Copy blog/form/collection:
 | Piece | `components/` + `load()` in `app.ts` |
 | Style | Utilities / existing components; new shared → `src/stylesheets/components/` + import in `styles.css` |
 | Live cart UI | Stable `.js-*` root + update `cartSections.ts` |
+| Ajax section refresh (filters, tabs, …) | `fetchSection` + `utils/renderSection.ts` with `.js-*` selectors — don't hand-roll DOM swaps |
 | Brand (fork) | Tokens in `theme.css` `@theme`, then components — not Liquid one-offs |
 
 ## Anti-patterns
