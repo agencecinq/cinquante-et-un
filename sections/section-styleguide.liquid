@@ -785,7 +785,7 @@
           </header>
           <cinq-windowsplitter
             id="StyleguideSplitter-{{ sid }}"
-            data-windowsplitter-mode="clip"
+            data-mode="clip"
             aria-label="{{ 'sections.styleguide.components.windowsplitter.label' | t }}"
           >
             {%- liquid
@@ -906,6 +906,28 @@
         if (!q) return items;
         return items.filter((item) => item.toLowerCase().includes(q));
       };
+
+      const button = host.querySelector('button[aria-controls]');
+      if (!button) return;
+
+      const syncButton = () => {
+        button.setAttribute('aria-expanded', host.expanded ? 'true' : 'false');
+        button.disabled = host.disabled;
+      };
+
+      button.addEventListener('mousedown', (event) => event.preventDefault());
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (host.disabled) return;
+        if (host.expanded) host.hide({ force: true });
+        else void host.ensureOpen().then(() => host.$input?.focus());
+      });
+
+      new MutationObserver(syncButton).observe(host, {
+        attributes: true,
+        attributeFilter: ['expanded', 'disabled'],
+      });
+      syncButton();
     };
 
     if (customElements.get('cinq-combobox')) {

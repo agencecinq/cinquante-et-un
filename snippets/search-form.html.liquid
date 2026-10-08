@@ -16,11 +16,11 @@
 
 <cinq-combobox
   class="relative block [&:has([aria-expanded='true'])_[data-dom=results]]:block{% if classes %} {{ classes }}{% endif %}"
-  data-combobox-mode="external"
-  data-combobox-select-mode="custom"
-  data-combobox-debounce="280"
-  data-combobox-min-length="2"
-  data-combobox-open-on-empty
+  data-mode="external"
+  data-select-mode="custom"
+  data-debounce="280"
+  data-min-length="2"
+  data-open-on-empty
   data-section-id="predictive-search"
   data-results-count-one="{{ 'sections.predictive_search.results_count.one' | t }}"
   data-results-count-other="{{ 'sections.predictive_search.results_count.other' | t: count: '__COUNT__' }}"

@@ -24,7 +24,7 @@ const wire = (host: Combobox): void => {
   const resultsCountOther = host.getAttribute('data-results-count-other') ?? '';
   const noResultsTemplate = host.getAttribute('data-no-results') ?? '';
   const sectionId = host.getAttribute('data-section-id') ?? DEFAULT_SECTION_ID;
-  const minLength = Math.max(0, parseInt(host.getAttribute('data-combobox-min-length') ?? '2', 10) || 2);
+  const minLength = Math.max(0, parseInt(host.getAttribute('data-min-length') ?? '2', 10) || 2);
 
   // Combobox `ensureOpen()` (click / ArrowDown) calls `run()` and bypasses
   // `minLength` — Shopify's suggest API rejects an empty `q`.
