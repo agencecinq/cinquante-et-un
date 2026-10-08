@@ -173,7 +173,7 @@
     "isEntry": true
   },
   "src/scripts/app.ts": {
-    "file": "app-DyK6vkBe.js",
+    "file": "app-BOPlwbNy.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -189,7 +189,6 @@
       "src/scripts/components/CartQuantity.ts"
     ],
     "dynamicImports": [
-      "src/scripts/predictive-search-mount.ts",
       "src/scripts/components/AddToCartButton.ts",
       "src/scripts/components/CartStoreDemo.ts",
       "src/scripts/components/Headroom.ts",
@@ -202,6 +201,16 @@
       "src/scripts/components/VariantsPicker.ts"
     ]
   },
+  "src/scripts/cinq/combobox.ts": {
+    "file": "combobox-wJCTb3-B.js",
+    "name": "combobox",
+    "src": "src/scripts/cinq/combobox.ts",
+    "isEntry": true,
+    "imports": [
+      "_dist-BcdnhdUF.js",
+      "src/scripts/api/fetchPredictiveSearch.ts"
+    ]
+  },
   "src/scripts/cinq/disclosure-button.ts": {
     "file": "disclosure-button-Ct8lTF0b.js",
     "name": "disclosure-button",
@@ -212,12 +221,13 @@
     ]
   },
   "src/scripts/cinq/index.ts": {
-    "file": "index-CeoVZV0k.js",
+    "file": "index-DWOTGYpT.js",
     "name": "index",
     "src": "src/scripts/cinq/index.ts",
     "isEntry": true,
     "imports": [
       "_dist-BcdnhdUF.js",
+      "src/scripts/cinq/combobox.ts",
       "src/scripts/cinq/disclosure-button.ts",
       "src/scripts/cinq/toast.ts"
     ]
@@ -229,15 +239,15 @@
     "isEntry": true
   },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-CHbsz-fE.js",
+    "file": "AddToCartButton-Cv39UzOW.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-DxA8j4Pk.js",
       "_dist-BcdnhdUF.js",
-      "src/scripts/cinq/toast.ts",
       "src/scripts/api/errors.ts",
+      "src/scripts/cinq/toast.ts",
       "src/scripts/store/cart.ts"
     ]
   },
@@ -252,14 +262,14 @@
     ]
   },
   "src/scripts/components/CartItem.ts": {
-    "file": "CartItem-BHKA8Mjk.js",
+    "file": "CartItem-Ch5XSpAK.js",
     "name": "CartItem",
     "src": "src/scripts/components/CartItem.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-DxA8j4Pk.js",
-      "src/scripts/cinq/toast.ts",
       "src/scripts/api/errors.ts",
+      "src/scripts/cinq/toast.ts",
       "src/scripts/store/cart.ts"
     ]
   },
@@ -367,17 +377,6 @@
       "_dist-BcdnhdUF.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
-    ]
-  },
-  "src/scripts/predictive-search-mount.ts": {
-    "file": "predictive-search-mount-B_mJ4SxC.js",
-    "name": "predictive-search-mount",
-    "src": "src/scripts/predictive-search-mount.ts",
-    "isEntry": true,
-    "imports": [
-      "_dist-BcdnhdUF.js",
-      "src/scripts/api/fetchPredictiveSearch.ts",
-      "src/scripts/api/fetchPredictiveSearch.ts"
     ]
   },
   "src/scripts/store/cart.ts": {
