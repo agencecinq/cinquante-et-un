@@ -11,8 +11,8 @@ export const cartSections: Section[] = [
     selectors: ['.js-cart-header', '.js-cart-items', '.js-cart-footer'],
   },
   {
+    // Whole root: the empty state shares no `.js-*` node with the filled one.
     id: 'cart',
-    selectors: ['.js-cart-items', '.js-cart-footer'],
   },
   {
     id: 'cart-count-bubble',

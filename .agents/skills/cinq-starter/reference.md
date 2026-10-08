@@ -56,8 +56,8 @@ assets/             # build outputs — don’t hand-edit hashed bundles
 
 Adding a live cart region:
 
-1. Mark a stable `.js-*` root
-2. Add it to `selectors` for `cart-drawer` and/or `cart`
+1. Mark a stable `.js-*` root, rendered in **every** state (empty included): a root missing on either side is never swapped
+2. Add it to `selectors` for `cart-drawer` (the `cart` page section is swapped whole)
 3. Keep form/item ids stable (`CartForm-{{ id }}`, …)
 
 Also re-render `cart-count-bubble` for the header badge.
