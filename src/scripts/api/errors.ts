@@ -16,11 +16,11 @@ export class ApiError extends Error {
 /**
  * Best-effort user-facing message from an unknown thrown value.
  */
-export function errorMessage(error: unknown): string {
+export function messageFromError(error: unknown): string {
   if (error instanceof Error) {
     return error.message;
   }
-  
+
   if (typeof error === 'string') {
     return error;
   }
@@ -28,6 +28,9 @@ export function errorMessage(error: unknown): string {
   return String(error ?? 'Unknown error');
 }
 
+/**
+ * Message from a Shopify Ajax error body (`message`, `description` or `errors`).
+ */
 export function messageFromPayload(payload: unknown, fallback: string): string {
   if (payload && typeof payload === 'object') {
     const record = payload as Record<string, unknown>;

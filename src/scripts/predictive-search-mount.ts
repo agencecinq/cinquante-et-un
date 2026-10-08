@@ -1,6 +1,6 @@
 import type { Combobox, EmptyDetail, UpdateDetail } from '@agencecinq/combobox';
 import { EVENTS } from '@agencecinq/utils';
-import { fetchPredictiveSearchSection } from './api/fetchPredictiveSearchSection.ts';
+import { fetchPredictiveSearch } from './api/fetchPredictiveSearch.ts';
 
 const DEFAULT_SECTION_ID = 'predictive-search';
 const wired = new WeakSet<Combobox>();
@@ -38,7 +38,7 @@ const wire = (host: Combobox): void => {
     }
 
     return {
-      html: await fetchPredictiveSearchSection({
+      html: await fetchPredictiveSearch({
         query,
         sectionId,
         signal,

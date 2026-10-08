@@ -7,22 +7,21 @@
  * @see https://shopify.dev/docs/api/ajax/reference/predictive-search
  */
 
-import { ApiError } from './errors.ts';
-import { fetchHtml, parseHtml } from './http.ts';
+import { fetchHtml } from './http.ts';
 
-export interface FetchPredictiveSearchSectionOptions {
+export interface FetchPredictiveSearchOptions {
   query: string;
   sectionId?: string;
   limit?: number;
   signal?: AbortSignal;
 }
 
-export async function fetchPredictiveSearchSection({
+export async function fetchPredictiveSearch({
   query,
   sectionId = 'predictive-search',
   limit = 8,
   signal,
-}: FetchPredictiveSearchSectionOptions): Promise<string> {
+}: FetchPredictiveSearchOptions): Promise<string> {
   // Shopify Predictive Search requires a non-empty `q`.
   if (!query.trim()) {
     return '';
@@ -38,23 +37,12 @@ export async function fetchPredictiveSearchSection({
     'resources[options][fields]': 'title,product_type,variants.title',
   });
 
-  try {
-    const html = await fetchHtml(`${routes.predictive_search_url}?${params.toString()}`, {
-      signal,
-    });
+  const html = await fetchHtml(`${routes.predictive_search_url}?${params.toString()}`, {
+    signal,
+    fallback: 'Predictive search failed',
+  });
 
-    const doc = parseHtml(html);
-    const section = doc.querySelector(`#shopify-section-${sectionId}`);
+  const section = new DOMParser().parseFromString(html, 'text/html').querySelector(`#shopify-section-${sectionId}`);
 
-    return section?.innerHTML.trim() ?? '';
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw new ApiError(
-        `Predictive search failed (${error.status})`,
-        error.status,
-        error.payload,
-      );
-    }
-    throw error;
-  }
+  return section?.innerHTML.trim() ?? '';
 }

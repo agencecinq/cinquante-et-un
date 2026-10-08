@@ -1,14 +1,14 @@
 import { ApiError, messageFromPayload } from './errors.ts';
 
-type JsonInit = RequestInit & {
-  /** Default error message when the response body has no Shopify `message`. */
+type FetchInit = RequestInit & {
+  /** Error message used when the response carries none; the status is appended. */
   fallback?: string;
 };
 
 /**
  * JSON fetch helper for Shopify Ajax endpoints (`*.js`).
  */
-export async function fetchJson<T>(url: string, init: JsonInit = {}): Promise<T> {
+export async function fetchJson<T>(url: string, init: FetchInit = {}): Promise<T> {
   const { fallback = 'Request failed', headers, ...rest } = init;
 
   const response = await fetch(url, {
@@ -40,24 +40,22 @@ export async function fetchJson<T>(url: string, init: JsonInit = {}): Promise<T>
 /**
  * HTML fetch helper for Section Rendering / Predictive Search.
  */
-export async function fetchHtml(url: string, init: RequestInit = {}): Promise<string> {
+export async function fetchHtml(url: string, init: FetchInit = {}): Promise<string> {
+  const { fallback = 'Request failed', headers, ...rest } = init;
+
   const response = await fetch(url, {
-    ...init,
+    ...rest,
     headers: {
       Accept: 'text/html',
-      ...init.headers,
+      ...headers,
     },
   });
 
   const text = await response.text();
 
   if (!response.ok) {
-    throw new ApiError(`Request failed (${response.status})`, response.status, text);
+    throw new ApiError(`${fallback} (${response.status})`, response.status, text);
   }
 
   return text;
-}
-
-export function parseHtml(markup: string): Document {
-  return new DOMParser().parseFromString(markup, 'text/html');
 }

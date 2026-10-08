@@ -4,14 +4,17 @@ import { CartSectionsOptions } from '../types/cart.ts';
 export const MAX_CART_SECTIONS = 5;
 
 /**
- * Apply bundled section-rendering options onto a cart Ajax request body.
+ * Return a copy of a cart Ajax request body with bundled section-rendering
+ * options applied.
  *
  * @see https://shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering
  */
-export function applyCartSections(
-  body: Record<string, unknown>,
+export function withCartSections<T extends object>(
+  body: T,
   options: CartSectionsOptions = {},
-): Record<string, unknown> {
+): T & { sections?: string; sections_url?: string } {
+  const result: T & { sections?: string; sections_url?: string } = { ...body };
+
   if (options.sections) {
     const ids = (
       Array.isArray(options.sections) ? options.sections : options.sections.split(',')
@@ -25,12 +28,12 @@ export function applyCartSections(
       );
     }
 
-    body.sections = ids.slice(0, MAX_CART_SECTIONS).join(',');
+    if (ids.length) result.sections = ids.slice(0, MAX_CART_SECTIONS).join(',');
   }
 
   if (options.sections_url) {
-    body.sections_url = options.sections_url;
+    result.sections_url = options.sections_url;
   }
 
-  return body;
+  return result;
 }

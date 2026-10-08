@@ -66,6 +66,11 @@ export type CartSectionsOptions = {
   sections_url?: string;
 };
 
-export type ItemsResponse = Record<string, unknown> & {
+/**
+ * Payload returned by `/cart/add.js`: only the added lines, not the full cart.
+ * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-add-js
+ */
+export type AddCartItemsResponse = {
+  items: CartLineItem[];
   sections?: Record<string, string>;
 };

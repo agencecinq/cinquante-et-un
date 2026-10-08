@@ -48,7 +48,7 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 ### Cart Ajax
 
 - Store: `src/scripts/store/cart.ts` (queued mutations, `subscribe` / `subscribePending`)
-- Registry: `src/scripts/utils/sections.ts` — ids + optional `.js-*` selectors
+- Registry: `src/scripts/store/cartSections.ts` — ids + optional `.js-*` selectors; only sections on the page are requested
 - Prefer bundled section HTML from cart Ajax; fallback `?sections=`
 - Live drawer roots: `.js-cart-header` / `.js-cart-items` / `.js-cart-footer`
 - Mount cart drawer globally from layout (`{% section 'cart-drawer' %}`)
@@ -101,7 +101,7 @@ Copy blog/form/collection:
 | Snippet | `name.html.liquid` + `{% doc %}`; optional `_` prefix for private partials |
 | Piece | `components/` + `load()` in `app.ts` |
 | Style | Utilities / existing components; new shared → `src/stylesheets/components/` + import in `styles.css` |
-| Live cart UI | Stable `.js-*` root + update `sections.ts` |
+| Live cart UI | Stable `.js-*` root + update `cartSections.ts` |
 | Brand (fork) | Tokens in `theme.css` `@theme`, then components — not Liquid one-offs |
 
 ## Anti-patterns

@@ -1,12 +1,20 @@
-import { addItems } from '../api/addItems.ts';
-import { getCart } from '../api/getCart.ts';
-import { renderBundledSection } from '../api/renderBundledSection.ts';
-import { renderSections } from '../api/renderSections.ts';
-import sections from '../utils/sections.ts';
-import { updateItems } from '../api/updateItems.ts';
+import { addCartItems } from '../api/addCartItems.ts';
+import { fetchCart } from '../api/fetchCart.ts';
+import { fetchSections } from '../api/fetchSections.ts';
+import { updateCart } from '../api/updateCart.ts';
 import { CartItem, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
+import { Section } from '../types/section.ts';
+import { cartSections } from './cartSections.ts';
+import { renderSection } from './renderSection.ts';
 
 export type CartAction = () => Promise<CartSnapshot>;
+
+/**
+ * Runs after each action, before the snapshot is committed. A middleware that
+ * mutates the cart server-side must return a snapshot without `sections`:
+ * the bundled markup from the original action would be stale, and omitting it
+ * makes `commit` re-fetch every registered section on the page.
+ */
 export type CartMiddleware = (snapshot: CartSnapshot) => Promise<CartSnapshot>;
 export type CartListener = (snapshot: CartSnapshot) => void;
 export type CartPendingListener = (pending: boolean) => void;
@@ -88,8 +96,8 @@ class CartStore {
 
     add(items: CartItem[], options: CartSectionsOptions = {}): Promise<CartSnapshot> {
         return this.mutate(async () => {
-            const added = await addItems(items, options);
-            const fresh = await getCart();
+            const added = await addCartItems(items, this.withSections(options));
+            const fresh = await fetchCart();
             return { ...fresh, sections: added.sections };
         });
     }
@@ -98,28 +106,55 @@ class CartStore {
         updates: Record<string, number>,
         options: CartSectionsOptions = {},
     ): Promise<CartSnapshot> {
-        return this.mutate(() => updateItems({ updates }, options));
+        return this.mutate(() => updateCart({ updates }, this.withSections(options)));
     }
 
     refresh(): Promise<CartSnapshot> {
-        return this.mutate(() => getCart());
+        return this.mutate(() => fetchCart());
+    }
+
+    private withSections(options: CartSectionsOptions): CartSectionsOptions {
+        return {
+            sections: this.liveSections().map(({ id }) => id),
+            sections_url: routes.cart_url,
+            ...options,
+        };
+    }
+
+    private liveSections(): Section[] {
+        return cartSections.filter(({ id }) => document.getElementById(id));
     }
 
     private async commit(snapshot: CartSnapshot): Promise<void> {
         this.current = snapshot;
 
-        if (snapshot.sections) {
-            for (const { id, selectors } of sections) {
-                const html = snapshot.sections[id];
-                if (html) {
-                    renderBundledSection(html, `#${id}`, selectors ?? null);
-                }
-            }
-        } else {
-            await renderSections(sections);
+        try {
+            await this.render(snapshot);
+        } finally {
+            this.notify(snapshot);
         }
+    }
 
-        this.listeners.forEach((listener) => listener(snapshot));
+    private async render(snapshot: CartSnapshot): Promise<void> {
+        const sections = this.liveSections();
+        if (!sections.length) return;
+
+        const markup = snapshot.sections ?? (await fetchSections(sections.map(({ id }) => id)));
+
+        for (const section of sections) {
+            const html = markup[section.id];
+            if (html) renderSection(html, section);
+        }
+    }
+
+    private notify(snapshot: CartSnapshot): void {
+        this.listeners.forEach((listener) => {
+            try {
+                listener(snapshot);
+            } catch (error) {
+                console.error('[cart] listener error:', error);
+            }
+        });
     }
 
     private notifyPending(): void {

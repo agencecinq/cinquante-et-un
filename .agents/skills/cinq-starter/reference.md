@@ -19,9 +19,9 @@ src/
     app.ts          # piecesjs loads + cart pieces + mounts
     cinq/           # @agencecinq side-effect imports
     components/     # c-* custom elements
-    store/cart.ts   # Ajax cart queue
-    api/            # addItems, updateItems, getCart, renderSections, …
-    utils/          # sections.ts, events, i18n, …
+    store/          # cart.ts (Ajax cart queue), cartSections.ts, renderSection.ts
+    api/            # network only: fetchCart, addCartItems, updateCart, fetchSections, …
+    utils/          # events, i18n, …
     types/          # cart, section, …
   stylesheets/
     styles.css      # tailwind → theme → base → utilities → components
@@ -52,7 +52,7 @@ assets/             # build outputs — don’t hand-edit hashed bundles
 
 ## Cart re-render contract
 
-`src/scripts/utils/sections.ts` lists section ids returned by Cart Ajax / Section Rendering.
+`src/scripts/store/cartSections.ts` lists section ids returned by Cart Ajax / Section Rendering. Only sections whose root id is on the current page are requested and re-rendered.
 
 Adding a live cart region:
 

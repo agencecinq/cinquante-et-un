@@ -1,8 +1,7 @@
 import { Piece } from 'piecesjs';
 import { EVENTS } from '@agencecinq/utils';
-import { errorMessage } from '../api/errors.ts';
+import { messageFromError } from '../api/errors.ts';
 import cart from '../store/cart.ts';
-import sections from '../utils/sections.ts';
 import { show } from '../cinq/toast.ts';
 import { CartItem } from '../types/cart.ts';
 
@@ -71,13 +70,10 @@ class AddToCartButton extends Piece {
 
     try {
       const items = this.parseItems();
-      await cart.add(items, {
-        sections: this.sections.map(({ id }) => id),
-        sections_url: '/cart',
-      });
+      await cart.add(items);
       this.dispatchEvents();
     } catch (error) {
-      show(errorMessage(error));
+      show(messageFromError(error));
     } finally {
       this.$button!.disabled = !this.inStock;
       this.loading = 'false';
@@ -193,10 +189,6 @@ class AddToCartButton extends Piece {
 
   get events() {
     return this.getAttribute('data-events') || this.getAttribute('events') || 'DRAWER_OPEN';
-  }
-
-  get sections() {
-    return sections;
   }
 }
 

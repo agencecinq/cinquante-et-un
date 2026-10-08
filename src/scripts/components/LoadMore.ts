@@ -1,5 +1,5 @@
 import { Piece } from 'piecesjs';
-import { fetchSectionByID } from '../api/fetchSectionByID.ts';
+import { fetchSection } from '../api/fetchSection.ts';
 
 class LoadMore extends Piece {
   static get observedAttributes() {
@@ -49,7 +49,8 @@ class LoadMore extends Piece {
     this.setAttribute('loading', '');
 
     try {
-      const doc = await fetchSectionByID(this.action, this.sectionId);
+      const markup = await fetchSection(this.action, this.sectionId);
+      const doc = new DOMParser().parseFromString(markup, 'text/html');
       const nextLoadMore = doc.getElementById(this.id);
       const nextProducts = doc.getElementById(this.productsId);
 

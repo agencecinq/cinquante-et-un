@@ -1,7 +1,6 @@
 import { Piece } from 'piecesjs';
-import { errorMessage } from '../api/errors.ts';
+import { messageFromError } from '../api/errors.ts';
 import cart from '../store/cart.ts';
-import sections from '../utils/sections.ts';
 import { show } from '../cinq/toast.ts';
 
 class CartItem extends Piece {
@@ -37,15 +36,9 @@ class CartItem extends Piece {
     this.loading = 'true';
 
     try {
-      await cart.update(
-        { [this.itemId]: quantity },
-        {
-          sections: this.sections.map(({ id }) => id),
-          sections_url: window.location.pathname,
-        },
-      );
+      await cart.update({ [this.itemId]: quantity });
     } catch (error) {
-      show(errorMessage(error));
+      show(messageFromError(error));
     } finally {
       this.loading = 'false';
     }
@@ -78,10 +71,6 @@ class CartItem extends Piece {
 
   set loading(value: string) {
     this.setAttribute('loading', value);
-  }
-
-  get sections() {
-    return sections;
   }
 }
 
