@@ -17,7 +17,7 @@ config/             # settings_schema.json, settings_data.json
 src/
   scripts/
     app.ts          # piecesjs loads + cart pieces + mounts
-    cinq/           # @agencecinq side-effect imports
+    cinq/           # @agencecinq side-effect imports + theme glue (combobox, toast, …)
     components/     # c-* custom elements
     store/          # cart.ts (Ajax cart queue), cartSections.ts, renderSection.ts
     api/            # network only: fetchCart, addCartItems, updateCart, fetchSections, …

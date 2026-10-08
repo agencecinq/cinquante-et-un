@@ -10,8 +10,10 @@ import '@agencecinq/tabs';
 import '@agencecinq/toast';
 import '@agencecinq/windowsplitter';
 
+import { init as initCombobox } from './combobox.ts';
 import { init as initDisclosureButton } from './disclosure-button.ts';
 import { init as initToast } from './toast.ts';
 
+initCombobox();
 initDisclosureButton();
 initToast();

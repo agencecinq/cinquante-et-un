@@ -1,12 +1,12 @@
 import type { Combobox, EmptyDetail, UpdateDetail } from '@agencecinq/combobox';
 import { EVENTS } from '@agencecinq/utils';
-import { fetchPredictiveSearch } from './api/fetchPredictiveSearch.ts';
+import { fetchPredictiveSearch } from '../api/fetchPredictiveSearch.ts';
 
 const DEFAULT_SECTION_ID = 'predictive-search';
 const wired = new WeakSet<Combobox>();
 
 /**
- * Mount script: wires Shopify predictive search onto `<cinq-combobox>`.
+ * Wires Shopify predictive search onto `<cinq-combobox>`.
  * Panel visibility is CSS (`:has([aria-expanded=true])`); this module only
  * assigns `search` / `onSelect` and i18n status / live regions.
  */
@@ -23,12 +23,8 @@ const wire = (host: Combobox): void => {
   const resultsCountOne = host.getAttribute('data-results-count-one') ?? '';
   const resultsCountOther = host.getAttribute('data-results-count-other') ?? '';
   const noResultsTemplate = host.getAttribute('data-no-results') ?? '';
-  const sectionId =
-    host.getAttribute('data-section-id') ?? DEFAULT_SECTION_ID;
-  const minLength = Math.max(
-    0,
-    parseInt(host.getAttribute('data-combobox-min-length') ?? '2', 10) || 2,
-  );
+  const sectionId = host.getAttribute('data-section-id') ?? DEFAULT_SECTION_ID;
+  const minLength = Math.max(0, parseInt(host.getAttribute('data-combobox-min-length') ?? '2', 10) || 2);
 
   // Combobox `ensureOpen()` (click / ArrowDown) calls `run()` and bypasses
   // `minLength` — Shopify's suggest API rejects an empty `q`.
@@ -83,12 +79,10 @@ const wire = (host: Combobox): void => {
     $status.hidden = true;
     $status.textContent = '';
     $live.textContent =
-      1 === options.length
-        ? resultsCountOne
-        : resultsCountOther.replace('__COUNT__', String(options.length));
+      1 === options.length ? resultsCountOne : resultsCountOther.replace('__COUNT__', String(options.length));
   }) as EventListener);
 };
 
-document
-  .querySelectorAll<Combobox>('cinq-combobox[data-section-id]')
-  .forEach(wire);
+export function init(): void {
+  document.querySelectorAll<Combobox>('cinq-combobox[data-section-id]').forEach(wire);
+}

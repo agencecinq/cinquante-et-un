@@ -7,9 +7,6 @@ import './cinq/index.ts';
 import './components/CartDrawer.ts';
 import './components/CartItem.ts';
 import './components/CartQuantity.ts';
-
-void import('./predictive-search-mount.ts');
-
 load('c-add-to-cart-button', () => import('./components/AddToCartButton.ts'));
 load('c-cart-store-demo', () => import('./components/CartStoreDemo.ts'));
 load('c-headroom', () => import('./components/Headroom.ts'));
