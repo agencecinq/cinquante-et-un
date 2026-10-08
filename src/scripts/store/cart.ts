@@ -2,7 +2,7 @@ import { addCartItems } from '../api/addCartItems.ts';
 import { fetchCart } from '../api/fetchCart.ts';
 import { fetchSections } from '../api/fetchSections.ts';
 import { updateCart } from '../api/updateCart.ts';
-import { AddCartItem, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
+import { AddCartItem, Cart, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
 import { Section } from '../types/section.ts';
 import { cartSections } from './cartSections.ts';
 import { renderSection } from '../utils/renderSection.ts';
@@ -16,11 +16,11 @@ export type CartAction = () => Promise<CartSnapshot>;
  * change), so `commit` re-fetches every registered section on the page.
  */
 export type CartMiddleware = (snapshot: CartSnapshot) => Promise<CartSnapshot>;
-export type CartListener = (snapshot: CartSnapshot) => void;
+export type CartListener = (cart: Cart) => void;
 export type CartPendingListener = (pending: boolean) => void;
 
 class CartStore {
-  private current: CartSnapshot | null = null;
+  private current: Cart | null = null;
   private listeners = new Set<CartListener>();
   private pendingListeners = new Set<CartPendingListener>();
   private middlewares: CartMiddleware[] = [];
@@ -33,7 +33,7 @@ class CartStore {
     }
   }
 
-  get(): CartSnapshot | null {
+  get(): Cart | null {
     return this.current;
   }
 
@@ -155,10 +155,10 @@ class CartStore {
     }
   }
 
-  private notify(snapshot: CartSnapshot): void {
+  private notify(cart: Cart): void {
     this.listeners.forEach((listener) => {
       try {
-        listener(snapshot);
+        listener(cart);
       } catch (error) {
         console.error('[cart] listener error:', error);
       }

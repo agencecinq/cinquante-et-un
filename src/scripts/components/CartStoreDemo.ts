@@ -1,7 +1,7 @@
 import { Piece } from 'piecesjs';
 import { messageFromError } from '../api/errors.ts';
 import cart, { CartMiddleware } from '../store/cart.ts';
-import { CartSnapshot } from '../types/cart.ts';
+import { Cart, CartSnapshot } from '../types/cart.ts';
 import { formatCurrency } from '../utils/format-currency.ts';
 
 type LogKind = 'queue' | 'done' | 'error' | 'pending' | 'listener' | 'middleware';
@@ -120,7 +120,7 @@ class CartStoreDemo extends Piece {
     return snapshot;
   };
 
-  private handleSnapshot = (snapshot: CartSnapshot): void => {
+  private handleSnapshot = (snapshot: Cart): void => {
     this.notifications += 1;
     this.renderStats(snapshot);
     this.addEntry(
@@ -144,7 +144,7 @@ class CartStoreDemo extends Piece {
     this.pending = pending;
   };
 
-  private renderStats(snapshot: CartSnapshot): void {
+  private renderStats(snapshot: Cart): void {
     this.$count.textContent = String(snapshot.item_count);
     this.$total.textContent = formatCurrency(snapshot.total_price, Shopify.money_format);
     this.$lines.textContent = String(snapshot.items.length);
