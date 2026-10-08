@@ -411,15 +411,6 @@
     "src": "src/scripts/types/section.ts",
     "isEntry": true
   },
-  "src/scripts/utils/environment.ts": {
-    "file": "environment-CgmQ_ezY.js",
-    "name": "environment",
-    "src": "src/scripts/utils/environment.ts",
-    "isEntry": true,
-    "imports": [
-      "_dist-BcdnhdUF.js"
-    ]
-  },
   "src/scripts/utils/events.ts": {
     "file": "events-CWt5CtG7.js",
     "name": "events",
