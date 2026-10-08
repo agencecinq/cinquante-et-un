@@ -10,10 +10,10 @@ import { renderSection } from './renderSection.ts';
 export type CartAction = () => Promise<CartSnapshot>;
 
 /**
- * Runs after each action, before the snapshot is committed. A middleware that
- * mutates the cart server-side must return a snapshot without `sections`:
- * the bundled markup from the original action would be stale, and omitting it
- * makes `commit` re-fetch every registered section on the page.
+ * Runs after each action, before the snapshot is committed. Return the same
+ * snapshot to pass through. Returning a new snapshot that still carries the
+ * previous `sections` drops that markup (it may be stale after a server-side
+ * change), so `commit` re-fetches every registered section on the page.
  */
 export type CartMiddleware = (snapshot: CartSnapshot) => Promise<CartSnapshot>;
 export type CartListener = (snapshot: CartSnapshot) => void;
@@ -79,7 +79,9 @@ class CartStore {
       try {
         let snapshot = await action();
         for (const middleware of this.middlewares) {
-          snapshot = await middleware(snapshot);
+          const next = await middleware(snapshot);
+          const reusesMarkup = next !== snapshot && next.sections === snapshot.sections;
+          snapshot = reusesMarkup ? { ...next, sections: undefined } : next;
         }
         await this.commit(snapshot);
         return snapshot;
