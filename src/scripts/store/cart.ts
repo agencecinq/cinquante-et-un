@@ -139,13 +139,19 @@ class CartStore {
 
   private async render(bundled?: Record<string, string>): Promise<void> {
     const sections = this.liveSections();
-    if (!sections.length) return;
+
+    if (!sections.length) {
+      return;
+    }
 
     const markup = bundled ?? (await fetchSections(sections.map(({ id }) => id)));
 
     for (const section of sections) {
       const html = markup[section.id];
-      if (html) renderSection(html, section);
+
+      if (html) {
+        renderSection(html, section);
+      }
     }
   }
 
