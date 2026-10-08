@@ -124,24 +124,24 @@ class CartStore {
     return cartSections.filter(({ id }) => document.getElementById(id));
   }
 
-  private async commit(snapshot: CartSnapshot): Promise<void> {
-    this.current = snapshot;
+  private async commit({ sections, ...cart }: CartSnapshot): Promise<void> {
+    this.current = cart;
 
     // The cart already changed server-side: a failed re-render must not reject the mutation.
     try {
-      await this.render(snapshot);
+      await this.render(sections);
     } catch (error) {
       console.error('[cart] render error:', error);
     }
 
-    this.notify(snapshot);
+    this.notify(cart);
   }
 
-  private async render(snapshot: CartSnapshot): Promise<void> {
+  private async render(bundled?: Record<string, string>): Promise<void> {
     const sections = this.liveSections();
     if (!sections.length) return;
 
-    const markup = snapshot.sections ?? (await fetchSections(sections.map(({ id }) => id)));
+    const markup = bundled ?? (await fetchSections(sections.map(({ id }) => id)));
 
     for (const section of sections) {
       const html = markup[section.id];
