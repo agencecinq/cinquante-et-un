@@ -1,147 +1,191 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "section-hero",
       "blocks": {
-        "hero_subtitle": {
+        "sub": {
           "type": "subtitle",
           "settings": {
-            "subtitle": "Starter"
+            "subtitle": "Touches à l'unité"
           },
           "blocks": {}
         },
-        "hero_title": {
+        "title": {
           "type": "title",
           "settings": {
-            "title": "Cinquante-et-un",
+            "title": "Remplacez la touche, pas le clavier.",
             "tag": "h1",
             "font_size": "text-xl font-semibold lg:text-3xl"
           },
           "blocks": {}
         },
-        "hero_text": {
+        "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Starter Shopify wireframe — Vite, Tailwind, piecesjs et composants @agencecinq.</p>",
+            "text": "<p>51 touches, de A à Z, en passant par l'arobase et la barre d'espace. 3 coloris. À partir de 5 €.</p>",
             "tag": "div",
             "font_size": "text-base"
           },
           "blocks": {}
         },
-        "hero_link": {
+        "link": {
           "type": "link",
           "settings": {
-            "link_url": "shopify://collections/all",
-            "link_title": "Voir la boutique",
-            "link_aria_label": "Voir la boutique",
+            "link_url": "shopify://collections/cinquante-et-un",
+            "link_title": "Voir les 51 touches",
+            "link_aria_label": "Voir les 51 touches",
             "link_target": "_self"
           },
           "blocks": {}
         }
       },
-      "block_order": ["hero_subtitle", "hero_title", "hero_text", "hero_link"],
+      "block_order": [
+        "sub",
+        "title",
+        "text",
+        "link"
+      ],
       "settings": {
-        "full_bleed": false,
+        "image": "shopify://shop_images/f5-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/f5-hero-mobile.png",
+        "full_bleed": true,
         "show_media_overlay": false,
         "space_between": "space-y-6",
         "alignment_horizontal": "lg:col-start-1 lg:text-start",
         "alignment_vertical": "items-end",
-        "padding_top": 40,
+        "padding_top": 24,
         "padding_bottom": 40
       }
     },
-    "intro": {
+    "nouveautes": {
+      "type": "featured-collection",
+      "settings": {
+        "subtitle": "Rechargé ce matin",
+        "title": "Nouveautés",
+        "collection": "nouveautes",
+        "products_to_show": 4,
+        "columns": "4",
+        "show_quick_add": true,
+        "show_view_all": true,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "principe": {
       "type": "section-richtext",
       "blocks": {
-        "intro_subtitle": {
+        "sub": {
           "type": "subtitle",
           "settings": {
-            "subtitle": "Intro"
+            "subtitle": "Le principe"
           },
           "blocks": {}
         },
-        "intro_title": {
+        "title": {
           "type": "title",
           "settings": {
-            "title": "Point de départ",
+            "title": "On remplace ce qui s'use, on garde le reste.",
             "tag": "h2",
             "font_size": "text-base font-semibold"
           },
           "blocks": {}
         },
-        "intro_text": {
+        "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Ce thème est volontairement minimal. Remplacez les textes, branchez vos menus, puis construisez les sections projet par-dessus ce socle.</p>",
+            "text": "<p>Une lettre effacée, un symbole qui manque, une touche Échap perdue dans un déménagement. Chez F5, chaque touche se commande seule, au format 1u ou plus, avec une fixation en croisillon type MX.</p><p>Le E s'use plus vite que le W : c'est pour lui qu'on vend les touches à l'unité.</p>",
             "tag": "div",
             "font_size": "text-base"
           },
           "blocks": {}
+        },
+        "link": {
+          "type": "link",
+          "settings": {
+            "link_url": "shopify://pages/a-propos",
+            "link_title": "Lire la suite",
+            "link_aria_label": "Lire la suite",
+            "link_target": "_self"
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["intro_subtitle", "intro_title", "intro_text"],
+      "block_order": [
+        "sub",
+        "title",
+        "text",
+        "link"
+      ],
       "settings": {
         "text_alignment": "text-start",
         "space_between": "space-y-4",
         "columns": "lg:col-start-1 lg:col-span-8",
         "padding_top": 64,
-        "padding_bottom": 32
+        "padding_bottom": 48
       }
     },
-    "stack": {
-      "type": "section-richtext",
+    "familles": {
+      "type": "multirow",
       "blocks": {
-        "stack_subtitle": {
-          "type": "subtitle",
+        "r1": {
+          "type": "row",
           "settings": {
-            "subtitle": "Tech"
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/f5-famille-lettres.png",
+            "title": "Lettres",
+            "content": "<p>Les 26, de A à Z. 5 € la touche.</p>",
+            "button_label": "Voir les lettres",
+            "button_link": "shopify://collections/lettres"
+          }
         },
-        "stack_title": {
-          "type": "title",
+        "r2": {
+          "type": "row",
           "settings": {
-            "title": "Stack inclus",
-            "tag": "h2",
-            "font_size": "text-base font-semibold"
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/f5-famille-symboles.png",
+            "title": "Symboles",
+            "content": "<p>Les signes qui tiennent les URL debout.</p>",
+            "button_label": "Voir les symboles",
+            "button_link": "shopify://collections/symboles"
+          }
         },
-        "stack_text": {
-          "type": "text",
+        "r3": {
+          "type": "row",
           "settings": {
-            "text": "<ul><li>Vite 8 + Tailwind 4</li><li>Cart store Ajax (sections bundlées)</li><li>Web Components @agencecinq</li><li>Header, footer, panier drawer, product/collection de base</li></ul>",
-            "tag": "div",
-            "font_size": "text-base"
-          },
-          "blocks": {}
-        },
-        "stack_link": {
-          "type": "link",
-          "settings": {
-            "link_url": "shopify://pages/contact",
-            "link_title": "Page contact",
-            "link_aria_label": "Page contact",
-            "link_target": "_self"
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/f5-famille-packs.png",
+            "title": "Packs",
+            "content": "<p>Les touches qui ne servent à rien seules.</p>",
+            "button_label": "Voir les packs",
+            "button_link": "shopify://collections/packs"
+          }
         }
       },
-      "block_order": ["stack_subtitle", "stack_title", "stack_text", "stack_link"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
       "settings": {
-        "text_alignment": "text-start",
-        "space_between": "space-y-4",
-        "columns": "lg:col-start-1 lg:col-span-8",
-        "padding_top": 32,
-        "padding_bottom": 64
+        "title": "Par famille",
+        "content": "<p>4 familles, 51 références.</p>",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
-    "featured": {
+    "web": {
       "type": "featured-collection",
       "settings": {
-        "subtitle": "Shop",
-        "title": "Nos produits",
-        "products_to_show": 4,
+        "subtitle": "www",
+        "title": "Le kit du web",
+        "collection": "kit-du-web",
+        "products_to_show": 8,
         "columns": "4",
         "show_quick_add": true,
         "show_view_all": true,
@@ -152,103 +196,111 @@
     "faq": {
       "type": "section-accordion-group",
       "blocks": {
-        "faq_1": {
+        "q1": {
           "type": "accordion",
           "settings": {
-            "title": "Comment démarrer ?",
-            "content": "<p>Configurez shopify.theme.toml, lancez pnpm install puis pnpm dev.</p>"
+            "title": "Les touches vont-elles sur mon clavier ?",
+            "content": "<p>Elles utilisent une fixation en croisillon type MX, la plus courante sur les claviers mécaniques. Elles ne vont pas sur les claviers d'ordinateurs portables à touches plates.</p>"
           }
         },
-        "faq_2": {
+        "q2": {
           "type": "accordion",
           "settings": {
-            "title": "Où personnaliser le design ?",
-            "content": "<p>Tokens dans src/stylesheets/theme.css, composants Liquid dans sections/ et snippets/.</p>"
+            "title": "Que veut dire « 1u » ?",
+            "content": "<p>C'est l'unité de largeur d'une touche : 19,05 mm d'entraxe. Une lettre fait 1u, la touche Maj 2,25u, la barre d'espace 6,25u.</p>"
           }
         },
-        "faq_3": {
+        "q3": {
           "type": "accordion",
           "settings": {
-            "title": "Le style wireframe est volontaire ?",
-            "content": "<p>Oui. Le starter reste neutre pour éviter de reporter une identité de marque d’un projet précédent.</p>"
+            "title": "Pourquoi le coloris Pistache coûte 1 € de plus ?",
+            "content": "<p>Parce que c'est la couleur d'accent de CINQ, et qu'un accent se dépense avec parcimonie.</p>"
+          }
+        },
+        "q4": {
+          "type": "accordion",
+          "settings": {
+            "title": "Ma commande sera-t-elle expédiée ?",
+            "content": "<p>Non. F5 est une boutique de démonstration du thème Cinquante-et-un. Rien n'est vendu, rien n'est expédié.</p>"
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
       "settings": {
-        "subtitle": "Help",
-        "title": "FAQ",
+        "subtitle": "Aide",
+        "title": "Questions fréquentes",
+        "link_url": "shopify://pages/faq",
+        "link_title": "Toutes les questions",
         "padding_top": 48,
         "padding_bottom": 48
       }
     },
-    "cta": {
+    "coulisses": {
       "type": "section-richtext",
       "blocks": {
-        "cta_subtitle": {
+        "sub": {
           "type": "subtitle",
           "settings": {
-            "subtitle": "Next"
+            "subtitle": "Coulisses"
           },
           "blocks": {}
         },
-        "cta_title": {
+        "title": {
           "type": "title",
           "settings": {
-            "title": "Prêt à itérer",
+            "title": "Pourquoi 51 touches ?",
             "tag": "h2",
             "font_size": "text-base font-semibold"
           },
           "blocks": {}
         },
-        "cta_text": {
+        "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Ajoutez vos sections métier, vos tokens et votre contenu. Ce squelette est là pour accélérer le premier commit.</p>",
+            "text": "<p>F5 est une boutique de démonstration. Elle sert à montrer Cinquante-et-un, le thème Shopify de départ de CINQ, publié en open source. Il fallait un catalogue pour remplir les gabarits : le compte s'est arrêté à 51.</p>",
             "tag": "div",
             "font_size": "text-base"
           },
           "blocks": {}
         },
-        "cta_link": {
+        "link": {
           "type": "link",
           "settings": {
-            "link_url": "shopify://collections/all",
-            "link_title": "Explorer les produits",
-            "link_aria_label": "Explorer les produits",
+            "link_url": "shopify://blogs/journal/pourquoi-51-touches",
+            "link_title": "Lire l'article",
+            "link_aria_label": "Lire l'article",
             "link_target": "_self"
           },
           "blocks": {}
         }
       },
-      "block_order": ["cta_subtitle", "cta_title", "cta_text", "cta_link"],
+      "block_order": [
+        "sub",
+        "title",
+        "text",
+        "link"
+      ],
       "settings": {
         "text_alignment": "text-start",
         "space_between": "space-y-4",
         "columns": "lg:col-start-1 lg:col-span-6",
         "padding_top": 64,
-        "padding_bottom": 48
-      }
-    },
-    "cart_store_demo": {
-      "type": "section-cart-store-demo",
-      "settings": {
-        "subtitle": "Cart store",
-        "title": "Un seul store pour toutes les mises à jour du panier",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "styleguide": {
-      "type": "section-styleguide",
-      "settings": {
-        "subtitle": "Style guide",
-        "title": "Cinquante-et-un",
-        "intro": "<p>Philosophy, features, and live demos of every @agencecinq Web Component.</p>",
-        "padding_top": 48,
         "padding_bottom": 80
       }
     }
   },
-  "order": ["hero", "intro", "featured", "stack", "faq", "cta", "cart_store_demo", "styleguide"]
+  "order": [
+    "hero",
+    "nouveautes",
+    "principe",
+    "familles",
+    "web",
+    "faq",
+    "coulisses"
+  ]
 }
