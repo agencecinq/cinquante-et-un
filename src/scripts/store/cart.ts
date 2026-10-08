@@ -125,11 +125,14 @@ class CartStore {
   private async commit(snapshot: CartSnapshot): Promise<void> {
     this.current = snapshot;
 
+    // The cart already changed server-side: a failed re-render must not reject the mutation.
     try {
       await this.render(snapshot);
-    } finally {
-      this.notify(snapshot);
+    } catch (error) {
+      console.error('[cart] render error:', error);
     }
+
+    this.notify(snapshot);
   }
 
   private async render(snapshot: CartSnapshot): Promise<void> {
