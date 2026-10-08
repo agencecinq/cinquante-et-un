@@ -208,6 +208,74 @@
     "featured-collection": {
       "view_all": "Voir tout"
     },
+    "cart-store-demo": {
+      "description": "Toutes les mutations du panier passent par un seul store. Déclenchez les actions ci-dessous et observez ce qu’il garantit : exécution dans l’ordre, un état « en cours » unique, des abonnés notifiés et des middlewares branchables. Cette démo modifie votre vrai panier.",
+      "actions": {
+        "title": "Actions",
+        "unavailable": "Aucun produit disponible à ajouter. Choisissez-en un dans les réglages de la section.",
+        "add": {
+          "label": "Ajouter 1 article",
+          "hint": "Une mutation simple : add.js, puis cart.js, avec les sections bundlées."
+        },
+        "burst": {
+          "label": "Rafale de 5 ajouts",
+          "hint": "Cinq appels sans await. La file les exécute un par un, le compteur ne saute jamais."
+        },
+        "remove": {
+          "label": "Retirer la ligne",
+          "hint": "update.js avec une quantité à 0 pour ce variant."
+        },
+        "refresh": {
+          "label": "Rafraîchir",
+          "hint": "Pas de sections dans la réponse : le store les recharge avec ?sections=."
+        },
+        "latency": {
+          "label": "Middleware : simuler 800 ms de latence",
+          "hint": "Enregistré avec cart.use(), retiré avec la fonction qu’il renvoie. Rend l’état « en cours » visible."
+        },
+        "open_drawer": "Ouvrir le panier"
+      },
+      "status": {
+        "idle": "Au repos",
+        "busy": "Mutation en cours…"
+      },
+      "stats": {
+        "count": "Articles",
+        "total": "Total",
+        "lines": "Lignes",
+        "notifications": "Notifications"
+      },
+      "log": {
+        "title": "Journal",
+        "clear": "Vider le journal",
+        "queued": "#__ID__ __ACTION__ mis en file",
+        "done": "#__ID__ __ACTION__ terminé",
+        "failed": "#__ID__ __ACTION__ en échec : __MESSAGE__",
+        "listener": "snapshot reçu : __COUNT__ article(s), __TOTAL__",
+        "pending": "en cours = __VALUE__",
+        "middleware": "attente de __MS__ ms avant le commit",
+        "middleware_on": "middleware enregistré",
+        "middleware_off": "middleware retiré"
+      },
+      "concepts": {
+        "queue": {
+          "title": "File d’attente",
+          "text": "Les mutations s’exécutent l’une après l’autre, même déclenchées en même temps. Aucune course entre deux appels à add.js."
+        },
+        "pending": {
+          "title": "État en cours",
+          "text": "subscribePending signale la première mutation et la fin de la dernière. Le drawer s’en sert pour aria-busy."
+        },
+        "listeners": {
+          "title": "Abonnés",
+          "text": "subscribe reçoit chaque snapshot validé, après le remplacement des sections. Un abonné qui plante n’affecte pas les autres."
+        },
+        "middleware": {
+          "title": "Middlewares",
+          "text": "cart.use() s’exécute entre la requête et le commit : tracking, cadeau automatique, latence. Retirable à tout moment."
+        }
+      }
+    },
     "collection": {
       "see-more": "Voir plus de produits",
       "no-products": "Aucun produit trouvé dans cette collection.",

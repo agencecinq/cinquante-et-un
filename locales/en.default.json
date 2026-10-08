@@ -208,6 +208,74 @@
     "featured-collection": {
       "view_all": "View all"
     },
+    "cart-store-demo": {
+      "description": "Every cart mutation goes through one store. Fire actions below and watch what it guarantees: ordered execution, a single busy state, notified listeners and pluggable middleware. This demo changes your real cart.",
+      "actions": {
+        "title": "Actions",
+        "unavailable": "No available product to add. Pick one in the section settings.",
+        "add": {
+          "label": "Add 1 item",
+          "hint": "A single mutation: add.js, then cart.js, with bundled sections."
+        },
+        "burst": {
+          "label": "Burst of 5 adds",
+          "hint": "Five calls without await. The queue runs them one by one, so the count never skips."
+        },
+        "remove": {
+          "label": "Remove the line",
+          "hint": "update.js with quantity 0 for this variant."
+        },
+        "refresh": {
+          "label": "Refresh",
+          "hint": "No sections in the response, so the store re-fetches them with ?sections=."
+        },
+        "latency": {
+          "label": "Middleware: simulate 800 ms latency",
+          "hint": "Registered with cart.use(), removed with the function it returns. Makes the busy state visible."
+        },
+        "open_drawer": "Open the cart drawer"
+      },
+      "status": {
+        "idle": "Idle",
+        "busy": "Mutation in progress…"
+      },
+      "stats": {
+        "count": "Items",
+        "total": "Total",
+        "lines": "Lines",
+        "notifications": "Notifications"
+      },
+      "log": {
+        "title": "Log",
+        "clear": "Clear log",
+        "queued": "#__ID__ __ACTION__ queued",
+        "done": "#__ID__ __ACTION__ done",
+        "failed": "#__ID__ __ACTION__ failed: __MESSAGE__",
+        "listener": "snapshot received: __COUNT__ item(s), __TOTAL__",
+        "pending": "busy = __VALUE__",
+        "middleware": "waiting __MS__ ms before commit",
+        "middleware_on": "middleware registered",
+        "middleware_off": "middleware removed"
+      },
+      "concepts": {
+        "queue": {
+          "title": "Queue",
+          "text": "Mutations run one after another, even when fired at the same time. No race between two add.js calls."
+        },
+        "pending": {
+          "title": "Busy state",
+          "text": "subscribePending signals the first mutation and the last one settling. The drawer uses it for aria-busy."
+        },
+        "listeners": {
+          "title": "Listeners",
+          "text": "subscribe receives each committed snapshot, after sections are swapped. A failing listener does not affect the others."
+        },
+        "middleware": {
+          "title": "Middleware",
+          "text": "cart.use() runs between the request and the commit: tracking, auto gift, latency. Removable at any time."
+        }
+      }
+    },
     "collection": {
       "sorting": {
         "title": "Sort by"

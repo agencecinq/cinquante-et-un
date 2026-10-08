@@ -230,6 +230,15 @@
         "padding_bottom": 48
       }
     },
+    "cart_store_demo": {
+      "type": "section-cart-store-demo",
+      "settings": {
+        "subtitle": "Cart store",
+        "title": "Un seul store pour toutes les mises à jour du panier",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "styleguide": {
       "type": "section-styleguide",
       "settings": {
@@ -241,5 +250,5 @@
       }
     }
   },
-  "order": ["hero", "intro", "featured", "stack", "faq", "cta", "styleguide"]
+  "order": ["hero", "intro", "featured", "stack", "faq", "cta", "cart_store_demo", "styleguide"]
 }

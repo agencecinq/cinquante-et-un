@@ -1,0 +1,259 @@
+{% comment %}
+  Cart store demo — showcase of the Ajax cart store (queue, pending state,
+  listeners, middleware). Mutates the real cart.
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.6 | divided_by: 16.00 }}rem;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | divided_by: 16.00 }}rem;
+  }
+
+  @media (width >= 64rem) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | divided_by: 16.00 }}rem;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 16.00 }}rem;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign product = section.settings.product
+  if product == blank
+    assign product = collections.all.products.first
+  endif
+
+  assign variant = product.selected_or_first_available_variant
+  assign disabled = ''
+  if variant == blank or variant.available == false
+    assign disabled = 'disabled'
+  endif
+
+  assign sid = section.id
+-%}
+
+<div class="section-{{ sid }}-padding color-{{ section.settings.color_scheme }}">
+  <c-cart-store-demo class="container block space-y-10" data-variant-id="{{ variant.id }}">
+    <header class="max-w-3xl space-y-4">
+      {%- render 'subtitle.html', subtitle: section.settings.subtitle -%}
+      <h2 class="text-3xl font-semibold text-balance lg:text-4xl">{{- section.settings.title -}}</h2>
+      {%- if section.settings.intro != blank -%}
+        <div class="wysiwyg text-base text-gray-700">{{ section.settings.intro }}</div>
+      {%- else -%}
+        <p class="text-base text-gray-700">{{- 'sections.cart-store-demo.description' | t -}}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="grid grid-cols-4 gap-6 lg:grid-cols-12">
+      <div class="surface surface--padded col-span-4 space-y-6 lg:col-span-5">
+        <div class="space-y-2">
+          {%- assign actions_label = 'sections.cart-store-demo.actions.title' | t -%}
+          {%- render 'subtitle.html', subtitle: actions_label -%}
+          {%- if variant != blank -%}
+            <p class="text-sm">
+              <span class="font-medium">{{- product.title -}}</span>
+              {%- unless product.has_only_default_variant %} · {{ variant.title }}{% endunless %}
+              · {{ variant.price | money -}}
+            </p>
+          {%- endif -%}
+          {%- if disabled != blank -%}
+            <p class="text-sm text-gray-600">{{- 'sections.cart-store-demo.actions.unavailable' | t -}}</p>
+          {%- endif -%}
+        </div>
+
+        <ul class="space-y-5">
+          <li class="space-y-2">
+            {%- assign title = 'sections.cart-store-demo.actions.add.label' | t -%}
+            {%- assign attributes = 'data-events-click="add" ' | append: disabled -%}
+            {%- render 'button.html', title: title, variant: 'secondary', classes: 'w-full', attributes: attributes -%}
+            <p class="text-xs text-gray-600">{{- 'sections.cart-store-demo.actions.add.hint' | t -}}</p>
+          </li>
+          <li class="space-y-2">
+            {%- assign title = 'sections.cart-store-demo.actions.burst.label' | t -%}
+            {%- assign attributes = 'data-events-click="burst" ' | append: disabled -%}
+            {%- render 'button.html', title: title, variant: 'secondary', classes: 'w-full', attributes: attributes -%}
+            <p class="text-xs text-gray-600">{{- 'sections.cart-store-demo.actions.burst.hint' | t -}}</p>
+          </li>
+          <li class="space-y-2">
+            {%- assign title = 'sections.cart-store-demo.actions.remove.label' | t -%}
+            {%- assign attributes = 'data-events-click="remove" ' | append: disabled -%}
+            {%- render 'button.html', title: title, variant: 'secondary', classes: 'w-full', attributes: attributes -%}
+            <p class="text-xs text-gray-600">{{- 'sections.cart-store-demo.actions.remove.hint' | t -}}</p>
+          </li>
+          <li class="space-y-2">
+            {%- assign title = 'sections.cart-store-demo.actions.refresh.label' | t -%}
+            {%- render 'button.html', title: title, variant: 'secondary', classes: 'w-full', attributes: 'data-events-click="refresh"' -%}
+            <p class="text-xs text-gray-600">{{- 'sections.cart-store-demo.actions.refresh.hint' | t -}}</p>
+          </li>
+        </ul>
+
+        <div class="space-y-2 border-t border-gray-200 pt-5">
+          <label class="flex items-center gap-3 text-sm font-medium">
+            <input type="checkbox" class="size-4 accent-black" data-events-change="toggleLatency">
+            {{- 'sections.cart-store-demo.actions.latency.label' | t -}}
+          </label>
+          <p class="text-xs text-gray-600">{{- 'sections.cart-store-demo.actions.latency.hint' | t -}}</p>
+        </div>
+
+        <cinq-drawer-button class="block">
+          <button
+            type="button"
+            class="button button--tertiary"
+            aria-controls="cart-drawer"
+            aria-expanded="false"
+          >
+            {{- 'sections.cart-store-demo.actions.open_drawer' | t -}}
+          </button>
+        </cinq-drawer-button>
+      </div>
+
+      <div class="surface surface--padded group col-span-4 space-y-6 lg:col-span-7" data-dom="panel">
+        <div class="flex items-center gap-2 text-sm font-medium">
+          <span
+            class="size-2 rounded-full bg-gray-200 group-aria-busy:animate-pulse group-aria-busy:bg-black"
+            aria-hidden="true"
+          ></span>
+          <p role="status" data-dom="status">{{- 'sections.cart-store-demo.status.idle' | t -}}</p>
+        </div>
+
+        <dl class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div class="space-y-1 border border-gray-200 px-3 py-2">
+            <dt class="text-xs text-gray-600">{{- 'sections.cart-store-demo.stats.count' | t -}}</dt>
+            <dd class="text-lg font-semibold tabular-nums" data-dom="count">{{- cart.item_count -}}</dd>
+          </div>
+          <div class="space-y-1 border border-gray-200 px-3 py-2">
+            <dt class="text-xs text-gray-600">{{- 'sections.cart-store-demo.stats.total' | t -}}</dt>
+            <dd class="text-lg font-semibold tabular-nums" data-dom="total">{{- cart.total_price | money -}}</dd>
+          </div>
+          <div class="space-y-1 border border-gray-200 px-3 py-2">
+            <dt class="text-xs text-gray-600">{{- 'sections.cart-store-demo.stats.lines' | t -}}</dt>
+            <dd class="text-lg font-semibold tabular-nums" data-dom="lines">{{- cart.items.size -}}</dd>
+          </div>
+          <div class="space-y-1 border border-gray-200 px-3 py-2">
+            <dt class="text-xs text-gray-600">{{- 'sections.cart-store-demo.stats.notifications' | t -}}</dt>
+            <dd class="text-lg font-semibold tabular-nums" data-dom="notifications">0</dd>
+          </div>
+        </dl>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-4">
+            {%- assign log_label = 'sections.cart-store-demo.log.title' | t -%}
+            {%- render 'subtitle.html', subtitle: log_label -%}
+            <button type="button" class="text-xs underline underline-offset-2" data-events-click="clear">
+              {{- 'sections.cart-store-demo.log.clear' | t -}}
+            </button>
+          </div>
+          <ol
+            class="h-80 divide-y divide-gray-100 overflow-y-auto border border-gray-200 font-mono text-xs"
+            role="log"
+            aria-label="{{ log_label | escape }}"
+            data-dom="log"
+          ></ol>
+        </div>
+      </div>
+    </div>
+
+    <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <li class="surface surface--padded space-y-2">
+        <h3 class="text-sm font-semibold">{{- 'sections.cart-store-demo.concepts.queue.title' | t -}}</h3>
+        <p class="text-sm text-gray-600">{{- 'sections.cart-store-demo.concepts.queue.text' | t -}}</p>
+      </li>
+      <li class="surface surface--padded space-y-2">
+        <h3 class="text-sm font-semibold">{{- 'sections.cart-store-demo.concepts.pending.title' | t -}}</h3>
+        <p class="text-sm text-gray-600">{{- 'sections.cart-store-demo.concepts.pending.text' | t -}}</p>
+      </li>
+      <li class="surface surface--padded space-y-2">
+        <h3 class="text-sm font-semibold">{{- 'sections.cart-store-demo.concepts.listeners.title' | t -}}</h3>
+        <p class="text-sm text-gray-600">{{- 'sections.cart-store-demo.concepts.listeners.text' | t -}}</p>
+      </li>
+      <li class="surface surface--padded space-y-2">
+        <h3 class="text-sm font-semibold">{{- 'sections.cart-store-demo.concepts.middleware.title' | t -}}</h3>
+        <p class="text-sm text-gray-600">{{- 'sections.cart-store-demo.concepts.middleware.text' | t -}}</p>
+      </li>
+    </ul>
+
+    <script type="application/json" data-dom="messages">
+      {
+        "queued": {{ 'sections.cart-store-demo.log.queued' | t | json }},
+        "done": {{ 'sections.cart-store-demo.log.done' | t | json }},
+        "failed": {{ 'sections.cart-store-demo.log.failed' | t | json }},
+        "listener": {{ 'sections.cart-store-demo.log.listener' | t | json }},
+        "pending": {{ 'sections.cart-store-demo.log.pending' | t | json }},
+        "middleware": {{ 'sections.cart-store-demo.log.middleware' | t | json }},
+        "middleware_on": {{ 'sections.cart-store-demo.log.middleware_on' | t | json }},
+        "middleware_off": {{ 'sections.cart-store-demo.log.middleware_off' | t | json }},
+        "status_idle": {{ 'sections.cart-store-demo.status.idle' | t | json }},
+        "status_busy": {{ 'sections.cart-store-demo.status.busy' | t | json }}
+      }
+    </script>
+  </c-cart-store-demo>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.cart-store-demo.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.shared.settings.subtitle.label",
+      "info": "t:sections.shared.settings.subtitle.info",
+      "default": "Cart store"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.cart-store-demo.settings.title.label",
+      "default": "One store, every cart update"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "t:sections.cart-store-demo.settings.intro.label"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:sections.cart-store-demo.settings.product.label",
+      "info": "t:sections.cart-store-demo.settings.product.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shared.settings.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.top.label",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.shared.settings.padding.bottom.label",
+      "default": 48
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "background-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.cart-store-demo.name",
+      "category": "t:general.styleguide"
+    }
+  ]
+}
+{% endschema %}

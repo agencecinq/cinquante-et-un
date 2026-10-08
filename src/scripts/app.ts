@@ -11,6 +11,7 @@ import './components/CartQuantity.ts';
 void import('./predictive-search-mount.ts');
 
 load('c-add-to-cart-button', () => import('./components/AddToCartButton.ts'));
+load('c-cart-store-demo', () => import('./components/CartStoreDemo.ts'));
 load('c-headroom', () => import('./components/Headroom.ts'));
 load('c-load-more', () => import('./components/LoadMore.ts'));
 load('c-menubar', () => import('./components/Menubar.ts'));

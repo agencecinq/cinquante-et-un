@@ -941,6 +941,21 @@
         }
       }
     },
+    "cart-store-demo": {
+      "name": "Démo du cart store",
+      "settings": {
+        "title": {
+          "label": "Titre"
+        },
+        "intro": {
+          "label": "Introduction"
+        },
+        "product": {
+          "label": "Produit",
+          "info": "Produit utilisé par les actions de la démo. Par défaut, le premier produit de la boutique."
+        }
+      }
+    },
     "footer": {
       "name": "Footer",
       "settings": {

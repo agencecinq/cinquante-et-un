@@ -946,6 +946,21 @@
         }
       }
     },
+    "cart-store-demo": {
+      "name": "Cart store demo",
+      "settings": {
+        "title": {
+          "label": "Title"
+        },
+        "intro": {
+          "label": "Introduction"
+        },
+        "product": {
+          "label": "Product",
+          "info": "Product used by the demo actions. Defaults to the first product of the shop."
+        }
+      }
+    },
     "footer": {
       "name": "Footer",
       "settings": {
