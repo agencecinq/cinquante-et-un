@@ -1,0 +1,1 @@
+function e(e,t={}){let n={...e};if(t.sections){let e=(Array.isArray(t.sections)?t.sections:t.sections.split(`,`)).map(e=>e.trim()).filter(Boolean);e.length>5&&console.warn(`[cart] Shopify accepts at most 5 sections per request; got ${e.length}.`),e.length&&(n.sections=e.slice(0,5).join(`,`))}return t.sections_url&&(n.sections_url=t.sections_url),n}export{e as withCartSections};

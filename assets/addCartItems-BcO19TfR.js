@@ -1,0 +1,1 @@
+import{fetchJson as e}from"./http-BeToTGEq.js";import{withCartSections as t}from"./withCartSections-IbaRhBYC.js";async function n(n,r={}){return e(`${routes.cart_add_url}.js`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify(t({items:n},r)),fallback:`Failed to add items to cart`})}export{n as addCartItems};

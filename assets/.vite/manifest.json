@@ -1,10 +1,10 @@
 {
-  "_dist-BOFO8wgI.js": {
-    "file": "dist-BOFO8wgI.js",
+  "_dist-BcdnhdUF.js": {
+    "file": "dist-BcdnhdUF.js",
     "name": "dist"
   },
-  "_piecesjs-BV-3uQvI.js": {
-    "file": "piecesjs-BV-3uQvI.js",
+  "_piecesjs-DxA8j4Pk.js": {
+    "file": "piecesjs-DxA8j4Pk.js",
     "name": "piecesjs"
   },
   "_sprite-C76rI6pA.svg": {
@@ -95,59 +95,60 @@
     "file": "youtube-CeUsPrsx.svg",
     "src": "src/icons/youtube.svg"
   },
-  "src/scripts/api/addItems.ts": {
-    "file": "addItems-CX1NdJyC.js",
-    "name": "addItems",
-    "src": "src/scripts/api/addItems.ts",
+  "src/scripts/api/addCartItems.ts": {
+    "file": "addCartItems-BcO19TfR.js",
+    "name": "addCartItems",
+    "src": "src/scripts/api/addCartItems.ts",
     "isEntry": true,
     "imports": [
-      "src/scripts/api/applyCartSections.ts",
-      "src/scripts/api/http.ts"
+      "src/scripts/api/http.ts",
+      "src/scripts/api/withCartSections.ts"
     ]
   },
-  "src/scripts/api/applyCartSections.ts": {
-    "file": "applyCartSections-CnX5lO-h.js",
-    "name": "applyCartSections",
-    "src": "src/scripts/api/applyCartSections.ts",
-    "isEntry": true
-  },
   "src/scripts/api/errors.ts": {
-    "file": "errors-Cs_w39SE.js",
+    "file": "errors-BOU-S5G4.js",
     "name": "errors",
     "src": "src/scripts/api/errors.ts",
     "isEntry": true
   },
-  "src/scripts/api/fetchPredictiveSearchSection.ts": {
-    "file": "fetchPredictiveSearchSection-BrBvhn5U.js",
-    "name": "fetchPredictiveSearchSection",
-    "src": "src/scripts/api/fetchPredictiveSearchSection.ts",
+  "src/scripts/api/fetchCart.ts": {
+    "file": "fetchCart-BuaGOhDL.js",
+    "name": "fetchCart",
+    "src": "src/scripts/api/fetchCart.ts",
     "isEntry": true,
     "imports": [
-      "src/scripts/api/errors.ts",
       "src/scripts/api/http.ts"
     ]
   },
-  "src/scripts/api/fetchSectionByID.ts": {
-    "file": "fetchSectionByID-CCC3S-Bj.js",
-    "name": "fetchSectionByID",
-    "src": "src/scripts/api/fetchSectionByID.ts",
+  "src/scripts/api/fetchPredictiveSearch.ts": {
+    "file": "fetchPredictiveSearch-BHetmbUd.js",
+    "name": "fetchPredictiveSearch",
+    "src": "src/scripts/api/fetchPredictiveSearch.ts",
     "isEntry": true,
     "imports": [
-      "src/scripts/api/errors.ts",
       "src/scripts/api/http.ts"
     ]
   },
-  "src/scripts/api/getCart.ts": {
-    "file": "getCart-CJPfP4Iy.js",
-    "name": "getCart",
-    "src": "src/scripts/api/getCart.ts",
+  "src/scripts/api/fetchSection.ts": {
+    "file": "fetchSection-CHBvoVUn.js",
+    "name": "fetchSection",
+    "src": "src/scripts/api/fetchSection.ts",
+    "isEntry": true,
+    "imports": [
+      "src/scripts/api/http.ts"
+    ]
+  },
+  "src/scripts/api/fetchSections.ts": {
+    "file": "fetchSections-B_4kZsmK.js",
+    "name": "fetchSections",
+    "src": "src/scripts/api/fetchSections.ts",
     "isEntry": true,
     "imports": [
       "src/scripts/api/http.ts"
     ]
   },
   "src/scripts/api/http.ts": {
-    "file": "http-FXV6rOmG.js",
+    "file": "http-BeToTGEq.js",
     "name": "http",
     "src": "src/scripts/api/http.ts",
     "isEntry": true,
@@ -155,58 +156,29 @@
       "src/scripts/api/errors.ts"
     ]
   },
-  "src/scripts/api/renderBundledSection.ts": {
-    "file": "renderBundledSection-5J7KN8Gg.js",
-    "name": "renderBundledSection",
-    "src": "src/scripts/api/renderBundledSection.ts",
+  "src/scripts/api/updateCart.ts": {
+    "file": "updateCart-Cxp6hyoi.js",
+    "name": "updateCart",
+    "src": "src/scripts/api/updateCart.ts",
     "isEntry": true,
     "imports": [
       "src/scripts/api/http.ts",
-      "src/scripts/api/swapSection.ts"
+      "src/scripts/api/withCartSections.ts"
     ]
   },
-  "src/scripts/api/renderSectionByID.ts": {
-    "file": "renderSectionByID-Cmye32On.js",
-    "name": "renderSectionByID",
-    "src": "src/scripts/api/renderSectionByID.ts",
-    "isEntry": true,
-    "imports": [
-      "src/scripts/api/fetchSectionByID.ts"
-    ]
-  },
-  "src/scripts/api/renderSections.ts": {
-    "file": "renderSections-DxUmz2n6.js",
-    "name": "renderSections",
-    "src": "src/scripts/api/renderSections.ts",
-    "isEntry": true,
-    "imports": [
-      "src/scripts/api/http.ts",
-      "src/scripts/api/swapSection.ts"
-    ]
-  },
-  "src/scripts/api/swapSection.ts": {
-    "file": "swapSection-Ci7y53vl.js",
-    "name": "swapSection",
-    "src": "src/scripts/api/swapSection.ts",
+  "src/scripts/api/withCartSections.ts": {
+    "file": "withCartSections-IbaRhBYC.js",
+    "name": "withCartSections",
+    "src": "src/scripts/api/withCartSections.ts",
     "isEntry": true
   },
-  "src/scripts/api/updateItems.ts": {
-    "file": "updateItems-glyG7gET.js",
-    "name": "updateItems",
-    "src": "src/scripts/api/updateItems.ts",
-    "isEntry": true,
-    "imports": [
-      "src/scripts/api/applyCartSections.ts",
-      "src/scripts/api/http.ts"
-    ]
-  },
   "src/scripts/app.ts": {
-    "file": "app-Cg8n4034.js",
+    "file": "app-DwGhOgLM.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
+      "_piecesjs-DxA8j4Pk.js",
       "src/scripts/cinq/index.ts",
       "src/scripts/cinq/index.ts",
       "src/scripts/components/CartDrawer.ts",
@@ -219,6 +191,7 @@
     "dynamicImports": [
       "src/scripts/predictive-search-mount.ts",
       "src/scripts/components/AddToCartButton.ts",
+      "src/scripts/components/CartStoreDemo.ts",
       "src/scripts/components/Headroom.ts",
       "src/scripts/components/LoadMore.ts",
       "src/scripts/components/Menubar.ts",
@@ -230,185 +203,208 @@
     ]
   },
   "src/scripts/cinq/disclosure-button.ts": {
-    "file": "disclosure-button-CGv3W0sO.js",
+    "file": "disclosure-button-Ct8lTF0b.js",
     "name": "disclosure-button",
     "src": "src/scripts/cinq/disclosure-button.ts",
     "isEntry": true,
     "imports": [
-      "_dist-BOFO8wgI.js"
+      "_dist-BcdnhdUF.js"
     ]
   },
   "src/scripts/cinq/index.ts": {
-    "file": "index-CoUudeWs.js",
+    "file": "index-CeoVZV0k.js",
     "name": "index",
     "src": "src/scripts/cinq/index.ts",
     "isEntry": true,
     "imports": [
-      "_dist-BOFO8wgI.js",
+      "_dist-BcdnhdUF.js",
       "src/scripts/cinq/disclosure-button.ts",
       "src/scripts/cinq/toast.ts"
     ]
   },
   "src/scripts/cinq/toast.ts": {
-    "file": "toast-D2h07utK.js",
+    "file": "toast-BtXhHwJJ.js",
     "name": "toast",
     "src": "src/scripts/cinq/toast.ts",
     "isEntry": true
   },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-C0o3qLGU.js",
+    "file": "AddToCartButton-yVyWQpb4.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
-      "_dist-BOFO8wgI.js",
+      "_piecesjs-DxA8j4Pk.js",
+      "_dist-BcdnhdUF.js",
       "src/scripts/cinq/toast.ts",
       "src/scripts/api/errors.ts",
-      "src/scripts/utils/sections.ts",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartDrawer.ts": {
-    "file": "CartDrawer-BI68LiZw.js",
+    "file": "CartDrawer-Bhg5gZ9c.js",
     "name": "CartDrawer",
     "src": "src/scripts/components/CartDrawer.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
+      "_piecesjs-DxA8j4Pk.js",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartItem.ts": {
-    "file": "CartItem-DqvKk7vT.js",
+    "file": "CartItem-8cXhmnvm.js",
     "name": "CartItem",
     "src": "src/scripts/components/CartItem.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
+      "_piecesjs-DxA8j4Pk.js",
       "src/scripts/cinq/toast.ts",
       "src/scripts/api/errors.ts",
-      "src/scripts/utils/sections.ts",
       "src/scripts/store/cart.ts"
     ]
   },
   "src/scripts/components/CartQuantity.ts": {
-    "file": "CartQuantity-DdfV5o7z.js",
+    "file": "CartQuantity-BMjDDYTX.js",
     "name": "CartQuantity",
     "src": "src/scripts/components/CartQuantity.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
-      "_dist-BOFO8wgI.js"
+      "_piecesjs-DxA8j4Pk.js",
+      "_dist-BcdnhdUF.js"
+    ]
+  },
+  "src/scripts/components/CartStoreDemo.ts": {
+    "file": "CartStoreDemo-DJby9EBh.js",
+    "name": "CartStoreDemo",
+    "src": "src/scripts/components/CartStoreDemo.ts",
+    "isEntry": true,
+    "imports": [
+      "_piecesjs-DxA8j4Pk.js",
+      "src/scripts/api/errors.ts",
+      "src/scripts/store/cart.ts",
+      "src/scripts/utils/format-currency.ts",
+      "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/components/Headroom.ts": {
-    "file": "Headroom-BsShsAn-.js",
+    "file": "Headroom-sk6MvzO2.js",
     "name": "Headroom",
     "src": "src/scripts/components/Headroom.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js"
+      "_piecesjs-DxA8j4Pk.js"
     ]
   },
   "src/scripts/components/LoadMore.ts": {
-    "file": "LoadMore-Bus1OWBg.js",
+    "file": "LoadMore-D0G8mTuS.js",
     "name": "LoadMore",
     "src": "src/scripts/components/LoadMore.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
-      "src/scripts/api/fetchSectionByID.ts",
-      "src/scripts/api/fetchSectionByID.ts"
+      "_piecesjs-DxA8j4Pk.js",
+      "src/scripts/api/fetchSection.ts",
+      "src/scripts/api/fetchSection.ts"
     ]
   },
   "src/scripts/components/Menubar.ts": {
-    "file": "Menubar-efbs2Gik.js",
+    "file": "Menubar-DL9BxOV4.js",
     "name": "Menubar",
     "src": "src/scripts/components/Menubar.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
-      "_dist-BOFO8wgI.js"
+      "_piecesjs-DxA8j4Pk.js",
+      "_dist-BcdnhdUF.js"
     ]
   },
   "src/scripts/components/Price.ts": {
-    "file": "Price-BHAB62WW.js",
+    "file": "Price-CdYJaHKD.js",
     "name": "Price",
     "src": "src/scripts/components/Price.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
-      "_dist-BOFO8wgI.js",
+      "_piecesjs-DxA8j4Pk.js",
+      "_dist-BcdnhdUF.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/components/SelectController.ts": {
-    "file": "SelectController-O_JFDV3R.js",
+    "file": "SelectController-C_DZMIJP.js",
     "name": "SelectController",
     "src": "src/scripts/components/SelectController.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js"
+      "_piecesjs-DxA8j4Pk.js"
     ]
   },
   "src/scripts/components/Slideshow.ts": {
-    "file": "Slideshow-B02xuyyI.js",
+    "file": "Slideshow-DB9d9Trc.js",
     "name": "Slideshow",
     "src": "src/scripts/components/Slideshow.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js"
+      "_piecesjs-DxA8j4Pk.js"
     ]
   },
   "src/scripts/components/TableOfContents.ts": {
-    "file": "TableOfContents-DUYw-sIi.js",
+    "file": "TableOfContents-Cpe7L3yj.js",
     "name": "TableOfContents",
     "src": "src/scripts/components/TableOfContents.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
+      "_piecesjs-DxA8j4Pk.js",
       "src/scripts/utils/slugify.ts",
       "src/scripts/utils/slugify.ts"
     ]
   },
   "src/scripts/components/VariantsPicker.ts": {
-    "file": "VariantsPicker-BZMi7lLd.js",
+    "file": "VariantsPicker-dU0oqDtg.js",
     "name": "VariantsPicker",
     "src": "src/scripts/components/VariantsPicker.ts",
     "isEntry": true,
     "imports": [
-      "_piecesjs-BV-3uQvI.js",
-      "_dist-BOFO8wgI.js",
+      "_piecesjs-DxA8j4Pk.js",
+      "_dist-BcdnhdUF.js",
       "src/scripts/utils/format-currency.ts",
       "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/predictive-search-mount.ts": {
-    "file": "predictive-search-mount-Dfcn6fls.js",
+    "file": "predictive-search-mount-B_mJ4SxC.js",
     "name": "predictive-search-mount",
     "src": "src/scripts/predictive-search-mount.ts",
     "isEntry": true,
     "imports": [
-      "_dist-BOFO8wgI.js",
-      "src/scripts/api/fetchPredictiveSearchSection.ts",
-      "src/scripts/api/fetchPredictiveSearchSection.ts"
+      "_dist-BcdnhdUF.js",
+      "src/scripts/api/fetchPredictiveSearch.ts",
+      "src/scripts/api/fetchPredictiveSearch.ts"
     ]
   },
   "src/scripts/store/cart.ts": {
-    "file": "cart-C9dXRnNL.js",
+    "file": "cart-B9cHIRot.js",
     "name": "cart",
     "src": "src/scripts/store/cart.ts",
     "isEntry": true,
     "imports": [
-      "src/scripts/api/addItems.ts",
-      "src/scripts/api/getCart.ts",
-      "src/scripts/api/renderBundledSection.ts",
-      "src/scripts/api/renderSections.ts",
-      "src/scripts/utils/sections.ts",
-      "src/scripts/api/updateItems.ts"
+      "src/scripts/api/addCartItems.ts",
+      "src/scripts/api/fetchCart.ts",
+      "src/scripts/api/fetchSections.ts",
+      "src/scripts/api/updateCart.ts",
+      "src/scripts/store/cartSections.ts",
+      "src/scripts/store/renderSection.ts"
     ]
+  },
+  "src/scripts/store/cartSections.ts": {
+    "file": "cartSections-D1co7UVt.js",
+    "name": "cartSections",
+    "src": "src/scripts/store/cartSections.ts",
+    "isEntry": true
+  },
+  "src/scripts/store/renderSection.ts": {
+    "file": "renderSection-Bhm8J6hZ.js",
+    "name": "renderSection",
+    "src": "src/scripts/store/renderSection.ts",
+    "isEntry": true
   },
   "src/scripts/types/cart.ts": {
     "file": "cart-BvRk9kiK.js",
@@ -423,21 +419,21 @@
     "isEntry": true
   },
   "src/scripts/utils/environment.ts": {
-    "file": "environment-C5vZrshn.js",
+    "file": "environment-CgmQ_ezY.js",
     "name": "environment",
     "src": "src/scripts/utils/environment.ts",
     "isEntry": true,
     "imports": [
-      "_dist-BOFO8wgI.js"
+      "_dist-BcdnhdUF.js"
     ]
   },
   "src/scripts/utils/events.ts": {
-    "file": "events-DoQyH2p9.js",
+    "file": "events-CWt5CtG7.js",
     "name": "events",
     "src": "src/scripts/utils/events.ts",
     "isEntry": true,
     "imports": [
-      "_dist-BOFO8wgI.js"
+      "_dist-BcdnhdUF.js"
     ]
   },
   "src/scripts/utils/format-currency.ts": {
@@ -450,12 +446,6 @@
     "file": "i18n-BvRk9kiK.js",
     "name": "i18n",
     "src": "src/scripts/utils/i18n.ts",
-    "isEntry": true
-  },
-  "src/scripts/utils/sections.ts": {
-    "file": "sections-Us4PaVSJ.js",
-    "name": "sections",
-    "src": "src/scripts/utils/sections.ts",
     "isEntry": true
   },
   "src/scripts/utils/slugify.ts": {
@@ -510,7 +500,7 @@
     "isEntry": true
   },
   "src/stylesheets/styles.css": {
-    "file": "styles-CHZPzSl2.css",
+    "file": "styles-DVeWj1iZ.css",
     "name": "styles",
     "names": [
       "styles.css"

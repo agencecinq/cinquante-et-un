@@ -25,20 +25,20 @@
   },
   "devDependencies": {
     "@by-association-only/vite-plugin-shopify-clean": "^2.2.0",
-    "@shopify/prettier-plugin-liquid": "^1.11.0",
+    "@shopify/prettier-plugin-liquid": "^1.11.2",
     "@tailwindcss/vite": "^4.3.3",
     "cross-env": "^10.1.0",
     "npm-run-all2": "^9.0.2",
-    "prettier": "^3.9.6",
+    "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "vite": "^8.2.2",
+    "vite": "^8.3.3",
     "vite-plugin-shopify": "^5.0.0",
     "vite-svg-sprite-wrapper": "^1.5.0"
   },
   "dependencies": {
     "@agencecinq/accordion": "^3.0.0",
     "@agencecinq/calendar": "^3.0.0",
-    "@agencecinq/combobox": "^1.0.4",
+    "@agencecinq/combobox": "^2.0.0",
     "@agencecinq/disclosure-button": "^3.0.1",
     "@agencecinq/drawer": "^7.0.1",
     "@agencecinq/modal": "^4.0.1",
@@ -46,9 +46,9 @@
     "@agencecinq/switch": "^3.0.1",
     "@agencecinq/tabs": "^11.0.0",
     "@agencecinq/toast": "^1.0.0",
-    "@agencecinq/utils": "^7.4.0",
-    "@agencecinq/windowsplitter": "^2.0.1",
-    "piecesjs": "^0.5.5",
+    "@agencecinq/utils": "^7.5.0",
+    "@agencecinq/windowsplitter": "^3.0.0",
+    "piecesjs": "^0.5.7",
     "tailwindcss": "^4.3.3"
   }
 }

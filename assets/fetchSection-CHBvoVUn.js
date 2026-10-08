@@ -1,0 +1,1 @@
+import{fetchHtml as e}from"./http-BeToTGEq.js";async function t(t,n){let r=new URL(t,window.location.origin);return r.searchParams.set(`section_id`,n),e(`${r.pathname}${r.search}`,{fallback:`Failed to fetch section ${n}`})}export{t as fetchSection};
