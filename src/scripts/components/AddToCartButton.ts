@@ -3,7 +3,7 @@ import { EVENTS } from '@agencecinq/utils';
 import { messageFromError } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import { show } from '../cinq/toast.ts';
-import { CartItem } from '../types/cart.ts';
+import { AddCartItem } from '../types/cart.ts';
 
 type VariantChangeDetail = {
   variant?: { available?: boolean };
@@ -80,14 +80,14 @@ class AddToCartButton extends Piece {
     }
   }
 
-  parseItems(): CartItem[] {
+  parseItems(): AddCartItem[] {
     const formData = this.formData!;
-    const items: CartItem[] = [];
+    const items: AddCartItem[] = [];
 
     if (formData.has('items[0][id]')) {
       let index = 0;
       while (formData.has(`items[${index}][id]`)) {
-        const item: CartItem = {
+        const item: AddCartItem = {
           id: formData.get(`items[${index}][id]`) as string,
           quantity: parseInt(formData.get(`items[${index}][quantity]`) as string, 10),
         };
@@ -104,7 +104,7 @@ class AddToCartButton extends Piece {
     }
 
     if (formData.has('id')) {
-      const item: CartItem = {
+      const item: AddCartItem = {
         id: formData.get('id') as string,
         quantity: parseInt(formData.get('quantity') as string, 10) || 1,
       };

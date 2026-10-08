@@ -1,4 +1,4 @@
-import { AddCartItemsResponse, CartItem, CartSectionsOptions } from '../types/cart.ts';
+import { AddCartItem, AddCartItemsResponse, CartSectionsOptions } from '../types/cart.ts';
 import { fetchJson } from './http.ts';
 import { withCartSections } from './withCartSections.ts';
 
@@ -8,7 +8,7 @@ import { withCartSections } from './withCartSections.ts';
  * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-add-js
  */
 export async function addCartItems(
-  items: CartItem[],
+  items: AddCartItem[],
   options: CartSectionsOptions = {},
 ): Promise<AddCartItemsResponse> {
   return fetchJson<AddCartItemsResponse>(`${routes.cart_add_url}.js`, {

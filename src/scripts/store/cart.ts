@@ -2,7 +2,7 @@ import { addCartItems } from '../api/addCartItems.ts';
 import { fetchCart } from '../api/fetchCart.ts';
 import { fetchSections } from '../api/fetchSections.ts';
 import { updateCart } from '../api/updateCart.ts';
-import { CartItem, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
+import { AddCartItem, CartSectionsOptions, CartSnapshot } from '../types/cart.ts';
 import { Section } from '../types/section.ts';
 import { cartSections } from './cartSections.ts';
 import { renderSection } from '../utils/renderSection.ts';
@@ -96,7 +96,7 @@ class CartStore {
     return next;
   }
 
-  add(items: CartItem[], options: CartSectionsOptions = {}): Promise<CartSnapshot> {
+  add(items: AddCartItem[], options: CartSectionsOptions = {}): Promise<CartSnapshot> {
     return this.mutate(async () => {
       const added = await addCartItems(items, this.withSections(options));
       const fresh = await fetchCart();

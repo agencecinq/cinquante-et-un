@@ -1,8 +1,8 @@
 /**
- * Line item for Shopify Cart API (`/cart/add.js`).
+ * Item sent to `/cart/add.js` (not a line already in the cart: see `CartLineItem`).
  * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-add-js
  */
-export type CartItem = {
+export type AddCartItem = {
   id: string | number;
   quantity: number;
   /** Line item properties. Keys prefixed with `_` are hidden from customers. */
