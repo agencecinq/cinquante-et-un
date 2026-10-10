@@ -59,44 +59,12 @@
       <div class="mt-auto flex items-center justify-between gap-4">
         {%- if item.instructions and item.instructions.can_update_quantity == true -%}
           <c-cart-quantity class="block">
-            <cinq-spinbutton class="flex items-center border border-black" data-step="1">
-              <button
-                type="button"
-                name="decrease"
-                class="flex size-8 items-center justify-center"
-                tabindex="-1"
-                aria-label="{{ 'snippets.cart-item.quantity.decrease' | t }}"
-              >
-                {%- render 'use.html', icon: 'minus', classes: 'size-3 pointer-events-none' -%}
-              </button>
-
-              <input
-                type="text"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                role="spinbutton"
-                name="quantity"
-                value="{{ item.quantity }}"
-                class="w-8 bg-transparent text-center text-xs"
-                data-dom="input"
-                aria-label="{{ 'snippets.cart-item.quantity.label' | t }}"
-                aria-valuemin="0"
-                {% if item.variant.quantity_rule.max %}
-                  aria-valuemax="{{ item.variant.quantity_rule.max }}"
-                {% endif %}
-                aria-valuenow="{{ item.quantity }}"
-              >
-
-              <button
-                type="button"
-                name="increase"
-                class="flex size-8 items-center justify-center"
-                tabindex="-1"
-                aria-label="{{ 'snippets.cart-item.quantity.increase' | t }}"
-              >
-                {%- render 'use.html', icon: 'plus', classes: 'size-3 pointer-events-none' -%}
-              </button>
-            </cinq-spinbutton>
+            {%- render 'quantity-input.html',
+              value: item.quantity,
+              min: 0,
+              max: item.variant.quantity_rule.max,
+              attributes: 'data-dom="input"'
+            -%}
           </c-cart-quantity>
         {%- endif -%}
 

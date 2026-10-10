@@ -548,12 +548,12 @@
         "name": "{{ name }}:"
       },
       "whishlist": "Move to Wishlist",
-      "remove": "Remove",
-      "quantity": {
-        "label": "Quantity",
-        "increase": "Increase quantity",
-        "decrease": "Decrease quantity"
-      }
+      "remove": "Remove"
+    },
+    "quantity-input": {
+      "label": "Quantity",
+      "increase": "Increase quantity",
+      "decrease": "Decrease quantity"
     }
   }
 }

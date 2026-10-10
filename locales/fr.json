@@ -541,12 +541,12 @@
         "name": "{{ name }} :"
       },
       "remove": "Supprimer",
-      "whishlist": "Déplacer vers la liste de souhaits",
-      "quantity": {
-        "label": "Quantité",
-        "increase": "Augmenter la quantité",
-        "decrease": "Diminuer la quantité"
-      }
+      "whishlist": "Déplacer vers la liste de souhaits"
+    },
+    "quantity-input": {
+      "label": "Quantité",
+      "increase": "Augmenter la quantité",
+      "decrease": "Diminuer la quantité"
     },
     "cart-footer": {
       "total": "Total",
