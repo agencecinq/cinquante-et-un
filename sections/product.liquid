@@ -172,8 +172,7 @@
                 product: product,
                 variant: variant,
                 block: block,
-                section_id: section.id,
-                form_id: form_id
+                section_id: section.id
               -%}
 
             {%- when 'quantity' -%}
@@ -204,9 +203,7 @@
                 {{ block.shopify_attributes }}
               >
                 {%- form 'product', product, id: form_id, data-dom: 'form' -%}
-                  {%- if product.has_only_default_variant -%}
-                    <input type="hidden" name="id" value="{{ variant.id }}">
-                  {%- endif -%}
+                  <input type="hidden" name="id" value="{{ variant.id }}" data-dom="variant-id">
                   {%- if quantity_blocks.size == 0 -%}
                     <input type="hidden" name="quantity" value="1">
                   {%- endif -%}

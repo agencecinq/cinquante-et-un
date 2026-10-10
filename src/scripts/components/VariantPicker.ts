@@ -118,7 +118,7 @@ class VariantPicker extends Piece {
     return this.getAttribute('data-product-url') || window.location.pathname;
   }
 
-  /** Id of the re-rendered wrapper: options, hidden `id` input and selected variant JSON. */
+  /** Id of the re-rendered wrapper: options and selected variant JSON. */
   get contentId() {
     return `VariantPicker-${this.sectionId}`;
   }
