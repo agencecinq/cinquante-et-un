@@ -1,0 +1,28 @@
+{% doc %}
+  Product variant picker (`c-variant-picker`), see `snippets/variant-picker.html.liquid`.
+{% enddoc %}
+
+{%- liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  capture variant_matches
+    render 'selected-variant-matches.html', product: product
+  endcapture
+  if variant_matches != 'true'
+    assign variant = null
+  endif
+-%}
+
+{%- render 'variant-picker.html', product: product, variant: variant, block: block, section_id: section.id -%}
+
+{% schema %}
+{
+  "name": "t:blocks.product-variant-picker.name",
+  "tag": null,
+  "presets": [
+    {
+      "name": "t:blocks.product-variant-picker.name"
+    }
+  ]
+}
+{% endschema %}

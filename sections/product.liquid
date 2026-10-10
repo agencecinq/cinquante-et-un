@@ -1,5 +1,5 @@
 {% comment %}
-  Product page — media, buy box, and add-to-cart form.
+  Product page — media gallery, and theme blocks for the product info (`blocks/product-*.liquid`).
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
@@ -17,17 +17,13 @@
     assign padding_top_desktop = padding_top_desktop | append: 'rem'
   endif
 
-  assign form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
-  assign quantity_blocks = section.blocks | where: 'type', 'quantity'
-  # With `?option_values=` pointing at a combination that doesn't exist, Shopify falls back to the
-  # first available variant: reset it so the picker, price and add-to-cart show "unavailable".
   assign variant = product.selected_or_first_available_variant
-  for option in product.options_with_values
-    if option.selected_value != blank and variant.options[forloop.index0] != option.selected_value
-      assign variant = null
-      break
-    endif
-  endfor
+  capture variant_matches
+    render 'selected-variant-matches.html', product: product
+  endcapture
+  if variant_matches != 'true'
+    assign variant = null
+  endif
   assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
 
   # Gallery starts on the selected variant's media (e.g. `?variant=`); `c-product-gallery` follows later changes.
@@ -138,179 +134,7 @@
       </div>
 
       <div class="col-span-4 space-y-6 lg:col-span-5 lg:col-start-8">
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'breadcrumb' -%}
-              {%- render 'breadcrumb.html', block: block, classes: 'text-xs opacity-60' -%}
-
-            {%- when 'title' -%}
-              <h1 class="text-xl" {{ block.shopify_attributes }}>
-                {{- product.title -}}
-              </h1>
-
-            {%- when 'price' -%}
-              <div class="space-y-1" {{ block.shopify_attributes }}>
-                <c-product-price
-                  id="ProductPrice-{{ section.id }}"
-                  data-product-id="{{ product.id }}"
-                  class="block text-base transition-opacity aria-busy:opacity-50"
-                >
-                  {%- if variant -%}
-                    {%- render 'price.html', product: product, variant: variant -%}
-                  {%- endif -%}
-                </c-product-price>
-
-                {%- if block.settings.show_tax_note -%}
-                  {%- liquid
-                    assign tax_note = ''
-                    if shop.taxes_included
-                      assign tax_note = 'sections.product.tax_note.taxes_included' | t | append: ' '
-                    endif
-
-                    if shop.shipping_policy.body != blank
-                      assign shipping_note = 'sections.product.tax_note.shipping_policy_html' | t: link: shop.shipping_policy.url
-                    else
-                      assign shipping_note = 'sections.product.tax_note.shipping_at_checkout' | t
-                    endif
-                  -%}
-                  <p class="text-xs opacity-60">
-                    {{ tax_note -}}
-                    {{- shipping_note }}
-                  </p>
-                {%- endif -%}
-              </div>
-
-            {%- when 'description' -%}
-              {%- if product.description != blank -%}
-                <div class="wysiwyg text-sm" {{ block.shopify_attributes }}>
-                  {{- product.description -}}
-                </div>
-              {%- endif -%}
-
-            {%- when 'variant-picker' -%}
-              {%- render 'variant-picker.html',
-                product: product,
-                variant: variant,
-                block: block,
-                section_id: section.id
-              -%}
-
-            {%- when 'quantity' -%}
-              {%- liquid
-                # Quantity rules only come from B2B catalogs; otherwise min 1, increment 1, no max.
-                assign quantity_min = variant.quantity_rule.min | default: 1
-              -%}
-              <div class="space-y-2" {{ block.shopify_attributes }}>
-                <p class="text-xs" aria-hidden="true">{{- 'snippets.quantity-input.label' | t -}}</p>
-                {%- render 'quantity-input.html',
-                  value: quantity_min,
-                  min: quantity_min,
-                  max: variant.quantity_rule.max,
-                  step: variant.quantity_rule.increment,
-                  form: form_id,
-                  classes: 'w-fit'
-                -%}
-              </div>
-
-            {%- when 'add-to-cart-button' -%}
-              <c-add-to-cart-button
-                id="ProductBuy-{{ section.id }}"
-                data-product-id="{{ product.id }}"
-                class="block aria-busy:cursor-wait aria-busy:opacity-50"
-                {% if variant.available %}
-                  in-stock
-                {% endif %}
-                {{ block.shopify_attributes }}
-              >
-                {%- form 'product', product, id: form_id, class: 'space-y-2', data-dom: 'form' -%}
-                  <input type="hidden" name="id" value="{{ variant.id }}" data-dom="variant-id">
-                  {%- if quantity_blocks.size == 0 -%}
-                    <input type="hidden" name="quantity" value="1">
-                  {%- endif -%}
-
-                  {%- capture atc_title -%}
-                    {%- if variant == null -%}
-                      {{- 'sections.product.unavailable' | t -}}
-                    {%- elsif variant.available -%}
-                      {{- 'sections.product.add_to_cart' | t -}}
-                      <span aria-hidden="true">&nbsp;‧&nbsp;</span>
-                      {{- variant.price | money_with_currency -}}
-                    {%- else -%}
-                      {{- 'sections.product.sold_out' | t -}}
-                    {%- endif -%}
-                  {%- endcapture -%}
-                  {%- liquid
-                    assign atc_disabled = false
-                    unless variant.available
-                      assign atc_disabled = true
-                    endunless
-                  -%}
-                  {% capture atc_attributes -%}
-                    data-dom="button"{% if atc_disabled %} disabled{% endif %}
-                  {%- endcapture %}
-                  {%- render 'button.html',
-                    title: atc_title,
-                    type: 'submit',
-                    classes: 'w-full',
-                    variant: 'primary',
-                    attributes: atc_attributes
-                  -%}
-
-                  {%- if block.settings.show_dynamic_checkout -%}
-                    {{- form | payment_button -}}
-                  {%- endif -%}
-                {%- endform -%}
-              </c-add-to-cart-button>
-
-            {%- when 'reassurance' -%}
-              {%- render 'product-reassurance.html', block: block -%}
-
-            {%- when 'custom-liquid' -%}
-              <div {{ block.shopify_attributes }}>
-                {{- block.settings.custom_liquid -}}
-              </div>
-
-            {%- when 'accordion-group' -%}
-              {%- if product.description != blank -%}
-                <cinq-accordion {{ block.shopify_attributes }}>
-                  <div
-                    data-panel
-                    class="js-accordion-panel border-t border-black"
-                    data-open="false"
-                    data-deselect="true"
-                  >
-                    <button
-                      data-header
-                      class="js-accordion-header group flex w-full items-center justify-between gap-2 py-4 text-start"
-                      type="button"
-                      aria-expanded="false"
-                      aria-controls="product-description-body-{{ section.id }}"
-                      id="product-description-header-{{ section.id }}"
-                    >
-                      <span class="text-xs uppercase">
-                        {{- 'sections.product.accordion-group.description' | t -}}
-                      </span>
-                      {%- render 'use.html',
-                        icon: 'chevron-down',
-                        classes: 'size-3 transition-transform duration-300 ease-out group-aria-expanded:rotate-180'
-                      -%}
-                    </button>
-
-                    <div
-                      id="product-description-body-{{ section.id }}"
-                      hidden
-                      role="region"
-                      aria-labelledby="product-description-header-{{ section.id }}"
-                    >
-                      <div data-inner class="js-accordion-inner wysiwyg pb-4 text-sm">
-                        {{- product.description -}}
-                      </div>
-                    </div>
-                  </div>
-                </cinq-accordion>
-              {%- endif -%}
-          {%- endcase -%}
-        {%- endfor -%}
+        {%- content_for 'blocks' -%}
       </div>
     </div>
   </div>
@@ -364,98 +188,7 @@
   ],
   "blocks": [
     {
-      "type": "breadcrumb",
-      "name": "t:sections.product.blocks.breadcrumb.name",
-      "limit": 1
-    },
-    {
-      "type": "title",
-      "name": "t:sections.product.blocks.title.name",
-      "limit": 1
-    },
-    {
-      "type": "price",
-      "name": "t:sections.product.blocks.price.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "checkbox",
-          "id": "show_tax_note",
-          "label": "t:sections.product.blocks.price.settings.show_tax_note.label",
-          "default": true
-        }
-      ]
-    },
-    {
-      "type": "description",
-      "name": "t:sections.product.blocks.description.name",
-      "limit": 1
-    },
-    {
-      "type": "variant-picker",
-      "name": "t:sections.product.blocks.variant-picker.name",
-      "limit": 1
-    },
-    {
-      "type": "quantity",
-      "name": "t:sections.product.blocks.quantity.name",
-      "limit": 1
-    },
-    {
-      "type": "add-to-cart-button",
-      "name": "t:sections.product.blocks.add-to-cart-button.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "checkbox",
-          "id": "show_dynamic_checkout",
-          "label": "t:sections.product.blocks.add-to-cart-button.settings.show_dynamic_checkout.label",
-          "info": "t:sections.product.blocks.add-to-cart-button.settings.show_dynamic_checkout.info",
-          "default": true
-        }
-      ]
-    },
-    {
-      "type": "reassurance",
-      "name": "t:sections.product.blocks.reassurance.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "text_0",
-          "label": "t:sections.product.blocks.reassurance.settings.text_0.label",
-          "default": "t:sections.product.blocks.reassurance.settings.text_0.default"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "text_1",
-          "label": "t:sections.product.blocks.reassurance.settings.text_1.label",
-          "default": "t:sections.product.blocks.reassurance.settings.text_1.default"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "text_2",
-          "label": "t:sections.product.blocks.reassurance.settings.text_2.label",
-          "default": "t:sections.product.blocks.reassurance.settings.text_2.default"
-        }
-      ]
-    },
-    {
-      "type": "accordion-group",
-      "name": "t:sections.product.blocks.accordion-group.name",
-      "limit": 1
-    },
-    {
-      "type": "custom-liquid",
-      "name": "t:sections.product.blocks.custom-liquid.name",
-      "settings": [
-        {
-          "type": "liquid",
-          "id": "custom_liquid",
-          "label": "t:sections.product.blocks.custom-liquid.settings.custom_liquid.label",
-          "info": "t:sections.product.blocks.custom-liquid.settings.custom_liquid.info"
-        }
-      ]
+      "type": "@theme"
     },
     {
       "type": "@app"

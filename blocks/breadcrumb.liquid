@@ -1,0 +1,17 @@
+{% doc %}
+  Breadcrumb, see `snippets/breadcrumb.html.liquid`.
+{% enddoc %}
+
+{%- render 'breadcrumb.html', block: block, classes: 'text-xs opacity-60' -%}
+
+{% schema %}
+{
+  "name": "t:blocks.breadcrumb.name",
+  "tag": null,
+  "presets": [
+    {
+      "name": "t:blocks.breadcrumb.name"
+    }
+  ]
+}
+{% endschema %}

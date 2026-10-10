@@ -1,0 +1,27 @@
+{% doc %}
+  Custom Liquid: app snippets, metafields or one-off markup.
+{% enddoc %}
+
+<div {{ block.shopify_attributes }}>
+  {{- block.settings.custom_liquid -}}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.custom-liquid.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:blocks.custom-liquid.settings.custom_liquid.label",
+      "info": "t:blocks.custom-liquid.settings.custom_liquid.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.custom-liquid.name"
+    }
+  ]
+}
+{% endschema %}

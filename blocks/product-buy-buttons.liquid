@@ -1,0 +1,104 @@
+{% doc %}
+  Product form: optional quantity, add to cart button (`c-add-to-cart-button`)
+  and optional dynamic checkout buttons. The form owns the variant `id` input,
+  updated on variant change.
+{% enddoc %}
+
+{%- liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  capture variant_matches
+    render 'selected-variant-matches.html', product: product
+  endcapture
+  if variant_matches != 'true'
+    assign variant = null
+  endif
+-%}
+
+{%- liquid
+  assign form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
+  # Quantity rules only come from B2B catalogs; otherwise min 1, increment 1, no max.
+  assign quantity_min = variant.quantity_rule.min | default: 1
+-%}
+
+<c-add-to-cart-button
+  id="ProductBuy-{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  class="block aria-busy:cursor-wait aria-busy:opacity-50"
+  {% if variant.available %}
+    in-stock
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- form 'product', product, id: form_id, class: 'space-y-2', data-dom: 'form' -%}
+    <input type="hidden" name="id" value="{{ variant.id }}" data-dom="variant-id">
+
+    {%- if block.settings.show_quantity -%}
+      <div class="space-y-2 pb-4">
+        <p class="text-xs" aria-hidden="true">{{- 'snippets.quantity-input.label' | t -}}</p>
+        {%- render 'quantity-input.html',
+          value: quantity_min,
+          min: quantity_min,
+          max: variant.quantity_rule.max,
+          step: variant.quantity_rule.increment,
+          classes: 'w-fit'
+        -%}
+      </div>
+    {%- else -%}
+      <input type="hidden" name="quantity" value="1">
+    {%- endif -%}
+
+    {%- capture atc_title -%}
+      {%- if variant == null -%}
+        {{- 'sections.product.unavailable' | t -}}
+      {%- elsif variant.available -%}
+        {{- 'sections.product.add_to_cart' | t -}}
+        <span aria-hidden="true">&nbsp;‧&nbsp;</span>
+        {{- variant.price | money_with_currency -}}
+      {%- else -%}
+        {{- 'sections.product.sold_out' | t -}}
+      {%- endif -%}
+    {%- endcapture -%}
+    {% capture atc_attributes -%}
+      data-dom="button"{% unless variant.available %} disabled{% endunless %}
+    {%- endcapture %}
+    {%- render 'button.html',
+      title: atc_title,
+      type: 'submit',
+      classes: 'w-full',
+      variant: 'primary',
+      attributes: atc_attributes
+    -%}
+
+    {%- if block.settings.show_dynamic_checkout -%}
+      {{- form | payment_button -}}
+    {%- endif -%}
+  {%- endform -%}
+</c-add-to-cart-button>
+
+{% schema %}
+{
+  "name": "t:blocks.product-buy-buttons.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "t:blocks.product-buy-buttons.settings.show_quantity.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "t:blocks.product-buy-buttons.settings.show_dynamic_checkout.label",
+      "info": "t:blocks.product-buy-buttons.settings.show_dynamic_checkout.info",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.product-buy-buttons.name"
+    }
+  ]
+}
+{% endschema %}

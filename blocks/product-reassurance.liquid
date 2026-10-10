@@ -1,0 +1,37 @@
+{% doc %}
+  Product reassurance strip, see `snippets/product-reassurance.html.liquid`.
+{% enddoc %}
+
+{%- render 'product-reassurance.html', block: block -%}
+
+{% schema %}
+{
+  "name": "t:blocks.product-reassurance.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "text_0",
+      "label": "t:blocks.product-reassurance.settings.text_0.label",
+      "default": "t:blocks.product-reassurance.settings.text_0.default"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_1",
+      "label": "t:blocks.product-reassurance.settings.text_1.label",
+      "default": "t:blocks.product-reassurance.settings.text_1.default"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_2",
+      "label": "t:blocks.product-reassurance.settings.text_2.label",
+      "default": "t:blocks.product-reassurance.settings.text_2.default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.product-reassurance.name"
+    }
+  ]
+}
+{% endschema %}

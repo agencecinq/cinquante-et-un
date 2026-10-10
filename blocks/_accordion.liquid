@@ -1,0 +1,53 @@
+{% doc %}
+  Accordion panel inside `accordion-group`: a heading, and any theme blocks as
+  content (e.g. a text block connected to the product description). Same panel
+  as the accordion group section (`snippets/accordion-panel.html.liquid`).
+{% enddoc %}
+
+{%- capture content -%}
+  {%- content_for 'blocks' -%}
+{%- endcapture -%}
+
+{%- liquid
+  assign id = 'Accordion-' | append: block.id
+  render 'accordion-panel.html', id: id, title: block.settings.heading, content: content, open: block.settings.open, attributes: block.shopify_attributes
+-%}
+
+{% schema %}
+{
+  "name": "t:blocks.accordion.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:blocks.accordion.settings.heading.label",
+      "default": "t:blocks.accordion.settings.heading.default"
+    },
+    {
+      "type": "checkbox",
+      "id": "open",
+      "label": "t:blocks.accordion.settings.open.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.accordion.name",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
