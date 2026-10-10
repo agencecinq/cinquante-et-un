@@ -141,7 +141,7 @@
     "blog": {
       "filter_by_tag": "Filtrer par {{ tag }}",
       "see-more": "Voir plus d'articles",
-      "out-of": "{{ current }} articles affichés sur {{ total }}"
+      "displayed-count": "{{ current }} articles affichés sur {{ total }}"
     },
     "404": {
       "title": "404",
@@ -279,7 +279,7 @@
     "collection": {
       "see-more": "Voir plus de produits",
       "no-products": "Aucun produit trouvé dans cette collection.",
-      "out-of": "{{ current }} produits affichés sur {{ total }}",
+      "displayed-count": "{{ current }} produits affichés sur {{ total }}",
       "filters": {
         "title": "Tous les filtres",
         "min_price": "Prix min",
