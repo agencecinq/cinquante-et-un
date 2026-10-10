@@ -24,6 +24,7 @@
 <c-add-to-cart-button
   id="ProductBuy-{{ section.id }}"
   data-product-id="{{ product.id }}"
+  data-price="{{ variant.price }}"
   class="block aria-busy:cursor-wait aria-busy:opacity-50"
   {% if variant.available %}
     in-stock
@@ -54,7 +55,7 @@
       {%- elsif variant.available -%}
         {{- 'sections.product.add_to_cart' | t -}}
         <span aria-hidden="true">&nbsp;‧&nbsp;</span>
-        {{- variant.price | money_with_currency -}}
+        <span data-dom="total">{{- variant.price | times: quantity_min | money_with_currency -}}</span>
       {%- else -%}
         {{- 'sections.product.sold_out' | t -}}
       {%- endif -%}
