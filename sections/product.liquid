@@ -149,7 +149,7 @@
 
             {%- when 'add-to-cart-button' -%}
               <c-add-to-cart-button
-                class="block"
+                class="block aria-busy:cursor-wait aria-busy:opacity-50"
                 data-product-id="{{ product.id }}"
                 {% if variant.available %}
                   in-stock

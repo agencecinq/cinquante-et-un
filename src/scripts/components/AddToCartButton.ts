@@ -12,7 +12,7 @@ type VariantChangeDetail = {
 
 class AddToCartButton extends Piece {
   static get observedAttributes() {
-    return ['loading', 'in-stock'];
+    return ['in-stock'];
   }
 
   $form: HTMLFormElement | null = null;
@@ -66,7 +66,7 @@ class AddToCartButton extends Piece {
 
   async fetch(): Promise<void> {
     this.$button!.disabled = true;
-    this.loading = 'true';
+    this.setAttribute('aria-busy', 'true');
 
     try {
       const items = this.parseItems();
@@ -76,7 +76,7 @@ class AddToCartButton extends Piece {
       show(messageFromError(error));
     } finally {
       this.$button!.disabled = !this.inStock;
-      this.loading = 'false';
+      this.removeAttribute('aria-busy');
     }
   }
 
@@ -147,17 +147,7 @@ class AddToCartButton extends Piece {
     });
   }
 
-  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void {
-    if (name === 'loading') {
-      if (newValue === 'true') {
-        this.style.setProperty('cursor', 'wait');
-        this.style.setProperty('opacity', '0.5');
-      } else {
-        this.style.removeProperty('cursor');
-        this.style.removeProperty('opacity');
-      }
-    }
-
+  attributeChangedCallback(name: string): void {
     if (name === 'in-stock' && this.$button) {
       this.$button.disabled = !this.inStock;
     }
@@ -169,14 +159,6 @@ class AddToCartButton extends Piece {
     }
 
     this.off('submit', this.$form!, this.handleSubmit);
-  }
-
-  get loading() {
-    return this.getAttribute('loading') ?? 'false';
-  }
-
-  set loading(value: string) {
-    this.setAttribute('loading', value);
   }
 
   get inStock(): boolean {

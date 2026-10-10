@@ -6,8 +6,7 @@
 {% enddoc %}
 
 <c-cart-item
-  class="flex gap-4 py-4"
-  loading="false"
+  class="flex gap-4 py-4 aria-busy:cursor-wait aria-busy:opacity-50"
   id="CartItem-{{ item.key }}"
   data-item-id="{{ item.key }}"
   data-section-id="{{ id }}"

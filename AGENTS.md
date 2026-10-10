@@ -75,6 +75,7 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 - Check `@agencecinq` before inventing drawer/modal/tabs/spinbutton/combobox
 - Icons: `src/icons/*.svg` → sprite → `{% render 'use.html', icon: %}`
 - Prefer `@agencecinq/utils` `EVENTS` when covered
+- Pending state: `aria-busy="true"` on the piece, styled with Tailwind `aria-busy:` utilities in Liquid — no custom `loading` attribute, no inline styles
 
 ## UI patterns
 
