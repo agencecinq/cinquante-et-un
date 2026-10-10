@@ -1,5 +1,6 @@
 declare const Shopify: {
   money_format: string;
+  money_with_currency_format: string;
 };
 
 declare const routes: {

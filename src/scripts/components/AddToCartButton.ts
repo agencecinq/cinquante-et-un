@@ -5,10 +5,12 @@ import { show } from '../cinq/toast.ts';
 import { AddCartItem } from '../types/cart.ts';
 import { VariantBeforeChangeDetail, VariantChangeDetail } from '../types/variant.ts';
 import { EVENTS } from '../utils/events.ts';
+import { formatCurrency } from '../utils/format-currency.ts';
 
 class AddToCartButton extends Piece {
   $form: HTMLFormElement | null = null;
   $button: HTMLButtonElement | null = null;
+  $spinbutton: HTMLElement | null = null;
 
   constructor() {
     super('AddToCartButton');
@@ -29,7 +31,12 @@ class AddToCartButton extends Piece {
     this.$button = $button;
     this.$form = $form;
 
+    this.$spinbutton = this.querySelector('cinq-spinbutton');
+
     this.on('submit', this.$form, this.handleSubmit);
+    if (this.$spinbutton) {
+      this.on(EVENTS.SPINBUTTON_CHANGE, this.$spinbutton, this.updateTotal);
+    }
     this.on(EVENTS.VARIANT_BEFORE_CHANGE, document.documentElement, this.handleVariantBeforeChange);
     this.on(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
   }
@@ -71,11 +78,28 @@ class AddToCartButton extends Piece {
 
     if ($next && $nextButton) {
       this.toggleAttribute('in-stock', $next.hasAttribute('in-stock'));
+      this.setAttribute('data-price', $next.getAttribute('data-price') ?? '');
       this.$button.innerHTML = $nextButton.innerHTML;
+      this.updateTotal();
     }
 
     this.$button.disabled = !this.inStock;
     this.removeAttribute('aria-busy');
+  };
+
+  /**
+   * Label total (`data-dom="total"`) = unit price (`data-price`, in cents) ×
+   * quantity, in the shop's `money_with_currency` format like the Liquid label.
+   */
+  updateTotal = (): void => {
+    const $total = this.domAttr('total') as HTMLElement | null;
+    const $quantity = this.$form?.querySelector<HTMLInputElement>('input[name="quantity"]');
+    const price = Number(this.getAttribute('data-price'));
+
+    if (!$total || !price) return;
+
+    const quantity = parseInt($quantity?.value ?? '', 10) || 1;
+    $total.textContent = formatCurrency(price * quantity, Shopify.money_with_currency_format);
   };
 
   handleSubmit(event: Event): void {
@@ -193,6 +217,9 @@ class AddToCartButton extends Piece {
 
   unmount() {
     this.off('submit', this.$form!, this.handleSubmit);
+    if (this.$spinbutton) {
+      this.off(EVENTS.SPINBUTTON_CHANGE, this.$spinbutton, this.updateTotal);
+    }
     this.off(EVENTS.VARIANT_BEFORE_CHANGE, document.documentElement, this.handleVariantBeforeChange);
     this.off(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
   }
