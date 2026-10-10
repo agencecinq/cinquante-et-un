@@ -5,13 +5,8 @@
 
 {%- liquid
   assign product = closest.product
+  # `nil` when `?option_values=` points at a combination that doesn't exist ("unavailable").
   assign variant = product.selected_or_first_available_variant
-  capture variant_matches
-    render 'selected-variant-matches.html', product: product
-  endcapture
-  if variant_matches != 'true'
-    assign variant = null
-  endif
 -%}
 
 <div class="space-y-1" {{ block.shopify_attributes }}>
