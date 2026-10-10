@@ -18,7 +18,15 @@
   endif
 
   assign form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
+  # With `?option_values=` pointing at a combination that doesn't exist, Shopify falls back to the
+  # first available variant: reset it so the picker, price and add-to-cart show "unavailable".
   assign variant = product.selected_or_first_available_variant
+  for option in product.options_with_values
+    if option.selected_value != blank and variant.options[forloop.index0] != option.selected_value
+      assign variant = null
+      break
+    endif
+  endfor
   assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
 -%}
 
@@ -131,11 +139,16 @@
               </h1>
 
             {%- when 'price' -%}
-              <div class="text-base" {{ block.shopify_attributes }}>
-                <c-price class="block" data-product-id="{{ product.id }}">
+              <c-product-price
+                id="ProductPrice-{{ section.id }}"
+                data-product-id="{{ product.id }}"
+                class="block text-base transition-opacity aria-busy:opacity-50"
+                {{ block.shopify_attributes }}
+              >
+                {%- if variant -%}
                   {%- render 'price.html', product: product, variant: variant -%}
-                </c-price>
-              </div>
+                {%- endif -%}
+              </c-product-price>
 
             {%- when 'description' -%}
               {%- if product.description != blank -%}
@@ -144,13 +157,20 @@
                 </div>
               {%- endif -%}
 
-            {%- when 'variants-picker' -%}
-              {%- render 'product-variants.html', product: product, block: block, form_id: form_id -%}
+            {%- when 'variant-picker' -%}
+              {%- render 'variant-picker.html',
+                product: product,
+                variant: variant,
+                block: block,
+                section_id: section.id,
+                form_id: form_id
+              -%}
 
             {%- when 'add-to-cart-button' -%}
               <c-add-to-cart-button
-                class="block aria-busy:cursor-wait aria-busy:opacity-50"
+                id="ProductBuy-{{ section.id }}"
                 data-product-id="{{ product.id }}"
+                class="block aria-busy:cursor-wait aria-busy:opacity-50"
                 {% if variant.available %}
                   in-stock
                 {% endif %}
@@ -163,12 +183,12 @@
                   <input type="hidden" name="quantity" value="1">
 
                   {%- capture atc_title -%}
-                    {%- if variant.available -%}
+                    {%- if variant == null -%}
+                      {{- 'sections.product.unavailable' | t -}}
+                    {%- elsif variant.available -%}
                       {{- 'sections.product.add_to_cart' | t -}}
                       <span aria-hidden="true">&nbsp;‧&nbsp;</span>
-                      <c-price data-product-id="{{ product.id }}">
-                        {{- variant.price | money_with_currency -}}
-                      </c-price>
+                      {{- variant.price | money_with_currency -}}
                     {%- else -%}
                       {{- 'sections.product.sold_out' | t -}}
                     {%- endif -%}
@@ -309,8 +329,8 @@
       "limit": 1
     },
     {
-      "type": "variants-picker",
-      "name": "t:sections.product.blocks.variants-picker.name",
+      "type": "variant-picker",
+      "name": "t:sections.product.blocks.variant-picker.name",
       "limit": 1
     },
     {

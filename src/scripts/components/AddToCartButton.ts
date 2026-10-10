@@ -1,20 +1,12 @@
 import { Piece } from 'piecesjs';
-import { EVENTS } from '@agencecinq/utils';
 import { messageFromError } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import { show } from '../cinq/toast.ts';
 import { AddCartItem } from '../types/cart.ts';
-
-type VariantChangeDetail = {
-  variant?: { available?: boolean };
-  id?: string | number;
-};
+import { VariantBeforeChangeDetail, VariantChangeDetail } from '../types/variant.ts';
+import { EVENTS } from '../utils/events.ts';
 
 class AddToCartButton extends Piece {
-  static get observedAttributes() {
-    return ['in-stock'];
-  }
-
   $form: HTMLFormElement | null = null;
   $button: HTMLButtonElement | null = null;
   formData: FormData | null = null;
@@ -38,22 +30,45 @@ class AddToCartButton extends Piece {
     this.$button = $button;
     this.$form = $form;
 
-    if (this.getAttribute('data-product-id')) {
-      this.on(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
-      this.$button.disabled = !this.inStock;
-    }
-
     this.on('submit', this.$form, this.handleSubmit);
+    this.on(EVENTS.VARIANT_BEFORE_CHANGE, document.documentElement, this.handleVariantBeforeChange);
+    this.on(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
   }
 
-  handleVariantChange = (event: Event): void => {
-    const { variant, id } = (event as CustomEvent<VariantChangeDetail>).detail ?? {};
+  /**
+   * While the variant picker loads, the form's `id` still holds the previous
+   * variant: block submissions until `VARIANT_CHANGE`. Only buttons with a
+   * matching `data-product-id` follow the picker (quick add buttons don't).
+   */
+  handleVariantBeforeChange = (event: Event): void => {
+    const { id } = (event as CustomEvent<VariantBeforeChangeDetail>).detail;
 
-    if (!variant || String(id) !== this.getAttribute('data-product-id')) {
-      return;
+    if (!this.$button || id !== this.productId) return;
+
+    this.setAttribute('aria-busy', 'true');
+    this.$button.disabled = true;
+  };
+
+  /**
+   * Label, `disabled` and `in-stock` come from the element with the same `id` in
+   * the rendered section. The form (quantity, properties…) is left untouched.
+   * Always leaves the busy state, even when this button isn't in that section.
+   */
+  handleVariantChange = (event: Event): void => {
+    const { html, id } = (event as CustomEvent<VariantChangeDetail>).detail;
+
+    if (!this.$button || id !== this.productId) return;
+
+    const $next = this.id ? html.getElementById(this.id) : null;
+    const $nextButton = $next ? (this.domAttr('button', $next) as HTMLButtonElement | null) : null;
+
+    if ($next && $nextButton) {
+      this.toggleAttribute('in-stock', $next.hasAttribute('in-stock'));
+      this.$button.innerHTML = $nextButton.innerHTML;
     }
 
-    this.inStock = Boolean(variant.available);
+    this.$button.disabled = !this.inStock;
+    this.removeAttribute('aria-busy');
   };
 
   handleSubmit(event: Event): void {
@@ -147,26 +162,19 @@ class AddToCartButton extends Piece {
     });
   }
 
-  attributeChangedCallback(name: string): void {
-    if (name === 'in-stock' && this.$button) {
-      this.$button.disabled = !this.inStock;
-    }
-  }
-
   unmount() {
-    if (this.getAttribute('data-product-id')) {
-      this.off(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
-    }
-
     this.off('submit', this.$form!, this.handleSubmit);
+    this.off(EVENTS.VARIANT_BEFORE_CHANGE, document.documentElement, this.handleVariantBeforeChange);
+    this.off(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
   }
 
+  get productId() {
+    return this.getAttribute('data-product-id');
+  }
+
+  /** Server-rendered (`in-stock`): re-enables the button after an add, unless sold out. */
   get inStock(): boolean {
     return this.hasAttribute('in-stock');
-  }
-
-  set inStock(value: boolean) {
-    this.toggleAttribute('in-stock', value);
   }
 
   get events() {
