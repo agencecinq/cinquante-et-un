@@ -1,0 +1,20 @@
+{% doc %}
+  Product title (`h1`). Rendered in Liquid: the generic `title` block's textarea
+  setting can't take a dynamic source.
+{% enddoc %}
+
+<h1 class="text-xl font-semibold wrap-break-word lg:text-2xl" {{ block.shopify_attributes }}>
+  {{- closest.product.title -}}
+</h1>
+
+{% schema %}
+{
+  "name": "t:blocks.product-title.name",
+  "tag": null,
+  "presets": [
+    {
+      "name": "t:blocks.product-title.name"
+    }
+  ]
+}
+{% endschema %}

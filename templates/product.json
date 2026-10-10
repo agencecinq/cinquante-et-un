@@ -11,6 +11,93 @@
   "sections": {
     "main": {
       "type": "product",
+      "blocks": {
+        "breadcrumb": {
+          "type": "breadcrumb",
+          "settings": {}
+        },
+        "title": {
+          "type": "product-title",
+          "settings": {}
+        },
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "<p>{{ closest.product.vendor }}</p>",
+            "tag": "div",
+            "font_size": "text-xs"
+          }
+        },
+        "price": {
+          "type": "product-price",
+          "settings": {
+            "show_tax_note": true
+          }
+        },
+        "variants": {
+          "type": "product-variant-picker",
+          "settings": {}
+        },
+        "buy": {
+          "type": "product-buy-buttons",
+          "settings": {
+            "show_quantity": true,
+            "show_dynamic_checkout": true
+          }
+        },
+        "reassurance": {
+          "type": "product-reassurance",
+          "settings": {
+            "text_0": "Livraison offerte dès 40 €",
+            "text_1": "Retours sous 30 jours",
+            "text_2": "Paiement sécurisé"
+          }
+        },
+        "accordions": {
+          "type": "accordion-group",
+          "settings": {},
+          "blocks": {
+            "description": {
+              "type": "_accordion",
+              "settings": {
+                "heading": "Description",
+                "open": true
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "{{ closest.product.description }}",
+                    "tag": "div",
+                    "font_size": "text-sm"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "shipping": {
+              "type": "_accordion",
+              "settings": {
+                "heading": "Livraison et retours",
+                "open": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Livraison offerte dès 40 €.</p><p>Retours sous 30 jours.</p>",
+                    "tag": "div",
+                    "font_size": "text-sm"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            }
+          },
+          "block_order": ["description", "shipping"]
+        }
+      },
+      "block_order": ["breadcrumb", "title", "vendor", "price", "variants", "buy", "reassurance", "accordions"],
       "settings": {
         "padding_top": 40,
         "padding_bottom": 40

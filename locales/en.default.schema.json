@@ -496,6 +496,9 @@
           "label": "Open by default"
         }
       }
+    },
+    "product-title": {
+      "name": "Product title"
     }
   },
   "sections": {
