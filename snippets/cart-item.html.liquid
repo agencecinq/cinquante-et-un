@@ -5,10 +5,6 @@
   @example {%- render 'cart-item.html', item: item, id: section.id -%}
 {% enddoc %}
 
-{% liquid
-  assign max = item.variant.quantity_rule.max | default: 10
-%}
-
 <c-cart-item
   class="flex gap-4 py-4"
   loading="false"
@@ -86,7 +82,9 @@
                 data-dom="input"
                 aria-label="{{ 'snippets.cart-item.quantity.label' | t }}"
                 aria-valuemin="0"
-                aria-valuemax="{{ max }}"
+                {% if item.variant.quantity_rule.max %}
+                  aria-valuemax="{{ item.variant.quantity_rule.max }}"
+                {% endif %}
                 aria-valuenow="{{ item.quantity }}"
               >
 
