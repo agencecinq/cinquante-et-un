@@ -28,6 +28,13 @@
     endif
   endfor
   assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
+
+  # Gallery starts on the selected variant's media (e.g. `?variant=`); `c-product-gallery` follows later changes.
+  assign gallery = product.media
+  if variant.featured_media
+    assign other_media = product.media | reject: 'id', variant.featured_media.id
+    assign gallery = product.media | where: 'id', variant.featured_media.id | concat: other_media
+  endif
 -%}
 
 {%- style -%}
@@ -53,77 +60,79 @@
             {{- 'product-1' | placeholder_svg_tag: 'size-full object-cover object-center opacity-40' -}}
           </div>
         {%- else -%}
-          <c-slideshow cid="{{ slideshow_cid }}" class="relative block">
-            <div
-              class="scrollbar-hidden flex aspect-3/4 snap-x snap-mandatory overflow-x-auto scroll-smooth border border-black"
-              data-dom="slider-{{ slideshow_cid }}"
-              aria-label="{{ product.title | escape }}"
-            >
-              {%- for media in product.media -%}
-                <div
-                  class="relative w-full shrink-0 snap-center"
-                  data-dom="slide-{{ slideshow_cid }}"
-                  data-media-id="{{ media.id }}"
-                >
-                  {%- if media.media_type == 'image' -%}
-                    {%- assign alt = media.alt | default: product.title -%}
-                    {{-
-                      media
-                      | image_url: width: 1440
-                      | image_tag: class: 'size-full object-cover object-center', alt: alt
-                    -}}
-                  {%- elsif media.media_type == 'video' -%}
-                    {{-
-                      media
-                      | video_tag:
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        playsinline: true,
-                        image_size: '1440x',
-                        class: 'size-full object-cover object-center'
-                    -}}
-                  {%- elsif media.media_type == 'external_video' -%}
-                    {{- media | external_video_tag: class: 'size-full object-cover object-center' -}}
-                  {%- endif -%}
-                </div>
-              {%- endfor -%}
-            </div>
-
-            {%- if product.media.size > 1 -%}
-              <div class="mt-2 flex items-center justify-between gap-2">
-                {%- liquid
-                  assign previous_label = 'sections.product.previous' | t
-                  assign previous_dom = 'previous-' | append: slideshow_cid
-                  assign next_label = 'sections.product.next' | t
-                  assign next_dom = 'next-' | append: slideshow_cid
-                -%}
-                {% capture previous_attributes %}data-dom="{{ previous_dom }}" aria-label="{{ previous_label | escape }}"{% endcapture %}
-                {% capture next_attributes %}data-dom="{{ next_dom }}" aria-label="{{ next_label | escape }}"{% endcapture %}
-                {%- render 'button.html',
-                  variant: 'tertiary',
-                  icon: 'chevron-left',
-                  title: '',
-                  attributes: previous_attributes
-                -%}
-                <div class="flex flex-wrap justify-center gap-1" data-dom="controls-{{ slideshow_cid }}">
-                  {%- for media in product.media -%}
-                    <button
-                      type="button"
-                      class="size-2 border border-black bg-transparent aria-current:bg-black"
-                      aria-label="{{ 'sections.product.thumbnail' | t: number: forloop.index }}"
-                    ></button>
-                  {%- endfor -%}
-                </div>
-                {%- render 'button.html',
-                  variant: 'tertiary',
-                  icon: 'chevron-right',
-                  title: '',
-                  attributes: next_attributes
-                -%}
+          <c-product-gallery class="block" data-product-id="{{ product.id }}">
+            <c-slideshow cid="{{ slideshow_cid }}" class="relative block">
+              <div
+                class="scrollbar-hidden flex aspect-3/4 snap-x snap-mandatory overflow-x-auto scroll-smooth border border-black"
+                data-dom="slider-{{ slideshow_cid }}"
+                aria-label="{{ product.title | escape }}"
+              >
+                {%- for media in gallery -%}
+                  <div
+                    class="relative w-full shrink-0 snap-center"
+                    data-dom="slide-{{ slideshow_cid }}"
+                    data-media-id="{{ media.id }}"
+                  >
+                    {%- if media.media_type == 'image' -%}
+                      {%- assign alt = media.alt | default: product.title -%}
+                      {{-
+                        media
+                        | image_url: width: 1440
+                        | image_tag: class: 'size-full object-cover object-center', alt: alt
+                      -}}
+                    {%- elsif media.media_type == 'video' -%}
+                      {{-
+                        media
+                        | video_tag:
+                          autoplay: true,
+                          loop: true,
+                          muted: true,
+                          playsinline: true,
+                          image_size: '1440x',
+                          class: 'size-full object-cover object-center'
+                      -}}
+                    {%- elsif media.media_type == 'external_video' -%}
+                      {{- media | external_video_tag: class: 'size-full object-cover object-center' -}}
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
               </div>
-            {%- endif -%}
-          </c-slideshow>
+
+              {%- if product.media.size > 1 -%}
+                <div class="mt-2 flex items-center justify-between gap-2">
+                  {%- liquid
+                    assign previous_label = 'sections.product.previous' | t
+                    assign previous_dom = 'previous-' | append: slideshow_cid
+                    assign next_label = 'sections.product.next' | t
+                    assign next_dom = 'next-' | append: slideshow_cid
+                  -%}
+                  {% capture previous_attributes %}data-dom="{{ previous_dom }}" aria-label="{{ previous_label | escape }}"{% endcapture %}
+                  {% capture next_attributes %}data-dom="{{ next_dom }}" aria-label="{{ next_label | escape }}"{% endcapture %}
+                  {%- render 'button.html',
+                    variant: 'tertiary',
+                    icon: 'chevron-left',
+                    title: '',
+                    attributes: previous_attributes
+                  -%}
+                  <div class="flex flex-wrap justify-center gap-1" data-dom="controls-{{ slideshow_cid }}">
+                    {%- for media in product.media -%}
+                      <button
+                        type="button"
+                        class="size-2 border border-black bg-transparent aria-current:bg-black"
+                        aria-label="{{ 'sections.product.thumbnail' | t: number: forloop.index }}"
+                      ></button>
+                    {%- endfor -%}
+                  </div>
+                  {%- render 'button.html',
+                    variant: 'tertiary',
+                    icon: 'chevron-right',
+                    title: '',
+                    attributes: next_attributes
+                  -%}
+                </div>
+              {%- endif -%}
+            </c-slideshow>
+          </c-product-gallery>
         {%- endif -%}
       </div>
 

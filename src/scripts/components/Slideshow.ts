@@ -1,12 +1,12 @@
 import { Piece } from 'piecesjs';
 
-class Slideshow extends Piece {
+export class Slideshow extends Piece {
   $previous!: HTMLElement;
   $next!: HTMLElement;
   $slider!: HTMLElement;
   slides!: HTMLElement[];
-  $controls: HTMLElement | null;
-  buttons: HTMLButtonElement[] | null;
+  $controls: HTMLElement | null = null;
+  buttons: HTMLButtonElement[] | null = null;
   resizeObserver!: ResizeObserver;
   offset = 0;
   slidesPerPage = 1;
@@ -35,24 +35,33 @@ class Slideshow extends Piece {
       this.buttons = Array.from(this.$controls.querySelectorAll('button'));
     }
 
-    this.on('scroll', this.$slider, this.update.bind(this));
+    this.on('scroll', this.$slider, this.update);
 
     if (this.$previous) {
-      this.on('click', this.$previous, this.handleClick.bind(this));
+      this.on('click', this.$previous, this.handleClick);
     }
 
     if (this.$next) {
-      this.on('click', this.$next, this.handleClick.bind(this));
+      this.on('click', this.$next, this.handleClick);
     }
 
     if (this.buttons) {
-      this.buttons.forEach(($button) => this.on('click', $button, this.slideToPage.bind(this)));
+      this.buttons.forEach(($button) => this.on('click', $button, this.slideToPage));
     }
 
     this.resizeObserver = new ResizeObserver(() => this.init());
     this.resizeObserver.observe(this.$slider);
 
     this.init();
+  }
+
+  /**
+   * Scroll so `$slide` is the first visible slide.
+   */
+  slideTo($slide: HTMLElement) {
+    const $first = this.slides[0] ?? $slide;
+
+    this.$slider.scrollTo({ left: $slide.offsetLeft - $first.offsetLeft, behavior: 'smooth' });
   }
 
   init() {
@@ -71,11 +80,10 @@ class Slideshow extends Piece {
     this.update();
   }
 
-  update() {
+  update = () => {
     const currentSlide = Math.round(this.$slider.scrollLeft / this.offset);
     this.currentPage = Math.max(1, Math.min(currentSlide + 1, this.totalPages));
 
-    // const progress = ((this.currentPage - 1) / (this.totalPages - 1)) * 100;
     const progress = (this.$slider.scrollLeft / (this.$slider.scrollWidth - this.$slider.clientWidth)) * 100;
 
     this.style.setProperty('--slides-length', `${this.slides.length}`);
@@ -104,13 +112,13 @@ class Slideshow extends Piece {
 
     if (this.buttons) {
       this.buttons.forEach(($button) => $button.removeAttribute('aria-current'));
-      this.buttons[this.currentPage - 1].setAttribute('aria-current', 'true');
+      this.buttons[this.currentPage - 1]?.setAttribute('aria-current', 'true');
     }
-  }
+  };
 
-  handleClick(event: Event) {
+  handleClick = (event: Event) => {
     this.slideToSlide(event);
-  }
+  };
 
   isSlideVisible(element: HTMLElement, offset = 0) {
     const lastVisibleSlide = this.$slider.clientWidth + this.$slider.scrollLeft - offset;
@@ -124,7 +132,6 @@ class Slideshow extends Piece {
     const { dom } = target.dataset;
     let left = 0;
 
-
     if (dom === `next-${this.cid}`) {
       left = this.$slider.scrollLeft + this.offset;
     }
@@ -132,12 +139,10 @@ class Slideshow extends Piece {
       left = this.$slider.scrollLeft - this.offset;
     }
 
-    // console.log(dom, left, this.$slider.scrollLeft, this.offset);
-
     this.$slider.scrollTo({ left, behavior: 'smooth' });
   }
 
-  slideToPage(event: Event) {
+  slideToPage = (event: Event) => {
     event.preventDefault();
 
     if (!this.buttons) return;
@@ -148,21 +153,21 @@ class Slideshow extends Piece {
       left,
       behavior: 'smooth',
     });
-  }
+  };
 
   unmount() {
-    this.off('scroll', this.$slider, this.update.bind(this));
+    this.off('scroll', this.$slider, this.update);
 
     if (this.$previous) {
-      this.off('click', this.$previous, this.handleClick.bind(this));
+      this.off('click', this.$previous, this.handleClick);
     }
 
     if (this.$next) {
-      this.off('click', this.$next, this.handleClick.bind(this));
+      this.off('click', this.$next, this.handleClick);
     }
 
     if (this.buttons) {
-      this.buttons.forEach(($button) => this.off('click', $button, this.slideToPage.bind(this)));
+      this.buttons.forEach(($button) => this.off('click', $button, this.slideToPage));
     }
 
     this.resizeObserver.disconnect();
