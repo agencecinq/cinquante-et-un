@@ -1,0 +1,52 @@
+{% doc %}
+  One `cinq-accordion` panel: a header button and a collapsible region. Render it
+  inside a `<cinq-accordion>`.
+
+  @param {string} id - Unique id, used for the header / region ids.
+  @param {string} title - Header label.
+  @param {string} content - Panel content (HTML).
+  @param {boolean} [open] - Open on load. Default `false`.
+  @param {string} [attributes] - Raw HTML attributes on the panel, e.g. `block.shopify_attributes`.
+
+  @example
+  {% render 'accordion-panel.html', id: block.id, title: block.settings.heading, content: content, open: forloop.first %}
+{% enddoc %}
+
+<div
+  data-panel
+  class="js-accordion-panel border-t border-gray-200"
+  data-open="{% if open %}true{% else %}false{% endif %}"
+  data-deselect="true"
+  {{ attributes }}
+>
+  <button
+    data-header
+    class="js-accordion-header group flex w-full items-center justify-between gap-2 py-6 text-start lg:gap-4"
+    type="button"
+    aria-expanded="{% if open %}true{% else %}false{% endif %}"
+    aria-controls="{{ id }}-body"
+    id="{{ id }}-header"
+  >
+    <strong class="text-sm font-semibold">{{- title -}}</strong>
+
+    <span class="relative size-8 shrink-0 bg-gray-100">
+      {%- liquid
+        render 'use.html', icon: 'plus', classes: 'size-3 absolute m-auto inset-0 block group-aria-expanded:hidden'
+        render 'use.html', icon: 'minus', classes: 'size-3 absolute m-auto inset-0 hidden group-aria-expanded:block'
+      -%}
+    </span>
+  </button>
+
+  <div
+    id="{{ id }}-body"
+    role="region"
+    aria-labelledby="{{ id }}-header"
+    {% unless open %}
+      hidden
+    {% endunless %}
+  >
+    <div data-inner class="js-accordion-inner wysiwyg max-w-3xl pb-6 text-sm">
+      {{- content -}}
+    </div>
+  </div>
+</div>
