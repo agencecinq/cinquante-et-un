@@ -11,65 +11,6 @@
   "sections": {
     "main": {
       "type": "product",
-      "blocks": {
-        "breadcrumb": {
-          "type": "breadcrumb",
-          "settings": {}
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "vendor": {
-          "type": "custom-liquid",
-          "settings": {
-            "custom_liquid": "<p class=\"text-xs opacity-60\">{{ product.vendor }}</p>"
-          }
-        },
-        "price": {
-          "type": "price",
-          "settings": {
-            "show_tax_note": true
-          }
-        },
-        "variants": {
-          "type": "variant-picker",
-          "settings": {}
-        },
-        "quantity": {
-          "type": "quantity",
-          "settings": {}
-        },
-        "buy": {
-          "type": "add-to-cart-button",
-          "settings": {
-            "show_dynamic_checkout": true
-          }
-        },
-        "reassurance": {
-          "type": "reassurance",
-          "settings": {
-            "text_0": "Livraison offerte dès 40 €",
-            "text_1": "Retours sous 30 jours",
-            "text_2": "Paiement sécurisé"
-          }
-        },
-        "accordion": {
-          "type": "accordion-group",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "breadcrumb",
-        "title",
-        "vendor",
-        "price",
-        "variants",
-        "quantity",
-        "buy",
-        "reassurance",
-        "accordion"
-      ],
       "settings": {
         "padding_top": 40,
         "padding_bottom": 40
@@ -86,5 +27,8 @@
       }
     }
   },
-  "order": ["main", "related"]
+  "order": [
+    "main",
+    "related"
+  ]
 }

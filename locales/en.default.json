@@ -310,10 +310,6 @@
       "sold_out": "Sold out",
       "unavailable": "Unavailable",
       "thumbnail": "Product thumbnail {{ number }}",
-      "accordion-group": {
-        "description": "Description",
-        "complementary_products": "Complementary products"
-      },
       "tax_note": {
         "taxes_included": "Taxes included.",
         "shipping_policy_html": "<a href=\"{{ link }}\" class=\"underline\">Shipping</a> calculated at checkout.",
