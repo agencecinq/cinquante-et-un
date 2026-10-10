@@ -9,7 +9,6 @@ import { EVENTS } from '../utils/events.ts';
 class AddToCartButton extends Piece {
   $form: HTMLFormElement | null = null;
   $button: HTMLButtonElement | null = null;
-  formData: FormData | null = null;
 
   constructor() {
     super('AddToCartButton');
@@ -74,17 +73,15 @@ class AddToCartButton extends Piece {
   handleSubmit(event: Event): void {
     event.preventDefault();
 
-    this.formData = new FormData(this.$form!);
-
-    this.fetch();
+    this.fetch(new FormData(this.$form!));
   }
 
-  async fetch(): Promise<void> {
+  async fetch(formData: FormData): Promise<void> {
     this.$button!.disabled = true;
     this.setAttribute('aria-busy', 'true');
 
     try {
-      const items = this.parseItems();
+      const items = this.parseItems(formData);
       await cart.add(items);
       this.dispatchEvents();
     } catch (error) {
@@ -95,46 +92,70 @@ class AddToCartButton extends Piece {
     }
   }
 
-  parseItems(): AddCartItem[] {
-    const formData = this.formData!;
-    const items: AddCartItem[] = [];
-
-    if (formData.has('items[0][id]')) {
-      let index = 0;
-      while (formData.has(`items[${index}][id]`)) {
-        const item: AddCartItem = {
-          id: formData.get(`items[${index}][id]`) as string,
-          quantity: parseInt(formData.get(`items[${index}][quantity]`) as string, 10),
-        };
-
-        const properties = this.getProperties(`items[${index}]`);
-        if (properties) {
-          item.properties = properties;
-        }
-
-        items.push(item);
-        index += 1;
-      }
-      return items;
+  /**
+   * Reads both Shopify product form shapes: a single product (`id`, `quantity`,
+   * `selling_plan`, `properties[…]`) or several at once (`items[0][id]`,
+   * `items[0][quantity]`, `items[0][properties][…]`…).
+   *
+   * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-add-js
+   */
+  parseItems(formData: FormData): AddCartItem[] {
+    if (!formData.has('items[0][id]')) {
+      const item = this.readItem(formData, '');
+      return item ? [item] : [];
     }
 
-    if (formData.has('id')) {
-      const item: AddCartItem = {
-        id: formData.get('id') as string,
-        quantity: parseInt(formData.get('quantity') as string, 10) || 1,
-      };
+    const items: AddCartItem[] = [];
 
-      items.push(item);
+    for (let index = 0; formData.has(`items[${index}][id]`); index += 1) {
+      const item = this.readItem(formData, `items[${index}]`);
+
+      if (item) {
+        items.push(item);
+      }
     }
 
     return items;
   }
 
-  private getProperties(prefix: string): Record<string, string> | undefined {
-    const properties: Record<string, string> = {};
-    const needle = `${prefix}[properties][`;
+  /**
+   * Reads one cart item; `prefix` is `''` for a single product form, `items[n]`
+   * for multi-item forms.
+   */
+  private readItem(formData: FormData, prefix: string): AddCartItem | null {
+    const key = (name: string) => (prefix ? `${prefix}[${name}]` : name);
+    const id = formData.get(key('id'));
 
-    for (const [key, value] of this.formData!.entries()) {
+    if (!id) {
+      return null;
+    }
+
+    const item: AddCartItem = {
+      id: String(id),
+      quantity: parseInt(String(formData.get(key('quantity'))), 10) || 1,
+    };
+
+    const sellingPlan = formData.get(key('selling_plan'));
+
+    if (sellingPlan) {
+      item.selling_plan = String(sellingPlan);
+    }
+
+    const properties = this.getProperties(formData, key('properties'));
+
+    if (properties) {
+      item.properties = properties;
+    }
+
+    return item;
+  }
+
+  /** Non-empty `{prefix}[name]` entries, e.g. `properties[Engraving]`. */
+  private getProperties(formData: FormData, prefix: string): Record<string, string> | undefined {
+    const properties: Record<string, string> = {};
+    const needle = `${prefix}[`;
+
+    for (const [key, value] of formData.entries()) {
       if (!key.startsWith(needle) || typeof value !== 'string' || value === '') {
         continue;
       }
