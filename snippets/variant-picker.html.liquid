@@ -1,0 +1,62 @@
+{% doc %}
+  Variant picker — one radio group per product option. Selecting a value fetches the
+  product section with `?option_values=` (Section Rendering API), refreshes the picker
+  and emits `VARIANT_CHANGE` with that markup: variant-dependent blocks update themselves
+  from it (`c-product-price`, `c-add-to-cart-button`, `c-product-gallery`).
+
+  @param {object} product - Product object.
+  @param {object} variant - Variant matching the selected option values, `null` when the combination doesn't exist.
+  @param {object} block - Section block.
+  @param {string} section_id - Section id, used to re-render the section.
+  @param {string} form_id - Product form id for the external `id` input.
+{% enddoc %}
+
+{%- unless product.has_only_default_variant -%}
+  <c-variant-picker
+    class="block"
+    data-section-id="{{ section_id }}"
+    data-product-url="{{ product.url }}"
+    data-update-url
+    {{ block.shopify_attributes }}
+  >
+    <div id="VariantPicker-{{ section_id }}" class="space-y-4" data-product-id="{{ product.id }}">
+      <script type="application/json" data-selected-variant>
+        {{ variant | json }}
+      </script>
+      <input type="hidden" name="id" value="{{ variant.id }}" form="{{ form_id }}">
+
+      {%- for option in product.options_with_values -%}
+        <fieldset class="space-y-2">
+          <legend class="text-xs">
+            {{- option.name -}}
+            <span class="ms-2 font-medium">{{- option.selected_value -}}</span>
+          </legend>
+
+          <div class="flex flex-wrap gap-1">
+            {%- for value in option.values -%}
+              <label class="border border-black px-3 py-2 text-xs has-checked:bg-black has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2{% unless value.available %} line-through opacity-40{% endunless %}">
+                <input
+                  type="radio"
+                  name="option-{{ section_id }}-{{ option.position }}"
+                  value="{{ value | escape }}"
+                  class="sr-only"
+                  data-option-value-id="{{ value.id }}"
+                  {% if value.product_url %}
+                    data-product-url="{{ value.product_url }}"
+                  {% endif %}
+                  {% if value.selected %}
+                    checked
+                  {% endif %}
+                >
+                <span>{{- value -}}</span>
+                {%- unless value.available -%}
+                  <span class="sr-only">, {{ 'snippets.product-tags.sold_out' | t }}</span>
+                {%- endunless -%}
+              </label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endfor -%}
+    </div>
+  </c-variant-picker>
+{%- endunless -%}

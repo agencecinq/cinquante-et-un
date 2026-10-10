@@ -130,7 +130,7 @@
     ]
   },
   "src/scripts/api/fetchSection.ts": {
-    "file": "fetchSection-CHBvoVUn.js",
+    "file": "fetchSection-IqK6VlrR.js",
     "name": "fetchSection",
     "src": "src/scripts/api/fetchSection.ts",
     "isEntry": true,
@@ -173,7 +173,7 @@
     "isEntry": true
   },
   "src/scripts/app.ts": {
-    "file": "app-D3uehtD7.js",
+    "file": "app-CCFj-Id6.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -194,11 +194,12 @@
       "src/scripts/components/Headroom.ts",
       "src/scripts/components/LoadMore.ts",
       "src/scripts/components/Menubar.ts",
-      "src/scripts/components/Price.ts",
+      "src/scripts/components/ProductGallery.ts",
+      "src/scripts/components/ProductPrice.ts",
       "src/scripts/components/SelectController.ts",
       "src/scripts/components/Slideshow.ts",
       "src/scripts/components/TableOfContents.ts",
-      "src/scripts/components/VariantsPicker.ts"
+      "src/scripts/components/VariantPicker.ts"
     ]
   },
   "src/scripts/cinq/combobox.ts": {
@@ -239,20 +240,21 @@
     "isEntry": true
   },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-Cp1lbeQf.js",
+    "file": "AddToCartButton--2MQ43yP.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-DxA8j4Pk.js",
-      "_dist-BcdnhdUF.js",
       "src/scripts/api/errors.ts",
       "src/scripts/cinq/toast.ts",
-      "src/scripts/store/cart.ts"
+      "src/scripts/store/cart.ts",
+      "src/scripts/utils/events.ts",
+      "src/scripts/utils/events.ts"
     ]
   },
   "src/scripts/components/CartDrawer.ts": {
-    "file": "CartDrawer-Ck8h_83v.js",
+    "file": "CartDrawer-CFGNUuQy.js",
     "name": "CartDrawer",
     "src": "src/scripts/components/CartDrawer.ts",
     "isEntry": true,
@@ -262,7 +264,7 @@
     ]
   },
   "src/scripts/components/CartItem.ts": {
-    "file": "CartItem-BzZFxVty.js",
+    "file": "CartItem-Be2RrnKD.js",
     "name": "CartItem",
     "src": "src/scripts/components/CartItem.ts",
     "isEntry": true,
@@ -284,7 +286,7 @@
     ]
   },
   "src/scripts/components/CartStoreDemo.ts": {
-    "file": "CartStoreDemo-BSSjqBaf.js",
+    "file": "CartStoreDemo-tfqhlwQ9.js",
     "name": "CartStoreDemo",
     "src": "src/scripts/components/CartStoreDemo.ts",
     "isEntry": true,
@@ -306,7 +308,7 @@
     ]
   },
   "src/scripts/components/LoadMore.ts": {
-    "file": "LoadMore-B_DCeSIE.js",
+    "file": "LoadMore-rwVm2uj_.js",
     "name": "LoadMore",
     "src": "src/scripts/components/LoadMore.ts",
     "isEntry": true,
@@ -326,16 +328,26 @@
       "_dist-BcdnhdUF.js"
     ]
   },
-  "src/scripts/components/Price.ts": {
-    "file": "Price-CdYJaHKD.js",
-    "name": "Price",
-    "src": "src/scripts/components/Price.ts",
+  "src/scripts/components/ProductGallery.ts": {
+    "file": "ProductGallery-7n-s9Tzo.js",
+    "name": "ProductGallery",
+    "src": "src/scripts/components/ProductGallery.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-DxA8j4Pk.js",
-      "_dist-BcdnhdUF.js",
-      "src/scripts/utils/format-currency.ts",
-      "src/scripts/utils/format-currency.ts"
+      "src/scripts/utils/events.ts",
+      "src/scripts/utils/events.ts"
+    ]
+  },
+  "src/scripts/components/ProductPrice.ts": {
+    "file": "ProductPrice-CcQ6mM_4.js",
+    "name": "ProductPrice",
+    "src": "src/scripts/components/ProductPrice.ts",
+    "isEntry": true,
+    "imports": [
+      "_piecesjs-DxA8j4Pk.js",
+      "src/scripts/utils/events.ts",
+      "src/scripts/utils/events.ts"
     ]
   },
   "src/scripts/components/SelectController.ts": {
@@ -348,7 +360,7 @@
     ]
   },
   "src/scripts/components/Slideshow.ts": {
-    "file": "Slideshow-DB9d9Trc.js",
+    "file": "Slideshow-BVIMqtrf.js",
     "name": "Slideshow",
     "src": "src/scripts/components/Slideshow.ts",
     "isEntry": true,
@@ -367,20 +379,22 @@
       "src/scripts/utils/slugify.ts"
     ]
   },
-  "src/scripts/components/VariantsPicker.ts": {
-    "file": "VariantsPicker-dU0oqDtg.js",
-    "name": "VariantsPicker",
-    "src": "src/scripts/components/VariantsPicker.ts",
+  "src/scripts/components/VariantPicker.ts": {
+    "file": "VariantPicker-BsHIwc6s.js",
+    "name": "VariantPicker",
+    "src": "src/scripts/components/VariantPicker.ts",
     "isEntry": true,
     "imports": [
       "_piecesjs-DxA8j4Pk.js",
-      "_dist-BcdnhdUF.js",
-      "src/scripts/utils/format-currency.ts",
-      "src/scripts/utils/format-currency.ts"
+      "src/scripts/utils/renderSection.ts",
+      "src/scripts/api/fetchSection.ts",
+      "src/scripts/api/fetchSection.ts",
+      "src/scripts/utils/events.ts",
+      "src/scripts/utils/events.ts"
     ]
   },
   "src/scripts/store/cart.ts": {
-    "file": "cart-Ere9Tk3G.js",
+    "file": "cart-DdpRFTHF.js",
     "name": "cart",
     "src": "src/scripts/store/cart.ts",
     "isEntry": true,
@@ -411,8 +425,14 @@
     "src": "src/scripts/types/section.ts",
     "isEntry": true
   },
+  "src/scripts/types/variant.ts": {
+    "file": "variant-BvRk9kiK.js",
+    "name": "variant",
+    "src": "src/scripts/types/variant.ts",
+    "isEntry": true
+  },
   "src/scripts/utils/events.ts": {
-    "file": "events-CWt5CtG7.js",
+    "file": "events-BCZJvU_7.js",
     "name": "events",
     "src": "src/scripts/utils/events.ts",
     "isEntry": true,
@@ -433,7 +453,7 @@
     "isEntry": true
   },
   "src/scripts/utils/renderSection.ts": {
-    "file": "renderSection-Bhm8J6hZ.js",
+    "file": "renderSection-CkyvfleN.js",
     "name": "renderSection",
     "src": "src/scripts/utils/renderSection.ts",
     "isEntry": true
@@ -490,7 +510,7 @@
     "isEntry": true
   },
   "src/stylesheets/styles.css": {
-    "file": "styles-0e3MT9m-.css",
+    "file": "styles-C8GngRaq.css",
     "name": "styles",
     "names": [
       "styles.css"

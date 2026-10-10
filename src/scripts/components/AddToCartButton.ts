@@ -1,23 +1,14 @@
 import { Piece } from 'piecesjs';
-import { EVENTS } from '@agencecinq/utils';
 import { messageFromError } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import { show } from '../cinq/toast.ts';
 import { AddCartItem } from '../types/cart.ts';
-
-type VariantChangeDetail = {
-  variant?: { available?: boolean };
-  id?: string | number;
-};
+import { VariantBeforeChangeDetail, VariantChangeDetail } from '../types/variant.ts';
+import { EVENTS } from '../utils/events.ts';
 
 class AddToCartButton extends Piece {
-  static get observedAttributes() {
-    return ['loading', 'in-stock'];
-  }
-
   $form: HTMLFormElement | null = null;
   $button: HTMLButtonElement | null = null;
-  formData: FormData | null = null;
 
   constructor() {
     super('AddToCartButton');
@@ -38,88 +29,133 @@ class AddToCartButton extends Piece {
     this.$button = $button;
     this.$form = $form;
 
-    if (this.getAttribute('data-product-id')) {
-      this.on(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
-      this.$button.disabled = !this.inStock;
-    }
-
     this.on('submit', this.$form, this.handleSubmit);
+    this.on(EVENTS.VARIANT_BEFORE_CHANGE, document.documentElement, this.handleVariantBeforeChange);
+    this.on(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
   }
 
-  handleVariantChange = (event: Event): void => {
-    const { variant, id } = (event as CustomEvent<VariantChangeDetail>).detail ?? {};
+  /**
+   * While the variant picker loads, the form's `id` still holds the previous
+   * variant: block submissions until `VARIANT_CHANGE`. Only buttons with a
+   * matching `data-product-id` follow the picker (quick add buttons don't).
+   */
+  handleVariantBeforeChange = (event: Event): void => {
+    const { id } = (event as CustomEvent<VariantBeforeChangeDetail>).detail;
 
-    if (!variant || String(id) !== this.getAttribute('data-product-id')) {
-      return;
+    if (!this.$button || id !== this.productId) return;
+
+    this.setAttribute('aria-busy', 'true');
+    this.$button.disabled = true;
+  };
+
+  /**
+   * Label, `disabled` and `in-stock` come from the element with the same `id` in
+   * the rendered section. The form (quantity, properties…) is left untouched.
+   * Always leaves the busy state, even when this button isn't in that section.
+   */
+  handleVariantChange = (event: Event): void => {
+    const { html, id } = (event as CustomEvent<VariantChangeDetail>).detail;
+
+    if (!this.$button || id !== this.productId) return;
+
+    const $next = this.id ? html.getElementById(this.id) : null;
+    const $nextButton = $next ? (this.domAttr('button', $next) as HTMLButtonElement | null) : null;
+
+    if ($next && $nextButton) {
+      this.toggleAttribute('in-stock', $next.hasAttribute('in-stock'));
+      this.$button.innerHTML = $nextButton.innerHTML;
     }
 
-    this.inStock = Boolean(variant.available);
+    this.$button.disabled = !this.inStock;
+    this.removeAttribute('aria-busy');
   };
 
   handleSubmit(event: Event): void {
     event.preventDefault();
 
-    this.formData = new FormData(this.$form!);
-
-    this.fetch();
+    this.fetch(new FormData(this.$form!));
   }
 
-  async fetch(): Promise<void> {
+  async fetch(formData: FormData): Promise<void> {
     this.$button!.disabled = true;
-    this.loading = 'true';
+    this.setAttribute('aria-busy', 'true');
 
     try {
-      const items = this.parseItems();
+      const items = this.parseItems(formData);
       await cart.add(items);
       this.dispatchEvents();
     } catch (error) {
       show(messageFromError(error));
     } finally {
       this.$button!.disabled = !this.inStock;
-      this.loading = 'false';
+      this.removeAttribute('aria-busy');
     }
   }
 
-  parseItems(): AddCartItem[] {
-    const formData = this.formData!;
-    const items: AddCartItem[] = [];
-
-    if (formData.has('items[0][id]')) {
-      let index = 0;
-      while (formData.has(`items[${index}][id]`)) {
-        const item: AddCartItem = {
-          id: formData.get(`items[${index}][id]`) as string,
-          quantity: parseInt(formData.get(`items[${index}][quantity]`) as string, 10),
-        };
-
-        const properties = this.getProperties(`items[${index}]`);
-        if (properties) {
-          item.properties = properties;
-        }
-
-        items.push(item);
-        index += 1;
-      }
-      return items;
+  /**
+   * Reads both Shopify product form shapes: a single product (`id`, `quantity`,
+   * `selling_plan`, `properties[…]`) or several at once (`items[0][id]`,
+   * `items[0][quantity]`, `items[0][properties][…]`…).
+   *
+   * @see https://shopify.dev/docs/api/ajax/reference/cart#post-locale-cart-add-js
+   */
+  parseItems(formData: FormData): AddCartItem[] {
+    if (!formData.has('items[0][id]')) {
+      const item = this.readItem(formData, '');
+      return item ? [item] : [];
     }
 
-    if (formData.has('id')) {
-      const item: AddCartItem = {
-        id: formData.get('id') as string,
-        quantity: parseInt(formData.get('quantity') as string, 10) || 1,
-      };
+    const items: AddCartItem[] = [];
 
-      items.push(item);
+    for (let index = 0; formData.has(`items[${index}][id]`); index += 1) {
+      const item = this.readItem(formData, `items[${index}]`);
+
+      if (item) {
+        items.push(item);
+      }
     }
 
     return items;
   }
 
-  private getProperties(prefix: string): Record<string, string> | undefined {
-    const properties: Record<string, string> = {};
-    const needle = `${prefix}[properties][`;
+  /**
+   * Reads one cart item; `prefix` is `''` for a single product form, `items[n]`
+   * for multi-item forms.
+   */
+  private readItem(formData: FormData, prefix: string): AddCartItem | null {
+    const key = (name: string) => (prefix ? `${prefix}[${name}]` : name);
+    const id = formData.get(key('id'));
 
-    for (const [key, value] of this.formData!.entries()) {
+    if (!id) {
+      return null;
+    }
+
+    const item: AddCartItem = {
+      id: String(id),
+      quantity: parseInt(String(formData.get(key('quantity'))), 10) || 1,
+    };
+
+    const sellingPlan = formData.get(key('selling_plan'));
+
+    if (sellingPlan) {
+      item.selling_plan = String(sellingPlan);
+    }
+
+    const properties = this.getProperties(formData, key('properties'));
+
+    if (properties) {
+      item.properties = properties;
+    }
+
+    return item;
+  }
+
+  /** Non-empty `{prefix}[name]` entries, e.g. `properties[Engraving]`. */
+  private getProperties(formData: FormData, prefix: string): Record<string, string> | undefined {
+    const properties: Record<string, string> = {};
+    const needle = `${prefix}[`;
+
+    for (const [key, value] of formData.entries()) {
       if (!key.startsWith(needle) || typeof value !== 'string' || value === '') {
         continue;
       }
@@ -147,44 +183,19 @@ class AddToCartButton extends Piece {
     });
   }
 
-  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void {
-    if (name === 'loading') {
-      if (newValue === 'true') {
-        this.style.setProperty('cursor', 'wait');
-        this.style.setProperty('opacity', '0.5');
-      } else {
-        this.style.removeProperty('cursor');
-        this.style.removeProperty('opacity');
-      }
-    }
-
-    if (name === 'in-stock' && this.$button) {
-      this.$button.disabled = !this.inStock;
-    }
-  }
-
   unmount() {
-    if (this.getAttribute('data-product-id')) {
-      this.off(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
-    }
-
     this.off('submit', this.$form!, this.handleSubmit);
+    this.off(EVENTS.VARIANT_BEFORE_CHANGE, document.documentElement, this.handleVariantBeforeChange);
+    this.off(EVENTS.VARIANT_CHANGE, document.documentElement, this.handleVariantChange);
   }
 
-  get loading() {
-    return this.getAttribute('loading') ?? 'false';
+  get productId() {
+    return this.getAttribute('data-product-id');
   }
 
-  set loading(value: string) {
-    this.setAttribute('loading', value);
-  }
-
+  /** Server-rendered (`in-stock`): re-enables the button after an add, unless sold out. */
   get inStock(): boolean {
     return this.hasAttribute('in-stock');
-  }
-
-  set inStock(value: boolean) {
-    this.toggleAttribute('in-stock', value);
   }
 
   get events() {

@@ -4,14 +4,11 @@ import cart from '../store/cart.ts';
 import { show } from '../cinq/toast.ts';
 
 class CartItem extends Piece {
-  static observedAttributes = ['loading'];
-
   $input!: HTMLInputElement;
   $remove!: HTMLButtonElement;
 
   constructor() {
     super('CartItem');
-    this.setAttribute('loading', 'false');
   }
 
   mount() {
@@ -33,26 +30,14 @@ class CartItem extends Piece {
   }
 
   async fetch(quantity: number) {
-    this.loading = 'true';
+    this.setAttribute('aria-busy', 'true');
 
     try {
       await cart.update({ [this.itemId]: quantity });
     } catch (error) {
       show(messageFromError(error));
     } finally {
-      this.loading = 'false';
-    }
-  }
-
-  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void {
-    if (name === 'loading') {
-      if (newValue === 'true') {
-        this.style.setProperty('cursor', 'wait');
-        this.style.setProperty('opacity', '0.5');
-      } else {
-        this.style.removeProperty('cursor');
-        this.style.removeProperty('opacity');
-      }
+      this.removeAttribute('aria-busy');
     }
   }
 
@@ -63,14 +48,6 @@ class CartItem extends Piece {
 
   get itemId() {
     return this.dataset.itemId || '';
-  }
-
-  get loading() {
-    return this.getAttribute('loading') ?? 'false';
-  }
-
-  set loading(value: string) {
-    this.setAttribute('loading', value);
   }
 }
 

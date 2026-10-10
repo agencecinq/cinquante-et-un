@@ -34,7 +34,8 @@ function replaceScoped(liveRoot: Element, sourceRoot: Element, selectors: string
  * are replaced, scoped to the section root so identical selectors in other
  * sections stay untouched. Prefer stable `.js-*` roots so focus / scroll /
  * open drawers survive. `section.id` is looked up as a DOM id in both the
- * markup and the page; no-ops when either is missing.
+ * markup and the page; no-ops when either is missing. `markup` may be an
+ * already parsed `Document` when the caller also reads from it.
  *
  * @example
  * renderSection(await fetchSection(url, 'main-collection'), {
@@ -44,8 +45,9 @@ function replaceScoped(liveRoot: Element, sourceRoot: Element, selectors: string
  *
  * @see https://shopify.dev/docs/api/ajax/section-rendering
  */
-export function renderSection(markup: string, section: Section): void {
-  const sourceRoot = new DOMParser().parseFromString(markup, 'text/html').getElementById(section.id);
+export function renderSection(markup: string | Document, section: Section): void {
+  const doc = typeof markup === 'string' ? new DOMParser().parseFromString(markup, 'text/html') : markup;
+  const sourceRoot = doc.getElementById(section.id);
   const liveRoot = document.getElementById(section.id);
 
   if (!sourceRoot || !liveRoot) return;

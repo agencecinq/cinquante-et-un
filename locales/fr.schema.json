@@ -869,8 +869,8 @@
         "accordion-group": {
           "name": "Accordion Group"
         },
-        "variants-picker": {
-          "name": "Variants Picker"
+        "variant-picker": {
+          "name": "Sélecteur de variante"
         },
         "add-to-cart-button": {
           "name": "Add to cart button"

@@ -9,6 +9,8 @@ export type AddCartItem = {
   quantity: number;
   /** Line item properties. Keys prefixed with `_` are hidden from customers. */
   properties?: Record<string, string>;
+  /** Selling plan (subscription) id, from a `selling_plan` input. */
+  selling_plan?: string | number;
 };
 
 /**

@@ -75,6 +75,7 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 - Check `@agencecinq` before inventing drawer/modal/tabs/spinbutton/combobox
 - Icons: `src/icons/*.svg` → sprite → `{% render 'use.html', icon: %}`
 - Prefer `@agencecinq/utils` `EVENTS` when covered
+- Pending state: `aria-busy="true"` on the piece, styled with Tailwind `aria-busy:` utilities in Liquid — no custom `loading` attribute, no inline styles
 
 ## UI patterns
 
@@ -104,6 +105,7 @@ Copy blog/form/collection:
 | Style | Utilities / existing components; new shared → `src/stylesheets/components/` + import in `styles.css` |
 | Live cart UI | Stable `.js-*` root + update `cartSections.ts` |
 | Ajax section refresh (filters, tabs, …) | `fetchSection` + `utils/renderSection.ts` with `.js-*` selectors — don't hand-roll DOM swaps |
+| Variant-dependent block (stock, SKU, …) | Own piece (e.g. `c-product-price`) with an id unique per section (`Name-{{ section.id }}`, element unconditional, condition inside) that listens to `VARIANT_CHANGE` and reads its own `id` from `detail.html` — never edit `VariantPicker`, never re-render prices in JS |
 | Brand (fork) | Tokens in `theme.css` `@theme`, then components — not Liquid one-offs |
 
 ## Anti-patterns

@@ -16,7 +16,7 @@
           "settings": {}
         },
         "variants": {
-          "type": "variants-picker",
+          "type": "variant-picker",
           "settings": {}
         },
         "buy": {

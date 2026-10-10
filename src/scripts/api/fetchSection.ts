@@ -5,11 +5,12 @@ import { fetchHtml } from './http.ts';
  *
  * @see https://shopify.dev/docs/api/ajax/section-rendering
  */
-export async function fetchSection(url: string, sectionId: string): Promise<string> {
+export async function fetchSection(url: string, sectionId: string, init: RequestInit = {}): Promise<string> {
   const endpoint = new URL(url, window.location.origin);
   endpoint.searchParams.set('section_id', sectionId);
 
   return fetchHtml(`${endpoint.pathname}${endpoint.search}`, {
+    ...init,
     fallback: `Failed to fetch section ${sectionId}`,
   });
 }

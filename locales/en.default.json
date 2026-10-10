@@ -308,6 +308,7 @@
       "next": "Next media",
       "add_to_cart": "Add to bag",
       "sold_out": "Sold out",
+      "unavailable": "Unavailable",
       "thumbnail": "Product thumbnail {{ number }}",
       "accordion-group": {
         "description": "Description",

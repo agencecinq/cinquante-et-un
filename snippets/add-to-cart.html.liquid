@@ -52,9 +52,9 @@
 
 {% unless id == false or id == null or id == blank or variant.available == false -%}
   <c-add-to-cart-button
-    class="{{ classes }}"
+    class="{{ classes }} aria-busy:cursor-wait aria-busy:opacity-50"
     data-events="{{ events }}"
-    loading
+    in-stock
   >
     <form action="{{ routes.cart_add_url }}" method="post" data-dom="form">
       <input type="hidden" name="id" value="{{ id }}">
