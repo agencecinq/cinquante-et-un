@@ -203,7 +203,7 @@
     "blog": {
       "filter_by_tag": "Filter by {{ tag }}",
       "see-more": "See more articles",
-      "out-of": "{{ current }} articles out of {{ total }}"
+      "displayed-count": "{{ current }} articles out of {{ total }}"
     },
     "featured-collection": {
       "view_all": "View all"
@@ -294,7 +294,7 @@
       },
       "no-products": "No products found in this collection.",
       "see-more": "See more products",
-      "out-of": "{{ current }} products out of {{ total }}"
+      "displayed-count": "{{ current }} products out of {{ total }}"
     },
     "header": {
       "back": "Back",

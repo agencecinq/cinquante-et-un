@@ -65,14 +65,13 @@
   {% paginate blog.articles by section.settings.articles_per_page %}
     {%- liquid
       assign current = paginate.current_offset | plus: blog.articles.size
-      assign out_of = 'sections.blog.out-of' | t: current: current, total: blog.articles_count
+      assign displayed_count = 'sections.blog.displayed-count' | t: current: current, total: blog.articles_count
     -%}
 
     {%- capture articles_grid -%}
       <ul
         id="BlogArticles-{{ section.id }}"
         data-dom="container"
-        data-out-of="{{ out_of }}"
         class="container grid grid-cols-2 gap-4 lg:grid-cols-4"
       >
         {%- for article in blog.articles -%}
@@ -91,24 +90,24 @@
       <c-load-more
         id="BlogLoadMore-{{ section.id }}"
         data-section-id="{{ section.id }}"
-        data-products-id="BlogArticles-{{ section.id }}"
+        data-items-id="BlogArticles-{{ section.id }}"
         data-action="{{ paginate.next.url }}"
-        data-current-page="{{ paginate.current_page }}"
-        data-total-pages="{{ paginate.pages }}"
-        class="flex flex-col gap-y-10 transition-opacity duration-300 ease-out lg:gap-y-12"
+        class="flex flex-col gap-y-10 transition-opacity duration-300 ease-out aria-busy:cursor-wait aria-busy:opacity-50 lg:gap-y-12"
       >
         {{ articles_grid }}
 
         <div class="container space-y-4 text-center">
-          <div data-dom="out-of" class="text-center text-sm">
-            {{- out_of -}}
+          <div data-dom="displayed-count" class="text-center text-sm">
+            {{- displayed_count -}}
           </div>
-          {%- assign title = 'sections.blog.see-more' | t -%}
-          {%- render 'button.html',
-            title: title,
-            variant: 'tertiary',
-            attributes: 'data-dom="load-more-button" data-events-click="fetch"'
+          {%- liquid
+            assign title = 'sections.blog.see-more' | t
+            assign button_attributes = 'data-dom="load-more-button" data-events-click="loadMore"'
+            if paginate.next.url == blank
+              assign button_attributes = button_attributes | append: ' hidden'
+            endif
           -%}
+          {%- render 'button.html', title: title, variant: 'tertiary', attributes: button_attributes -%}
         </div>
       </c-load-more>
     {%- else -%}
