@@ -908,6 +908,15 @@
               "info": "Third reassurance text (optional)"
             }
           }
+        },
+        "custom-liquid": {
+          "name": "Liquid personnalisé",
+          "settings": {
+            "custom_liquid": {
+              "label": "Liquid personnalisé",
+              "info": "Ajoutez des extraits d'app ou du code pour des personnalisations avancées."
+            }
+          }
         }
       }
     },

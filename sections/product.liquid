@@ -265,6 +265,11 @@
             {%- when 'reassurance' -%}
               {%- render 'product-reassurance.html', block: block -%}
 
+            {%- when 'custom-liquid' -%}
+              <div {{ block.shopify_attributes }}>
+                {{- block.settings.custom_liquid -}}
+              </div>
+
             {%- when 'accordion-group' -%}
               {%- if product.description != blank -%}
                 <cinq-accordion {{ block.shopify_attributes }}>
@@ -439,6 +444,18 @@
       "type": "accordion-group",
       "name": "t:sections.product.blocks.accordion-group.name",
       "limit": 1
+    },
+    {
+      "type": "custom-liquid",
+      "name": "t:sections.product.blocks.custom-liquid.name",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "t:sections.product.blocks.custom-liquid.settings.custom_liquid.label",
+          "info": "t:sections.product.blocks.custom-liquid.settings.custom_liquid.info"
+        }
+      ]
     },
     {
       "type": "@app"

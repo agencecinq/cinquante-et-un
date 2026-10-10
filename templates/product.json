@@ -11,6 +11,12 @@
           "type": "title",
           "settings": {}
         },
+        "vendor": {
+          "type": "custom-liquid",
+          "settings": {
+            "custom_liquid": "<p class=\"text-xs opacity-60\">{{ product.vendor }}</p>"
+          }
+        },
         "price": {
           "type": "price",
           "settings": {
@@ -47,6 +53,7 @@
       "block_order": [
         "breadcrumb",
         "title",
+        "vendor",
         "price",
         "variants",
         "quantity",
