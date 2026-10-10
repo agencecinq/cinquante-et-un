@@ -17,15 +17,8 @@
     assign padding_top_desktop = padding_top_desktop | append: 'rem'
   endif
 
+  # `nil` when `?option_values=` points at a combination that doesn't exist.
   assign variant = product.selected_or_first_available_variant
-
-  capture variant_matches
-    render 'selected-variant-matches.html', product: product
-  endcapture
-
-  if variant_matches != 'true'
-    assign variant = null
-  endif
 
   assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
 
