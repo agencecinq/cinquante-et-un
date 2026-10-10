@@ -18,16 +18,20 @@
   endif
 
   assign variant = product.selected_or_first_available_variant
+
   capture variant_matches
     render 'selected-variant-matches.html', product: product
   endcapture
+
   if variant_matches != 'true'
     assign variant = null
   endif
+
   assign slideshow_cid = 'slideshow-' | append: section.id | append: '-' | append: product.id
 
   # Gallery starts on the selected variant's media (e.g. `?variant=`); `c-product-gallery` follows later changes.
   assign gallery = product.media
+
   if variant.featured_media
     assign other_media = product.media | reject: 'id', variant.featured_media.id
     assign gallery = product.media | where: 'id', variant.featured_media.id | concat: other_media
