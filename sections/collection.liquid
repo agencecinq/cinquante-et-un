@@ -228,9 +228,10 @@
                         assign factor = 1
                       endif
 
-                      assign range_max_major = range_max | divided_by: factor
+                      # Ceil max bounds so products priced with cents (e.g. 96.90) stay included.
+                      assign range_max_major = range_max | times: 1.0 | divided_by: factor | ceil
                       assign min_value_major = min_value | divided_by: factor
-                      assign max_value_major = max_value | divided_by: factor
+                      assign max_value_major = max_value | times: 1.0 | divided_by: factor | ceil
                     -%}
 
                     <div class="flex justify-between gap-2 lg:gap-4">
