@@ -491,6 +491,9 @@
           "label": "Ouvert par défaut"
         }
       }
+    },
+    "product-title": {
+      "name": "Titre du produit"
     }
   },
   "sections": {

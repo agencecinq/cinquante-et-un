@@ -8,12 +8,8 @@
           "settings": {}
         },
         "title": {
-          "type": "title",
-          "settings": {
-            "title": "{{ closest.product.title }}",
-            "tag": "h1",
-            "font_size": "text-xl font-semibold lg:text-2xl"
-          }
+          "type": "product-title",
+          "settings": {}
         },
         "vendor": {
           "type": "text",
