@@ -880,6 +880,9 @@
         "add-to-cart-button": {
           "name": "Add to cart button"
         },
+        "quantity": {
+          "name": "Quantity"
+        },
         "reassurance": {
           "name": "Reassurance",
           "settings": {

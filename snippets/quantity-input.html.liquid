@@ -1,0 +1,61 @@
+{% doc %}
+  Quantity spinbutton (`<cinq-spinbutton>`) with decrease / increase buttons.
+
+  @param {number} value - Current quantity.
+  @param {number} [min] - Minimum quantity. Default `0`.
+  @param {number} [max] - Maximum quantity; no limit when blank.
+  @param {number} [step] - Increment. Default `1`.
+  @param {string} [form] - Form id the input belongs to, when rendered outside of it.
+  @param {string} [classes] - Extra classes on the spinbutton (optional).
+  @param {string} [attributes] - Raw HTML attributes on the input, e.g. `data-dom="input"`.
+
+  @example
+  {% render 'quantity-input.html', value: 1, min: 1, form: form_id %}
+{% enddoc %}
+
+{%- liquid
+  assign min = min | default: 0
+  assign step = step | default: 1
+-%}
+
+<cinq-spinbutton class="flex items-center border border-black {{ classes }}" data-step="{{ step }}">
+  <button
+    type="button"
+    name="decrease"
+    class="flex size-8 items-center justify-center"
+    tabindex="-1"
+    aria-label="{{ 'snippets.quantity-input.decrease' | t }}"
+  >
+    {%- render 'use.html', icon: 'minus', classes: 'size-3 pointer-events-none' -%}
+  </button>
+
+  <input
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    role="spinbutton"
+    name="quantity"
+    value="{{ value }}"
+    class="w-8 bg-transparent text-center text-xs"
+    aria-label="{{ 'snippets.quantity-input.label' | t }}"
+    aria-valuemin="{{ min }}"
+    {% if max %}
+      aria-valuemax="{{ max }}"
+    {% endif %}
+    aria-valuenow="{{ value }}"
+    {% if form %}
+      form="{{ form }}"
+    {% endif %}
+    {{ attributes }}
+  >
+
+  <button
+    type="button"
+    name="increase"
+    class="flex size-8 items-center justify-center"
+    tabindex="-1"
+    aria-label="{{ 'snippets.quantity-input.increase' | t }}"
+  >
+    {%- render 'use.html', icon: 'plus', classes: 'size-3 pointer-events-none' -%}
+  </button>
+</cinq-spinbutton>
