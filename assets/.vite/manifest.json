@@ -173,7 +173,7 @@
     "isEntry": true
   },
   "src/scripts/app.ts": {
-    "file": "app-DegD_SAu.js",
+    "file": "app-C7dkfZ1N.js",
     "name": "app",
     "src": "src/scripts/app.ts",
     "isEntry": true,
@@ -240,7 +240,7 @@
     "isEntry": true
   },
   "src/scripts/components/AddToCartButton.ts": {
-    "file": "AddToCartButton-WrCoV-bA.js",
+    "file": "AddToCartButton-DZhbpbhu.js",
     "name": "AddToCartButton",
     "src": "src/scripts/components/AddToCartButton.ts",
     "isEntry": true,
@@ -250,7 +250,9 @@
       "src/scripts/cinq/toast.ts",
       "src/scripts/store/cart.ts",
       "src/scripts/utils/events.ts",
-      "src/scripts/utils/events.ts"
+      "src/scripts/utils/events.ts",
+      "src/scripts/utils/format-currency.ts",
+      "src/scripts/utils/format-currency.ts"
     ]
   },
   "src/scripts/components/CartDrawer.ts": {
