@@ -18,6 +18,7 @@
   endif
 
   assign form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
+  assign quantity_blocks = section.blocks | where: 'type', 'quantity'
   # With `?option_values=` pointing at a combination that doesn't exist, Shopify falls back to the
   # first available variant: reset it so the picker, price and add-to-cart show "unavailable".
   assign variant = product.selected_or_first_available_variant
@@ -175,6 +176,23 @@
                 form_id: form_id
               -%}
 
+            {%- when 'quantity' -%}
+              {%- liquid
+                # Quantity rules only come from B2B catalogs; otherwise min 1, increment 1, no max.
+                assign quantity_min = variant.quantity_rule.min | default: 1
+              -%}
+              <div class="space-y-2" {{ block.shopify_attributes }}>
+                <p class="text-xs" aria-hidden="true">{{- 'snippets.quantity-input.label' | t -}}</p>
+                {%- render 'quantity-input.html',
+                  value: quantity_min,
+                  min: quantity_min,
+                  max: variant.quantity_rule.max,
+                  step: variant.quantity_rule.increment,
+                  form: form_id,
+                  classes: 'w-fit'
+                -%}
+              </div>
+
             {%- when 'add-to-cart-button' -%}
               <c-add-to-cart-button
                 id="ProductBuy-{{ section.id }}"
@@ -189,7 +207,9 @@
                   {%- if product.has_only_default_variant -%}
                     <input type="hidden" name="id" value="{{ variant.id }}">
                   {%- endif -%}
-                  <input type="hidden" name="quantity" value="1">
+                  {%- if quantity_blocks.size == 0 -%}
+                    <input type="hidden" name="quantity" value="1">
+                  {%- endif -%}
 
                   {%- capture atc_title -%}
                     {%- if variant == null -%}
@@ -340,6 +360,11 @@
     {
       "type": "variant-picker",
       "name": "t:sections.product.blocks.variant-picker.name",
+      "limit": 1
+    },
+    {
+      "type": "quantity",
+      "name": "t:sections.product.blocks.quantity.name",
       "limit": 1
     },
     {

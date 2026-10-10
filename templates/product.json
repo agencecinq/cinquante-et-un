@@ -19,6 +19,10 @@
           "type": "variant-picker",
           "settings": {}
         },
+        "quantity": {
+          "type": "quantity",
+          "settings": {}
+        },
         "buy": {
           "type": "add-to-cart-button",
           "settings": {}
@@ -41,6 +45,7 @@
         "title",
         "price",
         "variants",
+        "quantity",
         "buy",
         "reassurance",
         "accordion"
