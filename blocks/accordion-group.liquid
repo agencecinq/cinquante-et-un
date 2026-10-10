@@ -1,0 +1,34 @@
+{% doc %}
+  Accordion group (`cinq-accordion`) holding `_accordion` blocks.
+{% enddoc %}
+
+<cinq-accordion class="block" {{ block.shopify_attributes }}>
+  {%- content_for 'blocks' -%}
+</cinq-accordion>
+
+{% schema %}
+{
+  "name": "t:blocks.accordion-group.name",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_accordion"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.accordion-group.name",
+      "blocks": [
+        {
+          "type": "_accordion",
+          "blocks": [
+            {
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

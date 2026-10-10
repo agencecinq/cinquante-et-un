@@ -1,0 +1,66 @@
+{% doc %}
+  Product price, updated on variant change (`c-product-price`), with an optional
+  taxes and shipping note.
+{% enddoc %}
+
+{%- liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  capture variant_matches
+    render 'selected-variant-matches.html', product: product
+  endcapture
+  if variant_matches != 'true'
+    assign variant = null
+  endif
+-%}
+
+<div class="space-y-1" {{ block.shopify_attributes }}>
+  <c-product-price
+    id="ProductPrice-{{ section.id }}"
+    data-product-id="{{ product.id }}"
+    class="block text-base transition-opacity aria-busy:opacity-50"
+  >
+    {%- if variant -%}
+      {%- render 'price.html', product: product, variant: variant -%}
+    {%- endif -%}
+  </c-product-price>
+
+  {%- if block.settings.show_tax_note -%}
+    {%- liquid
+      assign tax_note = ''
+      if shop.taxes_included
+        assign tax_note = 'sections.product.tax_note.taxes_included' | t | append: ' '
+      endif
+
+      if shop.shipping_policy.body != blank
+        assign shipping_note = 'sections.product.tax_note.shipping_policy_html' | t: link: shop.shipping_policy.url
+      else
+        assign shipping_note = 'sections.product.tax_note.shipping_at_checkout' | t
+      endif
+    -%}
+    <p class="text-xs opacity-60">
+      {{ tax_note -}}
+      {{- shipping_note }}
+    </p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.product-price.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tax_note",
+      "label": "t:blocks.product-price.settings.show_tax_note.label",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.product-price.name"
+    }
+  ]
+}
+{% endschema %}

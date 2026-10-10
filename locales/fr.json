@@ -310,10 +310,6 @@
       "add_to_cart": "Ajouter au panier",
       "sold_out": "Épuisé",
       "unavailable": "Indisponible",
-      "accordion-group": {
-        "description": "Description",
-        "complementary_products": "Produits complémentaires"
-      },
       "tax_note": {
         "taxes_included": "Taxes incluses.",
         "shipping_policy_html": "<a href=\"{{ link }}\" class=\"underline\">Frais d'expédition</a> calculés à l'étape de paiement.",
