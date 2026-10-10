@@ -105,6 +105,7 @@ Copy blog/form/collection:
 | Style | Utilities / existing components; new shared → `src/stylesheets/components/` + import in `styles.css` |
 | Live cart UI | Stable `.js-*` root + update `cartSections.ts` |
 | Ajax section refresh (filters, tabs, …) | `fetchSection` + `utils/renderSection.ts` with `.js-*` selectors — don't hand-roll DOM swaps |
+| Product block | Theme block in `blocks/product-*.liquid` (product section only renders `content_for 'blocks'`), added to the section's `blocks` list (no `@theme`: only listed blocks are offered); read `closest.product`, get the variant with `selected-variant-matches.html` (blocks can't share variables). Prefer generic blocks + dynamic sources (`text` → `{{ closest.product.description }}`) over new blocks |
 | Variant-dependent block (stock, SKU, …) | Own piece (e.g. `c-product-price`) with an id unique per section (`Name-{{ section.id }}`, element unconditional, condition inside) that listens to `VARIANT_CHANGE` and reads its own `id` from `detail.html` — never edit `VariantPicker`, never re-render prices in JS |
 | Brand (fork) | Tokens in `theme.css` `@theme`, then components — not Liquid one-offs |
 
