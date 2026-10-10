@@ -866,7 +866,12 @@
           "name": "Description"
         },
         "price": {
-          "name": "Price"
+          "name": "Price",
+          "settings": {
+            "show_tax_note": {
+              "label": "Show taxes and shipping note"
+            }
+          }
         },
         "breadcrumb": {
           "name": "Breadcrumb"
@@ -878,7 +883,13 @@
           "name": "Variant picker"
         },
         "add-to-cart-button": {
-          "name": "Add to cart button"
+          "name": "Add to cart button",
+          "settings": {
+            "show_dynamic_checkout": {
+              "label": "Show dynamic checkout buttons",
+              "info": "Express payment methods available on the store, e.g. Shop Pay or Apple Pay."
+            }
+          }
         },
         "quantity": {
           "name": "Quantity"
@@ -900,6 +911,15 @@
               "label": "Text 3",
               "default": "",
               "info": "Third reassurance text (optional)"
+            }
+          }
+        },
+        "custom-liquid": {
+          "name": "Custom Liquid",
+          "settings": {
+            "custom_liquid": {
+              "label": "Custom Liquid",
+              "info": "Add app snippets or other code for advanced customizations."
             }
           }
         }

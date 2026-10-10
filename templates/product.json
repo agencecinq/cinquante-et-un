@@ -11,9 +11,17 @@
           "type": "title",
           "settings": {}
         },
+        "vendor": {
+          "type": "custom-liquid",
+          "settings": {
+            "custom_liquid": "<p class=\"text-xs opacity-60\">{{ product.vendor }}</p>"
+          }
+        },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "show_tax_note": true
+          }
         },
         "variants": {
           "type": "variant-picker",
@@ -25,7 +33,9 @@
         },
         "buy": {
           "type": "add-to-cart-button",
-          "settings": {}
+          "settings": {
+            "show_dynamic_checkout": true
+          }
         },
         "reassurance": {
           "type": "reassurance",
@@ -43,6 +53,7 @@
       "block_order": [
         "breadcrumb",
         "title",
+        "vendor",
         "price",
         "variants",
         "quantity",

@@ -49,14 +49,22 @@ class AddToCartButton extends Piece {
   };
 
   /**
-   * Label, `disabled` and `in-stock` come from the element with the same `id` in
-   * the rendered section. The form (quantity, properties…) is left untouched.
-   * Always leaves the busy state, even when this button isn't in that section.
+   * The form's `id` input takes the new variant (with a `change` event, which
+   * accelerated checkout buttons listen to). Label, `disabled` and `in-stock`
+   * come from the element with the same `id` in the rendered section; the rest
+   * of the form (quantity, properties…) is left untouched. Always leaves the
+   * busy state, even when this button isn't in that section.
    */
   handleVariantChange = (event: Event): void => {
-    const { html, id } = (event as CustomEvent<VariantChangeDetail>).detail;
+    const { html, id, variant } = (event as CustomEvent<VariantChangeDetail>).detail;
 
     if (!this.$button || id !== this.productId) return;
+
+    const $variantId = this.domAttr('variant-id') as HTMLInputElement | null;
+    if ($variantId) {
+      $variantId.value = variant ? String(variant.id) : '';
+      $variantId.dispatchEvent(new Event('change', { bubbles: true }));
+    }
 
     const $next = this.id ? html.getElementById(this.id) : null;
     const $nextButton = $next ? (this.domAttr('button', $next) as HTMLButtonElement | null) : null;

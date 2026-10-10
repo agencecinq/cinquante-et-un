@@ -149,16 +149,36 @@
               </h1>
 
             {%- when 'price' -%}
-              <c-product-price
-                id="ProductPrice-{{ section.id }}"
-                data-product-id="{{ product.id }}"
-                class="block text-base transition-opacity aria-busy:opacity-50"
-                {{ block.shopify_attributes }}
-              >
-                {%- if variant -%}
-                  {%- render 'price.html', product: product, variant: variant -%}
+              <div class="space-y-1" {{ block.shopify_attributes }}>
+                <c-product-price
+                  id="ProductPrice-{{ section.id }}"
+                  data-product-id="{{ product.id }}"
+                  class="block text-base transition-opacity aria-busy:opacity-50"
+                >
+                  {%- if variant -%}
+                    {%- render 'price.html', product: product, variant: variant -%}
+                  {%- endif -%}
+                </c-product-price>
+
+                {%- if block.settings.show_tax_note -%}
+                  {%- liquid
+                    assign tax_note = ''
+                    if shop.taxes_included
+                      assign tax_note = 'sections.product.tax_note.taxes_included' | t | append: ' '
+                    endif
+
+                    if shop.shipping_policy.body != blank
+                      assign shipping_note = 'sections.product.tax_note.shipping_policy_html' | t: link: shop.shipping_policy.url
+                    else
+                      assign shipping_note = 'sections.product.tax_note.shipping_at_checkout' | t
+                    endif
+                  -%}
+                  <p class="text-xs opacity-60">
+                    {{ tax_note -}}
+                    {{- shipping_note }}
+                  </p>
                 {%- endif -%}
-              </c-product-price>
+              </div>
 
             {%- when 'description' -%}
               {%- if product.description != blank -%}
@@ -172,8 +192,7 @@
                 product: product,
                 variant: variant,
                 block: block,
-                section_id: section.id,
-                form_id: form_id
+                section_id: section.id
               -%}
 
             {%- when 'quantity' -%}
@@ -203,10 +222,8 @@
                 {% endif %}
                 {{ block.shopify_attributes }}
               >
-                {%- form 'product', product, id: form_id, data-dom: 'form' -%}
-                  {%- if product.has_only_default_variant -%}
-                    <input type="hidden" name="id" value="{{ variant.id }}">
-                  {%- endif -%}
+                {%- form 'product', product, id: form_id, class: 'space-y-2', data-dom: 'form' -%}
+                  <input type="hidden" name="id" value="{{ variant.id }}" data-dom="variant-id">
                   {%- if quantity_blocks.size == 0 -%}
                     <input type="hidden" name="quantity" value="1">
                   {%- endif -%}
@@ -238,11 +255,20 @@
                     variant: 'primary',
                     attributes: atc_attributes
                   -%}
+
+                  {%- if block.settings.show_dynamic_checkout -%}
+                    {{- form | payment_button -}}
+                  {%- endif -%}
                 {%- endform -%}
               </c-add-to-cart-button>
 
             {%- when 'reassurance' -%}
               {%- render 'product-reassurance.html', block: block -%}
+
+            {%- when 'custom-liquid' -%}
+              <div {{ block.shopify_attributes }}>
+                {{- block.settings.custom_liquid -}}
+              </div>
 
             {%- when 'accordion-group' -%}
               {%- if product.description != blank -%}
@@ -350,7 +376,15 @@
     {
       "type": "price",
       "name": "t:sections.product.blocks.price.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_tax_note",
+          "label": "t:sections.product.blocks.price.settings.show_tax_note.label",
+          "default": true
+        }
+      ]
     },
     {
       "type": "description",
@@ -370,7 +404,16 @@
     {
       "type": "add-to-cart-button",
       "name": "t:sections.product.blocks.add-to-cart-button.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "t:sections.product.blocks.add-to-cart-button.settings.show_dynamic_checkout.label",
+          "info": "t:sections.product.blocks.add-to-cart-button.settings.show_dynamic_checkout.info",
+          "default": true
+        }
+      ]
     },
     {
       "type": "reassurance",
@@ -401,6 +444,18 @@
       "type": "accordion-group",
       "name": "t:sections.product.blocks.accordion-group.name",
       "limit": 1
+    },
+    {
+      "type": "custom-liquid",
+      "name": "t:sections.product.blocks.custom-liquid.name",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "t:sections.product.blocks.custom-liquid.settings.custom_liquid.label",
+          "info": "t:sections.product.blocks.custom-liquid.settings.custom_liquid.info"
+        }
+      ]
     },
     {
       "type": "@app"

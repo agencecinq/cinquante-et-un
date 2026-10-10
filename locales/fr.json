@@ -313,6 +313,11 @@
       "accordion-group": {
         "description": "Description",
         "complementary_products": "Produits complémentaires"
+      },
+      "tax_note": {
+        "taxes_included": "Taxes incluses.",
+        "shipping_policy_html": "<a href=\"{{ link }}\" class=\"underline\">Frais d'expédition</a> calculés à l'étape de paiement.",
+        "shipping_at_checkout": "Frais d'expédition calculés à l'étape de paiement."
       }
     },
     "styleguide": {

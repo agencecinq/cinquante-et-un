@@ -861,7 +861,12 @@
           "name": "Description"
         },
         "price": {
-          "name": "Prix"
+          "name": "Prix",
+          "settings": {
+            "show_tax_note": {
+              "label": "Afficher la mention taxes et livraison"
+            }
+          }
         },
         "breadcrumb": {
           "name": "Fil d'Ariane"
@@ -873,7 +878,13 @@
           "name": "Sélecteur de variante"
         },
         "add-to-cart-button": {
-          "name": "Add to cart button"
+          "name": "Add to cart button",
+          "settings": {
+            "show_dynamic_checkout": {
+              "label": "Afficher les boutons de paiement accéléré",
+              "info": "Moyens de paiement express disponibles sur la boutique, comme Shop Pay ou Apple Pay."
+            }
+          }
         },
         "quantity": {
           "name": "Quantité"
@@ -895,6 +906,15 @@
               "label": "Text 3",
               "default": "",
               "info": "Third reassurance text (optional)"
+            }
+          }
+        },
+        "custom-liquid": {
+          "name": "Liquid personnalisé",
+          "settings": {
+            "custom_liquid": {
+              "label": "Liquid personnalisé",
+              "info": "Ajoutez des extraits d'app ou du code pour des personnalisations avancées."
             }
           }
         }
