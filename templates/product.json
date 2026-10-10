@@ -13,7 +13,9 @@
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "show_tax_note": true
+          }
         },
         "variants": {
           "type": "variant-picker",

@@ -866,7 +866,12 @@
           "name": "Description"
         },
         "price": {
-          "name": "Price"
+          "name": "Price",
+          "settings": {
+            "show_tax_note": {
+              "label": "Show taxes and shipping note"
+            }
+          }
         },
         "breadcrumb": {
           "name": "Breadcrumb"

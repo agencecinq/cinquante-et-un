@@ -861,7 +861,12 @@
           "name": "Description"
         },
         "price": {
-          "name": "Prix"
+          "name": "Prix",
+          "settings": {
+            "show_tax_note": {
+              "label": "Afficher la mention taxes et livraison"
+            }
+          }
         },
         "breadcrumb": {
           "name": "Fil d'Ariane"
