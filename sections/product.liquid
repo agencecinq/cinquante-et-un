@@ -202,7 +202,7 @@
                 {% endif %}
                 {{ block.shopify_attributes }}
               >
-                {%- form 'product', product, id: form_id, data-dom: 'form' -%}
+                {%- form 'product', product, id: form_id, class: 'space-y-2', data-dom: 'form' -%}
                   <input type="hidden" name="id" value="{{ variant.id }}" data-dom="variant-id">
                   {%- if quantity_blocks.size == 0 -%}
                     <input type="hidden" name="quantity" value="1">
@@ -235,6 +235,10 @@
                     variant: 'primary',
                     attributes: atc_attributes
                   -%}
+
+                  {%- if block.settings.show_dynamic_checkout -%}
+                    {{- form | payment_button -}}
+                  {%- endif -%}
                 {%- endform -%}
               </c-add-to-cart-button>
 
@@ -367,7 +371,16 @@
     {
       "type": "add-to-cart-button",
       "name": "t:sections.product.blocks.add-to-cart-button.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "t:sections.product.blocks.add-to-cart-button.settings.show_dynamic_checkout.label",
+          "info": "t:sections.product.blocks.add-to-cart-button.settings.show_dynamic_checkout.info",
+          "default": true
+        }
+      ]
     },
     {
       "type": "reassurance",

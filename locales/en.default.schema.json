@@ -878,7 +878,13 @@
           "name": "Variant picker"
         },
         "add-to-cart-button": {
-          "name": "Add to cart button"
+          "name": "Add to cart button",
+          "settings": {
+            "show_dynamic_checkout": {
+              "label": "Show dynamic checkout buttons",
+              "info": "Express payment methods available on the store, e.g. Shop Pay or Apple Pay."
+            }
+          }
         },
         "quantity": {
           "name": "Quantity"

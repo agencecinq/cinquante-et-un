@@ -25,7 +25,9 @@
         },
         "buy": {
           "type": "add-to-cart-button",
-          "settings": {}
+          "settings": {
+            "show_dynamic_checkout": true
+          }
         },
         "reassurance": {
           "type": "reassurance",

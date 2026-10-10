@@ -873,7 +873,13 @@
           "name": "Sélecteur de variante"
         },
         "add-to-cart-button": {
-          "name": "Add to cart button"
+          "name": "Add to cart button",
+          "settings": {
+            "show_dynamic_checkout": {
+              "label": "Afficher les boutons de paiement accéléré",
+              "info": "Moyens de paiement express disponibles sur la boutique, comme Shop Pay ou Apple Pay."
+            }
+          }
         },
         "quantity": {
           "name": "Quantité"
