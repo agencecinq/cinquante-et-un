@@ -421,76 +421,6 @@
           "title": "New"
         }
       }
-    },
-    "product-price": {
-      "name": "Prix du produit",
-      "settings": {
-        "show_tax_note": {
-          "label": "Afficher la mention taxes et livraison"
-        }
-      }
-    },
-    "product-variant-picker": {
-      "name": "Sélecteur de variante"
-    },
-    "product-buy-buttons": {
-      "name": "Boutons d'achat",
-      "settings": {
-        "show_quantity": {
-          "label": "Afficher la quantité"
-        },
-        "show_dynamic_checkout": {
-          "label": "Afficher les boutons de paiement accéléré",
-          "info": "Moyens de paiement express disponibles sur la boutique, comme Shop Pay ou Apple Pay."
-        }
-      }
-    },
-    "product-reassurance": {
-      "name": "Réassurance",
-      "settings": {
-        "text_0": {
-          "label": "Text 1",
-          "default": "<strong>Free shipping</strong> on orders over €40",
-          "info": "First reassurance text"
-        },
-        "text_1": {
-          "label": "Text 2",
-          "default": "<strong>Fast delivery</strong> within 3 to 4 business days",
-          "info": "Second reassurance text"
-        },
-        "text_2": {
-          "label": "Text 3",
-          "default": "",
-          "info": "Third reassurance text (optional)"
-        }
-      }
-    },
-    "breadcrumb": {
-      "name": "Fil d'Ariane"
-    },
-    "custom-liquid": {
-      "name": "Liquid personnalisé",
-      "settings": {
-        "custom_liquid": {
-          "label": "Liquid personnalisé",
-          "info": "Ajoutez des extraits d'app ou du code pour des personnalisations avancées."
-        }
-      }
-    },
-    "accordion-group": {
-      "name": "Groupe d'accordéons"
-    },
-    "accordion": {
-      "name": "Accordéon",
-      "settings": {
-        "heading": {
-          "label": "Titre",
-          "default": "Accordéon"
-        },
-        "open": {
-          "label": "Ouvert par défaut"
-        }
-      }
     }
   },
   "sections": {
@@ -921,6 +851,72 @@
         "show_size_guide": {
           "label": "Show size guide",
           "info": "Display a size guide link for products with size options"
+        }
+      },
+      "blocks": {
+        "title": {
+          "name": "Title"
+        },
+        "description": {
+          "name": "Description"
+        },
+        "price": {
+          "name": "Prix",
+          "settings": {
+            "show_tax_note": {
+              "label": "Afficher la mention taxes et livraison"
+            }
+          }
+        },
+        "breadcrumb": {
+          "name": "Fil d'Ariane"
+        },
+        "accordion-group": {
+          "name": "Accordion Group"
+        },
+        "variant-picker": {
+          "name": "Sélecteur de variante"
+        },
+        "add-to-cart-button": {
+          "name": "Add to cart button",
+          "settings": {
+            "show_dynamic_checkout": {
+              "label": "Afficher les boutons de paiement accéléré",
+              "info": "Moyens de paiement express disponibles sur la boutique, comme Shop Pay ou Apple Pay."
+            }
+          }
+        },
+        "quantity": {
+          "name": "Quantité"
+        },
+        "reassurance": {
+          "name": "Reassurance",
+          "settings": {
+            "text_0": {
+              "label": "Text 1",
+              "default": "<strong>Free shipping</strong> on orders over €40",
+              "info": "First reassurance text"
+            },
+            "text_1": {
+              "label": "Text 2",
+              "default": "<strong>Fast delivery</strong> within 3 to 4 business days",
+              "info": "Second reassurance text"
+            },
+            "text_2": {
+              "label": "Text 3",
+              "default": "",
+              "info": "Third reassurance text (optional)"
+            }
+          }
+        },
+        "custom-liquid": {
+          "name": "Liquid personnalisé",
+          "settings": {
+            "custom_liquid": {
+              "label": "Liquid personnalisé",
+              "info": "Ajoutez des extraits d'app ou du code pour des personnalisations avancées."
+            }
+          }
         }
       }
     },

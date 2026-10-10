@@ -426,76 +426,6 @@
           "title": "New"
         }
       }
-    },
-    "product-price": {
-      "name": "Product price",
-      "settings": {
-        "show_tax_note": {
-          "label": "Show taxes and shipping note"
-        }
-      }
-    },
-    "product-variant-picker": {
-      "name": "Variant picker"
-    },
-    "product-buy-buttons": {
-      "name": "Buy buttons",
-      "settings": {
-        "show_quantity": {
-          "label": "Show quantity"
-        },
-        "show_dynamic_checkout": {
-          "label": "Show dynamic checkout buttons",
-          "info": "Express payment methods available on the store, e.g. Shop Pay or Apple Pay."
-        }
-      }
-    },
-    "product-reassurance": {
-      "name": "Reassurance",
-      "settings": {
-        "text_0": {
-          "label": "Text 1",
-          "default": "<strong>Free shipping</strong> on orders over €40",
-          "info": "First reassurance text"
-        },
-        "text_1": {
-          "label": "Text 2",
-          "default": "<strong>Fast delivery</strong> within 3 to 4 business days",
-          "info": "Second reassurance text"
-        },
-        "text_2": {
-          "label": "Text 3",
-          "default": "",
-          "info": "Third reassurance text (optional)"
-        }
-      }
-    },
-    "breadcrumb": {
-      "name": "Breadcrumb"
-    },
-    "custom-liquid": {
-      "name": "Custom Liquid",
-      "settings": {
-        "custom_liquid": {
-          "label": "Custom Liquid",
-          "info": "Add app snippets or other code for advanced customizations."
-        }
-      }
-    },
-    "accordion-group": {
-      "name": "Accordion group"
-    },
-    "accordion": {
-      "name": "Accordion",
-      "settings": {
-        "heading": {
-          "label": "Heading",
-          "default": "Accordion"
-        },
-        "open": {
-          "label": "Open by default"
-        }
-      }
     }
   },
   "sections": {
@@ -926,6 +856,72 @@
         "show_size_guide": {
           "label": "Show size guide",
           "info": "Display a size guide link for products with size options"
+        }
+      },
+      "blocks": {
+        "title": {
+          "name": "Title"
+        },
+        "description": {
+          "name": "Description"
+        },
+        "price": {
+          "name": "Price",
+          "settings": {
+            "show_tax_note": {
+              "label": "Show taxes and shipping note"
+            }
+          }
+        },
+        "breadcrumb": {
+          "name": "Breadcrumb"
+        },
+        "accordion-group": {
+          "name": "Accordion Group"
+        },
+        "variant-picker": {
+          "name": "Variant picker"
+        },
+        "add-to-cart-button": {
+          "name": "Add to cart button",
+          "settings": {
+            "show_dynamic_checkout": {
+              "label": "Show dynamic checkout buttons",
+              "info": "Express payment methods available on the store, e.g. Shop Pay or Apple Pay."
+            }
+          }
+        },
+        "quantity": {
+          "name": "Quantity"
+        },
+        "reassurance": {
+          "name": "Reassurance",
+          "settings": {
+            "text_0": {
+              "label": "Text 1",
+              "default": "<strong>Free shipping</strong> on orders over €40",
+              "info": "First reassurance text"
+            },
+            "text_1": {
+              "label": "Text 2",
+              "default": "<strong>Fast delivery</strong> within 3 to 4 business days",
+              "info": "Second reassurance text"
+            },
+            "text_2": {
+              "label": "Text 3",
+              "default": "",
+              "info": "Third reassurance text (optional)"
+            }
+          }
+        },
+        "custom-liquid": {
+          "name": "Custom Liquid",
+          "settings": {
+            "custom_liquid": {
+              "label": "Custom Liquid",
+              "info": "Add app snippets or other code for advanced customizations."
+            }
+          }
         }
       }
     },
