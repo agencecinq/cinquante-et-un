@@ -1,7 +1,7 @@
 import { Piece } from 'piecesjs';
 import { messageFromError } from '../api/errors.ts';
 import cart, { CartMiddleware } from '../store/cart.ts';
-import { Cart, CartSnapshot } from '../types/cart.ts';
+import { Cart } from '../types/cart.ts';
 import { formatCurrency } from '../utils/format-currency.ts';
 
 type LogKind = 'queue' | 'done' | 'error' | 'pending' | 'listener' | 'middleware';
@@ -102,7 +102,7 @@ class CartStoreDemo extends Piece {
    * Log the mutation before calling the store so the "queued" line always
    * precedes the pending notification it triggers.
    */
-  private track(action: string, run: () => Promise<CartSnapshot>): void {
+  private track(action: string, run: () => Promise<unknown>): void {
     const id = this.sequence + 1;
     this.sequence = id;
     this.addEntry('queue', this.message('queued', { id, action }));
@@ -120,7 +120,9 @@ class CartStoreDemo extends Piece {
     return snapshot;
   };
 
-  private handleSnapshot = (snapshot: Cart): void => {
+  private handleSnapshot = (snapshot: Cart | null): void => {
+    if (!snapshot) return;
+
     this.notifications += 1;
     this.renderStats(snapshot);
     this.addEntry(
