@@ -43,6 +43,7 @@
     "@agencecinq/drawer": "^7.0.1",
     "@agencecinq/modal": "^4.0.1",
     "@agencecinq/spinbutton": "^4.0.0",
+    "@agencecinq/store": "^1.0.0",
     "@agencecinq/switch": "^3.0.1",
     "@agencecinq/tabs": "^11.0.0",
     "@agencecinq/toast": "^1.0.0",

@@ -187,6 +187,9 @@ importers:
       '@agencecinq/spinbutton':
         specifier: ^4.0.0
         version: 4.0.0(@agencecinq/utils@7.5.0)
+      '@agencecinq/store':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@agencecinq/switch':
         specifier: ^3.0.1
         version: 3.0.1(@agencecinq/utils@7.5.0)
@@ -278,6 +281,9 @@ packages:
     resolution: {integrity: sha512-z1r11h3YtDPvpqqMaKkGxSeXFwM7+REvp2Xzjk6k05Z3fUiElWaFZduH2u2Xk9X6TlqCjgXF896ZQgzd1KUuBQ==}
     peerDependencies:
       '@agencecinq/utils': '>=7.0.0'
+
+  '@agencecinq/store@1.0.0':
+    resolution: {integrity: sha512-OMYgy+HZdtC0u07Zhf/NXmo9WFMGJcuWNFJM/XHkBr0Ega95+Y9+zp1jut5EqMmDZ7N5FQRkGhr56bAu0zISog==}
 
   '@agencecinq/switch@3.0.1':
     resolution: {integrity: sha512-pK/9cAghBcFZGdUuabIJrb2tgFpWluXQUF2O1Wrp+gVJKvQz2zwGEuHRrurZzVUBfVo9kyl7wp+RKT8YMMmzyw==}
@@ -2721,6 +2727,8 @@ snapshots:
   '@agencecinq/spinbutton@4.0.0(@agencecinq/utils@7.5.0)':
     dependencies:
       '@agencecinq/utils': 7.5.0
+
+  '@agencecinq/store@1.0.0': {}
 
   '@agencecinq/switch@3.0.1(@agencecinq/utils@7.5.0)':
     dependencies:

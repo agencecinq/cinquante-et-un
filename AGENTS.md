@@ -47,7 +47,7 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 
 ### Cart Ajax
 
-- Store: `src/scripts/store/cart.ts` (queued mutations, `subscribe` / `subscribePending`)
+- Store: `src/scripts/store/cart.ts` extends `@agencecinq/store` (queued actions via `run`, `subscribe` / `select` / `subscribePending`, middlewares via `use`); new shared state goes in a `Store` too
 - Registry: `src/scripts/store/cartSections.ts` — ids + optional `.js-*` selectors; only sections on the page are requested
 - Prefer bundled section HTML from cart Ajax; fallback `?sections=`
 - Live drawer roots: `.js-cart-header` / `.js-cart-items` / `.js-cart-footer`
