@@ -52,7 +52,7 @@ shopify theme push --environment production
 
 ## For coding agents
 
-Theme conventions live in **[AGENTS.md](./AGENTS.md)** (tool-agnostic). Claude Code also reads [CLAUDE.md](./CLAUDE.md). On-demand skill + deep reference: [`.agents/skills/cinq-starter/`](.agents/skills/cinq-starter/) (symlinked for Cursor / Claude under `.cursor/skills/` and `.claude/skills/`).
+Theme conventions live in **[AGENTS.md](./AGENTS.md)** (tool-agnostic). Claude Code also reads [CLAUDE.md](./CLAUDE.md). On-demand skill + deep reference: [`.agents/skills/cinq-starter/`](.agents/skills/cinq-starter/) (symlinked for Claude under `.claude/skills/`).
 
 ## License
 
