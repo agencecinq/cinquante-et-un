@@ -133,52 +133,6 @@
         "padding_bottom": 48
       }
     },
-    "familles": {
-      "type": "multirow",
-      "blocks": {
-        "r1": {
-          "type": "row",
-          "settings": {
-            "image": "shopify://shop_images/f5-famille-lettres.png",
-            "title": "Lettres",
-            "content": "<p>Les 26, de A à Z. 5 € la touche.</p>",
-            "button_label": "Voir les lettres",
-            "button_link": "shopify://collections/lettres"
-          }
-        },
-        "r2": {
-          "type": "row",
-          "settings": {
-            "image": "shopify://shop_images/f5-famille-symboles.png",
-            "title": "Symboles",
-            "content": "<p>Les signes qui tiennent les URL debout.</p>",
-            "button_label": "Voir les symboles",
-            "button_link": "shopify://collections/symboles"
-          }
-        },
-        "r3": {
-          "type": "row",
-          "settings": {
-            "image": "shopify://shop_images/f5-famille-packs.png",
-            "title": "Packs",
-            "content": "<p>Les touches qui ne servent à rien seules.</p>",
-            "button_label": "Voir les packs",
-            "button_link": "shopify://collections/packs"
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
-      "settings": {
-        "title": "Par famille",
-        "content": "<p>4 familles, 51 références.</p>",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
     "web": {
       "type": "featured-collection",
       "settings": {
@@ -298,7 +252,6 @@
     "hero",
     "nouveautes",
     "principe",
-    "familles",
     "web",
     "faq",
     "coulisses"
