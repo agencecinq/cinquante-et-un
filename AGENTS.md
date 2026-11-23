@@ -60,6 +60,7 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 - Trigger: a plain `<button commandfor="{id}" command="show-modal">` (invoker commands, polyfill loaded only when missing). Close: `command="request-close"` inside. From a script: `dialog.closest('cinq-drawer').show()`; react to the dialog's native `toggle` event
 - Chrome: `{% render 'drawer-header.html', title:, id: %}` (title gets `{id}-title`, close button included)
 - Scroll lock is CSS (`html:has(dialog:is(:modal, :popover-open))` in `styles.css`): the drawer no longer locks it
+- Mobile menu: `<cinq-drilldown>` (`@agencecinq/drilldown`) in `menu-drawer`, one panel per level (`hidden`, `aria-controls` + `aria-expanded` on the trigger, `data-close` on the back button, `data-autofocus` on the panel title). `cinq/drilldown.ts` resets it when its dialog closes, `components/drilldown.css` slides the panels
 - Add to cart opens `cart-drawer` (`{% render 'add-to-cart.html', drawer: … %}`, `''` opens none)
 - Optional offset under sticky header: `margin_top` / CSS vars (project-specific)
 

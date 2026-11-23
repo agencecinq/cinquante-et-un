@@ -78,6 +78,7 @@ html:has(dialog:is(:modal, :popover-open)) {
 
 /* Components */
 @import './components/button.css';
+@import './components/drilldown.css';
 @import './components/subtitle.css';
 @import './components/surface.css';
 @import './components/tag.css';

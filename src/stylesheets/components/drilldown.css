@@ -1,0 +1,42 @@
+/*
+ * Drilldown panels slide: drilling in, the parent leaves to the left and the
+ * child comes in from the right; going back, the other way round. The host
+ * reflects the direction (`data-direction`), panels overlap (absolute in a
+ * relative host), `display` transitions as a discrete value so the panel
+ * getting `hidden` stays on screen for its exit.
+ *
+ * @see node_modules/@agencecinq/drilldown/README.md, "Animating panels"
+ */
+@media (prefers-reduced-motion: no-preference) {
+  cinq-drilldown[data-direction] > * {
+    transition:
+      opacity 0.3s ease-out,
+      translate 0.3s ease-out,
+      display 0.3s allow-discrete;
+  }
+
+  cinq-drilldown[data-direction] > [hidden] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  cinq-drilldown[data-direction='forward'] > [hidden] {
+    translate: -1.5rem 0;
+  }
+
+  cinq-drilldown[data-direction='back'] > [hidden] {
+    translate: 1.5rem 0;
+  }
+
+  @starting-style {
+    cinq-drilldown[data-direction='forward'] > :not([hidden]) {
+      opacity: 0;
+      translate: 1.5rem 0;
+    }
+
+    cinq-drilldown[data-direction='back'] > :not([hidden]) {
+      opacity: 0;
+      translate: -1.5rem 0;
+    }
+  }
+}

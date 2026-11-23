@@ -181,6 +181,9 @@ importers:
       '@agencecinq/drawer':
         specifier: ^9.1.3
         version: 9.1.3
+      '@agencecinq/drilldown':
+        specifier: ^1.4.2
+        version: 1.4.2
       '@agencecinq/modal':
         specifier: ^6.1.3
         version: 6.1.3
@@ -263,6 +266,9 @@ packages:
   '@agencecinq/drawer@9.1.3':
     resolution: {integrity: sha512-Vw1JV2Rd6bYDCDxtjUHpR41muXc9jdc4Ie4tVpAg1oPncmvwsh3lqhxCeEZlXbEpS3lDJZNdf0mPNe8mLzecQw==}
     engines: {node: '>=18'}
+
+  '@agencecinq/drilldown@1.4.2':
+    resolution: {integrity: sha512-jhaTYAXfZ+ATlIZNp7FSVDA0LENrm/7mfJyGJpuXynoK8z4fXeI20HFwRS1NCLtl8N+/YWsSFhMRD4FfZOKWMw==}
 
   '@agencecinq/modal@6.1.3':
     resolution: {integrity: sha512-2gKf5hpl+4wS8inhZBFUkUX5hDvhfqn+lgsNU954fRGaPuXP3e4PgdJmkFlHTN1baFynnT/RMpYrirDyfmp3XQ==}
@@ -2701,6 +2707,10 @@ snapshots:
       '@agencecinq/utils': 11.0.2
 
   '@agencecinq/drawer@9.1.3':
+    dependencies:
+      '@agencecinq/utils': 11.0.2
+
+  '@agencecinq/drilldown@1.4.2':
     dependencies:
       '@agencecinq/utils': 11.0.2
 

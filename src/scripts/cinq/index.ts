@@ -3,6 +3,7 @@ import '@agencecinq/calendar';
 import '@agencecinq/combobox';
 import '@agencecinq/disclosure-button';
 import '@agencecinq/drawer';
+import '@agencecinq/drilldown';
 import '@agencecinq/modal';
 import '@agencecinq/spinbutton';
 import '@agencecinq/switch';
@@ -18,8 +19,10 @@ if (!('commandForElement' in HTMLButtonElement.prototype)) {
 
 import { init as initCombobox } from './combobox.ts';
 import { init as initDisclosureButton } from './disclosure-button.ts';
+import { init as initDrilldown } from './drilldown.ts';
 import { init as initToast } from './toast.ts';
 
 initCombobox();
 initDisclosureButton();
+initDrilldown();
 initToast();

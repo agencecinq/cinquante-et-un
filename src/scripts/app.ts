@@ -12,7 +12,6 @@ load('c-add-to-cart-button', () => import('./components/AddToCartButton.ts'));
 load('c-cart-store-demo', () => import('./components/CartStoreDemo.ts'));
 load('c-headroom', () => import('./components/Headroom.ts'));
 load('c-load-more', () => import('./components/LoadMore.ts'));
-load('c-menubar', () => import('./components/Menubar.ts'));
 load('c-product-gallery', () => import('./components/ProductGallery.ts'));
 load('c-product-price', () => import('./components/ProductPrice.ts'));
 load('c-select-controller', () => import('./components/SelectController.ts'));
