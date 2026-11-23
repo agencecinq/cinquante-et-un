@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  assets:
+    name: Committed assets match the sources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Fail if the build changes committed files
+        run: |
+          changes=$(git status --porcelain -- assets snippets/vite-tag.liquid)
+          if [ -n "$changes" ]; then
+            echo "::error::Committed assets are out of date. Run pnpm build and commit the result."
+            echo "$changes"
+            exit 1
+          fi

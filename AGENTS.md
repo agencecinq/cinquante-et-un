@@ -23,6 +23,8 @@ Deeper paths, fork token recipe, and checklists: [`.agents/skills/cinq-starter/r
 
 Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 
+CI (`.github/workflows/build.yml`, Node from `.nvmrc`) rebuilds on every pull request and on `main`, and fails when the committed `assets/` or `snippets/vite-tag.liquid` differ from the fresh build: commit the build output with the sources. A merged pull request deletes its branch (`delete-merged-branch.yml`), `main` excepted.
+
 ## First 60 seconds
 
 1. Skim `README.md` (architecture lives here + this file — don’t invent a parallel stack).

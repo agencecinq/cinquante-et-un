@@ -1,0 +1,46 @@
+name: Delete merged branch
+
+# Replaces GitHub's "Automatically delete head branches" setting, which cannot
+# exclude branches on this plan: merging a theme branch would delete it.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  delete:
+    name: Delete the head branch
+    if: github.event.pull_request.merged && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      BRANCH: ${{ github.event.pull_request.head.ref }}
+      BASE: ${{ github.event.pull_request.base.ref }}
+      # Branches synced with a Shopify theme.
+      KEPT_BRANCHES: main
+    steps:
+      - name: Skip kept branches
+        id: kept
+        run: |
+          for kept in $KEPT_BRANCHES; do
+            if [ "$BRANCH" = "$kept" ]; then
+              echo "Keeping $BRANCH."
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+            fi
+          done
+      # Deleting the base of an open pull request closes it, so move those
+      # pull requests to the base of the merged one first.
+      - name: Retarget pull requests based on the branch
+        if: steps.kept.outputs.skip != 'true'
+        run: |
+          for number in $(gh pr list --base "$BRANCH" --state open --json number --jq '.[].number'); do
+            gh pr edit "$number" --base "$BASE"
+          done
+      - name: Delete the branch
+        if: steps.kept.outputs.skip != 'true'
+        run: gh api --method DELETE "repos/$GH_REPO/git/refs/heads/$BRANCH"
