@@ -15,17 +15,16 @@
   id="CartDrawerHeader-{{ id }}"
   class="js-cart-header flex items-center justify-between gap-4 border-b border-black px-5 py-6"
 >
-  <p class="text-sm font-medium">{{- cart_title -}}</p>
-  <cinq-drawer-button class="ms-auto flex items-center justify-center">
+  <p id="cart-drawer-title" class="text-sm font-medium">{{- cart_title -}}</p>
+  <div class="ms-auto flex items-center justify-center">
     <button
-      data-dom="button"
-      aria-controls="cart-drawer"
-      aria-expanded="false"
+      commandfor="cart-drawer"
+      command="request-close"
       type="button"
       aria-label="{{ 'cart.drawer.close.label' | t }}"
       class="flex size-6 items-center justify-center"
     >
       {%- render 'use.html', icon: 'times', classes: 'size-3.5' -%}
     </button>
-  </cinq-drawer-button>
+  </div>
 </header>

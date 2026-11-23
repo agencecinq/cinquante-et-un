@@ -108,7 +108,7 @@ Do not permanently edit the snippet body — `cinqDrawerPlugin()` regenerates it
 - [ ] Chrome matches context (wireframe **or** project design — don’t mix)
 - [ ] Prefer shared classes (`.button`, `.surface`, `.wysiwyg`, `.tag`, `.subtitle`)
 - [ ] Spacing on Tailwind scale; avoid random `*.5` unless matching an existing control
-- [ ] Drawers: `data-dom="button"` + matching `aria-controls` / `id`
+- [ ] Drawers: `<button commandfor="{id}" command="show-modal">` targeting the dialog `id`, `label: '{id}-title'` on `cinq-drawer.html`
 - [ ] New strings in **all** `locales/*.json` + schema files as needed
 - [ ] No classic customer-account templates
 

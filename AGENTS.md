@@ -16,7 +16,7 @@ Deeper paths, fork token recipe, and checklists: [`.agents/skills/cinq-starter/r
 | Layer | Choice |
 |-------|--------|
 | Theme | Shopify OS 2.0 (JSON templates + sections) |
-| Build | Vite 8 + `vite-plugin-shopify` + **pnpm** 11 |
+| Build | Vite 8 + `vite-plugin-shopify` + **pnpm** 12 |
 | CSS | Tailwind 4 — starter: defaults; forks: `@theme` overrides |
 | JS | piecesjs `load('c-*', …)` + `@agencecinq/*` |
 | Accounts | New Customer Accounts only (classic/legacy deprecated by Shopify) |
@@ -56,9 +56,12 @@ Dev: `pnpm install` → `pnpm dev`. Build: `pnpm build`.
 
 ### Drawers
 
-- Capture → `{% render 'cinq-drawer.html', id:, content:, direction:, background: %}`
-- Trigger: `<cinq-drawer-button>` + `data-dom="button"` + matching `aria-controls`
-- Chrome: `{% render 'drawer-header.html', title:, id: %}`
+- Capture → `{% render 'cinq-drawer.html', id:, label:, content:, direction:, background: %}`: a native `<dialog id>` in `<cinq-drawer>` (`@agencecinq/drawer` 9). `label` is `{id}-title`, the title of `drawer-header`
+- Trigger: a plain `<button commandfor="{id}" command="show-modal">` (invoker commands, polyfill loaded only when missing). Close: `command="request-close"` inside. From a script: `dialog.closest('cinq-drawer').show()`; react to the dialog's native `toggle` event
+- Chrome: `{% render 'drawer-header.html', title:, id: %}` (title gets `{id}-title`, close button included)
+- Scroll lock is CSS (`html:has(dialog:is(:modal, :popover-open))` in `styles.css`): the drawer no longer locks it
+- Mobile menu: `<cinq-drilldown>` (`@agencecinq/drilldown`) in `menu-drawer`, one panel per level (`hidden`, `aria-controls` + `aria-expanded` on the trigger, `data-close` on the back button, `data-autofocus` on the panel title). `cinq/drilldown.ts` resets it when its dialog closes, `components/drilldown.css` slides the panels
+- Add to cart opens `cart-drawer` (`{% render 'add-to-cart.html', drawer: … %}`, `''` opens none)
 - Optional offset under sticky header: `margin_top` / CSS vars (project-specific)
 
 ### Localization

@@ -9,6 +9,16 @@
 
 @import './theme.css';
 
+/*
+ * The drawer and modal (native dialogs) do not lock the page scroll: an open
+ * modal dialog or popover drawer does, keeping the scrollbar gutter so the page
+ * does not shift.
+ */
+html:has(dialog:is(:modal, :popover-open)) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
 @layer base {
   html {
     color: var(--color-black);
@@ -68,6 +78,7 @@
 
 /* Components */
 @import './components/button.css';
+@import './components/drilldown.css';
 @import './components/subtitle.css';
 @import './components/surface.css';
 @import './components/tag.css';

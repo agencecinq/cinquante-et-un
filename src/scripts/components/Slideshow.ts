@@ -120,16 +120,22 @@ export class Slideshow extends Piece {
     this.slideToSlide(event);
   };
 
-  isSlideVisible(element: HTMLElement, offset = 0) {
-    const lastVisibleSlide = this.$slider.clientWidth + this.$slider.scrollLeft - offset;
-    return (
-      element.offsetLeft + element.clientWidth <= lastVisibleSlide && element.offsetLeft >= this.$slider.scrollLeft
-    );
+  /**
+   * Whether `element` is fully in view. Positions are measured from the first
+   * slide, like `slideTo()`: `offsetLeft` counts from the offset parent, which
+   * also holds the slider's border. One pixel absorbs subpixel scroll positions.
+   */
+  isSlideVisible(element: HTMLElement) {
+    const left = element.offsetLeft - (this.slides[0]?.offsetLeft ?? 0);
+    const start = this.$slider.scrollLeft;
+    const end = start + this.$slider.clientWidth;
+
+    return left >= start - 1 && left + element.clientWidth <= end + 1;
   }
 
   slideToSlide(event: Event) {
-    const target = event.target as HTMLElement;
-    const { dom } = target.dataset;
+    // The listener's button, not the icon inside it that received the click.
+    const { dom } = (event.currentTarget as HTMLElement).dataset;
     let left = 0;
 
     if (dom === `next-${this.cid}`) {

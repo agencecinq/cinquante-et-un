@@ -1,49 +1,51 @@
 {% doc %}
   This snippet is used to render a drawer.
 
-  @param {string} id - The drawer ID. Required.
+  @param {string} id - The dialog ID, targeted by the buttons' `commandfor`. Required.
   @param {string} content - The drawer content. Required.
-  @param {string} [direction] - The direction the drawer will open from. Possible values are 'from-left' and 'from-right'. Default is 'from-right'.
-  @param {string} [classes] - Additional classes to apply to the drawer. Optional.
-  @param {string} [margin_top] - The top margin of the drawer. Optional. Default is '0rem'.
+  @param {string} [label] - ID of the element labelling the dialog. Optional.
+  @param {string} [direction] - The direction the drawer will open from. Possible values are 'from-left', 'from-right' and 'from-bottom'. Default is 'from-right'.
+  @param {string} [classes] - Additional classes to apply to the dialog. Optional.
+  @param {string} [margin_top] - The top offset of the drawer. Optional. Default is '0rem'.
   @param {string} [background] - The background color of the drawer. Optional. Default is 'bg-white'.
+  @param {boolean} [modal] - `false` renders a `<dialog popover>`, toggled with `command="toggle-popover"`: the page, header included, stays interactive, and a scrim replaces `::backdrop`. Default `true`, opened with `command="show-modal"`.
 
   @example
-  {% render 'drawer.html', id: 'drawer1', direction: 'from-left' %}
+  {% render 'cinq-drawer.html', id: 'drawer1', direction: 'from-left', label: 'drawer1-title', content: panel %}
 {% enddoc %}
 
 {% liquid
   assign direction = direction | default: 'from-right'
-  assign translate = 'translate-x-full right-0 group-open:translate-x-0 w-125 max-w-full'
-  assign margin_top = margin_top | default: null
+  assign position = 'inset-y-0 right-0 left-auto w-125 translate-x-full open:translate-x-0 starting:open:translate-x-full'
+  assign margin_top = margin_top | default: '0rem'
   assign background = background | default: 'bg-white'
+  assign backdrop = 'backdrop:bg-black/30 backdrop:opacity-0 backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-300 open:backdrop:opacity-100 starting:open:backdrop:opacity-0'
 
   if direction == 'from-left'
-    assign translate = '-translate-x-full left-0 group-open:translate-x-0 w-125 max-w-full inset-y-0'
+    assign position = 'inset-y-0 left-0 right-auto w-125 -translate-x-full open:translate-x-0 starting:open:-translate-x-full'
   endif
 
   if direction == 'from-bottom'
-    assign translate = 'translate-y-full bottom-0 group-open:translate-y-0 inset-x-0'
+    assign position = 'inset-x-0 bottom-0 top-auto w-full translate-y-full open:translate-y-0 starting:open:translate-y-full'
   endif
 %}
-<cinq-drawer
-  id="{{ id }}"
-  class="group fixed inset-0 z-20 w-full block{% if classes %} {{ classes }}{% endif %}"
-  style="opacity: 0; visibility: hidden; height: {% if margin_top %}calc(100% - {{ margin_top }}); margin-top: {{ margin_top }}{% else %}100%{% endif %};"
->
-  <div
-    data-dom="overlay"
-    class="absolute inset-0 z-1 size-full bg-[#000000]/30 opacity-0 transition-opacity duration-300 ease-out group-open:opacity-100"
-  ></div>
-  <div
-    role="dialog"
-    aria-modal="true"
-    class="transition-transform duration-300 ease-out {{ translate }} h-full max-h-full {{ background }} absolute z-2"
+<cinq-drawer>
+  <dialog
+    id="{{ id }}"
+    {% if modal == false %}popover{% else %}closedby="any"{% endif %}
+    {% if label %}aria-labelledby="{{ label }}"{% endif %}
+    class="peer fixed m-0 h-full max-h-none max-w-full border-0 p-0 {{ position }} {{ background }} transition-[translate,overlay,display] transition-discrete duration-300 ease-out{% unless modal == false %} {{ backdrop }}{% endunless %}{% if classes %} {{ classes }}{% endif %}"
+    style="margin-top: {{ margin_top }}; height: calc(100% - {{ margin_top }});"
   >
-    <div
-      class="scrollbar-hidden h-full overflow-y-auto scroll-smooth"
-    >
+    <div class="scrollbar-hidden h-full overflow-y-auto scroll-smooth">
       {{- content -}}
     </div>
-  </div>
+  </dialog>
+  {%- if modal == false %}
+    <div
+      class="pointer-events-none fixed inset-x-0 bottom-0 bg-black/30 opacity-0 transition-opacity duration-300 peer-open:pointer-events-auto peer-open:opacity-100"
+      style="top: {{ margin_top }};"
+      aria-hidden="true"
+    ></div>
+  {%- endif %}
 </cinq-drawer>

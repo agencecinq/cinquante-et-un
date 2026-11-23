@@ -95,16 +95,16 @@
           <p class="text-xs text-gray-600">{{- 'sections.cart-store-demo.actions.latency.hint' | t -}}</p>
         </div>
 
-        <cinq-drawer-button class="block">
+        <div class="block">
           <button
             type="button"
             class="button button--tertiary"
-            aria-controls="cart-drawer"
-            aria-expanded="false"
+            commandfor="cart-drawer"
+            command="show-modal"
           >
             {{- 'sections.cart-store-demo.actions.open_drawer' | t -}}
           </button>
-        </cinq-drawer-button>
+        </div>
       </div>
 
       <div class="surface surface--padded group col-span-4 space-y-6 lg:col-span-7" data-dom="panel">

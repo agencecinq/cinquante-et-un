@@ -1,1 +1,0 @@
-import{fetchJson as e}from"./http-BeToTGEq.js";async function t(t){return e(`${routes.cart_url}?sections=${t.join(`,`)}`,{fallback:`Failed to fetch sections`})}export{t as fetchSections};

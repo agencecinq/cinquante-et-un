@@ -146,7 +146,7 @@
     color: #6b7280;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day {
+  #StyleguideCalendar-{{ section.id }} [data-day] {
     display: flex;
     aspect-ratio: 1;
     width: 100%;
@@ -160,43 +160,43 @@
     cursor: pointer;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day:hover:not([aria-disabled='true']):not(.active) {
+  #StyleguideCalendar-{{ section.id }} td:not([aria-selected='true']) > [data-day]:hover:not([aria-disabled='true']) {
     background: #f3f4f6;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day:focus {
+  #StyleguideCalendar-{{ section.id }} [data-day]:focus {
     outline: none;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day:focus-visible {
+  #StyleguideCalendar-{{ section.id }} [data-day]:focus-visible {
     outline: 2px solid #111827;
     outline-offset: 2px;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day[aria-current='date']:not(.active) {
+  #StyleguideCalendar-{{ section.id }} td:not([aria-selected='true']) > [data-day][aria-current='date'] {
     border-color: #111827;
     font-weight: 600;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day.active,
-  #StyleguideCalendar-{{ section.id }} .js-day[aria-selected='true'] {
+  /* Picked day, then range, then range ends: each rule wins over the previous one. */
+  #StyleguideCalendar-{{ section.id }} td[aria-selected='true'] > [data-day] {
     background: #111827;
     color: #fff;
     font-weight: 600;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day.range:not(.active) {
+  #StyleguideCalendar-{{ section.id }} td[data-range] > [data-day] {
     background: #e5e7eb;
     color: #111827;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day.start,
-  #StyleguideCalendar-{{ section.id }} .js-day.end {
+  #StyleguideCalendar-{{ section.id }} td[data-start] > [data-day],
+  #StyleguideCalendar-{{ section.id }} td[data-end] > [data-day] {
     background: #111827;
     color: #fff;
   }
 
-  #StyleguideCalendar-{{ section.id }} .js-day[aria-disabled='true'] {
+  #StyleguideCalendar-{{ section.id }} [data-day][aria-disabled='true'] {
     color: #d1d5db;
     cursor: not-allowed;
   }
@@ -398,7 +398,7 @@
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.accordion.text' | t -}}</p>
           </header>
           <cinq-accordion class="surface block divide-y divide-gray-200">
-            <div data-panel data-open="true" data-deselect="true">
+            <div data-panel data-open="true" data-deselectable="true">
               <button
                 type="button"
                 data-header
@@ -485,14 +485,14 @@
             <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.drawer.title' | t -}}</h4>
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.drawer.text' | t -}}</p>
           </header>
-          <cinq-drawer-button class="inline-block">
+          <div class="inline-block">
             {%- assign title = 'sections.styleguide.components.drawer.open' | t -%}
             {%- render 'button.html',
               title: title,
               variant: 'primary',
-              attributes: 'aria-controls="styleguide-drawer" aria-expanded="false"'
+              attributes: 'commandfor="styleguide-drawer" command="show-modal"'
             -%}
-          </cinq-drawer-button>
+          </div>
         </article>
 
         <article class="{{ card }}">
@@ -501,32 +501,31 @@
             <h4 class="text-base font-semibold">{{- 'sections.styleguide.components.modal.title' | t -}}</h4>
             <p class="text-sm text-gray-600">{{- 'sections.styleguide.components.modal.text' | t -}}</p>
           </header>
-          <cinq-modal-button class="inline-block">
-            {%- assign title = 'sections.styleguide.components.modal.open' | t -%}
-            {%- render 'button.html',
-              title: title,
-              variant: 'secondary',
-              attributes: 'aria-controls="styleguide-modal" aria-expanded="false"'
-            -%}
-          </cinq-modal-button>
-          <cinq-modal id="styleguide-modal">
+          {%- assign title = 'sections.styleguide.components.modal.open' | t -%}
+          {%- render 'button.html',
+            title: title,
+            variant: 'secondary',
+            attributes: 'commandfor="styleguide-modal" command="show-modal"'
+          -%}
+          <cinq-modal>
             <dialog
-              class="surface fixed top-1/2 left-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2 p-6 text-gray-900 backdrop:bg-black/40"
+              id="styleguide-modal"
+              closedby="any"
+              aria-labelledby="styleguide-modal-title"
+              class="surface m-auto w-[min(92vw,28rem)] p-6 text-gray-900 backdrop:bg-black/40"
             >
-              <h4 class="mb-2 text-base font-semibold">
+              <h4 id="styleguide-modal-title" class="mb-2 text-base font-semibold">
                 {{- 'sections.styleguide.components.modal.dialog_title' | t -}}
               </h4>
               <p class="mb-5 text-sm text-gray-600">
                 {{- 'sections.styleguide.components.modal.dialog_text' | t -}}
               </p>
-              <cinq-modal-button class="inline-block">
-                {%- assign title = 'sections.styleguide.components.modal.close' | t -%}
-                {%- render 'button.html',
-                  title: title,
-                  variant: 'primary',
-                  attributes: 'aria-controls="styleguide-modal" aria-expanded="false"'
-                -%}
-              </cinq-modal-button>
+              {%- assign title = 'sections.styleguide.components.modal.close' | t -%}
+              {%- render 'button.html',
+                title: title,
+                variant: 'primary',
+                attributes: 'commandfor="styleguide-modal" command="request-close"'
+              -%}
             </dialog>
           </cinq-modal>
         </article>
@@ -670,6 +669,8 @@
           </header>
           <cinq-switch
             class="group inline-flex cursor-pointer items-center gap-3"
+            name="styleguide-switch-{{ sid }}"
+            value="on"
             role="switch"
             aria-checked="false"
             tabindex="0"
@@ -681,9 +682,6 @@
             ></span>
             <span class="sr-only" aria-hidden="true">{{- 'sections.styleguide.components.switch.on' | t -}}</span>
             <span class="sr-only" aria-hidden="true">{{- 'sections.styleguide.components.switch.off' | t -}}</span>
-            <div hidden>
-              <input type="checkbox" name="styleguide-switch-{{ sid }}" tabindex="-1" aria-hidden="true">
-            </div>
           </cinq-switch>
         </article>
 
@@ -741,28 +739,26 @@
           </header>
           <cinq-calendar
             id="StyleguideCalendar-{{ sid }}"
-            locale="{{ request.locale.iso_code }}"
-            deselect
-            allow-past
+            lang="{{ request.locale.iso_code }}"
+            deselectable
             name="styleguide-date-{{ sid }}"
           >
             <header class="mb-3 flex items-center justify-between gap-2">
               <button
                 type="button"
-                class="js-previous border border-gray-200 px-2 py-1 text-xs"
+                class="border border-gray-200 px-2 py-1 text-xs"
+                commandfor="StyleguideCalendar-{{ sid }}"
+                command="--previous-month"
                 aria-label="{{ 'sections.styleguide.components.calendar.previous' | t }}"
               >
                 {%- render 'use.html', icon: 'chevron-left', classes: 'size-3' -%}
               </button>
+              <p class="text-sm font-medium" id="styleguide-calendar-label-{{ sid }}" aria-live="polite"></p>
               <button
                 type="button"
-                class="js-title text-sm font-medium"
-                id="styleguide-calendar-label-{{ sid }}"
-                aria-live="polite"
-              ></button>
-              <button
-                type="button"
-                class="js-next border border-gray-200 px-2 py-1 text-xs"
+                class="border border-gray-200 px-2 py-1 text-xs"
+                commandfor="StyleguideCalendar-{{ sid }}"
+                command="--next-month"
                 aria-label="{{ 'sections.styleguide.components.calendar.next' | t }}"
               >
                 {%- render 'use.html', icon: 'chevron-right', classes: 'size-3' -%}
@@ -770,9 +766,9 @@
             </header>
             <table role="grid" aria-labelledby="styleguide-calendar-label-{{ sid }}">
               <thead>
-                <tr class="js-days"></tr>
+                <tr></tr>
               </thead>
-              <tbody class="js-body"></tbody>
+              <tbody></tbody>
             </table>
           </cinq-calendar>
         </article>
@@ -947,7 +943,7 @@
     </div>
   </div>
 {%- endcapture -%}
-{%- render 'cinq-drawer.html', content: styleguide_drawer_content, id: 'styleguide-drawer', background: 'bg-white' -%}
+{%- render 'cinq-drawer.html', content: styleguide_drawer_content, id: 'styleguide-drawer', label: 'styleguide-drawer-title', background: 'bg-white' -%}
 
 {% schema %}
 {
