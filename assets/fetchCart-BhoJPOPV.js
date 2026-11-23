@@ -1,0 +1,1 @@
+import{n as e}from"./http-C6BCRkS5.js";async function t(){return e(`${routes.cart_url}.js`,{fallback:`Failed to fetch cart`})}export{t};

@@ -1,0 +1,1 @@
+import{t as e}from"./http-C6BCRkS5.js";async function t(t,n,r={}){let i=new URL(t,window.location.origin);return i.searchParams.set(`section_id`,n),e(`${i.pathname}${i.search}`,{...r,fallback:`Failed to fetch section ${n}`})}export{t};

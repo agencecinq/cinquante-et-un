@@ -1,1 +1,0 @@
-import{fetchJson as e}from"./http-BeToTGEq.js";async function t(){return e(`${routes.cart_url}.js`,{fallback:`Failed to fetch cart`})}export{t as fetchCart};

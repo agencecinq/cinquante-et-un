@@ -1,0 +1,1 @@
+import{n as e}from"./http-C6BCRkS5.js";async function t(t){return e(`${routes.cart_url}?sections=${t.join(`,`)}`,{fallback:`Failed to fetch sections`})}export{t};
