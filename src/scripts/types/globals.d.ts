@@ -14,5 +14,5 @@ declare const routes: {
 interface Window {
   routes: typeof routes;
   shopUrl: string;
-  cart?: import('./types/cart.ts').Cart;
+  cart?: import('./cart.ts').Cart;
 }

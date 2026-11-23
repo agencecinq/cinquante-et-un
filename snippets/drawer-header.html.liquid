@@ -2,23 +2,22 @@
   Renders a drawer header.
 
   @param [title] - {String} The title of the drawer.
-  @param id - {String} The id of the drawer.
+  @param id - {String} The id of the drawer dialog. The title gets `{id}-title`, to pass as the drawer `label`.
 {% enddoc %}
 
 <header class="flex items-center justify-between gap-2 px-5 py-8 lg:gap-4 lg:px-8">
   {%- if title != blank -%}
-    <p class="text-sm font-medium">{{- title -}}</p>
+    <p id="{{ id }}-title" class="text-sm font-medium">{{- title -}}</p>
   {%- endif -%}
 
-  <cinq-drawer-button class="ms-auto flex items-center justify-center">
+  <div class="ms-auto flex items-center justify-center">
     <button
-      data-dom="button"
-      aria-controls="{{ id }}"
-      aria-expanded="false"
+      commandfor="{{ id }}"
+      command="request-close"
       type="button"
       aria-label="{{ 'snippets.drawer-header.close' | t }}"
     >
       {%- render 'use.html', icon: 'times', classes: 'size-3.5' -%}
     </button>
-  </cinq-drawer-button>
+  </div>
 </header>

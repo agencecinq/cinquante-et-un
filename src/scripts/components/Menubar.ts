@@ -1,21 +1,24 @@
 import { Piece } from 'piecesjs';
-import { EVENTS, addTrapFocus, getFocusableElements, removeTrapFocus } from '@agencecinq/utils';
+import { getFocusableElements } from '@agencecinq/utils';
 
 /**
- * Nested mobile menu panels inside the menu drawer.
+ * Nested mobile menu panels inside the menu drawer (a modal `<dialog>`).
  * Buttons use data-dom="open|close" + aria-controls pointing at panel IDs.
+ *
+ * The dialog keeps focus inside the drawer. Inside it, only the visible panel
+ * takes part: the others are `inert` (they slide off-screen but stay in the
+ * DOM for the transition). Closing the drawer brings the main panel back.
  */
 class Menubar extends Piece {
-  trigger: HTMLElement | null = null;
-  isOpen = false;
+  trigger: HTMLButtonElement | null = null;
   closes: HTMLElement[] = [];
   opens: HTMLElement[] = [];
   panels: HTMLElement[] = [];
+  $dialog: HTMLDialogElement | null = null;
 
   constructor() {
     super('Menubar');
 
-    this.isOpen = this.classList.contains('is-open');
     this.panels = this.domAttrAll('panel');
     this.closes = this.domAttrAll('close');
     this.opens = this.domAttrAll('open');
@@ -25,71 +28,84 @@ class Menubar extends Piece {
   }
 
   mount(): void {
+    this.$dialog = this.closest('dialog');
+
     this.on('click', this.opens, this.open);
     this.on('click', this.closes, this.close);
-    this.on(EVENTS.DRAWER_CLOSE, document.documentElement, this.handleDrawerClose);
-    this.on(EVENTS.DRAWER_OPEN, document.documentElement, this.handleDrawerOpen);
-  }
 
-  handleDrawerOpen(event: CustomEvent<{ drawer: string }>): void {
-    if (event.detail.drawer !== 'menu-drawer' && this.isOpen) {
-      this.close();
+    if (this.$dialog) {
+      this.on('toggle', this.$dialog, this.handleToggle);
     }
   }
 
-  handleDrawerClose(event: CustomEvent<{ drawer: string }>): void {
-    if (event.detail.drawer === 'menu-drawer' && this.isOpen) {
-      this.close();
+  handleToggle = (event: Event): void => {
+    if ((event as ToggleEvent).newState === 'closed' && this.trigger) {
+      this.reset();
     }
+  };
+
+  get root(): HTMLElement | null {
+    return this.firstElementChild as HTMLElement | null;
   }
 
   open(event: Event): void {
     const $button = event.currentTarget as HTMLButtonElement;
     const controls: string[] = $button.getAttribute('aria-controls')?.trim().split(/\s+/) || [];
 
-    this.isOpen = true;
     this.trigger = $button;
     $button.setAttribute('aria-expanded', 'true');
 
+    if (this.root) {
+      this.root.inert = true;
+    }
+
     controls.forEach((control: string) => {
-      const el = this.querySelector(`#${CSS.escape(control)}`) as HTMLElement | null;
-      if (!el) {
+      const $panel = this.querySelector<HTMLElement>(`#${CSS.escape(control)}`);
+
+      if (!$panel) {
         throw new Error(`Menubar: #${control} not found`);
       }
 
-      el.scroll(0, 0);
-      el.classList.add('is-active');
+      $panel.scroll(0, 0);
+      $panel.inert = false;
+      $panel.classList.add('is-active');
 
-      const focusable = getFocusableElements(el);
-      if (focusable.length > 0) {
-        addTrapFocus(el, focusable[0] as HTMLElement);
-      }
+      const [$first] = getFocusableElements($panel);
+
+      $first?.focus();
     });
   }
 
+  /** Back button: main panel again, focus on the item that opened the panel. */
   close(): void {
-    if (this.trigger) {
-      removeTrapFocus(this.trigger);
-    }
+    const $trigger = this.trigger;
 
-    this.isOpen = false;
-    this.panels.forEach(($panel) => $panel.classList.remove('is-active'));
+    this.reset();
+    $trigger?.focus();
+  }
+
+  /** Main panel again, without moving focus (the drawer closing hands it back to its opener). */
+  reset(): void {
+    this.panels.forEach(($panel) => {
+      $panel.classList.remove('is-active');
+      $panel.inert = true;
+    });
     this.opens.forEach(($button) => $button.setAttribute('aria-expanded', 'false'));
 
-    const root = this.firstElementChild as HTMLElement | null;
-    if (!root) return;
-
-    const focusable = getFocusableElements(root);
-    if (focusable.length > 0) {
-      addTrapFocus(root, focusable[0] as HTMLElement);
+    if (this.root) {
+      this.root.inert = false;
     }
+
+    this.trigger = null;
   }
 
   unmount(): void {
     this.off('click', this.opens, this.open);
     this.off('click', this.closes, this.close);
-    this.off(EVENTS.DRAWER_CLOSE, document.documentElement, this.handleDrawerClose);
-    this.off(EVENTS.DRAWER_OPEN, document.documentElement, this.handleDrawerOpen);
+
+    if (this.$dialog) {
+      this.off('toggle', this.$dialog, this.handleToggle);
+    }
   }
 }
 

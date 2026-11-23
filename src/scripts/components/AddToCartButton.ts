@@ -1,4 +1,5 @@
 import { Piece } from 'piecesjs';
+import type { Drawer } from '@agencecinq/drawer';
 import { messageFromError } from '../api/errors.ts';
 import cart from '../store/cart.ts';
 import { show } from '../cinq/toast.ts';
@@ -115,7 +116,7 @@ class AddToCartButton extends Piece {
     try {
       const items = this.parseItems(formData);
       await cart.add(items);
-      this.dispatchEvents();
+      this.openDrawer();
     } catch (error) {
       show(messageFromError(error));
     } finally {
@@ -201,18 +202,11 @@ class AddToCartButton extends Piece {
     return Object.keys(properties).length > 0 ? properties : undefined;
   }
 
-  dispatchEvents() {
-    const detail = {
-      detail: {
-        target: this.$button,
-        drawer: 'cart-drawer',
-      },
-    };
+  /** Opens the drawer named by `data-drawer` (`cart-drawer` by default, none when empty) once the item is in the cart. */
+  openDrawer(): void {
+    if (!this.drawer) return;
 
-    this.events?.split(',').forEach((type: string) => {
-      const event = new CustomEvent(EVENTS[type as keyof typeof EVENTS], detail);
-      document.documentElement.dispatchEvent(event);
-    });
+    void document.getElementById(this.drawer)?.closest<Drawer>('cinq-drawer')?.show();
   }
 
   unmount() {
@@ -233,8 +227,9 @@ class AddToCartButton extends Piece {
     return this.hasAttribute('in-stock');
   }
 
-  get events() {
-    return this.getAttribute('data-events') || this.getAttribute('events') || 'DRAWER_OPEN';
+  /** Id of the drawer dialog to open after an add. */
+  get drawer(): string {
+    return this.getAttribute('data-drawer') ?? 'cart-drawer';
   }
 }
 

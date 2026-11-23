@@ -16,12 +16,11 @@
 -%}
 
 {%- if show_country or show_language -%}
-  <cinq-drawer-button class="block">
+  <div class="block">
     <button
       type="button"
-      data-dom="button"
-      aria-controls="locale-currency-drawer"
-      aria-expanded="false"
+      commandfor="locale-currency-drawer"
+      command="show-modal"
       aria-label="{{ 'snippets.localization.title' | t }}"
       class="flex items-center justify-center gap-2 border border-black px-4 py-2"
     >
@@ -52,5 +51,5 @@
 
       {%- render 'use.html', icon: 'chevron-down', classes: 'size-3' -%}
     </button>
-  </cinq-drawer-button>
+  </div>
 {%- endif -%}

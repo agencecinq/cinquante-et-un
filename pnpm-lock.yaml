@@ -167,44 +167,47 @@ importers:
   .:
     dependencies:
       '@agencecinq/accordion':
-        specifier: ^3.0.0
-        version: 3.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^4.2.1
+        version: 4.2.1
       '@agencecinq/calendar':
-        specifier: ^3.0.0
-        version: 3.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^4.3.2
+        version: 4.3.2
       '@agencecinq/combobox':
-        specifier: ^2.0.0
-        version: 2.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^2.1.2
+        version: 2.1.2
       '@agencecinq/disclosure-button':
-        specifier: ^3.0.1
-        version: 3.0.1(@agencecinq/utils@7.5.0)
+        specifier: ^3.1.2
+        version: 3.1.2
       '@agencecinq/drawer':
-        specifier: ^7.0.1
-        version: 7.0.1(@agencecinq/utils@7.5.0)
+        specifier: ^9.1.3
+        version: 9.1.3
       '@agencecinq/modal':
-        specifier: ^4.0.1
-        version: 4.0.1(@agencecinq/utils@7.5.0)
+        specifier: ^6.1.3
+        version: 6.1.3
       '@agencecinq/spinbutton':
-        specifier: ^4.0.0
-        version: 4.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^4.1.2
+        version: 4.1.2
       '@agencecinq/store':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.1.1
+        version: 1.1.1
       '@agencecinq/switch':
-        specifier: ^3.0.1
-        version: 3.0.1(@agencecinq/utils@7.5.0)
+        specifier: ^4.1.2
+        version: 4.1.2
       '@agencecinq/tabs':
-        specifier: ^11.0.0
-        version: 11.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^12.0.2
+        version: 12.0.2
       '@agencecinq/toast':
-        specifier: ^1.0.0
-        version: 1.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^1.1.2
+        version: 1.1.2
       '@agencecinq/utils':
-        specifier: ^7.5.0
-        version: 7.5.0
+        specifier: ^11.0.2
+        version: 11.0.2
       '@agencecinq/windowsplitter':
-        specifier: ^3.0.0
-        version: 3.0.0(@agencecinq/utils@7.5.0)
+        specifier: ^3.1.2
+        version: 3.1.2
+      invokers-polyfill:
+        specifier: ^1.0.4
+        version: 1.0.4
       piecesjs:
         specifier: ^0.5.7
         version: 0.5.7
@@ -245,68 +248,46 @@ importers:
 
 packages:
 
-  '@agencecinq/accordion@3.0.0':
-    resolution: {integrity: sha512-9+/DX10B7NL6g6RfP/C7HrsansCtIdDVOoJ4Pwo6CEWowL+LK0xf/zTWDqov8e0FkURp5ymtqp4B7e3p+SlLPw==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/accordion@4.2.1':
+    resolution: {integrity: sha512-dnO1XoVKqnzF/9Qsb03XjbqNcKmCUsMnc9Rd5mjD+yfgskNPL2U3OqieL0x0MiGX8OdDjDK8wXBwCEpxF5h8tQ==}
 
-  '@agencecinq/calendar@3.0.0':
-    resolution: {integrity: sha512-fFAilo3ftBo34FyfVjDXDxM99aCYNT1D07junpzJ0McV3vufeRabP5n8LBktcoceLJH/8vjjSHcHG1WhNmA5VQ==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/calendar@4.3.2':
+    resolution: {integrity: sha512-6NAUa0y2o7w2gsYFns0Vw7ZSDddLKmHdVnR54HQNtVDrfks61lVhR3/lIj2nRJDFppllxKraKB6yYvu5WfhkDA==}
 
-  '@agencecinq/combobox@2.0.0':
-    resolution: {integrity: sha512-Gu6zeeokCnRiRGVPdpVaJ1CP+Hp2Y0v3ec7/xCXMhp94/rDIn4LpivWzgd9kMQD9KsqbtkokmHvcrMFZZFnf3w==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/combobox@2.1.2':
+    resolution: {integrity: sha512-kpFDkfs+Wxgxmk2oMWhucYcggCWQGLBZy/P0UkBuvHLU+zt6K5ue4GYjFU7/G6xHbX+CQ5igoqyQ9QZ7Ulgh2w==}
 
-  '@agencecinq/disclosure-button@3.0.1':
-    resolution: {integrity: sha512-xk2vdku2doDwaQOHfWJmBqEFPoLByXpBE2xWFjNFQr/K29fyKToEgytESS4a+oK1QR2igvY6aeQYjHbLHwMAWQ==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/disclosure-button@3.1.2':
+    resolution: {integrity: sha512-cX07MEJ2eE75CSZhCGZ1zPgT+if6ViOkxX5m/MJU5XU/FA6JsDmN4Ta4tGtcVwHRaFpIsf/tPjlfxrpnxOl98w==}
 
-  '@agencecinq/drawer@7.0.1':
-    resolution: {integrity: sha512-q55mb0z2UAy3FP37PbrAj73vwlxYbdkz1cWJX+8+W3YMhjuNdTJLgiGra5WQNjLU3yt+JIFb4p+kGH4Z6cCcYQ==}
+  '@agencecinq/drawer@9.1.3':
+    resolution: {integrity: sha512-Vw1JV2Rd6bYDCDxtjUHpR41muXc9jdc4Ie4tVpAg1oPncmvwsh3lqhxCeEZlXbEpS3lDJZNdf0mPNe8mLzecQw==}
     engines: {node: '>=18'}
-    peerDependencies:
-      '@agencecinq/utils': '>=7.0.0'
 
-  '@agencecinq/modal@4.0.1':
-    resolution: {integrity: sha512-NF6fBORh7hOvDMCNhe7q0sGbkbidOJiNnZyOH/XaK5HwQhmzMX0swfAJuSIokCPVDPSQDhNUD8Tu+6mkGD3zQw==}
+  '@agencecinq/modal@6.1.3':
+    resolution: {integrity: sha512-2gKf5hpl+4wS8inhZBFUkUX5hDvhfqn+lgsNU954fRGaPuXP3e4PgdJmkFlHTN1baFynnT/RMpYrirDyfmp3XQ==}
     engines: {node: '>=18'}
-    peerDependencies:
-      '@agencecinq/utils': '>=7.0.0'
 
-  '@agencecinq/spinbutton@4.0.0':
-    resolution: {integrity: sha512-z1r11h3YtDPvpqqMaKkGxSeXFwM7+REvp2Xzjk6k05Z3fUiElWaFZduH2u2Xk9X6TlqCjgXF896ZQgzd1KUuBQ==}
-    peerDependencies:
-      '@agencecinq/utils': '>=7.0.0'
+  '@agencecinq/spinbutton@4.1.2':
+    resolution: {integrity: sha512-eehr3HIwfAWJlXJUJ4rSHIW49XzJhZULyOPhZnA8LhBTR7DffkGFfYgoFxFTF462YiPGR1AC6q/gEsB/PU190A==}
 
-  '@agencecinq/store@1.0.0':
-    resolution: {integrity: sha512-OMYgy+HZdtC0u07Zhf/NXmo9WFMGJcuWNFJM/XHkBr0Ega95+Y9+zp1jut5EqMmDZ7N5FQRkGhr56bAu0zISog==}
+  '@agencecinq/store@1.1.1':
+    resolution: {integrity: sha512-aS2E6wemgCql8W2NpXwCLFbIBg/AiTc/0z76wcFS0bxlWM0ML71pUVnvPUC572+KwW24fhNIgSPq0MJ/C6cuDA==}
 
-  '@agencecinq/switch@3.0.1':
-    resolution: {integrity: sha512-pK/9cAghBcFZGdUuabIJrb2tgFpWluXQUF2O1Wrp+gVJKvQz2zwGEuHRrurZzVUBfVo9kyl7wp+RKT8YMMmzyw==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/switch@4.1.2':
+    resolution: {integrity: sha512-hVjUP3qGNKi0DXsD0+eu8p39+yM2urk5PImOP/CeRGUJAgiHsgj9xKdBJNmAGVtTa/st7wzPwDosTAOEMrmMVQ==}
 
-  '@agencecinq/tabs@11.0.0':
-    resolution: {integrity: sha512-1czfBDqIECZjeAdrHSze6p6gtPK06DghFiz4hoHmI8Tl2JjMjp39nBcP6RGqatoji4tYcHhbwjJWtjfj6dnxEA==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/tabs@12.0.2':
+    resolution: {integrity: sha512-0umMba54RBqgJlquDFnJnMYeEqxQQ+yGSzV57XjqL1gtoy4laKJ3Jg7QSprPVUB9Wf0cBGixQKW6ha8TUAt65A==}
 
-  '@agencecinq/toast@1.0.0':
-    resolution: {integrity: sha512-MgFL+WKW3nlhxWFZEvEHoN4sTvnAUm0GOgLqhVR36HTFqMUDGxUNII6gJjQsDcX0JM5xadfMxdLcPPjtEWlQUA==}
-    peerDependencies:
-      '@agencecinq/utils': '>=7.0.0'
+  '@agencecinq/toast@1.1.2':
+    resolution: {integrity: sha512-tZxku2E+Q+m+VSVUPGDlmfVxCwQ+kX9NOhcE74EBNcEjpPTsR1bTSqZEBsbnpL7lG9LW5UxC4POWITAMOtgShw==}
 
-  '@agencecinq/utils@7.5.0':
-    resolution: {integrity: sha512-UM4QEWUvPj0AOP2vNxrPEDQlTxnsCg+KCYKM/TZ9TkY6eRft9m1zVoH2YJ8RCA5Jr2ffLLSchtek78hxh/YaIw==}
+  '@agencecinq/utils@11.0.2':
+    resolution: {integrity: sha512-omREsufuhZL/AY0lwSh73ItzO7LvNSBwLoC8vfIleQUCSSEC3+x9wSKJbva8NtXBlRSPPVaJnudTmjqYyHyk8w==}
 
-  '@agencecinq/windowsplitter@3.0.0':
-    resolution: {integrity: sha512-1WETzhwrPJPQfcAk88kRbvVHN5zmcsg2hFDb2Gus5tDx8irkp+NT61YaNTg98T9/JenNRwwBpQjI2f5MaFeP6A==}
-    peerDependencies:
-      '@agencecinq/utils': '*'
+  '@agencecinq/windowsplitter@3.1.2':
+    resolution: {integrity: sha512-OlPdmhuUEKjAq/XnU6UVZ2A2JEFjaBbi7vZg8jG/4S/pRHCrS4H7U/BV6GMjqUe0wY24Qb7wweUa7Z3D/NZtOA==}
 
   '@alcalzone/ansi-tokenize@0.2.5':
     resolution: {integrity: sha512-3NX/MpTdroi0aKz134A6RC2Gb2iXVECN4QaAXnvCIxxIm3C3AVB1mkUe8NaaiyvOpDfsrqWhYtj+Q6a62RrTsw==}
@@ -1571,6 +1552,9 @@ packages:
       react-devtools-core:
         optional: true
 
+  invokers-polyfill@1.0.4:
+    resolution: {integrity: sha512-mgs5JuNbd9aQ++wL3Gk2poHfZejTN9N/UlH9IGOsfkEFnPiN3A72bYf4mL/62YF0htWtaJ0WqfGdS0V6xdwywg==}
+
   iron-webcrypto@1.2.1:
     resolution: {integrity: sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==}
 
@@ -2700,53 +2684,53 @@ packages:
 
 snapshots:
 
-  '@agencecinq/accordion@3.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/accordion@4.2.1':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/calendar@3.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/calendar@4.3.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/combobox@2.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/combobox@2.1.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/disclosure-button@3.0.1(@agencecinq/utils@7.5.0)':
+  '@agencecinq/disclosure-button@3.1.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/drawer@7.0.1(@agencecinq/utils@7.5.0)':
+  '@agencecinq/drawer@9.1.3':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/modal@4.0.1(@agencecinq/utils@7.5.0)':
+  '@agencecinq/modal@6.1.3':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/spinbutton@4.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/spinbutton@4.1.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/store@1.0.0': {}
+  '@agencecinq/store@1.1.1': {}
 
-  '@agencecinq/switch@3.0.1(@agencecinq/utils@7.5.0)':
+  '@agencecinq/switch@4.1.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/tabs@11.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/tabs@12.0.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/toast@1.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/toast@1.1.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
-  '@agencecinq/utils@7.5.0': {}
+  '@agencecinq/utils@11.0.2': {}
 
-  '@agencecinq/windowsplitter@3.0.0(@agencecinq/utils@7.5.0)':
+  '@agencecinq/windowsplitter@3.1.2':
     dependencies:
-      '@agencecinq/utils': 7.5.0
+      '@agencecinq/utils': 11.0.2
 
   '@alcalzone/ansi-tokenize@0.2.5':
     dependencies:
@@ -4040,6 +4024,8 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  invokers-polyfill@1.0.4: {}
 
   iron-webcrypto@1.2.1: {}
 

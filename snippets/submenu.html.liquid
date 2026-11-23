@@ -9,7 +9,7 @@
 <cinq-accordion class="block space-y-5">
   {% for child in links %}
     {%- if child.links.size > 0 -%}
-      <div data-panel class="js-accordion-panel" data-open="true" data-deselect="true">
+      <div data-panel class="js-accordion-panel" data-open="true" data-deselectable="true">
         <button
           data-header
           class="js-accordion-header group flex w-full items-center gap-2.5 underline-offset-4 hover:underline aria-expanded:underline"

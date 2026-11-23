@@ -1,18 +1,20 @@
 {% doc %}
   @param {object} product - The product object to add to the cart. (Optional)
   @param {number} [quantity] - The quantity of the product to add to the cart. Default is 1. Optional.
-  @param {string} [events] - The events to trigger after the cart is updated. A comma-separated list of events. Default is 'DRAWER_OPEN'. Optional.
+  @param {string} [drawer] - Id of the drawer dialog to open once the item is in the cart. Default is 'cart-drawer'. An empty string opens none (the cart drawer's own recommendations). Optional.
   @param {string} [button] - The HTML content of the button. The button needs to have a data-dom="button" attribute to be used by the JavaScript. Default is a button with an icon. Optional.
   @param {string} [classes] - The classes to add to the button. Default is 'w-full'. Optional.
 
-  @example {% render 'add-to-cart-button.html', { product: product, quantity: 1, events: 'DRAWER_OPEN', button: '<button data-dom="button">My button</button>' } %}
+  @example {% render 'add-to-cart.html', product: product, quantity: 1, button: '<button data-dom="button">My button</button>' %}
 {% enddoc %}
 
 {% liquid
   assign variant = product.selected_or_first_available_variant
   assign id = variant.id
   assign quantity = quantity | default: 1
-  assign events = events | default: 'DRAWER_OPEN'
+  if drawer == null
+    assign drawer = 'cart-drawer'
+  endif
   assign classes = classes | default: 'block'
 
   assign check_against_inventory = true
@@ -53,7 +55,7 @@
 {% unless id == false or id == null or id == blank or variant.available == false -%}
   <c-add-to-cart-button
     class="{{ classes }} aria-busy:cursor-wait aria-busy:opacity-50"
-    data-events="{{ events }}"
+    data-drawer="{{ drawer }}"
     in-stock
   >
     <form action="{{ routes.cart_add_url }}" method="post" data-dom="form">

@@ -10,6 +10,12 @@ import '@agencecinq/tabs';
 import '@agencecinq/toast';
 import '@agencecinq/windowsplitter';
 
+// Invoker commands (commandfor) open the drawers, the modal and the calendar
+// months: Safari before 26.2 needs the polyfill.
+if (!('commandForElement' in HTMLButtonElement.prototype)) {
+  await import('invokers-polyfill');
+}
+
 import { init as initCombobox } from './combobox.ts';
 import { init as initDisclosureButton } from './disclosure-button.ts';
 import { init as initToast } from './toast.ts';

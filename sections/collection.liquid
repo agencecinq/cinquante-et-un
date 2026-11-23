@@ -73,10 +73,10 @@
     {%- if section.settings.show_filters or section.settings.show_sorting -%}
       <div class="container">
         <div class="flex flex-col items-center gap-2 lg:flex-row lg:justify-between lg:gap-4">
-          <cinq-drawer-button class="block w-full lg:w-auto">
+          <div class="block w-full lg:w-auto">
             {%- assign title = 'sections.collection.filters.title' | t -%}
             {%- capture filter_button_attributes -%}
-              data-dom="button" aria-controls="filter-drawer" aria-expanded="false" aria-label="{{ title | escape }}"
+              commandfor="filter-drawer" command="show-modal" aria-label="{{ title | escape }}"
             {%- endcapture -%}
             {%- render 'button.html',
               title: title,
@@ -84,7 +84,7 @@
               classes: 'w-full',
               attributes: filter_button_attributes
             -%}
-          </cinq-drawer-button>
+          </div>
 
           <c-select-controller
             data-action="redirect"
@@ -301,6 +301,7 @@
   margin_top: 'var(--headroom-top, 0px)',
   content: content,
   id: 'filter-drawer',
+  label: 'filter-drawer-title',
   background: 'bg-white'
 -%}
 
