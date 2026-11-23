@@ -1,0 +1,1 @@
+function e(){document.querySelectorAll(`dialog cinq-drilldown`).forEach(e=>{e.closest(`dialog`)?.addEventListener(`toggle`,t=>{t.newState===`closed`&&e.closeAll()})})}export{e as t};
